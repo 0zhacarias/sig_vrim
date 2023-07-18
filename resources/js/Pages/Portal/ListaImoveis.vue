@@ -1,0 +1,575 @@
+<template>
+    <PortalLayout>
+
+        <template>
+
+            <v-card-title class="text-h4">
+                <v-row class="my-content">
+                    <v-col sm="4" md="1"></v-col>
+                    <v-col cols="12" sm="4" md="2">
+                        <v-row class="mx-0 mt-0">
+                            <v-card elevation="0" class="mt-3 transparent px-0" :style="'border-radius: 10px'">
+                                <v-card-title class="deep-purple--text">O que estás a procura</v-card-title>
+                                <v-card-text>
+                                    <v-col cols="12" class="opens-sans mb-n8">
+                                        <v-autocomplete @change="filtrarTicket()" clearable v-model="query.estado_ticket_id"
+                                            :items="estadoTickets" item-text="designacao" item-value="id" prepend-icon=""
+                                            label="Estado" dense no-data-text="sem dados" outlined dark>
+                                        </v-autocomplete>
+                                    </v-col>
+                                    <v-col cols="12" class="pt-6 mb-n8 " v-if="showSecondAutocompleteModulo">
+                                        <v-autocomplete prepend-icon="" label="Tipo de Problema" type="text" clearable
+                                            outlined dense no-data-text="sem dados">
+                                        </v-autocomplete>
+                                    </v-col>
+
+                                    <v-col cols="12" class="pt-6 mb-n8">
+                                        <v-autocomplete @change="filtrarTicket()" clearable v-model="query.operador_id"
+                                            :items="funcionario_operadores" item-text="nome_funcionario" item-value="id"
+                                            prepend-icon="" label="Operadores" outlined dense no-data-text="sem dados">
+                                        </v-autocomplete>
+                                    </v-col>
+
+                                    <v-col cols="12" class="pt-6 mb-n8">
+                                        <v-autocomplete class="custom-autocomplete" @change="filtrarTicket()" clearable
+                                            v-model="query.tecnico_id" :items="funcionario_tecnicos"
+                                            item-text="nome_funcionario" item-value="id" prepend-icon="" label="Técnicos"
+                                            outlined dense no-data-text="sem dados">
+                                            <!-- <template v-slot:item="data">
+                                                {{ data.item.nome_funcionario }}
+                                                {{ data.item.sobre_nome_funcionario }}
+                                            </template> -->
+                                        </v-autocomplete>
+                                    </v-col>
+                                    <v-col cols="12" class="pt-13 mb-n8">
+                                        <v-text-field clearable label="Data inicial" class="my-n8 rounded"
+                                            v-model="query.data_inicial" type="date" :error-messages="erros.dat_inicio_real
+                                                " dense outlined>
+                                        </v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" class="pt-13 mb-n8">
+                                        <v-text-field clearable label="Data termino" v-model="query.data_final"
+                                            @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense
+                                            outlined>
+                                        </v-text-field>
+                                    </v-col>
+
+                                    <v-col cols="12" class="pt-13 mb-n8">
+                                        <v-text-field clearable label="Data termino" v-model="query.data_final"
+                                            @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense
+                                            outlined>
+                                        </v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" class="pt-13 mb-n8">
+                                        <v-text-field clearable label="Data termino" v-model="query.data_final"
+                                            @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense
+                                            outlined>
+                                        </v-text-field>
+                                    </v-col>
+                                    <!-- <v-col>
+                                        <v-col cols="12" class="pt-2 ">
+                                            <v-container fluid>
+                                                <v-checkbox v-model="selected" label="John" value="John"></v-checkbox>
+                                                <v-checkbox v-model="selected" label="Jacob" value="Jacob"></v-checkbox>
+                                            </v-container>
+                                        </v-col>
+                                    </v-col> -->
+                                </v-card-text>
+                            </v-card>
+                        </v-row>
+                    </v-col>
+
+                    <v-col cols="12" sm="8" md="8">
+                        <template>
+                            <template>
+                                <v-card class="ma-4 pa-4  grey lighten-2 " elevation="0" >
+                                    <v-card-title>
+                                        <!-- <span class="text-uppercase" style="font-size: 20px">
+                    {{ formTitle }}</span
+                > -->
+                                    </v-card-title>
+                                </v-card>
+
+                                <v-dialog
+             
+                v-model="dialogN"
+                max-width="500px"
+            >
+                <v-card>
+                    <v-card-text class="text-h6 py-2">
+                        Não existe funcionario_tecnicos associado!
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            color="red"
+                            dark
+                            @click="dialogN = false"
+                            >Fechar</v-btn
+                        >
+
+                        <v-spacer></v-spacer>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+
+
+
+
+                                <template v-for="item in ImoveisComprar">
+                                    <!-- <inertia-link
+                                                                    :href="`/tickets/visualizar-resposta/${item.id}` "
+                                                                > -->
+                                    <v-hover v-slot="{ hover }" >
+                                        <v-card class="ma-4 pa-0" :elevation="hover ? 6 : 0" @click.stop="findimoveis(item.id)">
+                                            <!-- <v-list-item-avatar>
+                                                    <v-img
+                                                        src="/img/avatar.jpg"
+                                                        v-if="
+                                                            !item.user
+                                                                .funcionario
+                                                        "
+                                                    ></v-img>
+
+                                                    <v-img
+                                                        src="/img/avatar.jpg"
+                                                        v-else-if="
+                                                            !item.user
+                                                                .funcionario
+                                                                .empresa
+                                                                .logotipo_da_empresa
+                                                        "
+                                                    ></v-img>
+
+                                                    <v-img
+                                                        :src="
+                                                            '/storage/' +
+                                                            item.user
+                                                                .funcionario
+                                                                .empresa
+                                                                .logotipo_da_empresa
+                                                        "
+                                                        v-else
+                                                    ></v-img>
+                                                </v-list-item-avatar> -->
+                                                
+                                                                
+                                                               
+                                            <template>
+                                                <!--   <card> -->
+                                                <v-list-item-content>
+                                                    <v-row >
+                                                        <v-col md="8" class="px-5" justify="center">
+                                                            <v-card-text>
+                                                            <!-- <v-spacer></v-spacer> -->
+                                                            
+                                                            <v-list-item-title class="font-weight-bold text-h3">
+                                                                <span class="">{{
+                                                                    item.designacao
+
+                                                                }}</span>
+                                                            </v-list-item-title>
+                                                            <v-list-item-title class="text-subtitle-2" >
+                                                                <p class="lighten-1--text" v-html="quebraDeLinhaItem(item.descricao)"></p>
+                                                            </v-list-item-title>
+
+                                                            <v-list-item-title class="font-weight-bold text-h5">
+                                                                <span class="">Total KZ: {{
+                                                                    item.preco
+
+                                                                }}</span>
+                                                            </v-list-item-title>
+                                                    
+                                                                <v-chip-group v-model="selection"
+                                                                    active-class="deep-purple accent-4 white--text" column>
+                                                                    <v-chip><span class="mdi mdi-seat-individual-suite">{{item.suite }}</span></v-chip>
+                                                                    <v-chip><span class="mdi mdi-car">{{item.suite }}</span></v-chip>
+                                                                    <v-chip><span
+                                                                            class="mdi mdi-chart-areaspline-variant"></span></v-chip>
+
+                                                                    <v-chip><span
+                                                                            class="mdi mdi-faucet-variant"></span></v-chip>
+
+                                                                    <v-chip>
+                                                                        <span class="mdi mdi-bed-double"></span>{{
+                                                                            item.tempo_arrendar }}</v-chip>
+                                                                    <v-chip>
+                                                                        <span class="mdi mdi-timer-lock-outline"
+                                                                            title="data do contrato"></span>{{
+                                                                                item.tempo_arrendar }} </v-chip>
+                                                                </v-chip-group>
+                                                                        <v-btn depressed class="mr-10">
+                                                                            Telefone
+                                                                        </v-btn>
+                                                                        <v-btn depressed color="primary">
+                                                                            Mensagem
+                                                                        </v-btn>
+
+                                                                        <v-btn v-on:click.stop="say()">Diga tchau</v-btn>
+                                                                        
+                                                                 
+                                                             
+                                                              
+                                                            </v-card-text>
+                                                        </v-col>
+                                                        <v-col md="4" class="ma-0 pa-0">
+                                                            <!-- <v-img
+                                                            max-height="300"
+                                                            max-width="300"
+                                                            @click="
+                                                                verFoto(item)
+                                                            "
+                                                            :src="
+                                                                '/storage/' +
+                                                                item.ficheiro_resposta
+                                                            "
+                                                        ></v-img> -->
+                                                            <v-img height="240"
+                                                            src="/img/pexels-nextvoyage.jpg"></v-img>
+                                                        </v-col>
+
+                                                    </v-row>
+
+
+
+                                                    <!-- <v-row justify="space-between" dense no-gutters>
+                                                        <v-col md="6">
+                                                            <v-row justify="start" dense>
+                                                                <v-col cols="12" md="1" class="my-content texto_do_card">
+                                                                    <v-list-item-title class="opens-sans">
+
+
+                                                                        ></v-list-item-title>
+                                                                </v-col>
+                                                                <v-col md="1" cols="12" class="my-content texto_do_card">
+                                                                    <v-list-item-title class="opens-sans">
+                                                                        <v-chip color="black" dark>
+
+                                                                        </v-chip></v-list-item-title>
+                                                                </v-col>
+                                                                <v-col md="2" cols="12" class="my-content texto_do_card">
+                                                                    <v-list-item-title class="opens-sans">
+                                                                        <v-chip color="#002e5b"
+                                                                            outlined></v-chip></v-list-item-title>
+                                                                </v-col>
+                                                            </v-row>
+                                                        </v-col>
+                                                        <v-row justify="end" dense>
+                                                            <v-col md="2">
+                                                                <v-icon dense class="mr-2" color="black" title="Editar"
+                                                                    @click="
+                                                                    editItem(
+                                                                        item
+                                                                    )
+                                                                        ">
+                                                                    mdi-pencil
+                                                                </v-icon>
+                                                            </v-col>
+                                                            <v-col md="2" class="my-content text-center">
+                                                                <v-icon color="red" dense title="Apagar" @click="
+                                                                    deleteItem(
+                                                                        item
+                                                                    )
+                                                                    ">
+                                                                    mdi-delete
+                                                                </v-icon>
+                                                            </v-col>
+                                                            <v-col md="2" class="my-content text-center">
+                                                                <inertia-link :href="`/tickets/visualizar-resposta/$`">
+                                                                    <v-badge color="primary">
+                                                                        <v-icon color="#002e5b" dense title="Responder">
+                                                                            fa fa-reply
+                                                                        </v-icon>
+                                                                    </v-badge>
+                                                                </inertia-link>
+                                                            </v-col>
+                                                            <v-col md="2">
+                                                                <v-icon color="#002e5b" dense class="mr-2" title="Atribuir"
+                                                                    @click="
+                                                                        atribuiResponsavel(
+                                                                            item
+                                                                        )
+                                                                        ">
+                                                                    fa
+                                                                    fa-sitemap</v-icon>
+                                                            </v-col>
+                                                            <v-col md="1" class="my-content text-center">
+                                                                <v-icon dense color="black" @click="
+                                                                    verDetalhe(
+                                                                        item
+                                                                    )
+                                                                    " title="Detalhes">
+                                                                    mdi-details
+                                                                </v-icon>
+                                                            </v-col>
+                                                            <v-col md="2" class="my-content text-center">
+                                                                <v-icon color="#002e5b" @click="
+                                                                    concluir_atribuicao(
+                                                                        item
+                                                                    )
+                                                                    " left>mdi-check</v-icon>
+                                                                <v-icon color="red" @click="
+                                                                    rejeitar_atribuicao(
+                                                                        item
+                                                                    )
+                                                                    " left>mdi-close</v-icon>
+                                                            </v-col>
+                                                        </v-row>
+                                                    </v-row> -->
+                                                </v-list-item-content>
+
+                                                <!--  </card> -->
+                                            </template>
+                                        
+                                        </v-card>
+                                    </v-hover>
+                                <!-- </inertia-link> -->
+                                </template>
+                            </template>
+                            <template>
+                                <div class="text-h6">
+                                    Nenhum Dado Encontrado!!
+                                </div>
+                            </template>
+                        </template>
+
+                        <div class="text-center">
+                            <v-pagination v-model="page" :length="last_page" :total-visible="7" @input="paginacao(page)"
+                                color="grey"></v-pagination>
+                        </div>
+
+                        <!-- <v-row class="fill-height" align-content="center" justify="center" >
+                            <v-col class="text-subtitle-1 text-center" cols="12">
+                                Carregando os seus dados
+                            </v-col>
+                            <v-col cols="6">
+                                <v-progress-linear color="#002e5b" indeterminate rounded height="6"></v-progress-linear>
+                            </v-col>
+                        </v-row> -->
+                    </v-col>
+<v-col sm="4" md="1"></v-col>
+                </v-row>
+            </v-card-title>
+
+        </template>
+    </PortalLayout>
+</template>
+<script>
+import PortalLayout from "../../Templates/PortalLayout.vue";
+export default {
+    components: {
+        PortalLayout,
+    },
+    data: () => ({
+        dialogN: false,
+        page: 1,
+        last_page: 1,
+        estadoTickets: [],
+        ticketpaginas: [],
+        ImoveisComprar: [],
+        dataFinalFiltrolRules: [],
+        showSecondAutocompleteModulo: [],
+        funcionario_operadores: [],
+        funcionario_tecnicos: [],
+        showSecondAutocompleteProjecto: [],
+        projectos: [],
+        query: {},
+        tipo_regimes: [
+            { id: 1, designacao: "GERAL" },
+            { id: 2, designacao: "ESPECÍFICO" },
+        ],
+        tipo_clientes: [
+            { id: 1, designacao: "SINGULAR" },
+            { id: 2, designacao: "EMPRESA" },
+        ],
+        // loading: null,
+        imoveis: {},
+        // items: [
+        //     {
+        //         text: "Início",
+        //         disabled: false,
+        //         href: "/home",
+        //     },
+        //     {
+        //         text: "Listar Condomínios",
+        //         disabled: true,
+        //         href: "/",
+        //     },
+        // ],
+        e1: 1,
+        steps: 3,
+        editedIndex: -1,
+        dialogAddCondominio: false,
+        morador: {},
+        erros: [],
+        rules: {
+            required: (value) => !!value || "Campos obrigatório.",
+            max: (v) => v.length == 9 || "Tem que ter 9 caracteres",
+            emailMatch: () => `The email and password you entered don't match`,
+        },
+        emailRules: [(v) => /.+@.+\..+/.test(v) || "E-mail deve ser válido"],
+        telefoneRules: [
+            (v) => !!v || "Campo telefone obrigatório.",
+            (v) => (v && v.length == 9) || "Tem que ter 9 caracteres",
+        ],
+        documentoRules: [(v) => !!v || "Campo telefone obrigatório."],
+        dateNascRules: [
+            (v) => !!v || "Data é Obrigatório",
+            (v) =>
+                v < new Date().toISOString().substr(0, 10) ||
+                "Data de Nascimento deve ser Menor que a Data Actual!",
+            (v) =>
+                new Date().getFullYear() - new Date(v).getFullYear() >= 18 ||
+                "Idade informada é Inferior a 18",
+        ],
+    }),
+
+    mounted() {
+        // this.loading = true;
+        // setTimeout(function () {
+        //     this.loading = false;
+        // }, 4000);
+        // alert(this.condominios);
+    },
+    computed: {
+        user() {
+            return this.$page.props.auth.user;
+        },
+        formTitle() {
+            return this.editedIndex === -1 ? "Novo Condomínio" : "Editar ";
+        },
+        
+
+    },
+
+    created() {
+        this.paginacao()
+       
+    },
+
+    watch: {
+        steps(val) {
+            if (this.e1 > val) {
+                this.e1 = val;
+            }
+        },
+    },
+
+    methods: {
+        say(){
+            this.dialogN=true
+        },
+        quebraDeLinhaItem(texto) {
+      const tamanhoMaximo = 70;
+      let novoTexto = '';
+
+      for (let i = 0; i < texto.length; i += tamanhoMaximo) {
+        novoTexto += texto.slice(i, i + tamanhoMaximo) + '<br>';
+      }
+
+      return novoTexto;
+    },
+        findimoveis(id){
+            window.location.href="/portal/imovel-selecionado/" + btoa(btoa(btoa(id)));
+            // alert(id);
+        },
+        setNovoCondominio() {
+            // this.loading = true;
+
+            alert(JSON.stringify(this.condominio)); // this.$inertia.post("/condominios", this.condominio, {});
+
+            // axios
+            //     .post(this.base_url + "/condominios", this.condominio)
+            //     .then((response) => {
+            //         this.loading = false;
+            //         alert(JSON.stringify(response.data));
+            //         //   this.resposta = response.data
+            //     })
+            //     .catch(() => {
+            //         alert(JSON.stringify(response.data));
+
+            //         //   console.log('Falha ao registar os dados na base de dados!...')
+            //     });
+        },
+        showDialogAddCondominio() {
+            this.dialogAddCondominio = true;
+        },
+        continuar(stepe, form) {
+            if (this.$refs[form].validate()) {
+                this.e1 = stepe;
+            }
+        },
+        continuar2(stepe, form) {
+            if (this.$refs[form].validate()) {
+                this.e1 = stepe;
+            }
+        },
+
+        validate() {
+            this.$refs.form.validate();
+            this.$refs.form2.validate();
+        },
+
+        close() {
+            this.morador = {};
+            this.dialogAddCondominio = false;
+            this.$nextTick(() => {
+                this.morador = Object.assign({}, this.defaultItem);
+                this.editedIndex = -1;
+            });
+            // setTimeout(() => {
+            //     this.overlay = false;
+            // }, 2000);
+        },
+        paginacao(page = 1) {
+            //   this.imoveis.id;
+
+
+            axios
+                .get("/portal/filtrarImoveisPaginate?page=" + page, {
+                    // .get("/portal/filtrarImoveisP", {
+                })
+                .then((response) => {
+                    // alert(JSON.stringify(response.data.data))
+                    this.ImoveisComprar = response.data.data;
+                    /*           this. mensagem_lida = response.data.tickets.resposta_count
+; */
+                    this.last_page = response.data.last_page;
+                    this.totalTicket = response.data.imoveis.total;
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        filtrarTicket() {
+            axios
+                .get("/tickets/filtrar-ticket", {
+                    params: this.query,
+                })
+                .then((response) => {
+                    this.dadostickets = response.data.ticket.data;
+                    this.mensagem_lida = response.data.ticket.resposta_count;
+                    this.empresas = response.data.empresas;
+                    // this.resposta_nao = response.data.resposta_nao;
+                    this.funcionario_tecnicos =
+                        response.data.tecnicos_projectos;
+                    this.modulos_projectos = response.data.modulos_projectos;
+                    this.last_page = response.data.ticket.last_page;
+                    this.totalTicket = response.data.ticket.total;
+                })
+                .catch((error) => {
+                    //toastr.warning('Houve uma falha ao carregar os dados!...');
+                });
+        },
+    },
+};
+</script>
+<style scoped>
+.custom-autocomplete .v-input__control {
+    background-color: #ff0000;
+    /* Substitua pelo código de cor desejado */
+    color: #ffffff;
+    /* Substitua pelo código de cor desejado */
+}
+</style>
