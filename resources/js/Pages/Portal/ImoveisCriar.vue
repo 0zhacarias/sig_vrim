@@ -21,8 +21,8 @@
                             <v-stepper-step class="text-uppercase" step="4" :complete="e1 > 4">Finalização</v-stepper-step>
                         </v-stepper-header>
                         <v-row>
-                            <v-col md="4"></v-col>
-                            <v-col md="5" offset-md="2">
+                            <v-col sm="1" md="2" lg="2"></v-col>
+                            <v-col sm="10" md="8" lg="8" offset-sm="0">
                                 <v-stepper-items flat>
                                     <v-stepper-content step="1">
                                         <v-card class="mb-12" flat>
@@ -56,11 +56,11 @@
                                                             que seu anúncio
                                                             apareça corretamente nas buscas dos interessados.
                                                         </span>
-                                                        <v-col cols="12" md="6">
+                                                        <v-col cols="12" sm="6" md="6">
                                                             <v-autocomplete outlined dense label="Tipo de Imovel*" v-model="condominio.designacao
                                                                 "></v-autocomplete>
                                                         </v-col>
-                                                        <v-col cols="12" md="6">
+                                                        <v-col cols="12"  sm="6" md="6">
                                                             <v-autocomplete outlined dense label="Tipologia*" v-model="condominio.designacao
                                                                 "></v-autocomplete>
                                                         </v-col>
@@ -69,7 +69,8 @@
                                                     </v-row>
 
                                                     <v-divider></v-divider>
-                                                    <v-row><v-col cols="12" sm="6" md="7">
+                                                    <v-row>
+                                                        <v-col cols="12" sm="6" md="6">
                                                             <span class="text-h6">Número de quartos</span><br />
                                                             <span class="subtitle">Incluindo suítes</span>
 
@@ -100,7 +101,7 @@
 
                                                         </v-col>
 
-                                                        <v-col cols="12" sm="2" md="1">
+                                                        <v-col cols="12" sm="2" md="2">
                                                             <v-text-field dense color="indigo" outlined
                                                                 v-model="numeroQuarto"
                                                                 class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
@@ -130,7 +131,7 @@
 
 
                                                     <v-divider></v-divider>
-                                                    <v-row><v-col cols="12" sm="6" md="7">
+                                                    <v-row><v-col cols="12" sm="6" md="6">
                                                             <span class="text-h6">Número de banheiros</span><br />
                                                             <span class="subtitle">Incluindo suítes</span>
 
@@ -147,7 +148,7 @@
 
                                                         </v-col>
 
-                                                        <v-col cols="12" sm="2" md="1">
+                                                        <v-col cols="12" sm="2" md="2">
                                                             <v-text-field dense color="indigo" outlined
                                                                 v-model="numeroBanheiro"
                                                                 class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
@@ -175,7 +176,7 @@
                                                     <v-divider></v-divider>
 
                                                     <v-divider></v-divider>
-                                                    <v-row><v-col cols="12" sm="6" md="7">
+                                                    <v-row><v-col cols="12" sm="6" md="6">
                                                             <span class="text-h6">Número de garagens</span><br />
                                                             <span class="subtitle">Vagas para Carros(Opcional)</span>
 
@@ -192,7 +193,7 @@
 
                                                         </v-col>
 
-                                                        <v-col cols="12" sm="2" md="1">
+                                                        <v-col cols="12" sm="2" md="2">
                                                             <v-text-field dense color="indigo" outlined
                                                                 v-model="numeroGaragem"
                                                                 class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
@@ -218,7 +219,7 @@
                                                     </v-row>
                                                     <v-divider></v-divider>
                                                     <v-divider></v-divider>
-                                                    <v-row><v-col cols="12" sm="6" md="7">
+                                                    <v-row><v-col cols="12" sm="6" md="6">
                                                             <span class="text-h6">Andar do imóvel</span><br />
                                                             <span class="subtitle">Opcional </span>
 
@@ -236,7 +237,7 @@
 
                                                         </v-col>
 
-                                                        <v-col cols="12" sm="2" md="1">
+                                                        <v-col cols="12" sm="2" md="2">
                                                             <v-text-field dense color="indigo" outlined
                                                                 v-model="numeroAndar"
                                                                 class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
@@ -318,19 +319,19 @@
                                                     <v-divider></v-divider>
                                                     <v-row>
                                                         <v-col cols="12" md="12">
-                                                            <v-text-field v-model="condominio.designacao"
+                                                            <v-text-field v-model="condominio.designacao" dense
                                                                 label="Localização**" outlined type="gps">
 
                                                             </v-text-field>
                                                         </v-col>
                                                         <v-col cols="12" md="4">
-                                                            <v-autocomplete v-model="condominio.designacao"
+                                                            <v-autocomplete v-model="condominio.designacao" dense
                                                                 label="Provincia**" outlined>
 
                                                             </v-autocomplete>
                                                         </v-col>
                                                         <v-col cols="12" md="4">
-                                                            <v-text-field v-model="condominio.designacao" label="Cidades*"
+                                                            <v-text-field v-model="condominio.designacao" label="Cidades*" dense
                                                                 outlined>
 
                                                             </v-text-field>
@@ -627,7 +628,7 @@
                                     </v-stepper-content>
                                 </v-stepper-items>
                             </v-col>
-                            <v-col md="3"></v-col>
+                            <v-col sm="1" md="2" lg="2"></v-col>
                         </v-row>
 
                     </v-stepper>

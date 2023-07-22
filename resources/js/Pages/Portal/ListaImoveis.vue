@@ -1,12 +1,10 @@
 <template>
     <PortalLayout>
 
-        <template>
-
-            <v-card-title class="text-h4">
-                <v-row class="my-content">
-                    <v-col sm="4" md="1"></v-col>
-                    <v-col cols="12" sm="4" md="2">
+          
+                <v-row >
+                    <v-col sm="1" md="1"></v-col>
+                    <v-col cols="3">
                         <v-row class="mx-0 mt-0">
                             <v-card elevation="0" class="mt-3 transparent px-0" :style="'border-radius: 10px'">
                                 <v-card-title class="deep-purple--text">O que estás a procura</v-card-title>
@@ -66,21 +64,13 @@
                                             outlined>
                                         </v-text-field>
                                     </v-col>
-                                    <!-- <v-col>
-                                        <v-col cols="12" class="pt-2 ">
-                                            <v-container fluid>
-                                                <v-checkbox v-model="selected" label="John" value="John"></v-checkbox>
-                                                <v-checkbox v-model="selected" label="Jacob" value="Jacob"></v-checkbox>
-                                            </v-container>
-                                        </v-col>
-                                    </v-col> -->
+
                                 </v-card-text>
                             </v-card>
                         </v-row>
                     </v-col>
 
-                    <v-col cols="12" sm="8" md="8">
-                        <template>
+                    <v-col cols="7" sm="7" md="7">
                             <template>
                                 <v-card class="ma-4 pa-4  grey lighten-2 " elevation="0" >
                                     <v-card-title>
@@ -122,40 +112,7 @@
                                                                 > -->
                                     <v-hover v-slot="{ hover }" >
                                         <v-card class="ma-4 pa-0" :elevation="hover ? 6 : 0" @click.stop="findimoveis(item.id)">
-                                            <!-- <v-list-item-avatar>
-                                                    <v-img
-                                                        src="/img/avatar.jpg"
-                                                        v-if="
-                                                            !item.user
-                                                                .funcionario
-                                                        "
-                                                    ></v-img>
-
-                                                    <v-img
-                                                        src="/img/avatar.jpg"
-                                                        v-else-if="
-                                                            !item.user
-                                                                .funcionario
-                                                                .empresa
-                                                                .logotipo_da_empresa
-                                                        "
-                                                    ></v-img>
-
-                                                    <v-img
-                                                        :src="
-                                                            '/storage/' +
-                                                            item.user
-                                                                .funcionario
-                                                                .empresa
-                                                                .logotipo_da_empresa
-                                                        "
-                                                        v-else
-                                                    ></v-img>
-                                                </v-list-item-avatar> -->
-                                                
-                                                                
-                                                               
-                                            <template>
+                                    <template>
                                                 <!--   <card> -->
                                                 <v-list-item-content>
                                                     <v-row >
@@ -326,17 +283,9 @@
                                 <!-- </inertia-link> -->
                                 </template>
                             </template>
-                            <template>
-                                <div class="text-h6">
-                                    Nenhum Dado Encontrado!!
-                                </div>
-                            </template>
-                        </template>
+                        
 
-                        <div class="text-center">
-                            <v-pagination v-model="page" :length="last_page" :total-visible="7" @input="paginacao(page)"
-                                color="grey"></v-pagination>
-                        </div>
+                      
 
                         <!-- <v-row class="fill-height" align-content="center" justify="center" >
                             <v-col class="text-subtitle-1 text-center" cols="12">
@@ -347,11 +296,9 @@
                             </v-col>
                         </v-row> -->
                     </v-col>
-<v-col sm="4" md="1"></v-col>
+<v-col cols="1" sm="1" md="1"></v-col>
                 </v-row>
-            </v-card-title>
-
-        </template>
+           
     </PortalLayout>
 </template>
 <script>

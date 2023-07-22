@@ -28,8 +28,8 @@
 
                     </perfil>
                     <perfil v-if="this.linhaSelecionado==='linha2'">
-
                     </perfil>
+                    <perfil-cliente v-if="this.linhaSelecionado==='linha3'"></perfil-cliente>
                 </v-col>
             </v-row>
             <v-dialog v-if="dialogNovoCadastro" v-model="dialogNovoCadastro" persistent max-width="900px">
@@ -151,12 +151,13 @@
 <script>
 import AdminLayout from "../../../Templates/AdminLayout";
 import Perfil from "../Clientes/Perfil";
+import PerfilCliente from "../Clientes/PerfilCliente";
 export default {
     props: ["generos"],
     components: {
         AdminLayout,
         Perfil,
-        
+        PerfilCliente,
     },
     data: () => ({
         items: [
@@ -215,7 +216,7 @@ meuPerfil(){
 },
 selectItem(item) {
       this.linhaSelecionado = item;
-      alert(item)
+    //   alert(item)
     },
         continuar(stepe, form) {
             if (this.$refs[form].validate()) {

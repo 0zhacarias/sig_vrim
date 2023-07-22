@@ -125,8 +125,8 @@
                     <v-divider></v-divider>
                     <v-card-text>
                         {{ new Date().getFullYear() }}-
-                        <strong>SIGIM-
-                            <span class="font-weight-light">(Sistema de Gestão de Imóveis)</span>
+                        <strong>SIG-VIM
+                            <span class="font-weight-light">(Sistema de Gestão de Venda e de Imóveis)</span>
                         </strong>
                     </v-card-text>
                 </v-card>

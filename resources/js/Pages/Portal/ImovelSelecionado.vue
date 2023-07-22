@@ -36,11 +36,9 @@
                                 <v-chip><span class="mdi mdi-faucet-variant"></span> Banheiros</v-chip>
 
                                 <v-chip>
-                                    <span class="mdi mdi-bed-double"></span>{{
-}}</v-chip>
+                                    <span class="mdi mdi-bed-double"></span>{{ }}</v-chip>
                                 <v-chip>
-                                    <span class="mdi mdi-timer-lock-outline" title="data do contrato"></span>{{
-}} </v-chip>
+                                    <span class="mdi mdi-timer-lock-outline" title="data do contrato"></span>{{ }} </v-chip>
                             </v-chip-group>
                             <v-divider></v-divider>
                         </v-card-text>
@@ -55,23 +53,27 @@
                             <v-row>
 
                                 <v-col cols="12" sm="4" md="4">
-                                    <span class="text-caption">Área de serviço</span><br/>
-                                    <span class="text-caption">Churrasqueira</span><br/>
-                                    <span class="text-caption">Elevador</span><br/>
+                                    <span class="text-caption">Área de serviço</span><br />
+                                    <span class="text-caption">Churrasqueira</span><br />
+                                    <span class="text-caption">Elevador</span><br />
                                     <span class="text-caption">Interfone</span>
                                 </v-col>
                                 <v-col sm="4" md="4">
-                                    <span class="text-caption">Piscina</span><br/>
-                                    <span class="text-caption">Quadra poliesportiva</span><br/>
-                                    <span class="text-caption">Sauna</span><br/>
-                                    <span class="text-caption">Varanda gourmet</span><br/>
+                                    <span class="text-caption">Piscina</span><br />
+                                    <span class="text-caption">Quadra poliesportiva</span><br />
+                                    <span class="text-caption">Sauna</span><br />
+                                    <span class="text-caption">Varanda gourmet</span><br />
                                     <!-- <p>Interfone</p> -->
                                 </v-col>
                                 <v-col sm="4" md="4">
-                                        <span class="text-caption">Piscina</span><span class="mdi mdi-check-circle-outline"></span><br/>
-                                        <span class="text-caption">Quadra poliesportiva</span><span class="mdi mdi-check-circle-outline"></span><br/>
-                                        <span class="text-caption">Cozinha equipada </span><span class="mdi mdi-check-circle-outline"></span><br/>
-                                        <span class="text-caption">Despesas incluídas (água, luz, gás e internet) </span><span class="mdi mdi-check-circle-outline"></span>
+                                    <span class="text-caption">Piscina</span><span
+                                        class="mdi mdi-check-circle-outline"></span><br />
+                                    <span class="text-caption">Quadra poliesportiva</span><span
+                                        class="mdi mdi-check-circle-outline"></span><br />
+                                    <span class="text-caption">Cozinha equipada </span><span
+                                        class="mdi mdi-check-circle-outline"></span><br />
+                                    <span class="text-caption">Despesas incluídas (água, luz, gás e internet) </span><span
+                                        class="mdi mdi-check-circle-outline"></span>
                                     <!-- <p>Interfone</p> -->
                                 </v-col>
 
@@ -93,20 +95,22 @@
                             Notas:
                             <p class="text-justify">
                                 *Se for consultor imobiliário, este imóvel está disponível para partilha de negócio.
-                                Apresente aos
-                                seus
-                                clientes compradores e agende a sua visita.
-                            </p >
+                                Apresente aos seus clientes compradores e agende a sua visita.
+                            </p>
                             *Para maior facilidade na identificação deste imóvel refira, por favor, o respetivo ID.
                         </v-card-subtitle>
 
                     </template>
+                    <v-spacer></v-spacer>
+                    <v-btn align="center" justify="center" color="#4527A0" dense outlined> Proceguir</v-btn>
+
                 </v-col>
             </v-row>
 
         </v-container>
     </PortalLayout>
 </template>
+
 <script>
 import PortalLayout from "../../Templates/PortalLayout.vue";
 export default {
@@ -176,8 +180,6 @@ export default {
             }
         },
 
-
-
         filtrarTicket() {
             axios
                 .get("/tickets/filtrar-ticket", {
@@ -203,11 +205,11 @@ export default {
     },
 };
 </script>
+
 <style scoped>
 .custom-autocomplete .v-input__control {
     background-color: #ff0000;
     /* Substitua pelo código de cor desejado */
     color: #ffffff;
     /* Substitua pelo código de cor desejado */
-}
-</style>
+}</style>

@@ -8,7 +8,7 @@
 
                     <v-card align="center" justify="center" elevation="0" class="w-50">
 
-                        <v-card-text class="text-h3"> SIGIM</v-card-text>
+                        <v-card-text class="text-h3"> SIG-VIM</v-card-text>
                         <v-card-text fluid class="justify-center">
                             <v-form v-model="isValid">
                                 <v-row class="justify-center">
@@ -85,7 +85,7 @@
                     <v-container>
                         <v-row class="alinnharcentro white--text ">
                             <v-card-text>
-                                <p class="text-h1 font-weight-bold p-0 m-0">SIGIM</p>
+                                <p class="text-h1 font-weight-bold p-0 m-0">SIG-VIM</p>
                                 <p class="subtitle pb-5 m-0">Sistema de Gestão de Imóbiliaria (Kubicos)</p>
                                 <p class="text-h5">Aumente sua receita com o nosso sistema</p>
                                 <p>O ZAP+Fin é a plataforma de financiamento imobiliário que <br />oferece crédito ao seu

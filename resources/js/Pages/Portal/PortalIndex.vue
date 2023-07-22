@@ -40,13 +40,13 @@
                     <v-col cols="12" sm="5" md="5" :style="' white-space:nowrap; padding:0; '">
 
 
-                        <v-card-text>
+                        <!-- <v-card-text>
                             <v-img gradient="to top right, rgba(255,115,201,.1), rgba(25,32,72,.7)"
                                 :style="'white-space:nowrap; padding:0;max-width: 100%;height:55vh; position:relative;top:50px;left:-5px; ; border-radius: 0 80px 0px 60px;'"
                                 src="/img/jason-briscoe.jpg" >
                                 </v-img>
                             <div class="bottom-gradient"></div>
-                        </v-card-text>
+                        </v-card-text> -->
                     </v-col>
                     <v-col cols="12" sm="7" md="5">
                         <v-card-text class="white--text" :style="'justify-content: center; padding-top:9rem'">

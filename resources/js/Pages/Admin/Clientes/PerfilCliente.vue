@@ -1,7 +1,7 @@
 <template>
     <AdminLayout>
         <v-container>
-            <v-col v-if="!loading" cols="12" style="margin-top: 150px">
+            <v-col v-if="!loading" cols="12" style="margin-top: 10px">
                 <div class="text-center">
                     <v-progress-circular
                         color="primary"
@@ -23,13 +23,13 @@
                             />
                             <v-spacer />
                             <div>
-                                <!-- <v-btn class="mx-2" fab dark large color="purple">
+                                <v-btn class="mx-2" fab dark large color="purple">
                   <v-icon dark> mdi-plus </v-icon>
                 </v-btn>
                 <v-btn class="mx-2" fab dark large color="purple">
                   <v-icon dark> mdi-plus </v-icon>
                 </v-btn>
-                 -->
+                
                             </div>
                             <!-- <v-divider class="mt-0" color="primary" /> -->
                         </v-row>
@@ -65,7 +65,7 @@
                         <v-icon dark> mdi-plus </v-icon>
                     </v-btn>
                 </div>
-                <!-- <v-btn
+                <v-btn
                     color="primary"
                     fab
                     large
@@ -75,7 +75,7 @@
                     class="v-btn--example"
                 >
                     <v-icon>mdi-plus</v-icon>
-                </v-btn> -->
+                </v-btn>
             </section>
 
             <v-dialog
@@ -272,7 +272,7 @@ export default {
         this.loading = true;
         setTimeout(function () {
             this.loading = false;
-        }, 4000);
+        }, 2000);
         // alert(this.condominios);
     },
     computed: {
