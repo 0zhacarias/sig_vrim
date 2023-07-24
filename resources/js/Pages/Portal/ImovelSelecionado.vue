@@ -24,7 +24,7 @@
                     <template>
                         <v-card-text class="text-h5 ">
                             <v-card-title> Casas de Condomínio à Vend/MA/Casas de Condomínio à venda em Paço do
-                                Lumiar/Pindaí/Avenida Doihara</v-card-title>
+                                Lumiar/Pindaí/Avenida Doihara {{ this.imovel }}</v-card-title>
                             <v-card-text class="my-0 py-0">Localização:sdsad</v-card-text>
                             <v-card-title class="my-0 py-0">Valor:144</v-card-title>
 
@@ -99,14 +99,126 @@
                             </p>
                             *Para maior facilidade na identificação deste imóvel refira, por favor, o respetivo ID.
                         </v-card-subtitle>
-
+                        <v-card-actions>
+                             <inertia-link class="ml-auto"
+                                                                    :href="`/portal/Solicitar-visita/${this.imovel.id}` "
+                                                                >
+                                                                
+                <v-btn  color="#4527A0" dense outlined> Solicitar visita</v-btn>
+            </inertia-link>
+            </v-card-actions>
                     </template>
-                    <v-spacer></v-spacer>
-                    <v-btn align="center" justify="center" color="#4527A0" dense outlined> Proceguir</v-btn>
-
                 </v-col>
+                
             </v-row>
-
+            
+            <template>
+  <v-row justify="space-around">
+    <v-col cols="auto">
+      <v-dialog
+        transition="dialog-bottom-transition"
+        max-width="600"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="primary"
+            v-bind="attrs"
+            v-on="on"
+          >From the bottom</v-btn>
+        </template>
+        <template v-slot:default="dialog">
+          <v-card>
+            <v-toolbar
+              color="primary"
+              dark
+            >Opening from the bottom</v-toolbar>
+            <v-card-text>
+              <div class="text-h2 pa-12">Hello world!</div>
+            </v-card-text>
+            <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col
+                cols="12"
+                sm="6"
+                md="4"
+              >
+                <v-text-field
+                  label="Legal first name*"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+                md="4"
+              >
+                <v-text-field
+                  label="Legal middle name"
+                  hint="example of helper text only on focus"
+                ></v-text-field>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+                md="4"
+              >
+                <v-text-field
+                  label="Legal last name*"
+                  hint="example of persistent helper text"
+                  persistent-hint
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  label="Email*"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  label="Password*"
+                  type="password"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+              >
+                <v-select
+                  :items="['0-17', '18-29', '30-54', '54+']"
+                  label="Age*"
+                  required
+                ></v-select>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+              >
+                <v-autocomplete
+                  :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
+                  label="Interests"
+                  multiple
+                ></v-autocomplete>
+              </v-col>
+            </v-row>
+          </v-container>
+          <small>*indicates required field</small>
+        </v-card-text>
+            <v-card-actions class="justify-end">
+              <v-btn
+                text
+                @click="dialog.value = false"
+              >Close</v-btn>
+            </v-card-actions>
+          </v-card>
+        </template>
+      </v-dialog>
+    </v-col>
+  </v-row>
+</template>
         </v-container>
     </PortalLayout>
 </template>
@@ -114,11 +226,12 @@
 <script>
 import PortalLayout from "../../Templates/PortalLayout.vue";
 export default {
+    props: ["imovel"],
     components: {
         PortalLayout,
     },
     data: () => ({
-
+     
         colors: [
             'indigo',
             'warning',

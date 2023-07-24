@@ -39,7 +39,7 @@ Route::resource('/venda-arendamento',App\Http\Controllers\VendaController::class
 Route::resource('/Solicitar-venda',App\Http\Controllers\VendaController::class);
 Route::resource('/Solicitar-arrendamento',App\Http\Controllers\ArrendamentoController::class);
 Route::resource('/Pagamento',App\Http\Controllers\PagamentoController::class);
-Route::post('/Solicitar-visita',[App\Http\Controllers\ImoveisController::class,'solicitar_visita']);
+Route::get('/Solicitar-visita/{id}',[App\Http\Controllers\ImoveisController::class,'solicitar_visita']);
 Route::get('/imovel-selecionado/{id}',[App\Http\Controllers\ImoveisController::class,'imovel_selecionado']);
 Route::get('/listaImoveisCompras',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_comprar'])->name('comprarimoveis');
 Route::get('/listaImoveisArrendamentos',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_arrendamento'])->name('comprarimoveis');

@@ -98,7 +98,8 @@ class ImoveisController extends Controller
     public function imovel_selecionado($id)
     {
         $id = base64_decode(base64_decode(base64_decode($id)));
-        $data['id']=Imoveis::find($id);
+        $data['imovel']=Imoveis::find($id);
+        // dd($data['id_imovel']);
         return Inertia::render('Portal/ImovelSelecionado',$data);
         // dd();
     }
@@ -107,5 +108,9 @@ class ImoveisController extends Controller
     {
         $imoveis = Imoveis::paginate(10);
         return response()->json($imoveis);
+    }
+    public function solicitar_visita($id)
+    {
+        return Inertia::render('Admin/Clientes/SolicitarVisista');
     }
 }
