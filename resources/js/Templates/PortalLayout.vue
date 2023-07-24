@@ -44,7 +44,7 @@
             <v-toolbar flat class="header1 elevation-0 py-0" color="deep-purple darken-3 ">
                 <v-toolbar-title ><a href="/" style="text-decoration: none"><v-avatar size="40" color="deep-purple darken-3"><v-icon
                                 color="white" large>home</v-icon></v-avatar>
-                      <span class="white--text">  SIGIM</span>
+                      <span class="white--text">  SIG-VAI</span>
                     </a>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
@@ -108,8 +108,8 @@
             <v-footer padless>
                 <v-card flat class="text-center">
                     <v-card-text>
-                        <v-btn v-for="icon in icons" :key="icon" class="mx-4" icon>
-                            <v-icon size="24px">{{ icon }}</v-icon>
+                        <v-btn  v-for="icon in icons" :key="icon" class="mx-4" icon>
+                            <v-icon color="#6A1B9A" size="24px">{{ icon }}</v-icon>
                         </v-btn>
                     </v-card-text>
                     <v-card-text class="pt-0">Desde 2017 o pais enfrenta uma crise economica, em consequencia disso as
@@ -125,8 +125,8 @@
                     <v-divider></v-divider>
                     <v-card-text>
                         {{ new Date().getFullYear() }}-
-                        <strong>SIG-VIM
-                            <span class="font-weight-light">(Sistema de Gestão de Venda e de Imóveis)</span>
+                        <strong>SIG-VAI
+                            <span class="font-weight-light">(Sistema de Gestão de Venda e Arrendamento de Imóveis)</span>
                         </strong>
                     </v-card-text>
                 </v-card>

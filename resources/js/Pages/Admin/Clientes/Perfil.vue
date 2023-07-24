@@ -1,9 +1,11 @@
 <template>
-    <AdminLayout>
-        <v-container>
+  <v-app>
+        
       <v-subheader>Meu Prefil</v-subheader>
-        </v-container>
-    </AdminLayout>
+      <v-row>
+
+      </v-row>
+    </v-app>
 </template>
 
 <script>
@@ -119,3 +121,6 @@ export default {
     },
 };
 </script>
+<style>
+@import "vuetify/dist/vuetify.min.css";
+</style>

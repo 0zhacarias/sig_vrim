@@ -1,272 +1,97 @@
 <template>
-    <AdminLayout>
-        <v-container>
-            <v-col v-if="!loading" cols="12" style="margin-top: 10px">
-                <div class="text-center">
-                    <v-progress-circular
-                        color="primary"
-                        indeterminate
-                        size="80"
-                    />
-                </div>
-            </v-col>
+      <v-app>
+       <v-subheader>Meus Imoveis solicitados</v-subheader>
+<v-row>
+       <v-col v-for="item in clientes" :key="item.id" cols="12" sm="6" md="4" 
+                        :lg="clientes.length <= 3 ? 6 : 4" >
+                        <v-hover v-slot="{ hover }">
 
-            <section v-if="loading">
-                <v-card>
-                    <v-container>
-                        <v-row>
-                            <!-- <v-col cols="12" sm="2" md="4"> </v-col>
-                            <v-col cols="12" sm="2" md="4"> </v-col> -->
-                            <v-breadcrumbs
-                                class="text-uppercase font-weight-bolder"
-                                :items="items"
-                            />
-                            <v-spacer />
-                            <div>
-                                <v-btn class="mx-2" fab dark large color="purple">
-                  <v-icon dark> mdi-plus </v-icon>
-                </v-btn>
-                <v-btn class="mx-2" fab dark large color="purple">
-                  <v-icon dark> mdi-plus </v-icon>
-                </v-btn>
-                
-                            </div>
-                            <!-- <v-divider class="mt-0" color="primary" /> -->
-                        </v-row>
-                    </v-container>
-                </v-card>
-                <v-divider></v-divider>
-                <v-card>
-                    <v-container>
-                        <v-row>
-                            <v-col cols="12" sm="2" md="12">
-                                <p
-                                    v-for="condominio in condominios"
-                                    :key="condominio.id"
-                                >
-                                    {{ condominio.designacao }} |
-                                    {{ condominio.localizacao }}
-                                </p>
-                            </v-col>
-                        </v-row>
-                    </v-container>
-                </v-card>
-                <div class="text-right mt-4">
-                    <v-btn
-                        class="mx-2"
-                        fab
-                        dark
-                        large
-                        bottom
-                        color="#4649FF"
-                        @click="showDialogAddCondominio()"
-                        title="Reigstrar Novo Morador"
-                    >
-                        <v-icon dark> mdi-plus </v-icon>
-                    </v-btn>
-                </div>
-                <v-btn
-                    color="primary"
-                    fab
-                    large
-                    dark
-                    bottom
-                    right
-                    class="v-btn--example"
-                >
-                    <v-icon>mdi-plus</v-icon>
-                </v-btn>
-            </section>
+                            <v-card :loading="!loading" class=" elevation-10 pa-2 ma-3 border"  
+                                :elevation="hover ? 10 : 0">
+                                <!-- <v-img height="150" src="/img/pexels-dids-2969915.jpg"></v-img> -->
 
-            <v-dialog
-                name="dialog-add-new-condominio"
-                v-if="dialogAddCondominio"
-                v-model="dialogAddCondominio"
-                persistent
-                max-width="900px"
-            >
-                <v-card>
-                    <v-card-title class="text-h5 grey lighten-2">
-                        <span class="text-h5"> {{ formTitle }}</span>
-                        <v-spacer></v-spacer>
-                        <v-toolbar-items>
-                            <v-btn dark text class="text-h5" @click="close()">
-                                <v-icon color="red">close</v-icon>
-                            </v-btn>
-                        </v-toolbar-items>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-container>
-                            <v-stepper flat v-model="e1">
-                                <v-stepper-header>
-                                    <v-stepper-step
-                                        class="text-uppercase"
-                                        :complete="e1 > 1"
-                                        step="1"
-                                        >Dados Pessoais</v-stepper-step
-                                    >
+                                <v-card-title>¨{{ item.title }}</v-card-title>
 
-                                    <v-divider></v-divider>
+                                <v-card-text>
+                                    <!-- <v-row align="center" class="mx-0">
+                                        <v-rating :value="4.5" color="amber" dense half-increments readonly
+                                            size="14"></v-rating>
+                                    </v-row> -->
 
-                                    <v-stepper-step
-                                        class="text-uppercase"
-                                        step="2"
-                                        >Localização</v-stepper-step
-                                    >
-                                </v-stepper-header>
+                                    <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus
+                                        patio seating.
+                                    </div>
+                                </v-card-text>
 
-                                <v-stepper-items flat>
-                                    <v-stepper-content step="1">
-                                        <v-card class="mb-12" flat>
-                                            <v-form ref="form" lazy-validation>
-                                                <v-container>
-                                                    <v-row dense>
-                                                        <v-col
-                                                            cols="12"
-                                                            md="12"
-                                                        >
-                                                            <v-text-field
-                                                                label="Nome do Condominio*"
-                                                                :rules="[
-                                                                    rules.required,
-                                                                ]"
-                                                                v-model="
-                                                                    condominio.designacao
-                                                                "
-                                                            ></v-text-field>
-                                                        </v-col>
-                                                    </v-row>
-                                                </v-container>
-                                            </v-form>
-                                        </v-card>
-                                        <v-card-actions>
-                                            <v-spacer />
-                                            <v-btn
-                                                color="primary"
-                                                @click="continuar(2, 'form')"
-                                            >
-                                                Continuar
-                                            </v-btn>
-                                        </v-card-actions>
-                                    </v-stepper-content>
+                                <v-divider class="mx-4"></v-divider>
 
-                                    <v-stepper-content step="2">
-                                        <v-card flat>
-                                            <v-form ref="form2" lazy-validation>
-                                                <v-container>
-                                                    <v-row dense>
-                                                        <v-col
-                                                            cols="12"
-                                                            md="12"
-                                                        >
-                                                            <v-text-field
-                                                                label="Localização do Condominio*"
-                                                                :rules="[
-                                                                    rules.required,
-                                                                ]"
-                                                                v-model="
-                                                                    condominio.localizacao
-                                                                "
-                                                            ></v-text-field>
-                                                        </v-col>
-                                                    </v-row>
-                                                    <v-col cols="12" md="12">
-                                                        <v-text-field
-                                                            label="Contactos do Condominio*"
-                                                            :rules="[
-                                                                rules.required,
-                                                            ]"
-                                                            v-model="
-                                                                condominio.contactos
-                                                            "
-                                                        ></v-text-field>
-                                                    </v-col>
-                                                </v-container>
-                                            </v-form>
-                                        </v-card>
+                                <v-card-title>Tonight's availability</v-card-title>
 
-                                        <v-card-actions>
-                                            <v-btn
-                                                color="warning"
-                                                @click="e1 = 1"
-                                                >Voltar</v-btn
-                                            >
+                                <v-card-text>
+                                    <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
+                                        column>
+                                        <v-chip><span class="mdi mdi-car"></span>5</v-chip>
 
-                                            <v-spacer />
-                                            <v-btn
-                                                class="bg-primary darken-4 white--text"
-                                                @click="setNovoCondominio()"
-                                            >
-                                                {{
-                                                    editedIndex > -1
-                                                        ? "Actualizar"
-                                                        : "Guardar"
-                                                }}
-                                            </v-btn>
-                                        </v-card-actions>
-                                    </v-stepper-content>
-                                </v-stepper-items>
-                            </v-stepper>
-                        </v-container>
-                    </v-card-text>
-                </v-card>
-            </v-dialog>
-        </v-container>
-    </AdminLayout>
+                                        <v-chip><span class="mdi mdi-faucet-variant"></span>7</v-chip>
+
+                                        <v-chip>
+                                            <span class="mdi mdi-bed-double"></span>8</v-chip>
+                                    </v-chip-group>
+                                </v-card-text>
+
+                                <v-card-actions class="justify-end">
+                                    <v-btn  color="deep-purple lighten-2" outlined rounded>
+Gostei
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-hover>
+                    </v-col>
+                </v-row>
+</v-app>
 </template>
 
 <script>
 import AdminLayout from "../../../Templates/AdminLayout";
 export default {
+    
     props: ["condominios"],
     components: {
-        AdminLayout,
+        AdminLayout
     },
     data: () => ({
         loading: null,
         condominio: {},
-        items: [
+        clientes: [
             {
-                text: "Início",
-                disabled: false,
-                href: "/home",
+                id: 1,
+                title: "Casa 1",
+                subtitle: "Localização 1",
+                src: "https://cdn.quasar.dev/img/parallax2.jpg",
             },
             {
-                text: "Listar Condomínios",
-                disabled: true,
-                href: "/",
+                id: 2,
+                title: "Residencial T4",
+                subtitle: "Localização 2",
+                src: "https://cdn.quasar.dev/img/parallax2.jpg",
+            },
+            {
+                id: 3,
+                title: "Resincia em contrução 3",
+                subtitle: "LOCALIZAÇÃO 3",
+                src: "https://cdn.quasar.dev/img/parallax2.jpg",
+            },
+            {
+                id: 4,
+                title: "CLIENTE 3",
+                subtitle: "LOCALIZAÇÃO 3",
+                // description:
+                //     "Aliquam albucius mei ei, debitis torquatos et pro, eos natum scribentur no. Putant verear constituto te qui. Adolescens persequeris vim ei. Vel nullam reprimique te.",
+                src: "https://cdn.quasar.dev/img/parallax2.jpg",
             },
         ],
-        e1: 1,
-        steps: 3,
-        editedIndex: -1,
-        dialogAddCondominio: false,
-        morador: {},
-        erros: [],
-        rules: {
-            required: (value) => !!value || "Campos obrigatório.",
-            max: (v) => v.length == 9 || "Tem que ter 9 caracteres",
-            emailMatch: () => `The email and password you entered don't match`,
-        },
-        emailRules: [(v) => /.+@.+\..+/.test(v) || "E-mail deve ser válido"],
+           }),
 
-        telefoneRules: [
-            (v) => !!v || "Campo telefone obrigatório.",
-            (v) => (v && v.length == 9) || "Tem que ter 9 caracteres",
-        ],
-
-        documentoRules: [(v) => !!v || "Campo telefone obrigatório."],
-
-        dateNascRules: [
-            (v) => !!v || "Data é Obrigatório",
-            (v) =>
-                v < new Date().toISOString().substr(0, 10) ||
-                "Data de Nascimento deve ser Menor que a Data Actual!",
-            (v) =>
-                new Date().getFullYear() - new Date(v).getFullYear() >= 18 ||
-                "Idade informada é Inferior a 18",
-        ],
-    }),
 
     mounted() {
         this.loading = true;
@@ -350,3 +175,6 @@ export default {
     },
 };
 </script>
+<style>
+@import "vuetify/dist/vuetify.min.css";
+</style>

@@ -8,7 +8,7 @@
                     <v-container>
                     <v-row class="alinnharcentro white--text ">
                             <v-card-text >
-                          <p class="text-h1 font-weight-bold p-0 m-0">SIGIM</p>
+                          <p class="text-h1 font-weight-bold p-0 m-0">SIG-VAI</p>
                           <p class="subtitle pb-5 m-0">Sistema de Gestão de Imóbiliaria (Kubicos)</p>
                           <p class="text-h5">Aumente sua receita com o nosso sistema</p>
                            <p>O ZAP+Fin é a plataforma de financiamento imobiliário que <br/>oferece crédito ao seu cliente de uma maneira fácil e sem burocracia.</p>
@@ -25,15 +25,15 @@
 
                 <v-container class=" alinnharcentro">
 
-                    <v-card align="center" justify="center" elevation="0" class="w-50">
+                    <v-card align="center" justify="center" elevation="0" class="w-75">
 
-                        <v-card-text class="text-h3"> SIGIM</v-card-text>
+                        <v-card-text class="text-h3"> SIG-VAI</v-card-text>
                         <v-card-text fluid class="justify-center">
                             <v-form v-model="isValid">
                                 <v-row class="justify-center">
                                     <v-col cols="12">
                                         <v-text-field :rules="[rules.required]" placeholder="Nome completo*" outlined rounded
-                                            label="Email" name="Nome completo*" v-model="user.nomeCompleto"
+                                            label="Nome completo*" name="Nome completo*" v-model="user.nomeCompleto"
                                             prepend-icon="mdi-account-circle" />
                                     </v-col>
                                     <v-col cols="12">
@@ -81,7 +81,7 @@
                                 </v-row>
                             </v-form>
                         </v-card-text>
-                        <v-card-actions>
+                        <!-- <v-card-actions> -->
                             <!-- <p class="ml-4 pb-6 subtitle">
                                 <a href="/reset-password" class="linkstilo">
                                     Esqueci a minha senha!</a><br />
@@ -89,7 +89,7 @@
                                     Cadastra AQUI!</a>
                             </p> -->
 
-                        </v-card-actions>
+                        <!-- </v-card-actions> -->
                         <div>
                             <v-btn href="" rounded outlined color="deep-purple darken-3">
                                 <a href="/logar" style="text-decoration: none; color: #4527A0; ">

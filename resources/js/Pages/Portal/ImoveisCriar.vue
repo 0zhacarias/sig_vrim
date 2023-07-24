@@ -1,10 +1,10 @@
 <template>
     <PortalLayout>
         <v-card elevation="0">
-            <v-card tile class="text-h5 deep-purple darken-3  white--text ">
+            <!-- <v-card tile class="text-h5 deep-purple darken-3  white--text ">
                 <span class="text-uppercase" style="font-size: 20px">
                     {{ formTitle }}</span>
-            </v-card>
+            </v-card> -->
             <v-card-text>
                 <v-container>
                     <v-stepper flat v-model="e1">
@@ -355,7 +355,7 @@
                                         </v-card>
                                         <v-card-actions>
                                             <v-spacer />
-                                            <v-btn color="primary" @click="continuar(2, 'form')">
+                                            <v-btn color="#6A1B9A" outlined @click="continuar(2, 'form')">
                                                 Continuar
                                             </v-btn>
                                         </v-card-actions>
@@ -517,7 +517,7 @@
                                                         <v-btn color="warning" @click="e1 = 1">Voltar</v-btn>
 
                                                         <v-spacer />
-                                                        <v-btn color="primary" @click="continuar(3, 'form')">
+                                                        <v-btn color="#6A1B9A" outlined @click="continuar(3, 'form')">
                                                             Continuar
                                                         </v-btn>
                                                     </v-card-actions>
@@ -592,7 +592,7 @@
                                             <v-btn color="warning" @click="e1 = 2">Voltar</v-btn>
 
                                             <v-spacer />
-                                            <v-btn color="primary" @click="continuar(4, 'form')">
+                                            <v-btn color="#6A1B9A"  outlined @click="continuar(4, 'form')">
                                                 Continuar
                                             </v-btn>
                                         </v-card-actions>

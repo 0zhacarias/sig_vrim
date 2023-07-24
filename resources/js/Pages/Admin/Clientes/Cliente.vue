@@ -1,151 +1,153 @@
 <template>
-    <AdminLayout>
-           <v-row>
-                <v-col cols="3" sm="2" md="" lg="3">
-                    <v-list subheader two-line flat>
-                        <v-subheader>Meus dados</v-subheader>
-   <template>
-  <v-container>
-    <v-list>
-      <v-list-item :class="{'item-selected': linhaSelecionado === 'linha1'}" @click="selectItem('linha1') " v-model="meudados">
-       Meus Dados
-      </v-list-item>
-      <v-list-item :class="{'item-selected': linhaSelecionado === 'linha2'}" @click="selectItem('linha2')"  v-model="meusAnucios">
-     Meus Anúncios
-      </v-list-item>
-      <v-list-item :class="{'item-selected': linhaSelecionado === 'linha3'}" @click="selectItem('linha3')"  v-model="meusProceso">
-        Imoveis em processo
-      </v-list-item>
-    </v-list>
-  </v-container>
-</template>
-                        
-                    </v-list>
-                </v-col>
-                <v-col sm="8" md="5" lg="5">
-                    
-                    <perfil v-if="this.linhaSelecionado==='linha1'">
+<AdminLayout>
+    <v-row>
+        <v-col cols="4" sm="5" md="" lg="3">
+            <v-list subheader two-line flat>
+                <v-subheader>Meus dados</v-subheader>
+                <template>
+                    <v-container>
+                        <v-list>
+                            <v-list-item :class="{'item-selected': linhaSelecionado === 'linha1'}" @click="selectItem('linha1') " v-model="meudados">
+                                Meus Dados
+                            </v-list-item>
+                            <v-list-item :class="{'item-selected': linhaSelecionado === 'linha2'}" @click="selectItem('linha2')" v-model="meusAnucios">
+                                Meus Anúncios
+                            </v-list-item>
+                            <v-list-item :class="{'item-selected': linhaSelecionado === 'linha3'}" @click="selectItem('linha3')" v-model="meusProceso">
+                                Imoveis em processo
+                            </v-list-item>
+                        </v-list>
+                    </v-container>
+                </template>
 
-                    </perfil>
-                    <perfil v-if="this.linhaSelecionado==='linha2'">
-                    </perfil>
-                    <perfil-cliente v-if="this.linhaSelecionado==='linha3'"></perfil-cliente>
-                </v-col>
-            </v-row>
-            <v-dialog v-if="dialogNovoCadastro" v-model="dialogNovoCadastro" persistent max-width="900px">
-                <v-card>
-                    <v-card-title class="text-h5 grey lighten-2">
-                        <span class="text-h5"> {{ formTitle }}</span>
-                        <v-spacer></v-spacer>
-                        <v-toolbar-items>
-                            <v-btn dark text class="text-h5" @click="close()">
-                                <v-icon color="red">close</v-icon>
-                            </v-btn>
-                        </v-toolbar-items>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-container>
-                            <v-stepper flat v-model="e1">
-                                <v-stepper-header>
-                                    <v-stepper-step :complete="e1 > 1" step="1">Dados Pessoais</v-stepper-step>
+            </v-list>
+        </v-col>
+        <v-col sm="8" md="7" lg="9">
+            dsdssd
+            <v-card>
 
-                                    <v-divider></v-divider>
+                <perfil v-if="this.linhaSelecionado==='linha1'">
+                </perfil>
+            </v-card>
+                <perfil v-if="this.linhaSelecionado==='linha2'">
+                </perfil>
+                <perfil-cliente class="mt-n16" v-if="this.linhaSelecionado==='linha3'">
+                </perfil-cliente>
+            
+        </v-col>
+    </v-row>
+    <!-- <v-dialog v-if="dialogNovoCadastro" v-model="dialogNovoCadastro" persistent max-width="900px">
+        <v-card>
+            <v-card-title class="text-h5 grey lighten-2">
+                <span class="text-h5"> {{ formTitle }}</span>
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                    <v-btn dark text class="text-h5" @click="close()">
+                        <v-icon color="red">close</v-icon>
+                    </v-btn>
+                </v-toolbar-items>
+            </v-card-title>
+            <v-card-text>
+                <v-container>
+                    <v-stepper flat v-model="e1">
+                        <v-stepper-header>
+                            <v-stepper-step :complete="e1 > 1" step="1">Dados Pessoais</v-stepper-step>
 
-                                    <v-stepper-step step="2">Contrato</v-stepper-step>
-                                </v-stepper-header>
+                            <v-divider></v-divider>
 
-                                <v-stepper-items flat>
-                                    <v-stepper-content step="1">
-                                        <v-card class="mb-12" flat>
-                                            <v-form ref="form" lazy-validation>
-                                                <v-container>
-                                                    <v-row dense>
-                                                        <v-col cols="12" md="12">
-                                                            <v-text-field label="Nome completo*" :rules="[
+                            <v-stepper-step step="2">Contrato</v-stepper-step>
+                        </v-stepper-header>
+
+                        <v-stepper-items flat>
+                            <v-stepper-content step="1">
+                                <v-card class="mb-12" flat>
+                                    <v-form ref="form" lazy-validation>
+                                        <v-container>
+                                            <v-row dense>
+                                                <v-col cols="12" md="12">
+                                                    <v-text-field label="Nome completo*" :rules="[
                                                                 rules.required,
                                                             ]" v-model="morador.nome_completo
     "></v-text-field>
-                                                        </v-col>
-                                                        <v-col cols="12" md="6">
-                                                            <v-text-field label="Nome do Pai" v-model="morador.pai
+                                                </v-col>
+                                                <v-col cols="12" md="6">
+                                                    <v-text-field label="Nome do Pai" v-model="morador.pai
                                                                 "></v-text-field>
-                                                        </v-col>
+                                                </v-col>
 
-                                                        <v-col cols="12" md="6">
-                                                            <v-text-field label="Nome da Mãe" v-model="morador.mae
+                                                <v-col cols="12" md="6">
+                                                    <v-text-field label="Nome da Mãe" v-model="morador.mae
                                                                 "></v-text-field>
-                                                        </v-col>
+                                                </v-col>
 
-                                                        <v-col cols="12" md="6">
-                                                            <v-text-field label="Nº do documento" v-model="morador.n_identificacao
+                                                <v-col cols="12" md="6">
+                                                    <v-text-field label="Nº do documento" v-model="morador.n_identificacao
                                                                 " :rules="[
         rules.required,
     ]" :error-messages="erros.n_identificacao
     "></v-text-field>
-                                                        </v-col>
+                                                </v-col>
 
-                                                        <v-col cols="12" md="6">
-                                                            <v-text-field label="Data de emissão" type="date" v-model="morador.data_emissao
+                                                <v-col cols="12" md="6">
+                                                    <v-text-field label="Data de emissão" type="date" v-model="morador.data_emissao
                                                                 "></v-text-field>
-                                                        </v-col>
+                                                </v-col>
 
-                                                        <v-col cols="12" md="6">
-                                                            <v-text-field label="Data de validade" type="date" v-model="morador.data_validade
+                                                <v-col cols="12" md="6">
+                                                    <v-text-field label="Data de validade" type="date" v-model="morador.data_validade
                                                                 "></v-text-field>
-                                                        </v-col>
+                                                </v-col>
 
-                                                        <v-col cols="12" md="6">
-                                                            <v-autocomplete v-model="morador.genero_id
-                                                                " prepend-icon="assignment" label="Generos*"
-                                                                item-value="id" item-text="designacao"
-                                                                :items="generos"></v-autocomplete>
-                                                        </v-col>
-                                                    </v-row>
-                                                </v-container>
-                                            </v-form>
-                                        </v-card>
-                                        <v-card-actions>
-                                            <v-spacer />
-                                            <v-btn color="primary" @click="continuar(2, 'form')">
-                                                Continuar
-                                            </v-btn>
-                                        </v-card-actions>
-                                    </v-stepper-content>
+                                                <v-col cols="12" md="6">
+                                                    <v-autocomplete v-model="morador.genero_id
+                                                                " prepend-icon="assignment" label="Generos*" item-value="id" item-text="designacao" :items="generos"></v-autocomplete>
+                                                </v-col>
+                                            </v-row>
+                                        </v-container>
+                                    </v-form>
+                                </v-card>
+                                <v-card-actions>
+                                    <v-spacer />
+                                    <v-btn color="primary" @click="continuar(2, 'form')">
+                                        Continuar
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-stepper-content>
 
-                                    <v-stepper-content step="2">
-                                        <v-card flat>
-                                            <v-form ref="form2" lazy-validation>
-                                                <v-container>
-                                                    <v-row dense>
-                                                        <v-col cols="12" md="6">
-                                                            <v-text-field label="Data de validade" type="date" v-model="morador.data_validade
+                            <v-stepper-content step="2">
+                                <v-card flat>
+                                    <v-form ref="form2" lazy-validation>
+                                        <v-container>
+                                            <v-row dense>
+                                                <v-col cols="12" md="6">
+                                                    <v-text-field label="Data de validade" type="date" v-model="morador.data_validade
                                                                 "></v-text-field>
-                                                        </v-col>
-                                                    </v-row>
-                                                </v-container>
-                                            </v-form>
-                                        </v-card>
+                                                </v-col>
+                                            </v-row>
+                                        </v-container>
+                                    </v-form>
+                                </v-card>
 
-                                        <v-card-actions>
-                                            <v-btn color="warning" @click="e1 = 1">Voltar</v-btn>
+                                <v-card-actions>
+                                    <v-btn color="warning" @click="e1 = 1">Voltar</v-btn>
 
-                                            <v-spacer />
-                                            <v-btn class="bg-primary darken-4 white--text" @click="save">
-                                                {{
+                                    <v-spacer />
+                                    <v-btn class="bg-primary darken-4 white--text" @click="save">
+                                        {{
                                                     editedIndex > -1
                                                     ? "Actualizar"
                                                     : "Guardar"
                                                 }}
-                                            </v-btn>
-                                        </v-card-actions>
-                                    </v-stepper-content>
-                                </v-stepper-items>
-                            </v-stepper>
-                        </v-container>
-                    </v-card-text>
-                </v-card>
-            </v-dialog>
-    </AdminLayout>
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-stepper-content>
+                        </v-stepper-items>
+                    </v-stepper>
+                </v-container>
+            </v-card-text>
+        </v-card>
+    </v-dialog> -->
+</AdminLayout>
 </template>
 
 <script>
@@ -160,8 +162,7 @@ export default {
         PerfilCliente,
     },
     data: () => ({
-        items: [
-            {
+        items: [{
                 text: "Início",
                 disabled: false,
                 href: "/home",
@@ -177,9 +178,9 @@ export default {
         editedIndex: -1,
         dialogNovoCadastro: false,
         linhaSelecionado: null,
-        meudados:1,
-        meusAnucios:2, 
-        meusProceso:3,
+        meudados: 1,
+        meusAnucios: 2,
+        meusProceso: 3,
     }),
 
     computed: {
@@ -206,18 +207,18 @@ export default {
     },
 
     methods: {
-        initialize() { },
+        initialize() {},
 
         novo_registo() {
             this.dialogNovoCadastro = true;
         },
-meuPerfil(){
-    alert(1);
-},
-selectItem(item) {
-      this.linhaSelecionado = item;
-    //   alert(item)
-    },
+        meuPerfil() {
+            alert(1);
+        },
+        selectItem(item) {
+            this.linhaSelecionado = item;
+            //   alert(item)
+        },
         continuar(stepe, form) {
             if (this.$refs[form].validate()) {
                 this.e1 = stepe;
@@ -248,8 +249,9 @@ selectItem(item) {
     },
 };
 </script>
+
 <style>
 .item-selected {
-  background-color: #885cda;
+    background-color: #885cda;
 }
 </style>
