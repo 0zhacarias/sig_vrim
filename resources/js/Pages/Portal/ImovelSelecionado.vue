@@ -143,7 +143,7 @@
                 sm="6"
                 md="4"
               >
-                <v-text-field
+                <v-text-field outlined
                   label="Legal first name*"
                   required
                 ></v-text-field>
@@ -153,7 +153,7 @@
                 sm="6"
                 md="4"
               >
-                <v-text-field
+                <v-text-field outlined
                   label="Legal middle name"
                   hint="example of helper text only on focus"
                 ></v-text-field>
@@ -177,7 +177,7 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field
+                <v-text-field outlined
                   label="Password*"
                   type="password"
                   required
@@ -197,7 +197,7 @@
                 cols="12"
                 sm="6"
               >
-                <v-autocomplete
+                <v-autocomplete outlined
                   :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
                   label="Interests"
                   multiple
