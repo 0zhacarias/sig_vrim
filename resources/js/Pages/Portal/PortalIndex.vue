@@ -30,15 +30,14 @@
        
        </v-card> -->
         <!--Pesquisar -->
-        <template class="pb-10">
+        <template class="pb-0 ">
 
-            <v-card class="deep-purple darken-3 elevation-0" :style="'border-radius: 0 0px 0px 60px'">
+            <v-toolbar-title class="deep-purple darken-3 elevation-0" :style="'border-radius: 0px 0px 0px 300px'">
                 <!-- <v-card-title>
                  <span class="headline">Título do Card</span> 
                 </v-card-title> -->
                 <v-row class="p-0">
-                    <v-col cols="12" sm="5" md="5" :style="' white-space:nowrap; padding:0; '">
-
+                    <v-col cols="12" sm="5" md="3" :style="' white-space:nowrap; padding:0; '">
 
                         <!-- <v-card-text>
                             <v-img gradient="to top right, rgba(255,115,201,.1), rgba(25,32,72,.7)"
@@ -48,58 +47,64 @@
                             <div class="bottom-gradient"></div>
                         </v-card-text> -->
                     </v-col>
-                    <v-col cols="12" sm="7" md="5">
-                        <v-card-text class="white--text" :style="'justify-content: center; padding-top:9rem'">
+                    <v-col cols="12" sm="7" md="9">
+                        <v-card-text class="white--text" :style="'justify-content: center; padding-top:10rem'">
                             <h1> No Kubico tem. O imóvel que deseja e o que procuras está aqui</h1>
 
                             <p>compra, arrenda ou vende o seu imóvel residencial.</p>
 
-
-                            <v-row>
-                                <v-col cols="12" md="6" align="center"><v-btn :disabled="loading" class="ma-1" color="white"
-                                        text>
+                            <v-row class="px-5">
+                                <v-col cols="12" md="6" align="center">
+                                    <v-btn :disabled="loading" class="ma-1" color="white" text>
                                         Comprar
-                                    </v-btn></v-col>
+                                    </v-btn>
+                                </v-col>
                                 <v-col cols="12" md="6" align="center">
                                     <v-btn :disabled="loading" class="ma-1" color="white" plain>
                                         Arrendar
                                     </v-btn>
                                 </v-col>
                                 <v-col cols="12" md="6" class="opens-sans mb-n8">
-                                    <v-text-field item-text="designacao" item-value="id" prepend-icon="" label="Estado"
-                                        clearable full-width hover solo>
-                                    </v-text-field>
+                                    <v-autocomplete dense item-text="designacao" item-value="id" prepend-icon=""
+                                        label="Localização" clearable full-width hover solo>
+                                    </v-autocomplete>
                                 </v-col>
                                 <v-col cols="12" md="4" class="opens-sans mb-n8">
-                                    <v-autocomplete clearable item-text="designacao" item-value="id" prepend-icon=""
+                                    <v-autocomplete dense clearable item-text="designacao" item-value="id" prepend-icon=""
                                         label="Estado" full-width solo>
                                     </v-autocomplete>
                                 </v-col>
-                                <v-col md="2"><v-btn :disabled="loading" class="ma-1" x-large>
+                                <v-col md="2">
+                                    <v-btn  dense :disabled="loading" class="ma-1" large>
                                         pesquisar
-                                    </v-btn></v-col>
+                                    </v-btn>
+                                </v-col>
                             </v-row>
                         </v-card-text>
 
                     </v-col>
-                   
+
                 </v-row>
-            </v-card>
+            </v-toolbar-title>
         </template>
         <!-- Lançamentos mais recentes -->
         <template>
             <v-container>
                 <v-row no-gutters justify="pt-15" :style="'justify-content: center;'" class="pt-14">
-                    <v-card-title class="Centralizar-linha">Lançamentos mais recentes</v-card-title>
+                    <v-toolbar-title class="deep-purple darken-3">
+                        
+                        <v-card-title class="Centralizar-linha">Lançamentos mais recentes</v-card-title>
+                    </v-toolbar-title>
                     <v-col v-for="item in clientes" :key="item.id" cols="12" sm="12" md="4" class="mx-1"
                         :lg="clientes.length <= 3 ? 6 : 4" :style="'max-width: min-content;'">
                         <v-hover v-slot="{ hover }">
 
                             <v-card :loading="loading" class="mx-auto my-12 elevation-10" max-width="300"
                                 :elevation="hover ? 10 : 0">
-                                <v-img height="150" src="/img/pexels-dids-2969915.jpg"></v-img>
+                                <v-img height="150" src="/img/Aaa.png"></v-img>
 
-                                <v-card-title>Cafe Badilico</v-card-title>
+                                <v-card-title>{{ item.title }}</v-card-title>
+                                <v-card-subtitle class="text--subtitle">{{ item.subtitle }}</v-card-subtitle>
 
                                 <v-card-text>
                                     <v-row align="center" class="mx-0">
@@ -114,17 +119,15 @@
 
                                 <v-divider class="mx-4"></v-divider>
 
-                                <v-card-title>Tonight's availability</v-card-title>
-
                                 <v-card-text>
                                     <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
                                         column>
-                                        <v-chip><span class="mdi mdi-car"></span>5:30PM</v-chip>
+                                        <v-chip><span class="mdi mdi-car"></span>5</v-chip>
 
-                                        <v-chip><span class="mdi mdi-faucet-variant"></span>7:30PM</v-chip>
+                                        <v-chip><span class="mdi mdi-faucet-variant"></span>7:</v-chip>
 
                                         <v-chip>
-                                            <span class="mdi mdi-bed-double"></span>8:00PM</v-chip>
+                                            <span class="mdi mdi-bed-double"></span>8</v-chip>
                                     </v-chip-group>
                                 </v-card-text>
 
@@ -142,9 +145,13 @@
 
         <!-- Lançamentos próximos a você -->
         <template>
+            <v-toolbar-title class="deep-purple darken-3 elevation-0">
+                        
+                        <v-card-title class="Centralizar-linha ">Lançamentos próximos a você</v-card-title>
+                    </v-toolbar-title>
             <v-container>
                 <v-row no-gutters justify="pa-0" :style="'justify-content: center;'">
-                    <v-card-title class="Centralizar-linha ">Lançamentos próximos a você</v-card-title>
+                    <!-- <v-card-title class="Centralizar-linha ">Lançamentos próximos a você</v-card-title> -->
                     <v-col v-for="item in clientes" :key="item.id" cols="12" sm="12" md="4" class="mx-1"
                         :lg="clientes.length <= 3 ? 6 : 4" :style="'max-width: min-content;'">
                         <v-hover v-slot="{ hover }">
@@ -155,16 +162,16 @@
                                     <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
                                 </template>
 
-                                <v-img height="150" src="/img/pexels-nextvoyage.jpg"></v-img>
+                                <v-img height="150" src="/img/images.jpeg"></v-img>
 
-                                <v-card-title>Cafe</v-card-title>
+                                <v-card-title>{{ item.title }}</v-card-title>
 
                                 <v-card-text>
                                     <v-row align="center" class="mx-0">
-                                        <v-rating :value="4.1" color="amber" dense half-increments readonly
+                                        <v-rating :value="6" color="amber" dense half-increments readonly
                                             size="14"></v-rating>
                                     </v-row>
-
+                                    <v-card-subtitle class="text--subtitle">{{ item.subtitle }}</v-card-subtitle>
 
                                     <!-- <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus
                                         patio seating.
@@ -173,16 +180,16 @@
 
                                 <v-divider class="mx-4"></v-divider>
 
-                                <v-card-title>Tonight's availability</v-card-title>
+                                <!-- <v-card-title>Tonight's availability</v-card-title> -->
 
                                 <v-card-text>
                                     <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
                                         column>
-                                        <v-chip>5:30PM</v-chip>
+                                        <v-chip>10</v-chip>
 
-                                        <v-chip>7:30PM</v-chip>
+                                        <v-chip>3</v-chip>
 
-                                        <v-chip>8:00PM</v-chip>
+                                        <v-chip>1</v-chip>
 
                                     </v-chip-group>
                                 </v-card-text>
@@ -196,141 +203,18 @@
                         </v-hover>
                     </v-col>
                 </v-row>
-  </v-container>
+            </v-container>
         </template>
 
         <template>
-            <v-container>
-                <v-divider></v-divider>
-                <v-row no-gutters justify="pa-0" :style="'justify-content: center;'">
-                    <v-card-title class="Centralizar-linha ">Imoveis em zonas Urbanas</v-card-title>
-                    <v-col cols="12" sm="12" md="4" class="mx-3" :style="'flex-basis: min-content;'"
-                        >
-                        <v-hover v-slot="{ hover }">
-
-                            <v-card :loading="loading" class="mx-auto my-12 elevation-10" max-width="350"
-                                :elevation="hover ? 10 : 0">
-                                <template slot="progress">
-                                    <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
-                                </template>
-
-                                <v-img height="150" src="/img/pexels-louis-1240435.jpg"></v-img>
-
-                                <v-card-title>Cafe Badilico</v-card-title>
-
-                                <v-card-text>
-                                    <v-row align="center" class="mx-0">
-                                        <v-rating :value="4.1" color="amber" dense half-increments readonly
-                                            size="14"></v-rating>
-                                    </v-row>
-
-
-                                    <!-- <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus
-                                        patio seating.
-                                    </div> -->
-                                </v-card-text>
-
-                                <v-divider class="mx-4"></v-divider>
-
-                                <v-card-title>Tonight's availability</v-card-title>
-
-                                <v-card-text>
-                                    <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
-                                        column>
-                                        <v-chip>5:30PM</v-chip>
-
-                                        <v-chip>7:30PM</v-chip>
-
-                                        <v-chip>8:00PM</v-chip>
-
-                                    </v-chip-group>
-                                </v-card-text>
-                                <!-- 
-                                <v-card-actions>
-                                    <v-btn color="deep-purple lighten-2" text>
-
-                                    </v-btn>
-                                </v-card-actions> -->
-                            </v-card>
-                        </v-hover>
-                        <span align="center">
-                           <h1>Municipios</h1> 
-                        <p>Luanda</p>
-                        <p>Benguela</p>
-                        <p>Lubito</p>
-                        <p>Benfica</p>
-                        <p>Mutamba</p>
-                        <p>Caxito</p>
-                        <p>Vila de Viana</p>
-                        <p>Talatona</p>
-                    </span>
-                 
-                    </v-col>
-
-                    <v-col cols="12" sm="12" md="4" class="mx-3" :style="'flex-basis: min-content;'"
-                        >
-                        <v-hover v-slot="{ hover }">
-
-                            <v-card :loading="loading" class="mx-auto my-12 elevation-10" max-width="350"
-                                :elevation="hover ? 10 : 0">
-                                <template slot="progress">
-                                    <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
-                                </template>
-
-                                <v-img height="150" src="/img/pexels-nextvoyage.jpg"></v-img>
-
-                                <v-card-title>Cafe Badilico</v-card-title>
-
-                                <v-card-text>
-                                    <v-row align="center" class="mx-0">
-                                        <v-rating :value="4.1" color="amber" dense half-increments readonly
-                                            size="14"></v-rating>
-                                    </v-row>
-
-
-                                    <!-- <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus
-                                        patio seating.
-                                    </div> -->
-                                </v-card-text>
-
-                                <v-divider class="mx-4"></v-divider>
-
-                                <v-card-title>Tonight's availability</v-card-title>
-
-                                <v-card-text>
-                                    <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
-                                        column>
-                                        <v-chip>5:30PM</v-chip>
-
-                                        <v-chip>7:30PM</v-chip>
-
-                                        <v-chip>8:00PM</v-chip>
-
-                                    </v-chip-group>
-                                </v-card-text>
-                                <!-- 
-                                <v-card-actions>
-                                    <v-btn color="deep-purple lighten-2" text>
-
-                                    </v-btn>
-                                </v-card-actions> -->
-                            </v-card>
-                        </v-hover>
-                        <span align="center">
-                           <h1>Municipios</h1> 
-                        <p>Luanda</p>
-                        <p>Benguela</p>
-                        <p>Lubito</p>
-                        <p>Benfica</p>
-                        <p>Mutamba</p>
-                        <p>Caxito</p>
-                        <p>Vila de Viana</p>
-                        <p>Talatona</p>
-                    </span>
-                    </v-col>
+            <v-toolbar-title class="deep-purple darken-3 elevation-0">
                     
-                    <v-col cols="12" sm="12" md="4" class="mx-3" :style="'flex-basis: min-content;'"
-                        >
+                    <v-card-title class="Centralizar-linha ">Imoveis em zonas Urbanas</v-card-title>
+                </v-toolbar-title>
+            <v-container>
+                <v-row no-gutters justify="pa-0" :style="'justify-content: center;'">
+                    <!-- <v-card-title class="Centralizar-linha ">Imoveis em zonas Urbanas</v-card-title> -->
+                    <v-col cols="12" sm="12" md="4" class="mx-3" :style="'flex-basis: min-content;'">
                         <v-hover v-slot="{ hover }">
 
                             <v-card :loading="loading" class="mx-auto my-12 elevation-10" max-width="350"
@@ -339,7 +223,7 @@
                                     <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
                                 </template>
 
-                                <v-img height="150" src="/img/pexels-louis-1240435.jpg"></v-img>
+                                <v-img height="150" src="/img/Aaa.png"></v-img>
 
                                 <v-card-title>Cafe Badilico</v-card-title>
 
@@ -348,7 +232,6 @@
                                         <v-rating :value="4.1" color="amber" dense half-increments readonly
                                             size="14"></v-rating>
                                     </v-row>
-
 
                                     <!-- <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus
                                         patio seating.
@@ -362,11 +245,73 @@
                                 <v-card-text>
                                     <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
                                         column>
-                                        <v-chip>5:30PM</v-chip>
+                                        <v-chip>5</v-chip>
 
-                                        <v-chip>7:30PM</v-chip>
+                                        <v-chip>7</v-chip>
 
-                                        <v-chip>8:00PM</v-chip>
+                                        <v-chip>8</v-chip>
+
+                                    </v-chip-group>
+                                </v-card-text>
+                                <!-- 
+                                <v-card-actions>
+                                    <v-btn color="deep-purple lighten-2" text>
+
+                                    </v-btn>
+                                </v-card-actions> -->
+                            </v-card>
+                        </v-hover>
+                        
+                        <span align="center">
+                            <h1>Municipios</h1>
+                            <p>Luanda</p>
+                            <p>Benguela</p>
+                            <p>Lubito</p>
+                            <p>Benfica</p>
+                            <p>Mutamba</p>
+                            <p>Caxito</p>
+                            <p>Vila de Viana</p>
+                            <p>Talatona</p>
+                        </span>
+
+                    </v-col>
+
+                    <v-col cols="12" sm="12" md="4" class="mx-3" :style="'flex-basis: min-content;'">
+                        <v-hover v-slot="{ hover }">
+
+                            <v-card :loading="loading" class="mx-auto my-12 elevation-10" max-width="350"
+                                :elevation="hover ? 10 : 0">
+                                <template slot="progress">
+                                    <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
+                                </template>
+
+                                <v-img height="150" src="/img/Casas_edit.jpeg"></v-img>
+
+                                <v-card-title>T1</v-card-title>
+
+                                <v-card-text>
+                                    <v-row align="center" class="mx-0">
+                                        <v-rating :value="4.1" color="amber" dense half-increments readonly
+                                            size="14"></v-rating>
+                                    </v-row>
+
+                                    <!-- <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus
+                                        patio seating.
+                                    </div> -->
+                                </v-card-text>
+
+                                <v-divider class="mx-4"></v-divider>
+
+                                <v-card-title>Tonight's availability</v-card-title>
+
+                                <v-card-text>
+                                    <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
+                                        column>
+                                        <v-chip>5</v-chip>
+
+                                        <v-chip>7</v-chip>
+
+                                        <v-chip>8</v-chip>
 
                                     </v-chip-group>
                                 </v-card-text>
@@ -379,25 +324,85 @@
                             </v-card>
                         </v-hover>
                         <span align="center">
-                           <h1>Municipios</h1> 
-                        <p>Luanda</p>
-                        <p>Benguela</p>
-                        <p>Lubito</p>
-                        <p>Benfica</p>
-                        <p>Mutamba</p>
-                        <p>Caxito</p>
-                        <p>Vila de Viana</p>
-                        <p>Talatona</p>
-                    </span>
+                            <h3>Municipios</h3>
+                            <p>Luanda</p>
+                            <p>Benguela</p>
+                            <p>Lubito</p>
+                            <p>Benfica</p>
+                            <p>Mutamba</p>
+                            <p>Caxito</p>
+                            <p>Vila de Viana</p>
+                            <p>Talatona</p>
+                        </span>
+                    </v-col>
+
+                    <v-col cols="12" sm="12" md="4" class="mx-3" :style="'flex-basis: min-content;'">
+                        <v-hover v-slot="{ hover }">
+
+                            <v-card :loading="loading" class="mx-auto my-12 elevation-10" max-width="350"
+                                :elevation="hover ? 10 : 0">
+                                <template slot="progress">
+                                    <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
+                                </template>
+
+                                <v-img height="150" src="/img/Casas_edit.jpeg"></v-img>
+
+                                <v-card-title>T4</v-card-title>
+
+                                <v-card-text>
+                                    <v-row align="center" class="mx-0">
+                                        <v-rating :value="4.1" color="amber" dense half-increments readonly
+                                            size="14"></v-rating>
+                                    </v-row>
+
+                                    <!-- <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus
+                                        patio seating.
+                                    </div> -->
+                                </v-card-text>
+
+                                <v-divider class="mx-4"></v-divider>
+
+                                <v-card-title>Tonight's availability</v-card-title>
+
+                                <v-card-text>
+                                    <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
+                                        column>
+                                        <v-chip>5</v-chip>
+
+                                        <v-chip>7</v-chip>
+
+                                        <v-chip>8</v-chip>
+
+                                    </v-chip-group>
+                                </v-card-text>
+                                <!-- 
+                                <v-card-actions>
+                                    <v-btn color="deep-purple lighten-2" text>
+
+                                    </v-btn>
+                                </v-card-actions> -->
+                            </v-card>
+                        </v-hover>
+                        <span align="center">
+                            <h3>Municipios</h3>
+                            <p>Luanda</p>
+                            <p>Benguela</p>
+                            <p>Lubito</p>
+                            <p>Benfica</p>
+                            <p>Mutamba</p>
+                            <p>Caxito</p>
+                            <p>Vila de Viana</p>
+                            <p>Talatona</p>
+                        </span>
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
-    </v-container>
+            </v-container>
         </template>
-        
+
         <!-- Contactos -->
         <v-template>
-           <v-card outlined class="my-8">
+            <v-card outlined class="my-8">
                 <div class="staticHero">
                     <v-img src="../assets/images/img14.jpg">
                         <v-row align="end" class="lightbox white--text pa-2 fill-height">
@@ -433,6 +438,7 @@
 
     </PortalLayout>
 </template>
+
 <script>
 import PortalLayout from "../../Templates/PortalLayout.vue";
 export default {
@@ -473,59 +479,62 @@ export default {
             // },
         ],
         show: false,
-        clientes: [
-            {
-                id: 1,
-                title: "CLIENTE 1",
-                subtitle: "Localização 1",
-                src: "https://cdn.quasar.dev/img/parallax2.jpg",
-            },
-            {
-                id: 2,
-                title: "CLIENTE 2",
-                subtitle: "Localização 2",
-                src: "https://cdn.quasar.dev/img/parallax2.jpg",
-            },
-            {
-                id: 3,
-                title: "CLIENTE 3",
-                subtitle: "LOCALIZAÇÃO 3",
-                src: "https://cdn.quasar.dev/img/parallax2.jpg",
-            },
-            {
-                id: 4,
-                title: "CLIENTE 3",
-                subtitle: "LOCALIZAÇÃO 3",
-                // description:
-                //     "Aliquam albucius mei ei, debitis torquatos et pro, eos natum scribentur no. Putant verear constituto te qui. Adolescens persequeris vim ei. Vel nullam reprimique te.",
-                src: "https://cdn.quasar.dev/img/parallax2.jpg",
-            },
-            {
-                id: 5,
-                title: "CLIENTE 3",
-                subtitle: "LOCALIZAÇÃO 3",
-                src: "https://cdn.quasar.dev/img/parallax2.jpg",
-            },
+        clientes: [{
+            id: 1,
+            title: "Loft Contemporaneo",
+            subtitle: "Loft contemporâneo com estilo industrial, localizado em um bairro revitalizado. ",
+            src: "https://cdn.quasar.dev/img/parallax2.jpg",
+        },
+        {
+            id: 2,
+            title: "casa colonial T4",
+            subtitle: "Elegante casa colonial, cercada por um exuberante jardim paisagístico. ", 
+            ssrc: "https://cdn.quasar.dev/img/parallax2.jpg",
+        },
+        {
+            id: 3,
+            title: "Apartamento T3",
+            subtitle: "Apartamento compacto e bem projetado, perfeito para solteiros ou casais",
+               src: "https://cdn.quasar.dev/img/parallax2.jpg",
+        },
+        {
+            id: 4,
+            title: "Casa T3",
+            subtitle: "Casa moderna e sustentável, equipada com painéis solares e sistema de captação de água da chuva",   // description:
+            //     "Aliquam albucius mei ei, debitis torquatos et pro, eos natum scribentur no. Putant verear constituto te qui. Adolescens persequeris vim ei. Vel nullam reprimique te.",
+            src: "https://cdn.quasar.dev/img/parallax2.jpg",
+        },
+        {
+            id: 5,
+            title: "Vivenda V2",
+            subtitle: "Loft contemporâneo com estilo industrial, localizado em um bairro revitalizado. Possui uma área aberta com tijolos expostos, ",
+            src: "https://cdn.quasar.dev/img/parallax2.jpg",
+        },
+        {
+            id: 5,
+            title: "Apartamento V3",
+            subtitle: "Elegante casa colonial, cercada por um exuberante jardim paisagístico. ", 
+            src: "https://cdn.quasar.dev/img/parallax2.jpg",
+        },
         ],
-        cidades: [
-            {
-                id: 1,
-                title: "CLIENTE 1",
-                subtitle: "Localização 1",
-                src: "https://cdn.quasar.dev/img/parallax2.jpg",
-            },
-            {
-                id: 2,
-                title: "CLIENTE 2",
-                subtitle: "Localização 2",
-                src: "https://cdn.quasar.dev/img/parallax2.jpg",
-            },
-            {
-                id: 3,
-                title: "CLIENTE 3",
-                subtitle: "LOCALIZAÇÃO 3",
-                src: "https://cdn.quasar.dev/img/parallax2.jpg",
-            },
+        cidades: [{
+            id: 1,
+            title: "CLIENTE 1",
+            subtitle: "Localização 1",
+            src: "https://cdn.quasar.dev/img/parallax2.jpg",
+        },
+        {
+            id: 2,
+            title: "CLIENTE 2",
+            subtitle: "Localização 2",
+            src: "https://cdn.quasar.dev/img/parallax2.jpg",
+        },
+        {
+            id: 3,
+            title: "CLIENTE 3",
+            subtitle: "LOCALIZAÇÃO 3",
+            src: "https://cdn.quasar.dev/img/parallax2.jpg",
+        },
 
         ],
     }),
@@ -544,7 +553,8 @@ export default {
     computed: {
         user() {
             return this.$page.props.auth.user;
-        }, col() {
+        },
+        col() {
             switch (this.$vuetify.breakpoint.name) {
                 case "xs":
                     return 12;
@@ -562,6 +572,7 @@ export default {
     },
 };
 </script>
+
 <style>
 @import "vuetify/dist/vuetify.min.css";
 
@@ -594,8 +605,9 @@ table {
     /* display: flex; */
     align-items: center;
     justify-content: center;
+    color: aliceblue;
+    font-size: 2rem;
     /* max-width: max-content; */
-
 
 }
 
@@ -610,5 +622,4 @@ v-card {
     /* background-image:linear-gradient(to bottom right, #0077c2, #0093ff) */
 }
 
-;
-</style>
+;</style>

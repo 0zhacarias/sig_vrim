@@ -1,10 +1,10 @@
 <template>
     <PortalLayout>
         <v-card elevation="0">
-            <v-card tile class="text-h5 deep-purple darken-3  white--text ">
+            <!-- <v-card tile class="text-h5 deep-purple darken-3  white--text ">
                 <span class="text-uppercase" style="font-size: 20px">
                     {{ formTitle }}</span>
-            </v-card>
+            </v-card> -->
             <v-card-text>
                 <v-container>
                     <v-stepper flat v-model="e1">
@@ -355,7 +355,7 @@
                                         </v-card>
                                         <v-card-actions>
                                             <v-spacer />
-                                            <v-btn color="primary" @click="continuar(2, 'form')">
+                                            <v-btn color="#6A1B9A" outlined @click="continuar(2, 'form')">
                                                 Continuar
                                             </v-btn>
                                         </v-card-actions>
@@ -373,7 +373,7 @@
                                                         <v-col cols="12" :md="this.getvender == false ? 6 : 4"
                                                             :lg="this.getvender == false ? 6 : 4">
                                                             <v-text-field v-model="condominio.preco" type="number" outlined
-                                                                dense label="Valor de venda do Imovel*"></v-text-field>
+                                                                dense :label="this.getvender == true ?  'Valor de venda do Imovel*' : 'Valor a ser Arrendado do Imovel*'"></v-text-field>
                                                         </v-col>
 
                                                         <v-col cols="12" :md="this.getvender == false ? 6 : 4"
@@ -381,15 +381,19 @@
                                                             <v-text-field outlined dense label="Quantidade de prestações*"
                                                                 v-model="condominio.nif"></v-text-field>
                                                         </v-col>
-                                                        <v-col cols="12" md="4" v-if="this.getarrendar == true">
+                                                        <v-col cols="12" :md="this.getarrendar == true ? 6 : 4" v-if="this.getarrendar == true">
                                                             <v-autocomplete outlined label="Tempo de arrendamento" dense
                                                                 :items="tipo_regimes" item-value="id" item-text="designacao"
                                                                 v-model="condominio.tipo_regime_id
                                                                     " />
                                                         </v-col>
-                                                        <v-col cols="12" md="4" v-if="this.getregime == false">
-                                                            <v-text-field dense outlined label="Telefone 1*" v-model="condominio.telefone1
+                                                        <v-col cols="12" md="4" v-if="this.getcolaborador == true && this.getvender == true">
+                                                            <v-text-field dense outlined type="number" label="percentagem a receber do valor do Imóvel*" v-model="condominio.telefone1
                                                                 "></v-text-field>
+                                                        </v-col>
+                                                        <v-col cols="12" md="4" v-if="this.getcolaborador == true && this.getarrendar == true">
+                                                            <span 
+                                                                >O pagamento referente a o arrendamento é o primeiro mês </span>
                                                         </v-col>
 
 
@@ -517,7 +521,7 @@
                                                         <v-btn color="warning" @click="e1 = 1">Voltar</v-btn>
 
                                                         <v-spacer />
-                                                        <v-btn color="primary" @click="continuar(3, 'form')">
+                                                        <v-btn color="#6A1B9A" outlined @click="continuar(3, 'form')">
                                                             Continuar
                                                         </v-btn>
                                                     </v-card-actions>
@@ -592,7 +596,7 @@
                                             <v-btn color="warning" @click="e1 = 2">Voltar</v-btn>
 
                                             <v-spacer />
-                                            <v-btn color="primary" @click="continuar(4, 'form')">
+                                            <v-btn color="#6A1B9A"  outlined @click="continuar(4, 'form')">
                                                 Continuar
                                             </v-btn>
                                         </v-card-actions>
@@ -654,9 +658,18 @@ export default {
         getarrendar: false,
         getvender: false,
         getImposto: false,
+        getcolaborador: false,
         tipo_regimes: [
-            { id: 1, designacao: "GERAL" },
-            { id: 2, designacao: "ESPECÍFICO" },
+            { id: 1, designacao: "2 Meses" },
+            { id: 1, designacao: "3 Meses" },
+            { id: 2, designacao: "6 Meses" },
+            { id: 2, designacao: "1 Ano" },
+            { id: 2, designacao: "2 Anos" },
+            { id: 2, designacao: "3 Anos" },
+            { id: 2, designacao: "4 Anos" },
+            { id: 2, designacao: "5 Anos" },
+            { id: 2, designacao: "10 Anos" },
+            { id: 2, designacao: "15 Anos" },
         ],
         tipo_clientes: [
             { id: 1, designacao: "SINGULAR" },
@@ -785,7 +798,7 @@ export default {
         colaborador() {
             // this.getarrendar = true;
             // this.getregime = true;
-            // this.getvender = false;
+            this.getcolaborador = true;
             // alert(this.getarrendar)
             const corColaborador = document.querySelector(".corColaborador");
             const corProprietario = document.querySelector(".corProprietario");
@@ -800,6 +813,7 @@ export default {
             // this.getregime = true;
             // this.getvender = false;
             // alert(this.getarrendar)
+            this.getcolaborador = false;
             const corProprietario = document.querySelector(".corProprietario");
             const corColaborador = document.querySelector(".corColaborador");
             corProprietario.style.color = "white";

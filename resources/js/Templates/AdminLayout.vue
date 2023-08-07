@@ -15,9 +15,9 @@
       </v-text> 
             <v-spacer /> -->
 
-               <a href="/pagina-inicial" style="text-decoration: none"><v-avatar size="60" color="primary"><v-icon
+               <a href="/perfilCliente" style="text-decoration: none"><v-avatar size="60" color="primary"><v-icon
                                 color="white" large>home</v-icon></v-avatar>
-                        Sistema de Gestão de Ivoveis</a>
+                        Sistema de Gestão de Venda e Arrendamento Ivoveis</a>
 
                 
                 <v-spacer/>
@@ -151,7 +151,7 @@
             </template>
         </v-navigation-drawer> -->
 
-        <v-main id="#scrolling-techniques-3" class="grey lighten-3">
+        <v-main id="#scrolling-techniques-2" class="grey lighten-3">
             <!-- <v-container> -->
                 <slot />
             <!-- </v-container> -->

@@ -2,13 +2,13 @@
     <v-app>
 
         <v-row align="center" justify="center">
-            <v-col cols="12" md="5">
+            <v-col cols="12" md="6" lg="5">
 
                 <v-container class=" alinnharcentro">
 
-                    <v-card align="center" justify="center" elevation="0" class="w-50">
+                    <v-card align="center" justify="center" elevation="0" class="w-75">
 
-                        <v-card-text class="text-h3"> SIG-VIM</v-card-text>
+                        <v-card-text class="text-h3"> SIG-VAI</v-card-text>
                         <v-card-text fluid class="justify-center">
                             <v-form v-model="isValid">
                                 <v-row class="justify-center">
@@ -79,13 +79,13 @@
                     </v-card>
                 </v-container>
             </v-col>
-            <v-col cols="12" md="7">
-                <v-img src="/img/pexels-nextvoyage.jpg" :style="'height: 100vh; '" align="center" justify="center"
+            <v-col cols="12" md="6" lg="7">
+                <v-img src="/img/cms-image.jpg" :style="'height: 100vh; '" align="center" justify="center"
                     gradient="to top right, rgba(10,115,201,.33), rgba(25,32,72,.7)">
                     <v-container>
                         <v-row class="alinnharcentro white--text ">
                             <v-card-text>
-                                <p class="text-h1 font-weight-bold p-0 m-0">SIG-VIM</p>
+                                <p class="text-h1 font-weight-bold p-0 m-0">SIG-VAI</p>
                                 <p class="subtitle pb-5 m-0">Sistema de Gestão de Imóbiliaria (Kubicos)</p>
                                 <p class="text-h5">Aumente sua receita com o nosso sistema</p>
                                 <p>O ZAP+Fin é a plataforma de financiamento imobiliário que <br />oferece crédito ao seu
