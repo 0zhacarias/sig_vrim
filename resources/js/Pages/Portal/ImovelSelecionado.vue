@@ -1,161 +1,171 @@
 <template>
-<PortalLayout>
-    <v-container>
-        <template class="ma-10" color="grey">
-            <v-card-text class="text-h4">
-                <template>
-                    <v-carousel cycle height="500" hide-delimiter-background show-arrows="hover">
-                        <v-carousel-item v-for="(slide, i) in slides" :key="i">
-                            <v-sheet :color="colors[i]" height="100%">
-                                <div class="d-flex fill-height justify-center align-center">
-                                    <div class="text-h2">
-                                        {{ slide }} Slide
-                                    </div>
-                                </div>
-                            </v-sheet>
-                        </v-carousel-item>
-                    </v-carousel>
-                </template>
-            </v-card-text>
+    <PortalLayout>
+        <v-div class="deep-purple lighten-2">
+            <template >
+                <v-carousel>
+                    <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src" reverse-transition="fade-transition"
+                        transition="fade-transition"></v-carousel-item>
+                </v-carousel>
+            </template>
+            <v-row >
+                <card class="white">
+                  
+                        <v-col md="8" offset-md="2">
+                            <v-card-subtitle class="">Arrendamento / Quarto / Cozinha Equipada / Leiria</v-card-subtitle>
+                        <v-card-text class="text-h5 ">
+                            <v-card-title class="deep-purple lighten-5"> {{ imovel.designacao }}</v-card-title>
+                            <v-row>
+                                
+                                <v-col cols="8"> <v-card-subtitle class="my-0 pt-3">Localização: {{ imovel.localizacao }}</v-card-subtitle></v-col>
+                                <v-col cols="4"> <v-card-title class="my-0 py-0 justify-content-end text-h4 text-bold text-s">Preço: {{ imovel.preco }},00 KZ</v-card-title></v-col>
+                            </v-row>
+                           
+                           
+                           
 
-        </template>
-        <v-row>
-            <v-col md="8" offset-md="2">
-                <template>
-                    <v-card-text class="text-h5 ">
-                        <v-card-title> Casas de Condomínio à Vend/MA/Casas de Condomínio à venda em Paço do
-                            Lumiar/Pindaí/Avenida Doihara </v-card-title>
-                        <v-card-text class="my-0 py-0">Localização:sdsad</v-card-text>
-                        <v-card-title class="my-0 py-0">Valor:144</v-card-title>
+                            <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text" column>
+                                <v-chip><span class="mdi mdi-chart-areaspline-variant">m<sup>2</sup></span></v-chip>
+                                <v-chip><span class="mdi mdi-seat-individual-suite">{{ }}</span>Suíte</v-chip>
+                                <v-chip><span class="mdi mdi-car">{{ 1 }}</span>Garagem</v-chip>
 
-                        <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text" column>
-                            <v-chip><span class="mdi mdi-chart-areaspline-variant">m<sup>2</sup></span></v-chip>
-                            <v-chip><span class="mdi mdi-seat-individual-suite">{{ }}</span>Suíte</v-chip>
-                            <v-chip><span class="mdi mdi-car">{{ }}</span>Garagem</v-chip>
+                                <v-chip><span class="mdi mdi-faucet-variant"></span> Banheiros</v-chip>
 
-                            <v-chip><span class="mdi mdi-faucet-variant"></span> Banheiros</v-chip>
+                                <v-chip>
+                                    <span class="mdi mdi-bed-double"></span>{{ }}</v-chip>
+                                <v-chip>
+                                    <span class="mdi mdi-timer-lock-outline" title="data do contrato"></span>{{ }} </v-chip>
+                            </v-chip-group>
+                            <v-divider></v-divider>
 
-                            <v-chip>
-                                <span class="mdi mdi-bed-double"></span>{{ }}</v-chip>
-                            <v-chip>
-                                <span class="mdi mdi-timer-lock-outline" title="data do contrato"></span>{{ }} </v-chip>
-                        </v-chip-group>
-                        <v-divider></v-divider>
-                    </v-card-text>
+                            
+                            <p class="text-uppercase">Descrição do imóvel:</p>
+                            <v-card-subtitle>
+                                {{ imovel.descricao }}
+                            </v-card-subtitle>
+                            <v-row class="pt-5">
+                                
 
-                </template>
-                <template>
-                    <v-card-title class="deep-purple lighten-5"> Descição do Imovel</v-card-title>
-                    <v-card-subtitle>
-                        <p>Arrendamento / Quarto / Cozinha Equipada / Leiria</p>
-                        <p class="text-uppercase">Descrição do imóvel:</p>
-                        Principais características:
-                        <v-row>
+                                <v-col cols="12" sm="4" md="4">
+                                    <span class="text-caption">Área de serviço</span><br />
+                                    <span class="text-caption">Churrasqueira</span><br />
+                                    <span class="text-caption">Elevador</span><br />
+                                    <span class="text-caption">Interfone</span>
+                                </v-col>
+                                <v-col sm="4" md="4">
+                                    <span class="text-caption">Piscina</span><br />
+                                    <span class="text-caption">Quadra poliesportiva</span><br />
+                                    <span class="text-caption">Sauna</span><br />
+                                    <span class="text-caption">Varanda gourmet</span><br />
+                                    <!-- <p>Interfone</p> -->
+                                </v-col>
+                                <v-col sm="4" md="4">
+                                    <span class="text-caption">Piscina</span><span
+                                        class="mdi mdi-check-circle-outline"></span><br />
+                                    <span class="text-caption">Quadra poliesportiva</span><span
+                                        class="mdi mdi-check-circle-outline"></span><br />
+                                    <span class="text-caption">Cozinha equipada </span><span
+                                        class="mdi mdi-check-circle-outline"></span><br />
+                                    <span class="text-caption">Despesas incluídas (água, luz, gás e internet) </span><span
+                                        class="mdi mdi-check-circle-outline"></span>
+                                    <!-- <p>Interfone</p> -->
+                                </v-col>
 
-                            <v-col cols="12" sm="4" md="4">
-                                <span class="text-caption">Área de serviço</span><br />
-                                <span class="text-caption">Churrasqueira</span><br />
-                                <span class="text-caption">Elevador</span><br />
-                                <span class="text-caption">Interfone</span>
-                            </v-col>
-                            <v-col sm="4" md="4">
-                                <span class="text-caption">Piscina</span><br />
-                                <span class="text-caption">Quadra poliesportiva</span><br />
-                                <span class="text-caption">Sauna</span><br />
-                                <span class="text-caption">Varanda gourmet</span><br />
-                                <!-- <p>Interfone</p> -->
-                            </v-col>
-                            <v-col sm="4" md="4">
-                                <span class="text-caption">Piscina</span><span class="mdi mdi-check-circle-outline"></span><br />
-                                <span class="text-caption">Quadra poliesportiva</span><span class="mdi mdi-check-circle-outline"></span><br />
-                                <span class="text-caption">Cozinha equipada </span><span class="mdi mdi-check-circle-outline"></span><br />
-                                <span class="text-caption">Despesas incluídas (água, luz, gás e internet) </span><span class="mdi mdi-check-circle-outline"></span>
-                                <!-- <p>Interfone</p> -->
-                            </v-col>
+                            </v-row>
+                            <v-divider></v-divider>
+                        </v-card-text>
+                    </v-col>
+                    </card>
+                <v-col md="8" offset-md="2" >
+                    <template>
+                        <v-card-title class="deep-purple lighten-5"> Descição do Imovel</v-card-title>
+                        <v-card-subtitle>
+                           
+                            <p>A prioridade são as pessoas!</p>
 
-                        </v-row>
-                        <v-divider></v-divider>
-                        <p>A prioridade são as pessoas!</p>
+                            <p class="text-justify subtitle-1">
+                                O seu voto de CONFIANÇA é o nosso compromisso.
+                                Pautamo-nos pela objetividade e TRANSPARÊNCIA em todas as fases do processo,
+                                proporcionando-lhe a
+                                SEGURANÇA que merece.
+                                Não há pessoas iguais, casas iguais nem negócios iguais.
+                                Adaptamo-nos às suas necessidades.
+                                INFORMAÇÃO e ACOMPANHAMENTO são as palavras-chave para a sua tomada de decisão.
+                                Primamos por um serviço de qualidade e pela SATISFAÇÃO dos nossos clientes.
+                            </p>
 
-                        <p class="text-justify subtitle-1">
-                            O seu voto de CONFIANÇA é o nosso compromisso.
-                            Pautamo-nos pela objetividade e TRANSPARÊNCIA em todas as fases do processo,
-                            proporcionando-lhe a
-                            SEGURANÇA que merece.
-                            Não há pessoas iguais, casas iguais nem negócios iguais.
-                            Adaptamo-nos às suas necessidades.
-                            INFORMAÇÃO e ACOMPANHAMENTO são as palavras-chave para a sua tomada de decisão.
-                            Primamos por um serviço de qualidade e pela SATISFAÇÃO dos nossos clientes.
-                        </p>
+                            Notas:
+                            <p class="text-justify">
+                                *Se for consultor imobiliário, este imóvel está disponível para partilha de negócio.
+                                Apresente aos seus clientes compradores e agende a sua visita.
+                            </p>
+                            *Para maior facilidade na identificação deste imóvel refira, por favor, o respetivo ID.
+                        </v-card-subtitle>
+                        <!-- <v-card-actions>
 
-                        Notas:
-                        <p class="text-justify">
-                            *Se for consultor imobiliário, este imóvel está disponível para partilha de negócio.
-                            Apresente aos seus clientes compradores e agende a sua visita.
-                        </p>
-                        *Para maior facilidade na identificação deste imóvel refira, por favor, o respetivo ID.
-                    </v-card-subtitle>
-                    <v-card-actions>
-                      
 
-                            <inertia-link class="ml-auto" :href="`/portal/Solicitar-visita/${this.imovel.id}` ">
+                            <inertia-link class="ml-auto" :href="`/portal/Solicitar-visita/${this.imovel.id}`">
 
                                 <v-btn color="#4527A0" dense outlined> Solicitar visita</v-btn>
                             </inertia-link>
-                       
-                    </v-card-actions>
-                </template>
-            </v-col>
 
-        </v-row>
+                        </v-card-actions> -->
+                    </template>
+                </v-col>
 
-        <template>
-            <v-row justify="space-around">
-                <v-col cols="auto">
-                    <v-dialog transition="dialog-bottom-transition" max-width="600">
-                      
-                        <template v-slot:activator="{ on, attrs }" >
+            </v-row>
 
-<!-- <inertia-link class="ml-auto" :href="`/portal/Solicitar-visita/${this.imovel.id}` "> -->
+            <template>
+                <v-row justify="space-around">
+                    <v-col cols="auto">
+                        <v-dialog transition="dialog-bottom-transition" max-width="600">
 
-    <v-btn v-bind="attrs"  class="ml-auto" v-on="on" color="#4527A0" dense outlined @click="marcarVisita()"> Solicitar visita</v-btn>
+                            <template v-slot:activator="{ on, attrs }">
 
-</template>
-                        <template v-slot:default="dialog">
-                            <v-card>
-                                <v-toolbar class="text-h6" color="primary" dark>Solicitando uma visita</v-toolbar>
-                                <!-- <v-card-text>
+                                <!-- <inertia-link class="ml-auto" :href="`/portal/Solicitar-visita/${this.imovel.id}` "> -->
+
+                                <v-btn v-bind="attrs" class="ml-auto" v-on="on" color="#4527A0" dense outlined
+                                    @click="marcarVisita()"> Solicitar visita</v-btn>
+
+                            </template>
+                            <template v-slot:default="dialog">
+                                <v-card>
+                                    <v-toolbar class="text-h6" color="primary" dark>Solicitando uma visita</v-toolbar>
+                                    <!-- <v-card-text>
                                     <div class="text-h2 pa-12">Hello world!</div>
                                 </v-card-text> -->
-                                <v-card-text>
-                                    <v-container>
-                                        <v-row>
-                                            <v-col cols="12" sm="6" md="6">
-                                                <v-text-field outlined dense type="month" label="Dia da semana*" required></v-text-field>
-                                            </v-col>
-                                            <v-col cols="12" sm="6" md="6">
-                                                <v-text-field outlined dense type="year" label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-                                            </v-col>
-                                            <v-col cols="12" sm="6" md="12">
-                                                <v-text-field label="Legal last name*" hint="example of persistent helper text" persistent-hint required></v-text-field>
-                                            </v-col>
-                                        </v-row>
-                                    </v-container>
-                                    <small>*indicates required field</small>
-                                </v-card-text>
-                                <v-card-actions class="justify-end">
-                                    <v-btn text @click="enviarSolicitacao()">Solicitar</v-btn>
-                                
-                                    <v-btn text @click="dialog.value = false">Fechar</v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </template>
-                    </v-dialog>
-                </v-col>
-            </v-row>
-        </template>
-    </v-container>
-</PortalLayout>
+                                    <v-card-text>
+                                        <v-container>
+                                            <v-row>
+                                                <v-col cols="12" sm="6" md="6">
+                                                    <v-text-field outlined dense type="month" label="Dia da semana*"
+                                                        required></v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" sm="6" md="6">
+                                                    <v-text-field outlined dense type="year" label="Legal middle name"
+                                                        hint="example of helper text only on focus"></v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" sm="6" md="12">
+                                                    <v-text-field label="Legal last name*"
+                                                        hint="example of persistent helper text" persistent-hint
+                                                        required></v-text-field>
+                                                </v-col>
+                                            </v-row>
+                                        </v-container>
+                                        <small>*indicates required field</small>
+                                    </v-card-text>
+                                    <v-card-actions class="justify-end">
+                                        <v-btn text @click="enviarSolicitacao()">Solicitar</v-btn>
+
+                                        <v-btn text @click="dialog.value = false">Fechar</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </template>
+                        </v-dialog>
+                    </v-col>
+                </v-row>
+            </template>
+        </v-div>
+    </PortalLayout>
 </template>
 
 <script>
@@ -167,7 +177,27 @@ export default {
     },
     data: () => ({
 
-        
+        items: [
+            {
+                src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+            },
+            {
+                src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+            },
+            {
+                src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+            },
+            {
+                src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+            },
+        ],
+        slides: [
+            'First',
+            'Second',
+            'Third',
+            'Fourth',
+            'Fifth',
+        ],
     }),
 
     mounted() {
@@ -200,13 +230,13 @@ export default {
             window.location.href = "/portal/imovel-selecionado/" + btoa(btoa(btoa(id)));
             // alert(id);
         },
-        marcarVisita(){
-          alert(this.imovel.id);
+        marcarVisita() {
+            alert(this.imovel.id);
         },
-        enviarSolicitacao(){
-          // :href="`/portal/Solicitar-visita/${this.imovel.id}` "
-          window.location.href = "/portal/Solicitar-visita/" + btoa(btoa(btoa(this.imovel.id)));
-          // alert(this.imovel.id);
+        enviarSolicitacao() {
+            // :href="`/portal/Solicitar-visita/${this.imovel.id}` "
+            window.location.href = "/portal/Solicitar-visita/" + btoa(btoa(btoa(this.imovel.id)));
+            // alert(this.imovel.id);
         },
 
         showDialogAddCondominio() {

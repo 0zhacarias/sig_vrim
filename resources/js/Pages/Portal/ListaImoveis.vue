@@ -155,14 +155,14 @@
                                                                             title="data do contrato"></span>{{
                                                                                 item.tempo_arrendar }} </v-chip>
                                                                 </v-chip-group>
-                                                                        <v-btn depressed class="mr-10">
+                                                                        <v-btn v-on:click.stop="say()" depressed class="mr-10">
                                                                             Telefone
                                                                         </v-btn>
-                                                                        <v-btn depressed color="primary">
+                                                                        <v-btn v-on:click.stop="say()" depressed color="primary">
                                                                             Mensagem
                                                                         </v-btn>
 
-                                                                        <v-btn v-on:click.stop="say()">Diga tchau</v-btn>
+                                                                        <!-- <v-btn v-on:click.stop="say()">Diga tchau</v-btn> -->
                                                                         
                                                                  
                                                              
@@ -181,8 +181,8 @@
                                                                 item.ficheiro_resposta
                                                             "
                                                         ></v-img> -->
-                                                            <v-img height="240"
-                                                            src="/img/pexels-nextvoyage.jpg"></v-img>
+                                                            <v-img height="300"
+                                                            src="/img/Aaa.png"></v-img>
                                                         </v-col>
 
                                                     </v-row>
@@ -407,7 +407,7 @@ export default {
             this.dialogN=true
         },
         quebraDeLinhaItem(texto) {
-      const tamanhoMaximo = 70;
+      const tamanhoMaximo = 95;
       let novoTexto = '';
 
       for (let i = 0; i < texto.length; i += tamanhoMaximo) {
@@ -513,6 +513,7 @@ export default {
 };
 </script>
 <style scoped>
+
 .custom-autocomplete .v-input__control {
     background-color: #ff0000;
     /* Substitua pelo código de cor desejado */

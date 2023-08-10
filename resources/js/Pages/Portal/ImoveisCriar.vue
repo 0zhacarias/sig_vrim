@@ -1,84 +1,73 @@
 <template>
-    <PortalLayout>
-        <v-card elevation="0">
-            <!-- <v-card tile class="text-h5 deep-purple darken-3  white--text ">
+<PortalLayout>
+    <v-card elevation="0">
+        <!-- <v-card tile class="text-h5 deep-purple darken-3  white--text ">
                 <span class="text-uppercase" style="font-size: 20px">
                     {{ formTitle }}</span>
             </v-card> -->
-            <v-card-text>
-                <v-container>
-                    <v-stepper flat v-model="e1">
-                        <v-stepper-header>
-                            <v-stepper-step class="text-uppercase" :complete="e1 > 1" step="1">Dados do
-                                Imovel</v-stepper-step>
+        <v-card-text>
+            <v-container>
+                <v-stepper flat v-model="e1">
+                    <v-stepper-header>
+                        <v-stepper-step class="text-uppercase" :complete="e1 > 1" step="1">Dados do
+                            Imovel</v-stepper-step>
 
-                            <!-- <v-divider></v-divider> -->
+                        <!-- <v-divider></v-divider> -->
 
-                            <v-stepper-step class="text-uppercase" step="2" :complete="e1 > 2">Localização do
-                                Imóvel</v-stepper-step>
-                            <v-stepper-step class="text-uppercase" step="3" :complete="e1 > 3">Fotos & Documentação do
-                                Imóvel</v-stepper-step>
-                            <v-stepper-step class="text-uppercase" step="4" :complete="e1 > 4">Finalização</v-stepper-step>
-                        </v-stepper-header>
-                        <v-row>
-                            <v-col sm="1" md="2" lg="2"></v-col>
-                            <v-col sm="10" md="8" lg="8" offset-sm="0">
-                                <v-stepper-items flat>
-                                    <v-stepper-content step="1">
-                                        <v-card class="mb-12" flat>
-                                            <v-card-text align="center" justify="center">
-                                                <v-btn class="corVender" outlined align="center" v-model="vender"
-                                                    @click="venderImoveis()">
-                                                    Vender</v-btn>
-                                                <v-btn outlined v-model="arrendar" class="corArrendamento"
-                                                    @click="arrendarImoveis()">Arrendar</v-btn>
+                        <v-stepper-step class="text-uppercase" step="2" :complete="e1 > 2">Localização do
+                            Imóvel</v-stepper-step>
+                        <v-stepper-step class="text-uppercase" step="3" :complete="e1 > 3">Fotos & Documentação do
+                            Imóvel</v-stepper-step>
+                        <v-stepper-step class="text-uppercase" step="4" :complete="e1 > 4">Finalização</v-stepper-step>
+                    </v-stepper-header>
+                    <v-row>
+                        <v-col sm="1" md="2" lg="2"></v-col>
+                        <v-col sm="10" md="8" lg="8" offset-sm="0">
+                            <v-stepper-items flat>
+                                <v-stepper-content step="1">
+                                    <v-card class="mb-12" flat>
+                                        <v-card-text align="center" justify="center">
+                                            <v-btn class="corVender" outlined align="center" v-model="imovel.venda_id" @click="venderImoveis()">
+                                                Vender</v-btn>
+                                            <v-btn outlined v-model="imovel.arrendamento_id" class="corArrendamento" @click="arrendarImoveis()">Arrendar</v-btn>
 
+                                            <v-btn outlined v-model="imovel.proprietario_id" @click="proprietario()" class="corProprietario" v-if="this.getarrendar == true || this.getvender == true">
+                                                Proprietário</v-btn>
+                                            <v-btn outlined v-model="imovel.colaborador_id" @click="colaborador()" class="corColaborador" v-if="this.getarrendar == true || this.getvender == true">Pambaleiro</v-btn>
+                                        </v-card-text>
 
-                                                <v-btn outlined v-model="proprietario" @click="proprietario()"
-                                                    class="corProprietario"
-                                                    v-if="this.getarrendar == true || this.getvender == true">
-                                                    Proprietário</v-btn>
-                                                <v-btn outlined v-model="colaborador" @click="colaborador()"
-                                                    class="corColaborador"
-                                                    v-if="this.getarrendar == true || this.getvender == true">Pambaleiro</v-btn>
-                                            </v-card-text>
-
-                                            <v-form ref="form" lazy-validation>
-                                                <v-container v-if="this.getarrendar == true || this.getvender == true">
-                                                    <!-- <v-card-text align="center" justify="center">
+                                        <v-form ref="form" lazy-validation  >
+                                            <v-container v-if="(this.getarrendar == true || this.getvender == true)  && (getProprietario== true || getcolaborador== true)">
+                                                <!-- <v-card-text align="center" justify="center">
                                                         <v-btn outlined  v-model="proprietario" @click="proprietario()" class="corProprietario"> Proprietário</v-btn>
                                                         <v-btn outlined v-model="colaborador" @click="colaborador()" class="corColaborador">Pambaleiro</v-btn>
                                                     </v-card-text> -->
 
-                                                    <v-row dense class="pt-10">
-                                                        <span class="text-h5 "> Detalhes sobre o seu imóvel</span><br />
-                                                        <span class="subtitle pb-10">Essas informações são importantes para
-                                                            que seu anúncio
-                                                            apareça corretamente nas buscas dos interessados.
-                                                        </span>
-                                                        <v-col cols="12" sm="6" md="6">
-                                                            <v-autocomplete outlined dense label="Tipo de Imovel*" v-model="condominio.designacao
+                                                <v-row dense class="pt-10">
+                                                    <span class="text-h5 "> Detalhes sobre o seu imóvel</span><br />
+                                                    <span class="subtitle pb-10">Essas informações são importantes para
+                                                        que seu anúncio
+                                                        apareça corretamente nas buscas dos interessados.
+                                                    </span>
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <v-autocomplete outlined dense :rules="tipoImovelRules" label="Tipo de Imovel*" v-model="imovel.tipoImovel_id
                                                                 "></v-autocomplete>
-                                                        </v-col>
-                                                        <v-col cols="12"  sm="6" md="6">
-                                                            <v-autocomplete outlined dense label="Tipologia*" v-model="condominio.designacao
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <v-autocomplete outlined dense :rules="tipologiaRules" required label="Tipologia*" v-model="imovel.tipologia_id
                                                                 "></v-autocomplete>
-                                                        </v-col>
+                                                    </v-col>
 
+                                                </v-row>
 
-                                                    </v-row>
+                                                <v-divider></v-divider>
+                                                <v-row>
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <span class="text-h6">Número de quartos</span><br />
+                                                        <span class="subtitle">Incluindo suítes</span>
 
-                                                    <v-divider></v-divider>
-                                                    <v-row>
-                                                        <v-col cols="12" sm="6" md="6">
-                                                            <span class="text-h6">Número de quartos</span><br />
-                                                            <span class="subtitle">Incluindo suítes</span>
-
-
-
-
-                                                        </v-col>
-                                                        <!-- <v-col cols="1">
+                                                    </v-col>
+                                                    <!-- <v-col cols="1">
                                                             <v-btn large outlined @click="decrement" color="indigo">
                                                                 <v-icon>mdi-minus</v-icon>
                                                             </v-btn>
@@ -93,30 +82,27 @@
                                                             </v-btn>
                                                         </v-col> -->
 
-                                                        <v-col cols="12" sm="2" md="2" class="text-right">
+                                                    <v-col cols="12" sm="2" md="2" class="text-right">
 
-                                                            <v-btn large outlined color="indigo" @click="decrementquarto">
-                                                                <v-icon>mdi-minus</v-icon>
-                                                            </v-btn>
+                                                        <v-btn large outlined color="indigo" @click="decrementquarto">
+                                                            <v-icon>mdi-minus</v-icon>
+                                                        </v-btn>
 
-                                                        </v-col>
+                                                    </v-col>
 
-                                                        <v-col cols="12" sm="2" md="2">
-                                                            <v-text-field dense color="indigo" outlined
-                                                                v-model="numeroQuarto"
-                                                                class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
+                                                    <v-col cols="12" sm="2" md="2">
+                                                        <v-text-field dense color="indigo" outlined v-model="imovel.numero_quartos" :rules="numero_quartosRules" class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
 
-                                                            </v-text-field>
-                                                        </v-col>
+                                                        </v-text-field>
+                                                    </v-col>
 
-                                                        <v-col cols="1" sm="2" md="1">
-                                                            <v-btn outlined large color="indigo" @click="incrementquarto">
-                                                                <v-icon>mdi-plus</v-icon>
-                                                            </v-btn>
-                                                        </v-col>
+                                                    <v-col cols="1" sm="2" md="1">
+                                                        <v-btn outlined large color="indigo" @click="incrementquarto">
+                                                            <v-icon>mdi-plus</v-icon>
+                                                        </v-btn>
+                                                    </v-col>
 
-
-                                                        <!-- <v-card-text>
+                                                    <!-- <v-card-text>
                                                             <v-row align="center" justify="center">
                                                                 <v-col cols="12">
                                                                     <p class="text-center">
@@ -126,43 +112,38 @@
 
                                                             </v-row>
                                                         </v-card-text> -->
-                                                    </v-row>
-                                                    <v-divider></v-divider>
+                                                </v-row>
+                                                <v-divider></v-divider>
 
+                                                <v-divider></v-divider>
+                                                <v-row>
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <span class="text-h6">Número de banheiros</span><br />
+                                                        <span class="subtitle">Incluindo suítes</span>
 
-                                                    <v-divider></v-divider>
-                                                    <v-row><v-col cols="12" sm="6" md="6">
-                                                            <span class="text-h6">Número de banheiros</span><br />
-                                                            <span class="subtitle">Incluindo suítes</span>
+                                                    </v-col>
 
+                                                    <v-col cols="12" sm="2" md="2" class="text-right">
 
+                                                        <v-btn large outlined color="indigo" @click="decrementbanheiro">
+                                                            -
+                                                        </v-btn>
 
+                                                    </v-col>
 
-                                                        </v-col>
+                                                    <v-col cols="12" sm="2" md="2">
+                                                        <v-text-field dense color="indigo" outlined v-model="imovel.numero_banheiro" class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
 
-                                                        <v-col cols="12" sm="2" md="2" class="text-right">
+                                                        </v-text-field>
+                                                    </v-col>
 
-                                                            <v-btn large outlined color="indigo" @click="decrementbanheiro">
-                                                                -
-                                                            </v-btn>
+                                                    <v-col cols="1" sm="2" md="1">
+                                                        <v-btn outlined large color="indigo" @click="incrementbanheiro">
+                                                            +
+                                                        </v-btn>
+                                                    </v-col>
 
-                                                        </v-col>
-
-                                                        <v-col cols="12" sm="2" md="2">
-                                                            <v-text-field dense color="indigo" outlined
-                                                                v-model="numeroBanheiro"
-                                                                class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
-
-                                                            </v-text-field>
-                                                        </v-col>
-
-                                                        <v-col cols="1" sm="2" md="1">
-                                                            <v-btn outlined large color="indigo" @click="incrementbanheiro">
-                                                                +
-                                                            </v-btn>
-                                                        </v-col>
-
-                                                        <!-- <v-card-text>
+                                                    <!-- <v-card-text>
                                                             <v-row align="center" justify="center">
                                                                 <v-col cols="12">
                                                                     <p class="text-center">
@@ -172,41 +153,36 @@
 
                                                             </v-row>
                                                         </v-card-text> -->
-                                                    </v-row>
-                                                    <v-divider></v-divider>
+                                                </v-row>
+                                                <v-divider></v-divider>
 
-                                                    <v-divider></v-divider>
-                                                    <v-row><v-col cols="12" sm="6" md="6">
-                                                            <span class="text-h6">Número de garagens</span><br />
-                                                            <span class="subtitle">Vagas para Carros(Opcional)</span>
+                                                <v-divider></v-divider>
+                                                <v-row>
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <span class="text-h6">Número de garagens</span><br />
+                                                        <span class="subtitle">Vagas para Carros(Opcional)</span>
+                                                    </v-col>
 
+                                                    <v-col cols="12" sm="2" md="2" class="text-right">
 
+                                                        <v-btn large outlined color="indigo" @click="decrementGaragem">
+                                                            -
+                                                        </v-btn>
 
+                                                    </v-col>
 
-                                                        </v-col>
+                                                    <v-col cols="12" sm="2" md="2">
+                                                        <v-text-field dense color="indigo" outlined v-model="imovel.numero_garagem" class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
+                                                        </v-text-field>
+                                                    </v-col>
 
-                                                        <v-col cols="12" sm="2" md="2" class="text-right">
+                                                    <v-col cols="1" sm="2" md="1">
+                                                        <v-btn outlined large color="indigo" @click="incrementGaragem">
+                                                            +
+                                                        </v-btn>
+                                                    </v-col>
 
-                                                            <v-btn large outlined color="indigo" @click="decrementGaragem">
-                                                                -
-                                                            </v-btn>
-
-                                                        </v-col>
-
-                                                        <v-col cols="12" sm="2" md="2">
-                                                            <v-text-field dense color="indigo" outlined
-                                                                v-model="numeroGaragem"
-                                                                class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
-                                                            </v-text-field>
-                                                        </v-col>
-
-                                                        <v-col cols="1" sm="2" md="1">
-                                                            <v-btn outlined large color="indigo" @click="incrementGaragem">
-                                                                +
-                                                            </v-btn>
-                                                        </v-col>
-
-                                                        <!-- <v-card-text>
+                                                    <!-- <v-card-text>
                                                             <v-row align="center" justify="center">
                                                                 <v-col cols="12">
                                                                     <p class="text-center">
@@ -216,86 +192,55 @@
 
                                                             </v-row>
                                                         </v-card-text> -->
-                                                    </v-row>
-                                                    <v-divider></v-divider>
-                                                    <v-divider></v-divider>
-                                                    <v-row><v-col cols="12" sm="6" md="6">
-                                                            <span class="text-h6">Andar do imóvel</span><br />
-                                                            <span class="subtitle">Opcional </span>
+                                                </v-row>
+                                                <v-divider></v-divider>
+                                                <v-divider></v-divider>
+                                                <v-row>
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <span class="text-h6">Andar do imóvel</span><br />
+                                                        <span class="subtitle">Opcional </span>
 
+                                                    </v-col>
 
+                                                    <v-col cols="12" sm="2" md="2" class="text-right">
 
+                                                        <v-btn large outlined color="indigo" @click="decrementnumero_andar">
+                                                            -
+                                                        </v-btn>
 
-                                                        </v-col>
+                                                    </v-col>
 
-                                                        <v-col cols="12" sm="2" md="2" class="text-right">
+                                                    <v-col cols="12" sm="2" md="2">
+                                                        <v-text-field dense color="indigo" outlined v-model="imovel.numero_andar" class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
+                                                        </v-text-field>
+                                                    </v-col>
 
-                                                            <v-btn large outlined color="indigo"
-                                                                @click="decrementnumeroAndar">
-                                                                -
-                                                            </v-btn>
+                                                    <v-col cols="1" sm="2" md="1">
+                                                        <v-btn outlined large color="indigo" @click="incrementnumero_andar">
+                                                            +
+                                                        </v-btn>
+                                                    </v-col>
+                                                </v-row>
+                                                <v-divider></v-divider>
+                                                <v-divider></v-divider>
+                                                <v-row>
+                                                    <v-col cols="12" sm="6" md="7">
+                                                        <span class="text-h6">Quantos m²</span><br />
+                                                        <span class="subtitle">Informe a área útil. Você pode informar
+                                                            um tamanho aproximado e alterar depois.</span> </v-col>
 
-                                                        </v-col>
+                                                    <v-col cols="12" sm="6" md="5">
+                                                        <v-text-field dense color="indigo" outlined v-model="imovel.metros" type="number" class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
+                                                        </v-text-field>
+                                                    </v-col>
 
-                                                        <v-col cols="12" sm="2" md="2">
-                                                            <v-text-field dense color="indigo" outlined
-                                                                v-model="numeroAndar"
-                                                                class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
-                                                            </v-text-field>
-                                                        </v-col>
-
-                                                        <v-col cols="1" sm="2" md="1">
-                                                            <v-btn outlined large color="indigo"
-                                                                @click="incrementnumeroAndar">
-                                                                +
-                                                            </v-btn>
-                                                        </v-col>
-
-                                                        <!-- <v-card-text>
-                                                            <v-row align="center" justify="center">
-                                                                <v-col cols="12">
-                                                                    <p class="text-center">
-                                                                        Rounded
-                                                                    </p>
-                                                                </v-col>
-
-                                                            </v-row>
-                                                        </v-card-text> -->
-                                                    </v-row>
-                                                    <v-divider></v-divider>
-                                                    <v-divider></v-divider>
-                                                    <v-row><v-col cols="12" sm="6" md="7">
-                                                            <span class="text-h6">Quantos m²</span><br />
-                                                            <span class="subtitle">Informe a área útil. Você pode informar
-                                                                um tamanho aproximado e alterar depois.</span>
-
-
-
-
-                                                        </v-col>
-
-                                                        <!-- <v-col cols="12" sm="2" md="2" class="text-right">
-
-                                                            <v-btn large outlined color="indigo" @click="decrementMetros">
-                                                                -
-                                                            </v-btn>
-
-                                                        </v-col> -->
-
-                                                        <v-col cols="12" sm="6" md="5">
-                                                            <v-text-field dense color="indigo" outlined v-model="metros"
-                                                                type="number"
-                                                                class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
-                                                            </v-text-field>
-                                                        </v-col>
-
-                                                        <!-- <v-col cols="1" sm="2" md="1">
+                                                    <!-- <v-col cols="1" sm="2" md="1">
                                                             <v-btn outlined large color="indigo" @click="increMentmetros">
                                                                 +
                                                             </v-btn>
                                                         </v-col> -->
 
-                                                        <!-- <v-card-text>
+                                                    <!-- <v-card-text>
                                                             <v-row align="center" justify="center">
                                                                 <v-col cols="12">
                                                                     <p class="text-center">
@@ -305,342 +250,279 @@
 
                                                             </v-row>
                                                         </v-card-text> -->
-                                                    </v-row>
-                                                    <v-divider></v-divider> <v-divider></v-divider>
-                                                    <v-row>
-                                                        <v-col cols="12" md="12">
-                                                            <v-textarea v-model="condominio.designacao"
-                                                                label="titulo do Anúcio*" outlined rows="2">
+                                                </v-row>
+                                                <v-divider></v-divider>
+                                                <v-divider></v-divider>
+                                                <v-row>
+                                                    <v-col cols="12" md="12">
+                                                        <v-textarea v-model="imovel.tituloImovel" label="titulo do Anúcio*" outlined rows="2">
 
-                                                            </v-textarea>
-                                                        </v-col>
-                                                    </v-row>
-                                                    <v-divider></v-divider>
-                                                    <v-divider></v-divider>
-                                                    <v-row>
-                                                        <v-col cols="12" md="12">
-                                                            <v-text-field v-model="condominio.designacao" dense
-                                                                label="Localização**" outlined type="gps">
+                                                        </v-textarea>
+                                                    </v-col>
+                                                </v-row>
+                                                <v-divider></v-divider>
+                                                <v-divider></v-divider>
+                                                <v-row>
+                                                    <v-col cols="12" md="12">
+                                                        <v-text-field v-model="imovel.localizacaoGeografica" dense label="Localização**" outlined type="gps">
 
-                                                            </v-text-field>
-                                                        </v-col>
-                                                        <v-col cols="12" md="4">
-                                                            <v-autocomplete v-model="condominio.designacao" dense
-                                                                label="Provincia**" outlined>
+                                                        </v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" md="4">
+                                                        <v-autocomplete v-model="imovel.provincia" dense label="Provincia**" outlined>
 
-                                                            </v-autocomplete>
-                                                        </v-col>
-                                                        <v-col cols="12" md="4">
-                                                            <v-text-field v-model="condominio.designacao" label="Cidades*" dense
-                                                                outlined>
+                                                        </v-autocomplete>
+                                                    </v-col>
+                                                    <v-col cols="12" md="4">
+                                                        <v-text-field v-model="imovel.cidades" label="Cidades*" dense outlined>
 
-                                                            </v-text-field>
-                                                        </v-col>
-                                                    </v-row>
-                                                    <!-- <v-col cols="12" md="6">
-                                                    <v-file-input
-                                                    outlined
-                                                        dense
-                                                        show-size
-                                                        counter
-                                                        label="Logotipo"
-                                                        v-model="
-                                                            condominio.logotipo
-                                                        "
-                                                    />
-                                                </v-col> -->
+                                                        </v-text-field>
+                                                    </v-col>
+                                                </v-row>
+                                            </v-container>
+                                        </v-form>
+                                    </v-card>
+                                    <v-card-actions>
+                                        <v-spacer />
+                      <v-btn color="#6A1B9A" v-if="(getvender || getarrendar) && (getProprietario || getcolaborador)" outlined @click="continuar(2, 'form')">
+                                            Continuar
+                                        </v-btn>
+                                    </v-card-actions>
+                                </v-stepper-content>
+                                <v-stepper-content step="2">
+                                    <v-card flat>
+                                        <v-form ref="form2" lazy-validation>
+                                            <v-container>
+                                                <template>
+                                                    <span class="text-h6">Quais os custos do imóvel?</span><br />
+                                                    <span class="subtitle">Se não souber o valor exato, você pode
+                                                        informar um aproximado e alterar depois.</span>
+                                                </template>
+                                                <v-row class="py-10">
+                                                    <v-col cols="12" :md="this.getvender == false ? 6 : 4" :lg="this.getvender == false ? 6 : 4">
+                                                        <v-text-field v-model="imovel.preco" type="number" outlined dense :label="this.getvender == true ?  'Valor de venda do Imovel*' : 'Valor a ser Arrendado do Imovel*'"></v-text-field>
+                                                    </v-col>
 
-                                                </v-container>
-                                            </v-form>
-                                        </v-card>
-                                        <v-card-actions>
-                                            <v-spacer />
-                                            <v-btn color="#6A1B9A" outlined @click="continuar(2, 'form')">
-                                                Continuar
-                                            </v-btn>
-                                        </v-card-actions>
-                                    </v-stepper-content>
-                                    <v-stepper-content step="2">
-                                        <v-card flat>
-                                            <v-form ref="form2" lazy-validation>
-                                                <v-container>
-                                                    <template>
-                                                        <span class="text-h6">Quais os custos do imóvel?</span><br />
-                                                        <span class="subtitle">Se não souber o valor exato, você pode
-                                                            informar um aproximado e alterar depois.</span>
-                                                    </template>
-                                                    <v-row class="py-10">
-                                                        <v-col cols="12" :md="this.getvender == false ? 6 : 4"
-                                                            :lg="this.getvender == false ? 6 : 4">
-                                                            <v-text-field v-model="condominio.preco" type="number" outlined
-                                                                dense :label="this.getvender == true ?  'Valor de venda do Imovel*' : 'Valor a ser Arrendado do Imovel*'"></v-text-field>
-                                                        </v-col>
-
-                                                        <v-col cols="12" :md="this.getvender == false ? 6 : 4"
-                                                            v-if="this.getvender == true">
-                                                            <v-text-field outlined dense label="Quantidade de prestações*"
-                                                                v-model="condominio.nif"></v-text-field>
-                                                        </v-col>
-                                                        <v-col cols="12" :md="this.getarrendar == true ? 6 : 4" v-if="this.getarrendar == true">
-                                                            <v-autocomplete outlined label="Tempo de arrendamento" dense
-                                                                :items="tipo_regimes" item-value="id" item-text="designacao"
-                                                                v-model="condominio.tipo_regime_id
+                                                    <v-col cols="12" :md="this.getvender == false ? 6 : 4" v-if="this.getvender == true">
+                                                        <v-text-field outlined dense label="Quantidade de prestações*" v-model="imovel.nif"></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" :md="this.getarrendar == true ? 6 : 4" v-if="this.getarrendar == true">
+                                                        <v-autocomplete outlined label="Tempo de arrendamento" dense :items="tipo_regimes" item-value="id" item-text="designacao" v-model="imovel.tipo_regime_id
                                                                     " />
-                                                        </v-col>
-                                                        <v-col cols="12" md="4" v-if="this.getcolaborador == true && this.getvender == true">
-                                                            <v-text-field dense outlined type="number" label="percentagem a receber do valor do Imóvel*" v-model="condominio.telefone1
+                                                    </v-col>
+                                                    <v-col cols="12" md="4" v-if="this.getcolaborador == true && this.getvender == true">
+                                                        <v-text-field dense outlined type="number" label="percentagem a receber do valor do Imóvel*" v-model="imovel.telefone1
                                                                 "></v-text-field>
-                                                        </v-col>
-                                                        <v-col cols="12" md="4" v-if="this.getcolaborador == true && this.getarrendar == true">
-                                                            <span 
-                                                                >O pagamento referente a o arrendamento é o primeiro mês </span>
-                                                        </v-col>
+                                                    </v-col>
+                                                    <v-col cols="12" md="4" v-if="this.getcolaborador == true && this.getarrendar == true">
+                                                        <span>O pagamento referente a o arrendamento é o primeiro mês </span>
+                                                    </v-col>
 
+                                                    <v-col cols="8">
+                                                        <span class="text-h6">Pagas Imposto Predial?</span>
 
-                                                        <v-col cols="8">
-                                                            <span class="text-h6">Pagas Imposto Predial?</span>
+                                                    </v-col>
+                                                    <v-col cols="4">
+                                                        <span>
+                                                            <v-btn elevation="0" outlined rounded v-model="imovel.simImP" @click="simIP()" class="simimposto_predial"> sim</v-btn>
+                                                            <v-btn outlined rounded v-model="imovel.naoImP" @click="naoIP()" class="naocorimposto_predial">não</v-btn>
+                                                        </span>
+                                                    </v-col>
 
-                                                        </v-col>
-                                                        <v-col cols="4">
-                                                            <span>
-                                                                <v-btn elevation="0" outlined rounded
-                                                                    v-model="condominio.simImP" @click="simIP()"
-                                                                    class="simImpostoPredial"> sim</v-btn>
-                                                                <v-btn outlined rounded v-model="condominio.naoImP"
-                                                                    @click="naoIP()"
-                                                                    class="naocorImpostoPredial">não</v-btn>
-                                                            </span>
-                                                        </v-col>
-
-                                                        <v-col cols="12" md="6" v-if="this.getImposto == true">
-                                                            <v-text-field outlined dense
-                                                                label="Valor pago do Imposto prediario*" v-model="condominio.localizacao
+                                                    <v-col cols="12" md="6" v-if="this.getImposto == true">
+                                                        <v-text-field outlined dense label="Valor pago do Imposto prediario*" v-model="imovel.imposto_predial
                                                                     "></v-text-field>
-                                                        </v-col>
+                                                    </v-col>
+                                                </v-row>
+                                                <v-divider></v-divider>
+                                                <v-divider></v-divider>
+                                                <v-list subheader two-line flat>
+                                                    <v-subheader>Você vai deixar no imóvel alguns desses
+                                                        itens?</v-subheader>
 
-                                                        <!-- <v-col cols="12" md="6">
-                                                    </v-col> -->
-                                                        <!-- <v-col cols="12" md="6">
-                                                        <v-autocomplete outlined label="Tipo de Cliente" dense
-                                                            :items="tipo_clientes" item-value="id" item-text="designacao"
-                                                            v-model="condominio.tipo_cliente_id
-                                                                " />
-                                                    </v-col> -->
-                                                    </v-row>
-                                                    <v-divider></v-divider>
-                                                    <v-divider></v-divider>
-                                                    <v-list subheader two-line flat>
-                                                        <v-subheader>Você vai deixar no imóvel alguns desses
-                                                            itens?</v-subheader>
+                                                    <v-list-item-group v-model="settings" multiple>
+                                                        <v-list-item>
+                                                            <template v-slot:default="{ active, }">
+                                                                <v-list-item-content>
+                                                                    <v-list-item-title>Sofá</v-list-item-title>
+                                                                    <!-- <v-list-item-subtitle>Allownotifications</v-list-item-subtitle> -->
+                                                                </v-list-item-content>
+                                                                <v-list-item-action>
+                                                                    <v-checkbox :input-value="active" v-model="imovel.sofa" style="background-color: #e9e5f5; border-radius: 10px;" color="primary"></v-checkbox>
+                                                                </v-list-item-action>
 
-                                                        <v-list-item-group v-model="settings" multiple>
-                                                            <v-list-item>
-                                                                <template v-slot:default="{ active, }">
-                                                                    <v-list-item-content>
-                                                                        <v-list-item-title>Sofá</v-list-item-title>
-                                                                        <!-- <v-list-item-subtitle>Allownotifications</v-list-item-subtitle> -->
-                                                                    </v-list-item-content>
-                                                                    <v-list-item-action>
-                                                                        <v-checkbox :input-value="active" v-model="s"
-                                                                            style="background-color: #e9e5f5; border-radius: 10px;"
-                                                                            color="primary"></v-checkbox>
-                                                                    </v-list-item-action>
-
-
-                                                                </template>
-                                                            </v-list-item>
-
-                                                            <v-list-item>
-                                                                <template v-slot:default="{ active }">
-                                                                    <v-list-item-content>
-                                                                        <v-list-item-title>Mesa e cadeiras de
-                                                                            jantar</v-list-item-title>
-                                                                        <!-- <v-list-item-subtitle>Hangoutsmessage</v-list-item-subtitle> -->
-                                                                    </v-list-item-content>
-                                                                    <v-list-item-action>
-                                                                        <v-checkbox :input-value="active"
-                                                                            style="background-color: #e9e5f5; border-radius: 10px;"
-                                                                            color="primary"></v-checkbox>
-                                                                    </v-list-item-action>
-
-
-                                                                </template>
-                                                            </v-list-item>
-
-                                                            <v-list-item>
-                                                                <template v-slot:default="{ active }">
-                                                                    <v-list-item-content>
-                                                                        <v-list-item-title>Armários embutidos -
-                                                                            dormitório</v-list-item-title>
-
-                                                                    </v-list-item-content>
-                                                                    <v-list-item-action>
-                                                                        <v-checkbox :input-value="active"
-                                                                            style="background-color: #e9e5f5; border-radius: 10px;"
-                                                                            color="primary"></v-checkbox>
-                                                                    </v-list-item-action>
-
-
-                                                                </template>
-                                                            </v-list-item>
-
-                                                            <v-list-item>
-                                                                <template v-slot:default="{ active }">
-                                                                    <v-list-item-content>
-                                                                        <v-list-item-title>Armário na
-                                                                            cozinha</v-list-item-title>
-
-                                                                    </v-list-item-content>
-                                                                    <v-list-item-action>
-                                                                        <v-checkbox :input-value="active"
-                                                                            style="background-color: #e9e5f5; border-radius: 10px;"
-                                                                            color="primary"></v-checkbox>
-                                                                    </v-list-item-action>
-
-
-                                                                </template>
-                                                            </v-list-item>
-                                                            <v-list-item>
-                                                                <template v-slot:default="{ active }">
-                                                                    <v-list-item-content>
-                                                                        <v-list-item-title>piscina </v-list-item-title>
-
-                                                                    </v-list-item-content>
-                                                                    <v-list-item-action>
-                                                                        <v-checkbox :input-value="active"
-                                                                            style="background-color: #e9e5f5; border-radius: 10px;"
-                                                                            color="primary"></v-checkbox>
-                                                                    </v-list-item-action>
-
-
-                                                                </template>
-                                                            </v-list-item>
-                                                        </v-list-item-group>
-                                                    </v-list>
-                                                    <v-card-actions>
-                                                        <v-btn color="warning" @click="e1 = 1">Voltar</v-btn>
-
-                                                        <v-spacer />
-                                                        <v-btn color="#6A1B9A" outlined @click="continuar(3, 'form')">
-                                                            Continuar
-                                                        </v-btn>
-                                                    </v-card-actions>
-                                                </v-container>
-                                            </v-form>
-                                        </v-card>
-
-
-                                    </v-stepper-content>
-                                    <v-stepper-content step="3">
-                                        <v-card flat>
-                                            <v-form ref="form2" lazy-validation>
-                                                <v-container>
-
-                                                    <v-row dense class="py-10">
-                                                        <v-col cols="12" sm="12">
-                                                            <template>
-                                                                <span class="text-h6">Fotos do Imóvel</span><br />
-                                                                <span class="subtitle">Primeiro campo adicionar a foto
-                                                                    principal e o segundo campo deve adicionar 10 fotos no
-                                                                    máximo.</span>
                                                             </template>
-                                                        </v-col>
-                                                        <v-col cols="12" md="6" class="pb-10">
-                                                            <template>
-                                                                <v-file-input accept="image/*" label="Foto principal" chips
-                                                                    counter multiple show-size
-                                                                    truncate-length="15"></v-file-input>
-                                                            </template>
-                                                        </v-col>
-                                                        <v-col cols="12" md="6">
-                                                            <template>
-                                                                <v-file-input accept="image/*"
-                                                                    label="Fotos do Imóvel 10 fotos no máximo." chips close
-                                                                    counter multiple show-size
-                                                                    truncate-length="15"></v-file-input>
-                                                            </template>
-                                                        </v-col>
+                                                        </v-list-item>
 
+                                                        <v-list-item>
+                                                            <template v-slot:default="{ active }">
+                                                                <v-list-item-content>
+                                                                    <v-list-item-title>Mesa e cadeiras de
+                                                                        jantar</v-list-item-title>
+                                                                </v-list-item-content>
+                                                                <v-list-item-action>
+                                                                    <v-checkbox :input-value="active" v-model="imovel.mesa_cadeira" style="background-color: #e9e5f5; border-radius: 10px;" color="primary"></v-checkbox>
+                                                                </v-list-item-action>
 
+                                                            </template>
+                                                        </v-list-item>
+
+                                                        <v-list-item>
+                                                            <template v-slot:default="{ active }">
+                                                                <v-list-item-content>
+                                                                    <v-list-item-title>Armários embutidos -
+                                                                        dormitório</v-list-item-title>
+
+                                                                </v-list-item-content>
+                                                                <v-list-item-action>
+                                                                    <v-checkbox :input-value="active" v-model="imovel.armario_embutido" style="background-color: #e9e5f5; border-radius: 10px;" color="primary"></v-checkbox>
+                                                                </v-list-item-action>
+
+                                                            </template>
+                                                        </v-list-item>
+
+                                                        <v-list-item>
+                                                            <template v-slot:default="{ active }">
+                                                                <v-list-item-content>
+                                                                    <v-list-item-title>Armário na
+                                                                        cozinha</v-list-item-title>
+
+                                                                </v-list-item-content>
+                                                                <v-list-item-action>
+                                                                    <v-checkbox :input-value="active" v-model="armario_cozinha" style="background-color: #e9e5f5; border-radius: 10px;" color="primary"></v-checkbox>
+                                                                </v-list-item-action>
+
+                                                            </template>
+                                                        </v-list-item>
+                                                        <v-list-item>
+                                                            <template v-slot:default="{ active }">
+                                                                <v-list-item-content>
+                                                                    <v-list-item-title>piscina </v-list-item-title>
+
+                                                                </v-list-item-content>
+                                                                <v-list-item-action>
+                                                                    <v-checkbox :input-value="active" v-model="imovel.piscina" style="background-color: #e9e5f5; border-radius: 10px;" color="primary"></v-checkbox>
+                                                                </v-list-item-action>
+
+                                                            </template>
+                                                        </v-list-item>
+                                                    </v-list-item-group>
+                                                </v-list>
+                                                <v-card-actions>
+                                                    <v-btn color="warning" @click="e1 = 1">Voltar</v-btn>
+
+                                                    <v-spacer />
+                                                    <v-btn color="#6A1B9A" outlined @click="continuar(3, 'form')">
+                                                        Continuar
+                                                    </v-btn>
+                                                </v-card-actions>
+                                            </v-container>
+                                        </v-form>
+                                    </v-card>
+
+                                </v-stepper-content>
+                                <v-stepper-content step="3">
+                                    <v-card flat>
+                                        <v-form ref="form3" lazy-validation>
+                                            <v-container>
+
+                                                <v-row dense class="py-10">
+                                                    <v-col cols="12" sm="12">
                                                         <template>
-                                                            <span class="text-h6">Documentação do Imóvel </span><br />
-                                                            <span class="subtitle">Ao divulgarmos esses dados iremos colocar
-                                                                marca d'água no documento para proteger as
-                                                                informações.</span>
+                                                            <span class="text-h6">Fotos do Imóvel</span><br />
+                                                            <span class="subtitle">Primeiro campo adicionar a foto
+                                                                principal e o segundo campo deve adicionar 10 fotos no
+                                                                máximo.</span>
                                                         </template>
-                                                        <v-col cols="12" md="12">
-                                                            <template>
-                                                                <v-file-input accept="image/*"
-                                                                    label="Crockis"></v-file-input>
-                                                            </template>
-                                                        </v-col>
-                                                        <v-col cols="12" md="12">
-                                                            <template>
-                                                                <v-file-input accept="image/*"
-                                                                    label="Localização"></v-file-input>
-                                                            </template>
-
-                                                        </v-col>
-                                                        <v-col cols="12" md="12">
-                                                            <template>
-                                                                <v-file-input accept="image/*"
-                                                                    label="Titulo de propriedade"></v-file-input>
-                                                            </template>
-                                                        </v-col>
-                                                    </v-row>
-                                                </v-container>
-                                            </v-form>
-                                        </v-card>
-
-                                        <v-card-actions>
-                                            <v-btn color="warning" @click="e1 = 2">Voltar</v-btn>
-
-                                            <v-spacer />
-                                            <v-btn color="#6A1B9A"  outlined @click="continuar(4, 'form')">
-                                                Continuar
-                                            </v-btn>
-                                        </v-card-actions>
-                                    </v-stepper-content>
-                                    <v-stepper-content step="4">
-                                        <v-card flat>
-                                            <v-form ref="form2" lazy-validation>
-                                                <v-container>
-                                                    <v-row dense>
+                                                    </v-col>
+                                                    <v-col cols="12" md="6" class="pb-10">
                                                         <template>
-                                                            <span class="text-h1">JÁ NÃO SEI O QUE COLOCAR MAIS AQUI </span><br />
-                                                            <span class="subtitle">Ao divulgarmos esses dados iremos colocar
-                                                                marca d'água no documento para proteger as
-                                                                informações.</span>
+                                                            <v-file-input accept="image/*" label="Foto principal" chips counter show-size v-model="imovel.fotoPrincipal" :rules="multiplaImagemRules"></v-file-input>
                                                         </template>
-                                                    </v-row>
-                                                </v-container>
-                                            </v-form>
-                                        </v-card>
+                                                    </v-col>
+                                                    <v-col cols="12" md="6">
+                                                        <template>
+                                                            <v-file-input accept="image/*" label="Fotos do Imóvel 10 fotos no máximo." chips close counter multiple show-size truncate-length="15" v-model="imovel.mutiplaImagem"></v-file-input>
+                                                        </template>
+                                                    </v-col>
 
-                                        <v-card-actions>
-                                            <v-btn color="warning" @click="e1 = 3">Voltar</v-btn>
+                                                    <template>
+                                                        <span class="text-h6">Documentação do Imóvel </span><br />
+                                                        <span class="subtitle">Ao divulgarmos esses dados iremos colocar
+                                                            marca d'água no documento para proteger as
+                                                            informações.</span>
+                                                    </template>
+                                                    <v-col cols="12" md="12">
+                                                        <template>
+                                                            <v-file-input accept="image/*" label="Crockis" v-model="imovel.crockis"></v-file-input>
+                                                        </template>
+                                                    </v-col>
+                                                    <v-col cols="12" md="12">
+                                                        <template>
+                                                            <v-file-input accept="image/*" label="Localização" v-model="imovel.localizacao"></v-file-input>
+                                                        </template>
 
-                                            <v-spacer />
-                                            <v-btn class="bg-primary darken-4 white--text" @click="setNovoCondominio()">
-                                                {{
+                                                    </v-col>
+                                                    <v-col cols="12" md="12">
+                                                        <template>
+                                                            <v-file-input accept="image/*" label="Titulo de propriedade" v-model="imovel.tituloProprie"></v-file-input>
+                                                        </template>
+                                                    </v-col>
+                                                </v-row>
+                                            </v-container>
+                                        </v-form>
+                                    </v-card>
+
+                                    <v-card-actions>
+                                        <v-btn color="warning" @click="e1 = 2">Voltar</v-btn>
+
+                                        <v-spacer />
+                                        <v-btn color="#6A1B9A" outlined @click="continuar(4, 'form')">
+                                            Continuar
+                                        </v-btn>
+                                    </v-card-actions>
+                                </v-stepper-content>
+                                <v-stepper-content step="4">
+                                    <v-card flat>
+                                        <v-form ref="form4" lazy-validation>
+                                            <v-container>
+                                                <v-row dense>
+                                                    <template>
+                                                        <span class="text-h1">JÁ NÃO SEI O QUE COLOCAR MAIS AQUI </span><br />
+                                                        <span class="subtitle">Ao divulgarmos esses dados iremos colocar
+                                                            marca d'água no documento para proteger as
+                                                            informações.</span>
+                                                    </template>
+                                                </v-row>
+                                            </v-container>
+                                        </v-form>
+                                    </v-card>
+
+                                    <v-card-actions>
+                                        <v-btn color="warning" @click="e1 = 3">Voltar</v-btn>
+
+                                        <v-spacer />
+                                        <v-btn class="bg-primary darken-4 white--text" @click="salvarImovel()">
+                                            {{
                                                     editedIndex > -1
                                                     ? "Actualizar"
                                                     : "Guardar"
                                                 }}
-                                            </v-btn>
-                                        </v-card-actions>
-                                    </v-stepper-content>
-                                </v-stepper-items>
-                            </v-col>
-                            <v-col sm="1" md="2" lg="2"></v-col>
-                        </v-row>
+                                        </v-btn>
+                                    </v-card-actions>
+                                </v-stepper-content>
+                            </v-stepper-items>
+                        </v-col>
+                        <v-col sm="1" md="2" lg="2"></v-col>
+                    </v-row>
 
-                    </v-stepper>
-                </v-container>
-            </v-card-text>
-        </v-card>
-    </PortalLayout>
+                </v-stepper>
+            </v-container>
+        </v-card-text>
+    </v-card>
+</PortalLayout>
 </template>
+
 <script>
 import PortalLayout from "../../Templates/PortalLayout.vue";
 export default {
@@ -649,36 +531,93 @@ export default {
     },
     data: () => ({
         qquarto: "1",
-        value: 0,
-        numeroQuarto: 0,
-        numeroGaragem: 0,
-        numeroBanheiro: 0,
-        numeroAndar: 0,
-        metros: 0,
         getarrendar: false,
         getvender: false,
         getImposto: false,
         getcolaborador: false,
-        tipo_regimes: [
-            { id: 1, designacao: "2 Meses" },
-            { id: 1, designacao: "3 Meses" },
-            { id: 2, designacao: "6 Meses" },
-            { id: 2, designacao: "1 Ano" },
-            { id: 2, designacao: "2 Anos" },
-            { id: 2, designacao: "3 Anos" },
-            { id: 2, designacao: "4 Anos" },
-            { id: 2, designacao: "5 Anos" },
-            { id: 2, designacao: "10 Anos" },
-            { id: 2, designacao: "15 Anos" },
+        getProprietario: false,
+        tipo_regimes: [{
+                id: 1,
+                designacao: "2 Meses"
+            },
+            {
+                id: 1,
+                designacao: "3 Meses"
+            },
+            {
+                id: 2,
+                designacao: "6 Meses"
+            },
+            {
+                id: 2,
+                designacao: "1 Ano"
+            },
+            {
+                id: 2,
+                designacao: "2 Anos"
+            },
+            {
+                id: 2,
+                designacao: "3 Anos"
+            },
+            {
+                id: 2,
+                designacao: "4 Anos"
+            },
+            {
+                id: 2,
+                designacao: "5 Anos"
+            },
+            {
+                id: 2,
+                designacao: "10 Anos"
+            },
+            {
+                id: 2,
+                designacao: "15 Anos"
+            },
         ],
-        tipo_clientes: [
-            { id: 1, designacao: "SINGULAR" },
-            { id: 2, designacao: "EMPRESA" },
+        tipo_clientes: [{
+                id: 1,
+                designacao: "SINGULAR"
+            },
+            {
+                id: 2,
+                designacao: "EMPRESA"
+            },
         ],
         loading: null,
-        condominio: {},
-        items: [
-            {
+        imovel: {
+            colaborador_id:null,
+            proprietario_id:null,
+            venda_id:null,
+            arrendamento_id:null,
+            crockis:null,
+            localizacao:null,
+            designacao:null,
+            descricao:null,
+            tipologia_id:null,
+            tipoImovel_id:null,
+            numero_quartos:0,
+            numero_banheiro:0,
+            numero_garagem:0,
+            numero_andar: 0,
+            metros:0,
+            tituloImovel:null,
+            localizacaoGeografica:null,
+            provincia:null,
+            cidades:null,
+            simImP:null,
+            naoImP:null,
+            imposto_predial:null,
+            mesa_cadeira:null,
+            armario_embutido:null,
+            armario_cozinha:null,
+            piscina:null,
+            sofa:null,
+
+        },
+        items: [{
                 text: "Início",
                 disabled: false,
                 href: "/home",
@@ -692,7 +631,7 @@ export default {
         e1: 1,
         steps: 3,
         editedIndex: -1,
-        dialogAddCondominio: false,
+        dialogAddimovel: false,
         morador: {},
         erros: [],
         rules: {
@@ -709,15 +648,14 @@ export default {
         dateNascRules: [
             (v) => !!v || "Data é Obrigatório",
             (v) =>
-                v < new Date().toISOString().substr(0, 10) ||
-                "Data de Nascimento deve ser Menor que a Data Actual!",
+            v < new Date().toISOString().substr(0, 10) ||
+            "Data de Nascimento deve ser Menor que a Data Actual!",
             (v) =>
-                new Date().getFullYear() - new Date(v).getFullYear() >= 18 ||
-                "Idade informada é Inferior a 18",
+            new Date().getFullYear() - new Date(v).getFullYear() >= 18 ||
+            "Idade informada é Inferior a 18",
         ],
 
-        folders: [
-            {
+        folders: [{
                 subtitle: 'Jan 9, 2014',
                 title: 'Photos',
                 value: '1'
@@ -740,7 +678,7 @@ export default {
         setTimeout(function () {
             this.loading = false;
         }, 4000);
-        // alert(this.condominios);
+        // alert(this.imovels);
     },
     computed: {
         user() {
@@ -799,6 +737,7 @@ export default {
             // this.getarrendar = true;
             // this.getregime = true;
             this.getcolaborador = true;
+            this.getProprietario = true;
             // alert(this.getarrendar)
             const corColaborador = document.querySelector(".corColaborador");
             const corProprietario = document.querySelector(".corProprietario");
@@ -813,7 +752,9 @@ export default {
             // this.getregime = true;
             // this.getvender = false;
             // alert(this.getarrendar)
+
             this.getcolaborador = false;
+            this.getProprietario = true;
             const corProprietario = document.querySelector(".corProprietario");
             const corColaborador = document.querySelector(".corColaborador");
             corProprietario.style.color = "white";
@@ -824,44 +765,70 @@ export default {
         },
         simIP() {
             this.getImposto = true;
-            const simImpostoPredial = document.querySelector(".simImpostoPredial");
-            const naocorImpostoPredial = document.querySelector(".naocorImpostoPredial");
-            simImpostoPredial.style.color = "white";
-            simImpostoPredial.style.background = "#D1C4E9";
-            naocorImpostoPredial.style.background = "white";
-            naocorImpostoPredial.style.color = "black";
+            const simimposto_predial = document.querySelector(".simimposto_predial");
+            const naocorimposto_predial = document.querySelector(".naocorimposto_predial");
+            simimposto_predial.style.color = "white";
+            simimposto_predial.style.background = "#D1C4E9";
+            naocorimposto_predial.style.background = "white";
+            naocorimposto_predial.style.color = "black";
         },
         naoIP() {
             this.getImposto = false;
-            const naocorImpostoPredial = document.querySelector(".naocorImpostoPredial");
-            const simImpostoPredial = document.querySelector(".simImpostoPredial");
-            naocorImpostoPredial.style.color = "white";
-            naocorImpostoPredial.style.background = "#D1C4E9";
-            simImpostoPredial.style.background = "white";
-            simImpostoPredial.style.color = "black";
+            const naocorimposto_predial = document.querySelector(".naocorimposto_predial");
+            const simimposto_predial = document.querySelector(".simimposto_predial");
+            naocorimposto_predial.style.color = "white";
+            naocorimposto_predial.style.background = "#D1C4E9";
+            simimposto_predial.style.background = "white";
+            simimposto_predial.style.color = "black";
         },
 
-
-        setNovoCondominio() {
+        salvarImovel() {
             // this.loading = true;
 
-            alert(JSON.stringify(this.condominio)); // this.$inertia.post("/condominios", this.condominio, {});
+            // alert(JSON.stringify(this.imovel)); // this.$inertia.post("/imovels", this.imovel, {});
 
-            // axios
-            //     .post(this.base_url + "/condominios", this.condominio)
-            //     .then((response) => {
-            //         this.loading = false;
-            //         alert(JSON.stringify(response.data));
-            //         //   this.resposta = response.data
-            //     })
-            //     .catch(() => {
-            //         alert(JSON.stringify(response.data));
+            axios
+                .post("/portal/imoveis", this.imovel)
+                .then((response) => {
+                    // this.loading = false;
+                    // alert(JSON.stringify(response.data));
+                    //   this.resposta = response.data
+                })
+                .catch(() => {
+                    // alert(JSON.stringify(response.data));
 
-            //         //   console.log('Falha ao registar os dados na base de dados!...')
-            //     });
+                    //   console.log('Falha ao registar os dados na base de dados!...')
+                });
+            
+            // this.$inertia.post(
+            //             "/portal/imoveis",
+            //             this.imovel,
+            //             {
+            //                 onFinish: () => {
+            //                     if (this.$page.props.flash.success != null) {
+            //                         Vue.toasted.global.defaultSuccess({
+            //                             msg:
+            //                                 "" + this.$page.props.flash.success,
+            //                         });
+            //                     }
+            //                     if (this.$page.props.flash.error != null) {
+            //                         Vue.toasted.global.defaultError({
+            //                             msg: "" + this.$page.props.flash.error,
+            //                         });
+            //                     }
+            //                     this.closeSave();
+            //                 },
+            //             }
+            //         );
         },
-        showDialogAddCondominio() {
-            this.dialogAddCondominio = true;
+        showDialogAddimovel() {
+            this.dialogAddimovel = true;
+        },
+        validate() {
+            this.$refs.form.validate();
+            this.$refs.form2.validate();
+            this.$refs.form3.validate();
+            this.$refs.form4.validate();
         },
         continuar(stepe, form) {
             if (this.$refs[form].validate()) {
@@ -869,14 +836,9 @@ export default {
             }
         },
 
-        validate() {
-            this.$refs.form.validate();
-            this.$refs.form2.validate();
-        },
-
         close() {
             this.morador = {};
-            this.dialogAddCondominio = false;
+            this.dialogAddimovel = false;
             this.$nextTick(() => {
                 this.morador = Object.assign({}, this.defaultItem);
                 this.editedIndex = -1;
@@ -888,6 +850,7 @@ export default {
 
         increaseValue() {
             var value = parseInt(document.getElementById("idquarto").value, 10);
+            alert(value)
             value = isNaN(value) ? 0 : value;
             value++;
             document.getElementById("idquarto").value = value;
@@ -904,50 +867,50 @@ export default {
         },
 
         incrementquarto() {
-            this.numeroQuarto++;
+            this.imovel.numero_quartos++;
         },
         decrementquarto() {
-            if (this.numeroQuarto > 0) {
-                this.numeroQuarto--;
+            if (this.imovel.numero_quartos > 0) {
+                this.imovel.numero_quartos--;
             }
         },
-        incrementnumeroAndar() {
-            this.numeroAndar++;
+        incrementnumero_andar() {
+            this.imovel.numero_andar++;
         },
-        decrementnumeroAndar() {
-            if (this.numeroAndar > 0) {
-                this.numeroAndar--;
+        decrementnumero_andar() {
+            if (this.imovel.numero_andar > 0) {
+                this.imovel.numero_andar--;
             }
         },
         incrementbanheiro() {
-            this.numeroBanheiro++;
+            this.imovel.numero_banheiro++;
         },
         decrementbanheiro() {
-            if (this.numeroBanheiro > 0) {
-                this.numeroBanheiro--;
+            if (this.imovel.numero_banheiro > 0) {
+                this.imovel.numero_banheiro--;
             }
         },
         decrementGaragem() {
-            if (this.numeroGaragem > 0) {
-                this.numeroGaragem--;
+            if (this.imovel.numero_garagem > 0) {
+                this.imovel.numero_garagem--;
             }
         },
         incrementGaragem() {
-            this.numeroGaragem++;
+            this.imovel.numero_garagem++;
         },
         increMentmetros() {
-            this.metros++;
+            this.imovel.metros++;
         },
         decrementMetros() {
-            if (this.metros > 0) {
-                this.metros--;
+            if (this.imovel.metros > 0) {
+                this.imovel.metros--;
             }
         }
-
 
     },
 };
 </script>
+
 <style>
 .no-padding-messages .v-messages.theme--light,
 .no-padding-details .v-text-field__details {

@@ -88,7 +88,7 @@
                                 <p class="text-h1 font-weight-bold p-0 m-0">SIG-VAI</p>
                                 <p class="subtitle pb-5 m-0">Sistema de Gestão de Imóbiliaria (Kubicos)</p>
                                 <p class="text-h5">Aumente sua receita com o nosso sistema</p>
-                                <p>O ZAP+Fin é a plataforma de financiamento imobiliário que <br />oferece crédito ao seu
+                                <p>O SIG-VRIM é a plataforma de financiamento imobiliário que <br />oferece crédito ao seu
                                     cliente de uma maneira fácil e sem burocracia.</p>
 
                             </v-card-text>

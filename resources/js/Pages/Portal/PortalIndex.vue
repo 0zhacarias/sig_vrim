@@ -75,7 +75,7 @@
                                     </v-autocomplete>
                                 </v-col>
                                 <v-col md="2">
-                                    <v-btn  dense :disabled="loading" class="ma-1" large>
+                                    <v-btn dense :disabled="loading" class="ma-1" large>
                                         pesquisar
                                     </v-btn>
                                 </v-col>
@@ -92,15 +92,15 @@
             <v-container>
                 <v-row no-gutters justify="pt-15" :style="'justify-content: center;'" class="pt-14">
                     <v-toolbar-title class="deep-purple darken-3">
-                        
+
                         <v-card-title class="Centralizar-linha">Lançamentos mais recentes</v-card-title>
                     </v-toolbar-title>
-                    <v-col v-for="item in clientes" :key="item.id" cols="12" sm="12" md="4" class="mx-1"
+                    <v-col v-for="item in clientes" :key="item.id" cols="12" sm="12" md="" class="mx-1"
                         :lg="clientes.length <= 3 ? 6 : 4" :style="'max-width: min-content;'">
                         <v-hover v-slot="{ hover }">
 
-                            <v-card :loading="loading" class="mx-auto my-12 elevation-10" max-width="300"
-                                :elevation="hover ? 10 : 0">
+                            <v-card :loading="loading" class="mx-5 my-12 elevation-10" max-width="320"
+                                @click.stop="findImoveis(item.id)" :elevation="hover ? 10 : 0">
                                 <v-img height="150" src="/img/Aaa.png"></v-img>
 
                                 <v-card-title>{{ item.title }}</v-card-title>
@@ -146,32 +146,27 @@
         <!-- Lançamentos próximos a você -->
         <template>
             <v-toolbar-title class="deep-purple darken-3 elevation-0">
-                        
-                        <v-card-title class="Centralizar-linha ">Lançamentos próximos a você</v-card-title>
-                    </v-toolbar-title>
+
+                <v-card-title class="Centralizar-linha ">Lançamentos próximos a você</v-card-title>
+            </v-toolbar-title>
             <v-container>
-                <v-row no-gutters justify="pa-0" :style="'justify-content: center;'">
-                    <!-- <v-card-title class="Centralizar-linha ">Lançamentos próximos a você</v-card-title> -->
-                    <v-col v-for="item in clientes" :key="item.id" cols="12" sm="12" md="4" class="mx-1"
+                <v-row no-gutters justify="pt-15" :style="'justify-content: center;'" class="pt-14">
+                    <v-col v-for="item in clientes" :key="item.id" cols="12" sm="12" md="" class="mx-1"
                         :lg="clientes.length <= 3 ? 6 : 4" :style="'max-width: min-content;'">
                         <v-hover v-slot="{ hover }">
 
-                            <v-card :loading="loading" class="mx-auto my-12 elevation-10" max-width="300"
-                                :elevation="hover ? 10 : 0">
-                                <template slot="progress">
-                                    <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
-                                </template>
-
-                                <v-img height="150" src="/img/images.jpeg"></v-img>
+                            <v-card :loading="loading" class="mx-5 my-12 elevation-10" max-width="320"
+                                @click.stop="findImoveis(item.id)" :elevation="hover ? 10 : 0">
+                                <v-img height="150" src="/img/jason-briscoe.jpg"></v-img>
 
                                 <v-card-title>{{ item.title }}</v-card-title>
+                                <v-card-subtitle class="text--subtitle">{{ item.subtitle }}</v-card-subtitle>
 
                                 <v-card-text>
                                     <v-row align="center" class="mx-0">
-                                        <v-rating :value="6" color="amber" dense half-increments readonly
+                                        <v-rating :value="4.5" color="amber" dense half-increments readonly
                                             size="14"></v-rating>
                                     </v-row>
-                                    <v-card-subtitle class="text--subtitle">{{ item.subtitle }}</v-card-subtitle>
 
                                     <!-- <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus
                                         patio seating.
@@ -180,21 +175,19 @@
 
                                 <v-divider class="mx-4"></v-divider>
 
-                                <!-- <v-card-title>Tonight's availability</v-card-title> -->
-
                                 <v-card-text>
                                     <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
                                         column>
-                                        <v-chip>10</v-chip>
+                                        <v-chip><span class="mdi mdi-car"></span>5</v-chip>
 
-                                        <v-chip>3</v-chip>
+                                        <v-chip><span class="mdi mdi-faucet-variant"></span>7:</v-chip>
 
-                                        <v-chip>1</v-chip>
-
+                                        <v-chip>
+                                            <span class="mdi mdi-bed-double"></span>8</v-chip>
                                     </v-chip-group>
                                 </v-card-text>
-                                <!-- 
-                                <v-card-actions>
+
+                                <!-- <v-card-actions>
                                     <v-btn color="deep-purple lighten-2" text>
 
                                     </v-btn>
@@ -208,9 +201,9 @@
 
         <template>
             <v-toolbar-title class="deep-purple darken-3 elevation-0">
-                    
-                    <v-card-title class="Centralizar-linha ">Imoveis em zonas Urbanas</v-card-title>
-                </v-toolbar-title>
+
+                <v-card-title class="Centralizar-linha ">Imoveis em zonas Urbanas</v-card-title>
+            </v-toolbar-title>
             <v-container>
                 <v-row no-gutters justify="pa-0" :style="'justify-content: center;'">
                     <!-- <v-card-title class="Centralizar-linha ">Imoveis em zonas Urbanas</v-card-title> -->
@@ -225,7 +218,7 @@
 
                                 <v-img height="150" src="/img/Aaa.png"></v-img>
 
-                                <v-card-title>Cafe Badilico</v-card-title>
+                                <v-card-title>T2</v-card-title>
 
                                 <v-card-text>
                                     <v-row align="center" class="mx-0">
@@ -240,7 +233,7 @@
 
                                 <v-divider class="mx-4"></v-divider>
 
-                                <v-card-title>Tonight's availability</v-card-title>
+                                <v-card-title>Apenas para Benguela</v-card-title>
 
                                 <v-card-text>
                                     <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
@@ -261,7 +254,7 @@
                                 </v-card-actions> -->
                             </v-card>
                         </v-hover>
-                        
+
                         <span align="center">
                             <h1>Municipios</h1>
                             <p>Luanda</p>
@@ -302,7 +295,7 @@
 
                                 <v-divider class="mx-4"></v-divider>
 
-                                <v-card-title>Tonight's availability</v-card-title>
+                                <v-card-title>Apenas para Benguela</v-card-title>
 
                                 <v-card-text>
                                     <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
@@ -362,7 +355,7 @@
 
                                 <v-divider class="mx-4"></v-divider>
 
-                                <v-card-title>Tonight's availability</v-card-title>
+                                <v-card-title>Apenas Para Benguela</v-card-title>
 
                                 <v-card-text>
                                     <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
@@ -488,14 +481,14 @@ export default {
         {
             id: 2,
             title: "casa colonial T4",
-            subtitle: "Elegante casa colonial, cercada por um exuberante jardim paisagístico. ", 
+            subtitle: "Elegante casa colonial, cercada por um exuberante jardim paisagístico. ",
             ssrc: "https://cdn.quasar.dev/img/parallax2.jpg",
         },
         {
             id: 3,
             title: "Apartamento T3",
             subtitle: "Apartamento compacto e bem projetado, perfeito para solteiros ou casais",
-               src: "https://cdn.quasar.dev/img/parallax2.jpg",
+            src: "https://cdn.quasar.dev/img/parallax2.jpg",
         },
         {
             id: 4,
@@ -513,7 +506,7 @@ export default {
         {
             id: 5,
             title: "Apartamento V3",
-            subtitle: "Elegante casa colonial, cercada por um exuberante jardim paisagístico. ", 
+            subtitle: "Elegante casa colonial, cercada por um exuberante jardim paisagístico. ",
             src: "https://cdn.quasar.dev/img/parallax2.jpg",
         },
         ],
@@ -541,6 +534,10 @@ export default {
 
     mounted() { },
     methods: {
+        findImoveis(id) {
+            window.location.href = "/portal/imovel-selecionado/" + btoa(btoa(btoa(id)));
+            // alert(id);
+        },
         validate() {
             if (this.$refs.form.validate()) {
                 this.snackbar = true;
@@ -622,4 +619,5 @@ v-card {
     /* background-image:linear-gradient(to bottom right, #0077c2, #0093ff) */
 }
 
-;</style>
+;
+</style>
