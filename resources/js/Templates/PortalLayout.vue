@@ -70,7 +70,7 @@
                         Login
                     </v-btn>
 
-                    <v-btn dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/condominio/create"
+                    <v-btn dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/register"
                         elevation="0" text>
                         Cadastrar
                     </v-btn>

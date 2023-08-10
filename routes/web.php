@@ -52,11 +52,18 @@ Route::get('/arrendamento', function () {
 
 
 Route::get('/home', function () {
-    return Inertia::render('Home');
+    return view('home');
 });
 Route::get('/perfilCliente',[App\Http\Controllers\ClienteController::class,'perfil_cliente']);
+// Route::get('/register', function () {
+//     return view('auth.register');
+// })->name('cadastrar');
 Auth::routes();
-Route::resource('/home', App\Http\Controllers\HomeController::class);
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
+// Route::resource('/home', App\Http\Controllers\HomeController::class);
 Route::resource('/moradores', App\Http\Controllers\MoradorController::class);
 Route::resource('/condominios', App\Http\Controllers\CondominioController::class);
 Route::get('/paginarwte', [App\Http\Controllers\HomeController::class, 'portal_auth'])->name('home');

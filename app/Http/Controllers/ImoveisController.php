@@ -35,9 +35,12 @@ class ImoveisController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-         dd($request);
+    public function store(Request $request) { 
+   
+   if(has($request->get('fotoPrincipal'))){
+        dd($request);
+    }
+        
         // return response()->json($request);
     
         // $data = $request->all();
@@ -73,6 +76,7 @@ class ImoveisController extends Controller
             'users_id'=>$request->get('numero_banheiro'),
             'meses'=>$request->get('numero_banheiro'),
         ]);
+       
     }
 
     /**
