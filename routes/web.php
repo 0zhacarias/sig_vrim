@@ -54,8 +54,8 @@ Route::get('/arrendamento', function () {
 Route::get('/home', function () {
     return Inertia::render('Home');
 });
-Route::get('/perfilCliente',[App\Http\Controllers\ClienteController::class,'perfil_cliente']);
 Auth::routes();
+Route::get('/perfilCliente',[App\Http\Controllers\ClienteController::class,'perfil_cliente']);
 Route::resource('/home', App\Http\Controllers\HomeController::class);
 Route::resource('/moradores', App\Http\Controllers\MoradorController::class);
 Route::resource('/condominios', App\Http\Controllers\CondominioController::class);
