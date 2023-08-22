@@ -41,74 +41,78 @@
             </v-app-bar>
         </div> -->
 
-            <v-toolbar flat class="header1 elevation-0 py-0" color="deep-purple darken-3 ">
-                <v-toolbar-title ><a href="/" style="text-decoration: none"><v-avatar size="40" color="deep-purple darken-3"><v-icon
-                                color="white" large>home</v-icon></v-avatar>
-                      <span class="white--text">  SIG-VAI</span>
-                    </a>
-                </v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-toolbar-items class="hidden-xs-only">
-                    <v-btn class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisArrendamentos" elevation="0"
-                        text>
-                        Arrendar
-                    </v-btn>
+        <v-toolbar flat class="header1 elevation-0 py-0" color="deep-purple darken-3 ">
+            <v-toolbar-title><a href="/" style="text-decoration: none"><v-avatar size="40"
+                        color="deep-purple darken-3"><v-icon color="white" large>home</v-icon></v-avatar>
+                    <span class="white--text"> SIG-VAI</span>
+                </a>
+            </v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items class="hidden-xs-only">
+                <v-btn class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisArrendamentos"
+                    elevation="0" text>
+                    Arrendar
+                </v-btn>
 
-                    <v-btn dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisCompras"
-                        elevation="0" text>
-                        Comprar
-                    </v-btn>
-                    <v-btn dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/imoveis"
-                        elevation="0" text>
-                        Anuciar
-                    </v-btn>
-                </v-toolbar-items>
-                
-                <v-toolbar-items class="hidden-xs-only">
-                    <v-btn class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/logar" elevation="0"
-                        text>
-                        Login
-                    </v-btn>
+                <v-btn dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisCompras"
+                    elevation="0" text>
+                    Comprar
+                </v-btn>
+                <v-btn dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/imoveis" elevation="0"
+                    text>
+                    Anuciar
+                </v-btn>
+            </v-toolbar-items>
+            <v-toolbar-items class="hidden-xs-only">
+                <v-btn v-if="isLoggedOut" class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/logar" elevation="0" text>
+                    Login
+                </v-btn>
 
-                    <v-btn dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/condominio/create"
-                        elevation="0" text>
-                        Cadastrar
-                    </v-btn>
-                </v-toolbar-items>
-                <div class="hidden-sm-and-up">
-                    <v-menu offset-y>
-                        <template v-slot:activator="{ on }">
-                            <v-app-bar-nav-icon v-on="on"></v-app-bar-nav-icon>
-                        </template>
-                        <v-list class="responsiveMenu">
-            <v-list-item>
-              <v-list-item-title><router-link to="/">Home</router-link></v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title><router-link to="/about">About</router-link></v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title><router-link to="/contact">Contact</router-link></v-list-item-title>
-            </v-list-item>
-          </v-list>
-                    </v-menu>
-                </div>
-            </v-toolbar>
+                <v-btn v-if="isLoggedOut"  dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/RegistrarConta" elevation="0" text>
+                    Cadastrar
+                </v-btn>
+                <v-btn text dense class="white--text text-lowercase" @click="perfilUsuario()">
+                    <!-- {{ user.name }}<br/> -->
+                    <!-- {{ user.email}} -->
+                </v-btn>
+                <v-btn class="white--text" v-if="isLoggedIn" @click="logout" title="Terminar Sessão" icon>
+                    <v-icon>mdi-export</v-icon>
+                </v-btn>
+            </v-toolbar-items>
+            <div class="hidden-sm-and-up">
+                <v-menu offset-y>
+                    <template v-slot:activator="{ on }">
+                        <v-app-bar-nav-icon v-on="on"></v-app-bar-nav-icon>
+                    </template>
+                    <v-list class="responsiveMenu">
+                        <v-list-item>
+                            <v-list-item-title><router-link to="/">Home</router-link></v-list-item-title>
+                        </v-list-item>
+                        <v-list-item>
+                            <v-list-item-title><router-link to="/about">About</router-link></v-list-item-title>
+                        </v-list-item>
+                        <v-list-item>
+                            <v-list-item-title><router-link to="/contact">Contact</router-link></v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+            </div>
+        </v-toolbar>
 
-        
-<v-main class=" grey lighten-5 scroll-y pb-0" fluid>
+
+        <v-main class=" grey lighten-5 scroll-y pb-0" fluid>
             <!-- <v-container> -->
-                <slot align="center" justify="center" />
+            <slot align="center" justify="center" />
             <!-- </v-container> -->
         </v-main>
         <v-container>
 
 
-            
+
             <v-footer padless>
                 <v-card flat class="text-center">
                     <v-card-text>
-                        <v-btn  v-for="icon in icons" :key="icon" class="mx-4" icon>
+                        <v-btn v-for="icon in icons" :key="icon" class="mx-4" icon>
                             <v-icon color="#6A1B9A" size="24px">{{ icon }}</v-icon>
                         </v-btn>
                     </v-card-text>
@@ -150,12 +154,14 @@ export default {
             drawer: true,
             mini: true,
             totalNotificacoes: 0,
+            isLoggedIn: false,
+            isLoggedOut: true,
         };
     },
 
-    // mounted() {
-    //     console.log("portal layout");
-    // },
+    mounted() {
+        this.checkLoginStatus();
+    },
 
     computed: {
         user() {
@@ -163,19 +169,36 @@ export default {
         },
     },
     methods: {
+        checkLoginStatus() {
+            this.isLoggedIn = this.$page.props.auth.user !== null;
+            this.isLoggedOut = !this.isLoggedIn;
+        },
         logout() {
             axios.post("/logout").then((response) => {
                 window.location.reload();
+            }).catch((error) => {
+                console.log(error);
+                // Tratamento de erro, se necessário
             });
         },
+        perfilUsuario(){
+            axios.post("/perfil-usuario").then((response) => {
+                window.location.reload();
+            }).catch((error) => {
+                console.log(error);
+                // Tratamento de erro, se necessário
+            });
+            // this.$inertia.post("/login", this.user, {});
+        }
     },
 };
 </script>
 <style>
-@import "vuetify/dist/vuetify.min.css";
+/* @import "vuetify/dist/vuetify.min.css"; */
+
 /* @import "./assets/scss/_custom-variable.scss";
 @import "./assets/scss/style.scss"; */
-body{
-    font-family:'Poppins-Regular';
+body {
+    font-family: 'Poppins-Regular';
 }
 </style>

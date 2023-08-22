@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TipoDeDocumento;
+use App\Models\TipoDocumentacoes;
 use Illuminate\Http\Request;
 
-class TipoDeDocumentoController extends Controller
+class TipoDocumentacoesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class TipoDeDocumentoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TipoDeDocumento  $tipoDeDocumento
+     * @param  \App\Models\TipoDocumentacoes  $tipoDocumentacoes
      * @return \Illuminate\Http\Response
      */
-    public function show(TipoDeDocumento $tipoDeDocumento)
+    public function show(TipoDocumentacoes $tipoDocumentacoes)
     {
         //
     }
@@ -52,10 +52,10 @@ class TipoDeDocumentoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TipoDeDocumento  $tipoDeDocumento
+     * @param  \App\Models\TipoDocumentacoes  $tipoDocumentacoes
      * @return \Illuminate\Http\Response
      */
-    public function edit(TipoDeDocumento $tipoDeDocumento)
+    public function edit(TipoDocumentacoes $tipoDocumentacoes)
     {
         //
     }
@@ -64,10 +64,10 @@ class TipoDeDocumentoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TipoDeDocumento  $tipoDeDocumento
+     * @param  \App\Models\TipoDocumentacoes  $tipoDocumentacoes
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TipoDeDocumento $tipoDeDocumento)
+    public function update(Request $request, TipoDocumentacoes $tipoDocumentacoes)
     {
         //
     }
@@ -75,10 +75,10 @@ class TipoDeDocumentoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TipoDeDocumento  $tipoDeDocumento
+     * @param  \App\Models\TipoDocumentacoes  $tipoDocumentacoes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TipoDeDocumento $tipoDeDocumento)
+    public function destroy(TipoDocumentacoes $tipoDocumentacoes)
     {
         //
     }

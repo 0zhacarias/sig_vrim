@@ -27,13 +27,13 @@
                                 <v-stepper-content step="1">
                                     <v-card class="mb-12" flat>
                                         <v-card-text align="center" justify="center">
-                                            <v-btn class="corVender" outlined align="center" v-model="imovel.venda_id" @click="venderImoveis()">
+                                            <v-btn class="corVender" outlined align="center" value="1" v-model="imovel.venda_id" @click="venderImoveis()">
                                                 Vender</v-btn>
-                                            <v-btn outlined v-model="imovel.arrendamento_id" class="corArrendamento" @click="arrendarImoveis()">Arrendar</v-btn>
+                                            <v-btn outlined value="2" v-model="imovel.arrendamento_id" class="corArrendamento" @click="arrendarImoveis()">Arrendar</v-btn>
 
-                                            <v-btn outlined v-model="imovel.proprietario_id" @click="proprietario()" class="corProprietario" v-if="this.getarrendar == true || this.getvender == true">
+                                            <v-btn outlined value="1" v-model="imovel.proprietario_id" @click="proprietario()" class="corProprietario" v-if="this.getarrendar == true || this.getvender == true">
                                                 Proprietário</v-btn>
-                                            <v-btn outlined v-model="imovel.colaborador_id" @click="colaborador()" class="corColaborador" v-if="this.getarrendar == true || this.getvender == true">Pambaleiro</v-btn>
+                                            <v-btn outlined value="2" v-model="imovel.colaborador_id" @click="colaborador()" class="corColaborador" v-if="this.getarrendar == true || this.getvender == true">Pambaleiro</v-btn>
                                         </v-card-text>
 
                                         <v-form ref="form" lazy-validation  >
@@ -255,7 +255,7 @@
                                                 <v-divider></v-divider>
                                                 <v-row>
                                                     <v-col cols="12" md="12">
-                                                        <v-textarea v-model="imovel.tituloImovel" label="titulo do Anúcio*" outlined rows="2">
+                                                        <v-textarea v-model="imovel.designacao" label="titulo do Anúcio*" outlined rows="2">
 
                                                         </v-textarea>
                                                     </v-col>
@@ -389,7 +389,7 @@
 
                                                                 </v-list-item-content>
                                                                 <v-list-item-action>
-                                                                    <v-checkbox :input-value="active" v-model="armario_cozinha" style="background-color: #e9e5f5; border-radius: 10px;" color="primary"></v-checkbox>
+                                                                    <v-checkbox :input-value="active" v-model="imovel.armario_cozinha" style="background-color: #e9e5f5; border-radius: 10px;" color="primary"></v-checkbox>
                                                                 </v-list-item-action>
 
                                                             </template>
@@ -454,7 +454,7 @@
                                                     </template>
                                                     <v-col cols="12" md="12">
                                                         <template>
-                                                            <v-file-input accept="image/*" label="Crockis" v-model="imovel.crockis"></v-file-input>
+                                                            <v-file-input accept="application/pdf,image/*" label="Croquis dde Localização" v-model="imovel.croquis"></v-file-input>
                                                         </template>
                                                     </v-col>
                                                     <v-col cols="12" md="12">
@@ -465,7 +465,7 @@
                                                     </v-col>
                                                     <v-col cols="12" md="12">
                                                         <template>
-                                                            <v-file-input accept="image/*" label="Titulo de propriedade" v-model="imovel.tituloProprie"></v-file-input>
+                                                            <v-file-input accept="application/pdf,image/*" label="Titulo de propriedade" v-model="imovel.tituloPropriedade"></v-file-input>
                                                         </template>
                                                     </v-col>
                                                 </v-row>
@@ -592,7 +592,8 @@ export default {
             proprietario_id:null,
             venda_id:null,
             arrendamento_id:null,
-            crockis:null,
+            croquis:null,
+            tituloPropriedade:null,
             localizacao:null,
             designacao:null,
             descricao:null,
@@ -603,7 +604,7 @@ export default {
             numero_garagem:0,
             numero_andar: 0,
             metros:0,
-            tituloImovel:null,
+            designacao:null,
             localizacaoGeografica:null,
             provincia:null,
             cidades:null,
@@ -709,6 +710,8 @@ export default {
             alert(item);
         },
         venderImoveis() {
+            this.imovel.venda_id=true,
+            this.imovel.arrendamento_id=false
             this.getarrendar = false;
             this.getregime = false;
             this.getvender = true;
@@ -721,6 +724,8 @@ export default {
             // alert(this.getvender)
         },
         arrendarImoveis() {
+            this.imovel.venda_id=false,
+            this.imovel.arrendamento_id=true
             this.getarrendar = true;
             this.getregime = true;
             this.getvender = false;
@@ -738,6 +743,8 @@ export default {
             // this.getregime = true;
             this.getcolaborador = true;
             this.getProprietario = true;
+            this.imovel.proprietario_id=false;
+           this.imovel.colaborador_id=true;
             // alert(this.getarrendar)
             const corColaborador = document.querySelector(".corColaborador");
             const corProprietario = document.querySelector(".corProprietario");
@@ -752,7 +759,8 @@ export default {
             // this.getregime = true;
             // this.getvender = false;
             // alert(this.getarrendar)
-
+           this.imovel.proprietario_id=true;
+           this.imovel.colaborador_id=false,
             this.getcolaborador = false;
             this.getProprietario = true;
             const corProprietario = document.querySelector(".corProprietario");
@@ -764,6 +772,8 @@ export default {
 
         },
         simIP() {
+            this.imovel.simImP=true;
+            this.imovel.naoImP=false
             this.getImposto = true;
             const simimposto_predial = document.querySelector(".simimposto_predial");
             const naocorimposto_predial = document.querySelector(".naocorimposto_predial");
@@ -773,6 +783,8 @@ export default {
             naocorimposto_predial.style.color = "black";
         },
         naoIP() {
+            this.imovel.simImP=false
+            this.imovel.naoImP=true
             this.getImposto = false;
             const naocorimposto_predial = document.querySelector(".naocorimposto_predial");
             const simimposto_predial = document.querySelector(".simimposto_predial");
@@ -787,39 +799,39 @@ export default {
 
             // alert(JSON.stringify(this.imovel)); // this.$inertia.post("/imovels", this.imovel, {});
 
-            axios
-                .post("/portal/imoveis", this.imovel)
-                .then((response) => {
-                    // this.loading = false;
-                    // alert(JSON.stringify(response.data));
-                    //   this.resposta = response.data
-                })
-                .catch(() => {
-                    // alert(JSON.stringify(response.data));
+            // axios
+            //     .post("/portal/imoveis", this.imovel)
+            //     .then((response) => {
+            //         // this.loading = false;
+            //         // alert(JSON.stringify(response.data));
+            //         //   this.resposta = response.data
+            //     })
+            //     .catch(() => {
+            //         // alert(JSON.stringify(response.data));
 
-                    //   console.log('Falha ao registar os dados na base de dados!...')
-                });
+            //         //   console.log('Falha ao registar os dados na base de dados!...')
+            //     });
             
-            // this.$inertia.post(
-            //             "/portal/imoveis",
-            //             this.imovel,
-            //             {
-            //                 onFinish: () => {
-            //                     if (this.$page.props.flash.success != null) {
-            //                         Vue.toasted.global.defaultSuccess({
-            //                             msg:
-            //                                 "" + this.$page.props.flash.success,
-            //                         });
-            //                     }
-            //                     if (this.$page.props.flash.error != null) {
-            //                         Vue.toasted.global.defaultError({
-            //                             msg: "" + this.$page.props.flash.error,
-            //                         });
-            //                     }
-            //                     this.closeSave();
-            //                 },
-            //             }
-            //         );
+            this.$inertia.post(
+                        "/portal/imoveis",
+                        this.imovel,
+                        {
+                            onFinish: () => {
+                                if (this.$page.props.flash.success != null) {
+                                    Vue.toasted.global.defaultSuccess({
+                                        msg:
+                                            "" + this.$page.props.flash.success,
+                                    });
+                                }
+                                if (this.$page.props.flash.error != null) {
+                                    Vue.toasted.global.defaultError({
+                                        msg: "" + this.$page.props.flash.error,
+                                    });
+                                }
+                                this.closeSave();
+                            },
+                        }
+                    );
         },
         showDialogAddimovel() {
             this.dialogAddimovel = true;

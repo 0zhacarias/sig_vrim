@@ -20,7 +20,8 @@ class HomeController extends Controller
 
     public function index()
     {
-        return Inertia::render('Admin/Home');
+        return Inertia::render('Portal/PortalIndex');
+        // return Inertia::render('Admin/Home');
     }
     public function portal_auth()
     {

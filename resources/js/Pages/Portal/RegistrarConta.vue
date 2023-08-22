@@ -1,6 +1,6 @@
 <template>
     <v-app>
-
+      
         <v-row align="center" justify="center">
             <v-col cols="12" md="7">
                 <v-img src="/img/cms-image.jpg" :style="'height: 100vh; '" align="center" justify="center"
@@ -30,10 +30,12 @@
                         <v-card-text class="text-h3"> SIG-VAI</v-card-text>
                         <v-card-text fluid class="justify-center">
                             <v-form v-model="isValid">
+                            
                                 <v-row class="justify-center">
+                                    
                                     <v-col cols="12">
                                         <v-text-field :rules="[rules.required]" placeholder="Nome completo*" outlined rounded
-                                            label="Nome completo*" name="Nome completo*" v-model="user.nomeCompleto"
+                                            label="Nome completo*" name="name" v-model="user.name"
                                             prepend-icon="mdi-account-circle" />
                                     </v-col>
                                     <v-col cols="12">
@@ -137,7 +139,7 @@ export default {
 
     methods: {
         setLogin() {
-            this.$inertia.post("/login", this.user, {});
+            this.$inertia.post("/register", this.user, {});
         },
     },
 };

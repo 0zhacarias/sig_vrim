@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActividadeImoveis;
+use App\Models\Documentacoes;
+use App\Models\FotosImoveis;
 use App\Models\Imoveis;
+use App\Models\TipoDeDocumento;
+use App\Models\TipoDocumentacoes;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -37,42 +41,77 @@ class ImoveisController extends Controller
      */
     public function store(Request $request)
     {
-         dd($request);
+
         // return response()->json($request);
-    
+
         // $data = $request->all();
         // Imoveis::created($data);
-      
-        $imovel=Imoveis::created([
-            'designacao'=>$request->get('designacao'),
-            'descricao'=>$request->get('descricao'),
-            'mobiliado_id'=>$request->get('mobiliado_id'),
-            'cozinha'=>$request->get('cozinha'),
-            'suite'=>$request->get('suite'),
-            'sala_de_estar'=>$request->get('sala_de_estar'),
-            'numero_quartos'=>$request->get('numero_quartos'),
-            'numero_garagem'=>$request->get('numero_garagem'),
-            'numero_andar'=>$request->get('numero_andar'),
-            'metros'=>$request->get('metros'),
-            'numero_banheiro'=>$request->get('numero_banheiro'),
-            'tempo_arrendar'=>$request->get('numero_banheiro'),
-            'imposto_predial'=>$request->get('imposto_predial'),
-            'mesa_cadeira'=>$request->get('mesa_cadeira'),
-            'armario_embutido'=>$request->get('armario_embutido'),
-            'armario_cozinha'=>$request->get('armario_cozinha'),
-            'piscina'=>$request->get('piscina'),
-            'numero_banheiro'=>$request->get('numero_banheiro'),
-            'numero_banheiro'=>$request->get('numero_banheiro'),
-         
+        // dd($request->get('mutiplaImagem'));
+
+        $imovel = Imoveis::create([
+            'designacao' => $request->get('designacao'),
+            'descricao' => $request->get('descricao'),
+            'mobiliado_id' => $request->get('mobiliado_id'),
+            'cozinha' => $request->get('cozinha'),
+            'suite' => $request->get('suite'),
+            'sala_de_estar' => $request->get('sala_de_estar'),
+            'numero_quartos' => $request->get('numero_quartos'),
+            'numero_garagem' => $request->get('numero_garagem'),
+            'numero_andar' => $request->get('numero_andar'),
+            'metros' => $request->get('metros'),
+            'numero_banheiro' => $request->get('numero_banheiro'),
+            'tempo_arrendar' => $request->get('numero_banheiro'),
+            'imposto_predial' => $request->get('imposto_predial'),
+            'mesa_cadeira' => $request->get('mesa_cadeira'),
+            'armario_embutido' => $request->get('armario_embutido'),
+            'armario_cozinha' => $request->get('armario_cozinha'),
+            'piscina' => $request->get('piscina'),
+            'numero_banheiro' => $request->get('numero_banheiro'),
+            'numero_banheiro' => $request->get('numero_banheiro'),
+
 
         ]);
-        $actividade=ActividadeImoveis::created([
-            'proprietario_colaborador'=>$request->get('numero_banheiro'),
-            'operacao_imoveis_id'=>$request->get('numero_banheiro'),
-            'imoveis_id'=>$request->get('numero_banheiro'),
-            'users_id'=>$request->get('numero_banheiro'),
-            'meses'=>$request->get('numero_banheiro'),
-        ]);
+        if($request->hasFile('fotoPrincipal')){
+            $fileFoto =$request-> fotoPrincipal->store('Foto_principal');
+            $fotos = FotosImoveis::create([
+                'foto' => $fileFoto,
+                'imoveis_id' => $imovel->id,
+            ]);
+        }
+        if($request->hasFile('tituloPropriedade')){
+            $filepdf =$request-> tituloPropriedade->store('Tipo_Propriedade');
+            $fotos = Documentacoes::create([
+                'foto' => $filepdf,
+                'imoveis_id' => $imovel->id,
+                'tipo_domumentacoes' => 1,
+            ]);
+        }
+     
+        if($request->hasFile('croquis')){
+            $filepdf =$request-> croquis->store('Croquis');
+            $fotos = Documentacoes::create([
+                'nome_arquivo' => $filepdf,
+                'imoveis_id' => $imovel->id,
+                'tipo_domumentacoes' => 2,
+            ]);
+        }
+        if ($request->hasFile('mutiplaImagem')) {
+            foreach ($request->mutiplaImagem as $foto) {
+                $fileFoto =  $foto->store('Foto_Multipla');
+                $fotos = FotosImoveis::create([
+                    'foto' => $fileFoto,
+                    'imoveis_id' => $imovel->id,
+                ]);
+            };
+
+            $actividade = ActividadeImoveis::create([
+                'proprietario_colaborador' => $request->get('numero_banheiro'),
+                'operacao_imoveis_id' => $request->get('numero_banheiro'),
+                'imoveis_id' => $request->get('numero_banheiro'),
+                'users_id' => $request->get('numero_banheiro'),
+                'meses' => $request->get('numero_banheiro'),
+            ]);
+        }
     }
 
     /**

@@ -6,6 +6,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import '@mdi/font/css/materialdesignicons.css'
 import Vuetify from 'vuetify'
 
+
 /* import Vuetify from 'vuetify/lib'; */
 //import Vuetify from 'vuetify/lib'
 // não se esqueça de importar estilos CSS
@@ -20,8 +21,8 @@ export default new Vuetify({
         iconfont: 'md',
         iconfont: 'fa',
         iconfont: 'mdiSvg',
-        iconfont: 'mdi',
         iconfont: 'fa4',
+        iconfont: 'mdi',
     },
     theme: {
 
@@ -35,7 +36,7 @@ export default new Vuetify({
         },
     },
 
-  /*   components:{
-        Icon,
-    }, */
+//   /*   components:{
+//         Icon,
+//     }, */
 })

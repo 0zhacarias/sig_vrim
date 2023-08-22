@@ -3,7 +3,6 @@
 
         <v-row align="center" justify="center">
             <v-col cols="12" md="6" lg="5">
-
                 <v-container class=" alinnharcentro">
 
                     <v-card align="center" justify="center" elevation="0" class="w-75">
@@ -47,8 +46,10 @@
                                         </v-alert>
 
                                         <v-btn block rounded color="#4527A0" dark x-large @click="setLogin()"
-                                            :disabled="!isValid"><v-icon>login</v-icon> Iniciar
-                                            Sessão</v-btn>
+                                            :disabled="!isValid">
+                                            <v-icon>login</v-icon> Iniciar
+                                            Sessão
+                                        </v-btn>
                                     </v-col>
 
                                     <v-col cols="12" md="12">
@@ -69,7 +70,6 @@
                         <div class=" px-6">
                             <v-btn href="" rounded outlined color="deep-purple darken-3">
                                 <a href="/" style="text-decoration: none; color: #4527A0; ">
-
 
                                     <v-icon>mdi mdi-arrow-left-circle</v-icon>
                                     Voltar
@@ -104,15 +104,16 @@
 </template>
 
 <script>
-
-
 export default {
     components: {
 
     },
 
     data: () => ({
-        alert: { text: "", type: "" },
+        alert: {
+            text: "",
+            type: ""
+        },
         showPassword: false,
         isValid: true,
         overlay: false,
@@ -137,6 +138,7 @@ export default {
     },
 };
 </script>
+
 <style scoped>
 /* @import "vuetify/dist/vuetify.min.css"; */
 
@@ -158,5 +160,4 @@ body {
     text-decoration: none !important;
     color: #4527A0;
 
-}
-</style>
+}</style>

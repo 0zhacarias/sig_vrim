@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Genero;
+use App\Models\Documentacoes;
 use Illuminate\Http\Request;
 
-class GeneroController extends Controller
+class DocumentacoesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class GeneroController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Genero  $genero
+     * @param  \App\Models\Documentacoes  $documentacoes
      * @return \Illuminate\Http\Response
      */
-    public function show(Genero $genero)
+    public function show(Documentacoes $documentacoes)
     {
         //
     }
@@ -52,10 +52,10 @@ class GeneroController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Genero  $genero
+     * @param  \App\Models\Documentacoes  $documentacoes
      * @return \Illuminate\Http\Response
      */
-    public function edit(Genero $genero)
+    public function edit(Documentacoes $documentacoes)
     {
         //
     }
@@ -64,10 +64,10 @@ class GeneroController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Genero  $genero
+     * @param  \App\Models\Documentacoes  $documentacoes
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Genero $genero)
+    public function update(Request $request, Documentacoes $documentacoes)
     {
         //
     }
@@ -75,10 +75,10 @@ class GeneroController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Genero  $genero
+     * @param  \App\Models\Documentacoes  $documentacoes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Genero $genero)
+    public function destroy(Documentacoes $documentacoes)
     {
         //
     }

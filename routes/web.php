@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 /*
@@ -14,7 +16,7 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Portal/PortalIndex');
     // return view('welcome');
-});
+})->name('index');
 Route::get('/RegistrarConta', function () {
     return Inertia::render('Portal/RegistrarConta');
     // return view('welcome');
@@ -51,11 +53,25 @@ Route::get('/arrendamento', function () {
 })->name('arrendamento');
 
 
-Route::get('/home', function () {
-    return Inertia::render('Home');
-});
+// Route::get('/home', function () {
+//     return view('home');
+// });
+Route::post('/perfil-usuario',[App\Http\Controllers\ClienteController::class,'perfil_cliente']);
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('cadastrar');
+// Route::post('/register', function () {
+//     return Inertia::render('auth.register');
+// })->name('cadastrar');
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
 Auth::routes();
-Route::get('/perfilCliente',[App\Http\Controllers\ClienteController::class,'perfil_cliente']);
+// Route::post('/register', App\Http\Controllers\Auth\RegisterController::class);
+Route::get('/', function () {
+    return Inertia::render('Portal/PortalIndex');
+    // return view('welcome');
+})->name('index');
 Route::resource('/home', App\Http\Controllers\HomeController::class);
 Route::resource('/moradores', App\Http\Controllers\MoradorController::class);
 Route::resource('/condominios', App\Http\Controllers\CondominioController::class);
