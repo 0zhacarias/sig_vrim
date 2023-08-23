@@ -15,7 +15,7 @@
       </v-text> 
             <v-spacer /> -->
 
-               <a href="/perfilCliente" style="text-decoration: none"><v-avatar size="60" color="white"><v-icon
+               <a href="/home" style="text-decoration: none"><v-avatar size="60" color="white"><v-icon
                                  large>home</v-icon></v-avatar>
                        <span class="white--text text-bold text--darken-3"> KUBICO - (SIG-VAI)</span></a>
 

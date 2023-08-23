@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <div>
+        <!-- <div>
             <v-app-bar
                 app
                 class="app-header position-relative navbar-light header1"
@@ -39,17 +39,17 @@
                     </v-btn>
                 </v-container>
             </v-app-bar>
-        </div>
+        </div> -->
 
         <v-toolbar flat class="header1 elevation-0 py-0" color="deep-purple darken-3 ">
             <v-toolbar-title><a href="/" style="text-decoration: none"><v-avatar size="40"
                         color="deep-purple darken-3"><v-icon color="white" large>home</v-icon></v-avatar>
-                    <span class="white--text"> SIG-VAI</span>
+                    <span class="white--text hidden-xs-only" > KUBICO - (SIG-VAI)</span>
                 </a>
             </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items class="hidden-xs-only">
-                <v-btn @click="storePreviousUrl('/portal/listaImoveisArrendamentos')"  class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisArrendamentos"
+            <v-spacer class=""></v-spacer>
+            <v-toolbar-items >
+                <v-btn  @click="storePreviousUrl('/portal/listaImoveisArrendamentos')"  class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisArrendamentos"
                     elevation="0" text>
                     Arrendar
                 </v-btn>
@@ -63,7 +63,7 @@
                     Anuciar
                 </v-btn>
             </v-toolbar-items>
-            <v-toolbar-items class="hidden-xs-only">
+            <v-toolbar-items>
                 <v-btn v-if="isLoggedOut" class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff"  href="/logar" @click="storePreviousUrl('/logar')" elevation="0" text>
                     Login
                 </v-btn>
@@ -75,24 +75,27 @@
                     {{ user.name }}<br/>
                     <!-- {{ user.email}} -->
                 </v-btn>
-                <v-btn class="white--text" v-if="isLoggedIn" @click="logout" title="Terminar Sessão" icon>
+                <v-btn class="white--text hidden-xs-only" v-if="isLoggedIn" @click="logout" title="Terminar Sessão" icon>
                     <v-icon>mdi-export</v-icon>
                 </v-btn>
             </v-toolbar-items>
             <div class="hidden-sm-and-up">
                 <v-menu offset-y>
                     <template v-slot:activator="{ on }">
-                        <v-app-bar-nav-icon v-on="on"></v-app-bar-nav-icon>
+                        <v-app-bar-nav-icon v-on="on" class="white--text"></v-app-bar-nav-icon>
                     </template>
                     <v-list class="responsiveMenu">
                         <v-list-item>
                             <v-list-item-title><router-link to="/">Home</router-link></v-list-item-title>
                         </v-list-item>
                         <v-list-item>
-                            <v-list-item-title><router-link to="/about">About</router-link></v-list-item-title>
+                            <v-list-item-title><router-link to="/about">Arrendamento</router-link></v-list-item-title>
                         </v-list-item>
                         <v-list-item>
-                            <v-list-item-title><router-link to="/contact">Contact</router-link></v-list-item-title>
+                            <v-list-item-title><router-link to="/contact">Venda</router-link></v-list-item-title>
+                        </v-list-item>
+                        <v-list-item>
+                            <v-list-item-title v-if="isLoggedIn"><router-link to="/logout">sair</router-link></v-list-item-title>
                         </v-list-item>
                     </v-list>
                 </v-menu>
@@ -105,6 +108,21 @@
             <slot align="center" justify="center" />
             <!-- </v-container> -->
         </v-main>
+        <v-card-text style="height: 200px; position: relative">
+            <v-fab-transition>
+              <v-btn
+                v-show="!hidden"
+                class="deep-purple"
+                dark
+                absolute
+                top
+                right
+                fab
+              >
+                <v-icon>mdi mdi-email-fast-outline</v-icon>
+              </v-btn>
+            </v-fab-transition>
+          </v-card-text>
         <v-container>
 
 

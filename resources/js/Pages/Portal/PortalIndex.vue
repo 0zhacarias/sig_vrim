@@ -75,7 +75,7 @@
                                     </v-autocomplete>
                                 </v-col>
                                 <v-col md="2">
-                                    <v-btn dense :disabled="loading" class="ma-1" large>
+                                    <v-btn dense :disabled="loading" d-none d-lg-flex btn-custom-nm ml-5>
                                         pesquisar
                                     </v-btn>
                                 </v-col>
@@ -391,11 +391,12 @@
                 </v-row>
                 <v-divider></v-divider>
             </v-container>
+            
         </template>
 
-        <!-- Contactos -->
+        <!-- Contactos
         <v-template>
-            <v-card outlined class="my-8">
+            <v-container  >
                 <div class="staticHero">
                     <v-img src="../assets/images/img14.jpg">
                         <v-row align="end" class="lightbox white--text pa-2 fill-height">
@@ -408,13 +409,13 @@
                     </v-img>
                 </div>
                 <div >
-                    <v-container >
-                        <v-card class="elevation-0"  offset-md="4" >
+                    <v-container class="w-50 justify-content-around" >
+                        <v-card class="elevation-2  ma-3"  >
                             <v-form ref="form" v-model="valid" lazy-validation >
-                            <v-text-field v-model="name" :counter="10" :rules="nameRules" label="Nome Completo"
+                            <v-text-field v-model="name" outlined :counter="10" :rules="nameRules" label="Nome Completo"
                                 required></v-text-field>
-                            <v-text-field v-model="email" :rules="emailRules" label="Email" required></v-text-field>
-                            <v-textarea v-model="message" :rules="messageRules" label="Mensagem por enviar"
+                            <v-text-field v-model="email" outlined :rules="emailRules" label="Email" required></v-text-field>
+                            <v-textarea v-model="message" outlined  :rules="messageRules" label="Mensagem por enviar"
                                 required></v-textarea>
                             <v-btn :disabled="!valid" color="primary" class="mr-4" @click="validate">Enviar Mensagem</v-btn>
                             <v-btn outlined color="error" class="mr-4" @click="reset">Limpar Formulário</v-btn>
@@ -423,14 +424,13 @@
                         
                     </v-container>
                 </div>
-                <!-- <div class="googlemap">
+                 <div class="googlemap">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d16705.802661855836!2d-0.14290489950731525!3d51.50711704027593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon!5e0!3m2!1sen!2suk!4v1577041400110!5m2!1sen!2suk"
                         width="100%" height="450"></iframe>
-                </div> -->
-            </v-card>
-        </v-template>
-
+                </div> 
+            </v-container>
+        </v-template> -->
     </PortalLayout>
 </template>
 
