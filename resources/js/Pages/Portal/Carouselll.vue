@@ -15,7 +15,7 @@
 <script>
 import PortalLayout from "../../Templates/PortalLayout.vue";
 // import VueThumbnailer from 'vue-thumbnailer';
-import VueImages from 'vue-images';
+// import VueImages from 'vue-images';
 // import image1 from '../../../img/Aaa.png';
 // import image2 from '../assets/jason-briscoe.jpg';
 // import image3 from '../assets/jason-briscoe.jpg';

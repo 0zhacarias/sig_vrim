@@ -1,9 +1,9 @@
 <template>
 <AdminLayout>
     <v-row>
-        <v-col cols="4" sm="5" md="" lg="3">
+        <v-col cols="4" sm="4" md="5" lg="3">
             <v-list subheader two-line flat>
-                <v-subheader>Meus dados</v-subheader>
+                <!-- <v-subheader >Meus dados</v-subheader> -->
                 <template>
                     <v-container>
                         <v-list>
@@ -22,17 +22,14 @@
 
             </v-list>
         </v-col>
-        <v-col sm="8" md="7" lg="9">
-            dsdssd
-            <v-card>
-
+        <v-col cols="8" sm="8" md="7" lg="9">
                 <perfil v-if="this.linhaSelecionado==='linha1'">
                 </perfil>
-            </v-card>
-                <perfil v-if="this.linhaSelecionado==='linha2'">
-                </perfil>
-                <perfil-cliente class="mt-n16" v-if="this.linhaSelecionado==='linha3'">
-                </perfil-cliente>
+            
+                <MeusAnuncios v-if="this.linhaSelecionado==='linha2'">
+                </MeusAnuncios>
+                <MeusImoveisCompra class="mt-n16" v-if="this.linhaSelecionado==='linha3'">
+                </MeusImoveisCompra>
             
         </v-col>
     </v-row>
@@ -153,13 +150,17 @@
 <script>
 import AdminLayout from "../../../Templates/AdminLayout";
 import Perfil from "../Clientes/Perfil";
-import PerfilCliente from "../Clientes/PerfilCliente";
+import MeusAnuncios from "../Clientes/MeusAnuncios";
+import MeusImoveisCompra from "../Clientes/MeusImoveisCompra";
+// import PerfilCliente from "../Clientes/PerfilCliente";
 export default {
     props: ["generos"],
     components: {
         AdminLayout,
         Perfil,
-        PerfilCliente,
+        // PerfilCliente,
+        MeusAnuncios,
+        MeusImoveisCompra,
     },
     data: () => ({
         items: [{

@@ -1,60 +1,59 @@
 <template>
-      <v-app>
-       <v-subheader>Meus Imoveis solicitados</v-subheader>
-<v-row>
-       <v-col v-for="item in clientes" :key="item.id" cols="12" sm="6" md="4" 
-                        :lg="clientes.length <= 3 ? 6 : 4" >
-                        <v-hover v-slot="{ hover }">
+    <v-app>
+        <v-subheader>Meus Imoveis solicitados</v-subheader>
+        <v-row>
+            <v-col v-for="item in clientes" :key="item.id" cols="12" sm="6" md="4" :lg="clientes.length <= 3 ? 6 : 4">
+                <v-hover v-slot="{ hover }">
 
-                            <v-card :loading="!loading" class=" elevation-10 pa-2 ma-3 border"  
-                                :elevation="hover ? 10 : 0">
-                                <!-- <v-img height="150" src="/img/pexels-dids-2969915.jpg"></v-img> -->
+                    <v-card :loading="!loading" class=" elevation-10 pa-2 ma-3 border" :elevation="hover ? 10 : 0">
+                        <!-- <v-img height="150" src="/img/pexels-dids-2969915.jpg"></v-img> -->
+                        <v-img height="200"  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.2)" :src="item.src" ></v-img>
+                        <v-card-title>¨{{ item.title }}</v-card-title>
 
-                                <v-card-title>¨{{ item.title }}</v-card-title>
-
-                                <v-card-text>
-                                    <!-- <v-row align="center" class="mx-0">
+                        <v-card-text>
+                            <!-- <v-row align="center" class="mx-0">
                                         <v-rating :value="4.5" color="amber" dense half-increments readonly
                                             size="14"></v-rating>
                                     </v-row> -->
 
                                     <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus
-                                        patio seating.
-                                    </div>
-                                </v-card-text>
+                                patio seating.
+                            </div>
+                        </v-card-text>
 
-                                <v-divider class="mx-4"></v-divider>
+                        <v-divider class="mx-1"></v-divider>
 
-                                <v-card-title>Tonight's availability</v-card-title>
+                        <v-card-title v-text="item.subtitle"></v-card-title>
 
-                                <v-card-text>
-                                    <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
-                                        column>
-                                        <v-chip><span class="mdi mdi-car"></span>5</v-chip>
+                        <v-card-text>
+                            <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text" column>
+                                <v-chip><span class="mdi mdi-car"></span>5</v-chip>
 
-                                        <v-chip><span class="mdi mdi-faucet-variant"></span>7</v-chip>
+                                <v-chip><span class="mdi mdi-faucet-variant"></span>7</v-chip>
 
-                                        <v-chip>
-                                            <span class="mdi mdi-bed-double"></span>8</v-chip>
-                                    </v-chip-group>
-                                </v-card-text>
+                                <v-chip>
+                                    <span class="mdi mdi-bed-double"></span>8</v-chip>
+                            </v-chip-group>
+                        </v-card-text>
 
-                                <v-card-actions class="justify-end">
-                                    <v-btn  color="deep-purple lighten-2" outlined rounded>
-Gostei
-                                    </v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </v-hover>
-                    </v-col>
-                </v-row>
-</v-app>
+                        <v-card-actions class="justify-end">
+                            <v-btn icon color="deep-purple lighten-2" outlined rounded  title="Gostei do Imóvel">
+                                <v-icon>
+                                    mdi mdi-thumb-up-outline
+                                </v-icon>
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-hover>
+            </v-col>
+        </v-row>
+    </v-app>
 </template>
 
 <script>
 import AdminLayout from "../../../Templates/AdminLayout";
 export default {
-    
+
     props: ["condominios"],
     components: {
         AdminLayout
@@ -67,7 +66,7 @@ export default {
                 id: 1,
                 title: "Casa 1",
                 subtitle: "Localização 1",
-                src: "https://cdn.quasar.dev/img/parallax2.jpg",
+                src: "/img/pexels-dids-2969915.jpg",
             },
             {
                 id: 2,
@@ -90,7 +89,7 @@ export default {
                 src: "https://cdn.quasar.dev/img/parallax2.jpg",
             },
         ],
-           }),
+    }),
 
 
     mounted() {

@@ -56,7 +56,7 @@ Route::get('/arrendamento', function () {
 // Route::get('/home', function () {
 //     return view('home');
 // });
-Route::post('/perfil-usuario',[App\Http\Controllers\ClienteController::class,'perfil_cliente']);
+
 // Route::resource('/registrar-usuario',App\Http\Controllers\RegistrarController::class);
 // Route::post('/registrar',[App\Http\Controllers\RegistrarController::class,'registrar_usuario']);
 Route::get('/register', function () {
@@ -74,6 +74,7 @@ Route::get('/', function () {
     return Inertia::render('Portal/PortalIndex');
     // return view('welcome');
 })->name('index');
+Route::get('/perfil-usuario',[App\Http\Controllers\ClienteController::class,'perfil_cliente'])->name('meu_perfil');
 Route::resource('/home', App\Http\Controllers\HomeController::class);
 Route::resource('/moradores', App\Http\Controllers\MoradorController::class);
 Route::resource('/condominios', App\Http\Controllers\CondominioController::class);

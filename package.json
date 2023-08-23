@@ -41,6 +41,7 @@
         "pusher-js": "^7.0.3",
         "qrcode": "^1.4.4",
         "tiptap-vuetify": "^2.24.0",
+        "vee-validate": "^3.4.15",
         "vue-axios": "^3.2.4",
         "vue-browser-geolocation": "^1.8.0",
         "vue-filter-number-format": "^3.0.1",

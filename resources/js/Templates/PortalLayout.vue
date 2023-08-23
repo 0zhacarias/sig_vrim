@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <!-- <div>
+        <div>
             <v-app-bar
                 app
                 class="app-header position-relative navbar-light header1"
@@ -22,8 +22,8 @@
                     <v-btn
                         class="d-none d-lg-flex btn-custom-nm ml-5"
                         outlined
-                        color="#00B0FF"white
-                        href="/auth/login"white
+                        color="#00B0FF"
+                        href="/auth/login"
                         elevation="0"
                     >
                         Login
@@ -39,7 +39,7 @@
                     </v-btn>
                 </v-container>
             </v-app-bar>
-        </div> -->
+        </div>
 
         <v-toolbar flat class="header1 elevation-0 py-0" color="deep-purple darken-3 ">
             <v-toolbar-title><a href="/" style="text-decoration: none"><v-avatar size="40"
@@ -71,7 +71,7 @@
                 <v-btn v-if="isLoggedOut"  dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/RegistrarConta" elevation="0" text>
                     Cadastrar
                 </v-btn>
-                <v-btn v-if="isLoggedIn" text dense class="white--text text-lowercase" @click="perfilUsuario()">
+                <v-btn v-if="isLoggedIn" text dense class="white--text text-lowercase" href="meu_perfil">
                     {{ user.name }}<br/>
                     <!-- {{ user.email}} -->
                 </v-btn>
@@ -200,7 +200,7 @@ export default {
             });
         },
         perfilUsuario(){
-            axios.post("/perfil-usuario").then((response) => {
+            axios.get("/perfil-usuario").then((response) => {
                 window.location.reload();
             }).catch((error) => {
                 console.log(error);

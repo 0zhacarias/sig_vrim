@@ -1,6 +1,6 @@
 <template>
     <v-app id="inspire">
-        <v-app-bar app color="#00B0FF" flat>
+        <v-app-bar app color="deep-purple darken-3 "  class="white--text" flat>
             <!-- <v-btn
                 text
                 icon
@@ -15,30 +15,30 @@
       </v-text> 
             <v-spacer /> -->
 
-               <a href="/perfilCliente" style="text-decoration: none"><v-avatar size="60" color="primary"><v-icon
-                                color="white" large>home</v-icon></v-avatar>
-                        Sistema de Gestão de Venda e Arrendamento Ivoveis</a>
+               <a href="/perfilCliente" style="text-decoration: none"><v-avatar size="60" color="white"><v-icon
+                                 large>home</v-icon></v-avatar>
+                       <span class="white--text text-bold text--darken-3"> KUBICO - (SIG-VAI)</span></a>
 
                 
                 <v-spacer/>
             
-            <v-btn icon>
+            <v-btn icon class="white--text">
                 <v-icon>mdi-magnify</v-icon>
             </v-btn>
 
-            <v-btn icon>
+            <v-btn icon class="white--text">
                 <v-icon
                     title="Ver Notificações"
                     left
                     v-if="totalNotificacoes > 0"
-                    color="#DAA520"
+                    color="#000"
                     dense
                     >notifications</v-icon
                 >
-                <v-icon left v-else color="#000">notifications</v-icon>
+                <v-icon left v-else color="#fff">notifications</v-icon>
             </v-btn>
 
-            <v-btn @click="logout" title="Terminar Sessão" icon>
+            <v-btn class="white--text" @click="logout" title="Terminar Sessão" icon>
                 <v-icon>mdi-export</v-icon>
             </v-btn>
       
