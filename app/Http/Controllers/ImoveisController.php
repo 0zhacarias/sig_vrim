@@ -21,6 +21,7 @@ class ImoveisController extends Controller
     public function index()
     {
         return Inertia::render('Portal/ImoveisCriar');
+        // return Inertia::render('Portal/Carousel');
         // return view();
     }
 
