@@ -118,21 +118,49 @@ export default {
         isValid: true,
         overlay: false,
         user: {},
+        previousUrls: [],
         rules: {
             required: (value) => !!value || "Campos obrigatório.",
         },
     }),
     computed: {},
 
-    // created() {
-    //     setTimeout(() => {
-    //         this.overlay = false;
-    //     }, 2000);
-    // },
+    created() {
+        // setTimeout(() => {
+        //     this.overlay = false;
+        // }, 2000);
+        // alert(JSON.stringify(response.data))
+        // alert(JSON.stringify($root.$on('store-previous-url', this.storePreviousUrl)))
+        this.$root.$on('store-previous-url', this.storePreviousUrl);
+    },
     mounted() { },
 
     methods: {
+        storePreviousUrl(url) {
+      // Adiciona a nova URL à frente do array
+      this.previousUrls.unshift(url);
+      alert(url);
+      // Garante que o array tenha no máximo duas URLs armazenadas
+      if (this.previousUrls.length > 2) {
+        this.previousUrls.pop(); // Remove a URL mais antiga
+      }
+    },
         setLogin() {
+        //    this.$inertia.visit('/login', { data: { redirectRoute: window.location.href } });
+        // this.user.rotas=
+        const url1 = this.previousUrls.pop();
+        const url2 = this.previousUrls.pop();
+        this.previousUrls.unshift();
+        alert( this.url1);
+        // this.previousUrls.push(url);
+
+// Garantir que o array tenha no máximo duas URLs armazenadas
+if (this.previousUrls.length > 2) {
+  this.previousUrls.shift(); // Remover a URL mais antiga
+}
+            // this.previousUrl = window.location.href;
+        //   alert( this.previousUrls);
+        
             this.$inertia.post("/login", this.user, {});
         },
     },

@@ -49,30 +49,30 @@
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-xs-only">
-                <v-btn class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisArrendamentos"
+                <v-btn @click="storePreviousUrl('/portal/listaImoveisArrendamentos')"  class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisArrendamentos"
                     elevation="0" text>
                     Arrendar
                 </v-btn>
 
-                <v-btn dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisCompras"
+                <v-btn @click="storePreviousUrl('/portal/listaImoveisCompras')" dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisCompras" 
                     elevation="0" text>
                     Comprar
                 </v-btn>
-                <v-btn dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/imoveis" elevation="0"
+                <v-btn dense @click="storePreviousUrl('/portal/imoveis')" class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/imoveis" elevation="0"
                     text>
                     Anuciar
                 </v-btn>
             </v-toolbar-items>
             <v-toolbar-items class="hidden-xs-only">
-                <v-btn v-if="isLoggedOut" class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/logar" elevation="0" text>
+                <v-btn v-if="isLoggedOut" class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff"  href="/logar" @click="storePreviousUrl('/logar')" elevation="0" text>
                     Login
                 </v-btn>
 
                 <v-btn v-if="isLoggedOut"  dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/RegistrarConta" elevation="0" text>
                     Cadastrar
                 </v-btn>
-                <v-btn text dense class="white--text text-lowercase" @click="perfilUsuario()">
-                    <!-- {{ user.name }}<br/> -->
+                <v-btn v-if="isLoggedIn" text dense class="white--text text-lowercase" @click="perfilUsuario()">
+                    {{ user.name }}<br/>
                     <!-- {{ user.email}} -->
                 </v-btn>
                 <v-btn class="white--text" v-if="isLoggedIn" @click="logout" title="Terminar Sessão" icon>
@@ -156,6 +156,7 @@ export default {
             totalNotificacoes: 0,
             isLoggedIn: false,
             isLoggedOut: true,
+            previousUrl: null,
         };
     },
 
@@ -169,6 +170,23 @@ export default {
         },
     },
     methods: {
+        storePreviousUrl(url) {
+      // Emite um evento global com a URL
+      this.$root.$emit('store-previous-url', url);
+    },
+        logar(){
+            this.$inertia.get("/logar").then((response) => {
+                // window.location.reload();
+            }).catch((error) => {
+                console.log(error);
+                // Tratamento de erro, se necessário
+            });
+            // href="/logar"
+        },
+    //     storePreviousUrl(event) {
+    //   this.previousUrl = window.location.href;
+    //   alert(this.previousUrl);
+    // },
         checkLoginStatus() {
             this.isLoggedIn = this.$page.props.auth.user !== null;
             this.isLoggedOut = !this.isLoggedIn;

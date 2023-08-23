@@ -57,6 +57,8 @@ Route::get('/arrendamento', function () {
 //     return view('home');
 // });
 Route::post('/perfil-usuario',[App\Http\Controllers\ClienteController::class,'perfil_cliente']);
+// Route::resource('/registrar-usuario',App\Http\Controllers\RegistrarController::class);
+// Route::post('/registrar',[App\Http\Controllers\RegistrarController::class,'registrar_usuario']);
 Route::get('/register', function () {
     return view('auth.register');
 })->name('cadastrar');

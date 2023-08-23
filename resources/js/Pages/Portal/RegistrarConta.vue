@@ -139,7 +139,13 @@ export default {
 
     methods: {
         setLogin() {
-            this.$inertia.post("/register", this.user, {});
+            window.sessionStorage.setItem('redirectRoute', this.$route.fullPath),
+            this.$inertia.post("register", this.user, {
+                
+            });
+            if(response.status === 201){
+                this.alert(1)
+            }
         },
     },
 };

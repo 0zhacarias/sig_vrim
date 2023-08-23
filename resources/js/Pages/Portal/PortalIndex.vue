@@ -407,10 +407,10 @@
                         </v-row>
                     </v-img>
                 </div>
-                <div class="block">
-                    <v-container>
-                        <v-form ref="form" v-model="valid" lazy-validation>
-
+                <div >
+                    <v-container >
+                        <v-card class="elevation-0"  offset-md="4" >
+                            <v-form ref="form" v-model="valid" lazy-validation >
                             <v-text-field v-model="name" :counter="10" :rules="nameRules" label="Nome Completo"
                                 required></v-text-field>
                             <v-text-field v-model="email" :rules="emailRules" label="Email" required></v-text-field>
@@ -419,6 +419,8 @@
                             <v-btn :disabled="!valid" color="primary" class="mr-4" @click="validate">Enviar Mensagem</v-btn>
                             <v-btn outlined color="error" class="mr-4" @click="reset">Limpar Formulário</v-btn>
                         </v-form>
+                        </v-card>
+                        
                     </v-container>
                 </div>
                 <!-- <div class="googlemap">
