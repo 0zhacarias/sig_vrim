@@ -159,6 +159,8 @@
     </v-app>
 </template>
 <script>
+// import { required, digits, email, max, regex } from 'vee-validate/dist/rules'
+// import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
 export default {
     data() {
         return {

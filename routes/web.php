@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Laravel\Socialite\Facades\Socialite;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,8 +13,19 @@ use Inertia\Inertia;
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
-|
-*/
+|*/
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('google')->redirect();
+});
+ 
+Route::get('/auth/callback', function () {
+    $user = Socialite::driver('google')->user();
+ 
+    // $user->token
+});
+
+Route::get('/login/google', [App\Http\Controllers\ClienteController::class,'redirectToGoogle']);
+Route::get('/login/google/callback', [App\Http\Controllers\ClienteController::class,'handleGoogleCallback']);
 Route::get('/', function () {
     return Inertia::render('Portal/PortalIndex');
     // return view('welcome');
@@ -21,6 +34,7 @@ Route::get('/RegistrarConta', function () {
     return Inertia::render('Portal/RegistrarConta');
     // return view('welcome');
 });
+
 Route::get('/Registrar-conta', function () {
     return Inertia::render('Portal/RegistrarConta');
     // return view('welcome');

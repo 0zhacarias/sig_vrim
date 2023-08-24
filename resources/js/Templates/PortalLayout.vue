@@ -44,35 +44,39 @@
         <v-toolbar flat class="header1 elevation-0 py-0" color="deep-purple darken-3 ">
             <v-toolbar-title><a href="/" style="text-decoration: none"><v-avatar size="40"
                         color="deep-purple darken-3"><v-icon color="white" large>home</v-icon></v-avatar>
-                    <span class="white--text hidden-xs-only" > KUBICO - (SIG-VAI)</span>
+                    <span class="white--text hidden-xs-only"> KUBICO - (SIG-VAI)</span>
                 </a>
             </v-toolbar-title>
             <v-spacer class=""></v-spacer>
-            <v-toolbar-items >
-                <v-btn  @click="storePreviousUrl('/portal/listaImoveisArrendamentos')"  class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisArrendamentos"
+            <v-toolbar-items>
+                <v-btn @click="storePreviousUrl('/portal/listaImoveisArrendamentos')"
+                    class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisArrendamentos"
                     elevation="0" text>
                     Arrendar
                 </v-btn>
 
-                <v-btn @click="storePreviousUrl('/portal/listaImoveisCompras')" dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisCompras" 
+                <v-btn @click="storePreviousUrl('/portal/listaImoveisCompras')" dense
+                    class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisCompras"
                     elevation="0" text>
                     Comprar
                 </v-btn>
-                <v-btn dense @click="storePreviousUrl('/portal/imoveis')" class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/imoveis" elevation="0"
-                    text>
+                <v-btn dense @click="storePreviousUrl('/portal/imoveis')" class="d-none d-lg-flex btn-custom-nm ml-5"
+                    color="#fff" href="/portal/imoveis" elevation="0" text>
                     Anuciar
                 </v-btn>
             </v-toolbar-items>
             <v-toolbar-items>
-                <v-btn v-if="isLoggedOut" class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff"  href="/logar" @click="storePreviousUrl('/logar')" elevation="0" text>
+                <v-btn v-if="isLoggedOut" class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/logar"
+                    @click="storePreviousUrl('/logar')" elevation="0" text>
                     Login
                 </v-btn>
 
-                <v-btn v-if="isLoggedOut"  dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/RegistrarConta" elevation="0" text>
+                <v-btn v-if="isLoggedOut" dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff"
+                    href="/RegistrarConta" elevation="0" text>
                     Cadastrar
                 </v-btn>
                 <v-btn v-if="isLoggedIn" text dense class="white--text text-lowercase" href="meu_perfil">
-                    {{ user.name }}<br/>
+                    {{ user.name }}<br />
                     <!-- {{ user.email}} -->
                 </v-btn>
                 <v-btn class="white--text hidden-xs-only" v-if="isLoggedIn" @click="logout" title="Terminar Sessão" icon>
@@ -95,7 +99,8 @@
                             <v-list-item-title><router-link to="/contact">Venda</router-link></v-list-item-title>
                         </v-list-item>
                         <v-list-item>
-                            <v-list-item-title v-if="isLoggedIn"><router-link to="/logout">sair</router-link></v-list-item-title>
+                            <v-list-item-title v-if="isLoggedIn"><router-link
+                                    to="/logout">sair</router-link></v-list-item-title>
                         </v-list-item>
                     </v-list>
                 </v-menu>
@@ -108,23 +113,85 @@
             <slot align="center" justify="center" />
             <!-- </v-container> -->
         </v-main>
-        <v-card-text style="height: 200px; position: relative">
-            <v-fab-transition>
-              <v-btn
-                v-show="!hidden"
-                class="deep-purple"
-                dark
-                absolute
-                top
-                right
-                fab
-              >
-                <v-icon>mdi mdi-email-fast-outline</v-icon>
-              </v-btn>
-            </v-fab-transition>
-          </v-card-text>
-        <v-container>
+         
+                <div class="text-center">
+                    <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="50" offset-y nudge-top="600">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-fab-transition>
+                                <v-btn v-bind="attrs" v-on="on" v-show="!hidden" class="deep-purple" dark fixed bottom  right
+                                    fab>
+                                    <v-icon>mdi mdi-email-fast-outline</v-icon>
+                                </v-btn>
 
+                            </v-fab-transition>
+                        </template>
+
+                        <v-card class="" max-width="300" >
+                            <v-list>
+                                <v-list-item>
+                                    <v-list-item-avatar>
+                                        <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
+                                    </v-list-item-avatar>
+
+                                    <v-list-item-content>
+                                        <v-list-item-title class="subtitle-1 text-h5">KUBICOS</v-list-item-title>
+                                        <v-list-item-subtitle>Entre em contacto com um corretor</v-list-item-subtitle>
+                                    </v-list-item-content>
+
+                                    <v-list-item-action>
+                                        <v-btn :class="fav ? 'red--text' : ''" icon @click="fav = !fav">
+                                            <v-icon>mdi-heart</v-icon>
+                                        </v-btn>
+                                    </v-list-item-action>
+                                </v-list-item>
+                            </v-list>
+
+                            <v-divider></v-divider>
+                            <v-col cols="12"> <validation-provider v-slot="{ errors }" name="Numero do telefone" :rules="{
+                                required: true,
+                                digits: 12,
+                                regex: '^(244)\\d{9}$'
+                            }">
+                                    <v-text-field v-model="phoneNumber" outlined :counter="7" :error-messages="errors"
+                                        label="Phone Number" required></v-text-field>
+                                </validation-provider></v-col>
+                            <v-col cols="12"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
+                                    <v-text-field v-model="email" outlined :error-messages="errors" label="E-mail"
+                                        required></v-text-field>
+                                </validation-provider>
+                            </v-col>
+                            <v-list>
+
+                                <v-list-item>
+                                    <v-list-item-action>
+                                        <v-switch v-model="message" color="purple"></v-switch>
+                                    </v-list-item-action>
+                                    <v-list-item-title>Enable messages</v-list-item-title>
+                                </v-list-item>
+
+                                <v-list-item>
+                                    <v-list-item-action>
+                                        <v-switch v-model="hints" color="purple"></v-switch>
+                                    </v-list-item-action>
+                                    <v-list-item-title>Enable hints</v-list-item-title>
+                                </v-list-item>
+                            </v-list>
+
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+
+                                <v-btn text @click="menu = false">
+                                    Cancel
+                                </v-btn>
+                                <v-btn color="primary" text @click="menu = false">
+                                    Save
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-menu>
+                </div>
+
+        <v-container>
 
 
             <v-footer padless>
@@ -189,10 +256,10 @@ export default {
     },
     methods: {
         storePreviousUrl(url) {
-      // Emite um evento global com a URL
-      this.$root.$emit('store-previous-url', url);
-    },
-        logar(){
+            // Emite um evento global com a URL
+            this.$root.$emit('store-previous-url', url);
+        },
+        logar() {
             this.$inertia.get("/logar").then((response) => {
                 // window.location.reload();
             }).catch((error) => {
@@ -201,10 +268,10 @@ export default {
             });
             // href="/logar"
         },
-    //     storePreviousUrl(event) {
-    //   this.previousUrl = window.location.href;
-    //   alert(this.previousUrl);
-    // },
+        //     storePreviousUrl(event) {
+        //   this.previousUrl = window.location.href;
+        //   alert(this.previousUrl);
+        // },
         checkLoginStatus() {
             this.isLoggedIn = this.$page.props.auth.user !== null;
             this.isLoggedOut = !this.isLoggedIn;
@@ -217,7 +284,7 @@ export default {
                 // Tratamento de erro, se necessário
             });
         },
-        perfilUsuario(){
+        perfilUsuario() {
             axios.get("/perfil-usuario").then((response) => {
                 window.location.reload();
             }).catch((error) => {

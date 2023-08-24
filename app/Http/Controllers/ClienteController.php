@@ -1,10 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
+// use Socialite;
+use App\Library\Authenticate;
+use App\Library\GoogleClient;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Http\Controllers\Socialite;
+use Laravel\Socialite\Facades\Socialite as FacadesSocialite;
+
 
 class ClienteController extends Controller
 {
@@ -26,6 +31,7 @@ class ClienteController extends Controller
     public function create()
     {
         //
+        
     }
 
     /**
@@ -88,4 +94,36 @@ class ClienteController extends Controller
         
         return Inertia::render('Admin/Clientes/Cliente');
     }
+    public function login_google()
+    {
+        
+        $googleClient = new GoogleClient;
+        $googleClient->init();
+
+        if ($googleClient->authenticated()) {
+            $auth = new Authenticate();
+
+            return $auth->authGoogle($googleClient->getData());
+        }
+
+        return view('login', ['authUrl' => $googleClient->generateLink()]);
+    }
+
+
+
+public function redirectToGoogle()
+{
+    // dd(1);
+  
+    return Socialite::driver('google')->redirect();
+}
+
+public function handleGoogleCallback()
+{
+    $user = Socialite::driver('google')->user();
+    // Faça o login do usuário ou registre-o conforme necessário
+    // $user contém as informações do usuário retornado pelo Google
+
+    return redirect('/home'); // Redirecionar após o login
+}
 }

@@ -57,6 +57,16 @@
     </v-main>
   </v-app>
 </template>
+<script>
+import { defineComponent } from '@vue/composition-api'
+// import { required, digits, email, max, regex } from 'vee-validate/dist/rules'
+// import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+export default defineComponent({
+  setup() {
+    
+  },
+})
+</script>
 
 
 <style>

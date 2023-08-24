@@ -30,11 +30,24 @@
                                     <span class="subtitle">--------------- Entrar com ---------------------
                                     </span>
                                     <v-col cols="12">
-                                        <div class="text-center pb-3">
-                                            <v-btn href="login/google" block rounded outlined x-large color="blue darken-1">
+                                        <!-- <template>
+  <div>
+    <a v-bind:href="authUrl" v-html="linkText"></a>
+  </div>
+</template> --><template>
+  <div>
+    <a href = '/auth/redirect' >Login with Google</a>
+  </div>
+</template>
+                                        <div>
+                                            <GoogleLogin :params="params"  :onSuccess="onSuccess" :onFailure="onFailure">Login</GoogleLogin>
+                                            <!-- <GoogleLogin :params="params" :renderParams="renderParams"
+                                                :onSuccess="onSuccess" :onFailure="onFailure"></GoogleLogin> -->
+
+                                            <!-- <v-btn href="login/google" block rounded outlined x-large color="blue darken-1">
                                                 <v-icon>mdi mdi-google</v-icon>
                                                 Google
-                                            </v-btn>
+                                            </v-btn> -->
                                         </div>
                                         <v-alert outlined dismissible transition="scale-transition" text
                                             v-if="alert.type == 'success'" type="success">
@@ -104,12 +117,16 @@
 </template>
 
 <script>
+import GoogleLogin from 'Vue-google-login';
 export default {
-    components: {
 
+    components: {
+        GoogleLogin
     },
 
     data: () => ({
+        // authUrl: '$authUrl', // Substitua $authUrl pelo valor real
+        // linkText: "Login google",
         alert: {
             text: "",
             type: ""
@@ -121,6 +138,15 @@ export default {
         previousUrls: [],
         rules: {
             required: (value) => !!value || "Campos obrigatório.",
+        },
+        params: {
+            client_id: "390506223983-2km69qu9r8v3o9fu8mt5vqpgudpqgf9n.apps.googleusercontent.com"
+        },
+        // only needed if you want to render the button with the google ui
+        renderParams: {
+            width: 250,
+            height: 50,
+            longtitle: true
         },
     }),
     computed: {},
@@ -136,31 +162,41 @@ export default {
     mounted() { },
 
     methods: {
-        storePreviousUrl(url) {
-      // Adiciona a nova URL à frente do array
-      this.previousUrls.unshift(url);
-      alert(url);
-      // Garante que o array tenha no máximo duas URLs armazenadas
-      if (this.previousUrls.length > 2) {
-        this.previousUrls.pop(); // Remove a URL mais antiga
-      }
+        loginWithGoogle() {
+      // Redirecionar para a rota de login do Laravel
+      window.location.href = '/login/google';
     },
-        setLogin() {
-        //    this.$inertia.visit('/login', { data: { redirectRoute: window.location.href } });
-        // this.user.rotas=
-        const url1 = this.previousUrls.pop();
-        const url2 = this.previousUrls.pop();
-        this.previousUrls.unshift();
-        alert( this.url1);
-        // this.previousUrls.push(url);
+        onSuccess(googleUser) {
+            console.log(googleUser);
 
-// Garantir que o array tenha no máximo duas URLs armazenadas
-if (this.previousUrls.length > 2) {
-  this.previousUrls.shift(); // Remover a URL mais antiga
-}
+            // This only gets the user information: id, name, imageUrl and email
+            console.log(googleUser.getBasicProfile());
+        },
+        storePreviousUrl(url) {
+            // Adiciona a nova URL à frente do array
+            this.previousUrls.unshift(url);
+            alert(url);
+            // Garante que o array tenha no máximo duas URLs armazenadas
+            if (this.previousUrls.length > 2) {
+                this.previousUrls.pop(); // Remove a URL mais antiga
+            }
+        },
+        setLogin() {
+            //    this.$inertia.visit('/login', { data: { redirectRoute: window.location.href } });
+            // this.user.rotas=
+            const url1 = this.previousUrls.pop();
+            const url2 = this.previousUrls.pop();
+            this.previousUrls.unshift();
+            alert(this.url1);
+            // this.previousUrls.push(url);
+
+            // Garantir que o array tenha no máximo duas URLs armazenadas
+            if (this.previousUrls.length > 2) {
+                this.previousUrls.shift(); // Remover a URL mais antiga
+            }
             // this.previousUrl = window.location.href;
-        //   alert( this.previousUrls);
-        
+            //   alert( this.previousUrls);
+
             this.$inertia.post("/login", this.user, {});
         },
     },
@@ -188,4 +224,5 @@ body {
     text-decoration: none !important;
     color: #4527A0;
 
-}</style>
+}
+</style>

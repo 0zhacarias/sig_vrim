@@ -20,7 +20,9 @@ import Vue from 'vue'
 // import 'tiptap-vuetify/dist/main.css'
 
 import { createInertiaApp, Link } from '@inertiajs/inertia-vue'
+import { ValidationProvider } from 'vee-validate';
 
+Vue.component('ValidationProvider', ValidationProvider);
 
 // import VueSweetalert2 from 'vue-sweetalert2';
 // import Swal from "sweetalert2/dist/sweetalert2.js";
@@ -29,6 +31,8 @@ import { createInertiaApp, Link } from '@inertiajs/inertia-vue'
 // import 'sweetalert2/dist/sweetalert2.min.css'
 // than add in app.js this line
 Vue.component("inertia-link", Link)
+
+
 
 // Vue.use(TiptapVuetifyPlugin, {
 //     // the next line is important! You need to provide the Vuetify Object to this place.
