@@ -40,7 +40,7 @@
   </div>
 </template>
                                         <div>
-                                            <GoogleLogin :params="params"  :onSuccess="onSuccess" :onFailure="onFailure">Login</GoogleLogin>
+                                            <!-- <GoogleLogin :params="params"  :onSuccess="onSuccess" :onFailure="onFailure">Login</GoogleLogin> -->
                                             <!-- <GoogleLogin :params="params" :renderParams="renderParams"
                                                 :onSuccess="onSuccess" :onFailure="onFailure"></GoogleLogin> -->
 
@@ -117,11 +117,11 @@
 </template>
 
 <script>
-import GoogleLogin from 'Vue-google-login';
+// import GoogleLogin from 'Vue-google-login';
 export default {
 
     components: {
-        GoogleLogin
+        // GoogleLogin
     },
 
     data: () => ({

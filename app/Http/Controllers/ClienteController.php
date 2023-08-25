@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Library\Authenticate;
 use App\Library\GoogleClient;
 use App\Models\Cliente;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use App\Http\Controllers\Socialite;
-use Laravel\Socialite\Facades\Socialite as FacadesSocialite;
-
-
+// use App\Http\Controllers\Socialite;
+use Laravel\Socialite\Facades\Socialite;
 class ClienteController extends Controller
 {
     /**
@@ -64,6 +64,7 @@ class ClienteController extends Controller
      */
     public function edit(Cliente $cliente)
     {
+        
         //
     }
 
@@ -111,19 +112,5 @@ class ClienteController extends Controller
 
 
 
-public function redirectToGoogle()
-{
-    // dd(1);
-  
-    return Socialite::driver('google')->redirect();
-}
 
-public function handleGoogleCallback()
-{
-    $user = Socialite::driver('google')->user();
-    // Faça o login do usuário ou registre-o conforme necessário
-    // $user contém as informações do usuário retornado pelo Google
-
-    return redirect('/home'); // Redirecionar após o login
-}
 }

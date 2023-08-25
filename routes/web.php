@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,15 +15,16 @@ use Laravel\Socialite\Facades\Socialite;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |*/
-Route::get('/auth/redirect', function () {
-    return Socialite::driver('google')->redirect();
-});
+Route::get('/auth/redirect',[App\Http\Controllers\Auth\LoginController::class,'redirectToGoogle'])->name('login.google');
+Route::get('/auth/callback',[App\Http\Controllers\Auth\LoginController::class,'handleGoogleCallback'])->name('callback.google');
+// Route::get('/auth/redirect', function () {
+//     return Socialite::driver('google')->redirect();
+// });
  
-Route::get('/auth/callback', function () {
-    $user = Socialite::driver('google')->user();
- 
-    // $user->token
-});
+// Route::get('/auth/callback', function () {
+//     $user = Socialite::driver('google')->user();
+//     // $user->token
+// });
 
 Route::get('/login/google', [App\Http\Controllers\ClienteController::class,'redirectToGoogle']);
 Route::get('/login/google/callback', [App\Http\Controllers\ClienteController::class,'handleGoogleCallback']);
