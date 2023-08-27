@@ -75,7 +75,7 @@
                     href="/RegistrarConta" elevation="0" text>
                     Cadastrar
                 </v-btn>
-                <v-btn v-if="isLoggedIn" text dense class="white--text text-lowercase" href="meu_perfil">
+                <v-btn v-if="isLoggedIn" text dense class="white--text text-lowercase" href="/perfil">
                     {{ user.name }}<br />
                     <!-- {{ user.email}} -->
                 </v-btn>

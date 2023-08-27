@@ -1,34 +1,29 @@
 <template>
-    
     <PortalLayout>
         <template>
-    <div class="card-carousel" @mouseover="stopTimer" @mouseleave="restartTimer">
-        <div class="progressbar" v-if="autoSlideInterval && showProgressBar">
-            <div :style="{width: progressBar + '%' }"></div>
-        </div>
-        <div class="card-img">
-            <img :src="currentImage" alt="">
-            <div class="actions">
-                <span @click="prevImage" class="prev">
-                    &#8249;
-                </span>
-                <span @click="nextImage" class="next">
-                    &#8250;
-                </span>
+            <div class="card-carousel" @mouseover="stopTimer" @mouseleave="restartTimer">
+                <div class="progressbar" v-if="autoSlideInterval && showProgressBar">
+                    <div :style="{ width: progressBar + '%' }"></div>
+                </div>
+                <div class="card-img">
+                    <img :src="currentImage" alt="">
+                    <div class="actions">
+                        <span @click="prevImage" class="prev">
+                            &#8249;
+                        </span>
+                        <span @click="nextImage" class="next">
+                            &#8250;
+                        </span>
+                    </div>
+                </div>
+                <div class="thumbnails">
+                    <div v-for="(image, index) in  images" :key="image.id"
+                        :class="['thumbnail-image', (activeImage == index) ? 'active' : '']" @click="activateImage(index)">
+                        <img :src="image.thumb">
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="thumbnails">
-            <div 
-                v-for="(image, index) in  images"
-                :key="image.id"
-                :class="['thumbnail-image', (activeImage == index) ? 'active' : '']"
-                @click="activateImage(index)"
-            >
-                <img :src="image.thumb">
-            </div>
-        </div>
-    </div>
-</template>
+        </template>
         <v-div class="deep-purple lighten-2">
             <!-- <template >
                 <v-carousel>
@@ -36,7 +31,7 @@
                         transition="fade-transition"></v-carousel-item>
                 </v-carousel>
             </template> -->
-          
+
             <v-row>
                 <card class="white">
 
@@ -184,28 +179,22 @@
                                                 </v-col>
                                             </v-row>
                                         </v-container> -->
-                                        <v-row  justify="space-around">
+                                        <v-row justify="space-around">
                                             <v-col>
-                                                <v-date-picker
-      v-model="date"
-      width="290"
-      class="mt-4"
-    ></v-date-picker>
+                                                <v-date-picker v-model="dias_data" width="290" :format="DatePickerFormat"
+                                                :min="new Date().toISOString().substring(0, 10)" class="mt-4"></v-date-picker>
                                             </v-col>
                                             <v-col>
-                                                <v-time-picker
-      v-model="time"
-      :allowed-hours="allowedHours"
-      :allowed-minutes="allowedMinutes"
-      class="mt-4"
-      format="24hr"
-      scrollable
-      min="9:30"
-      max="22:15"
-    ></v-time-picker>
+                                                <v-time-picker v-model="hora_data" :allowed-hours="allowedHours"
+                                                    :allowed-minutes="allowedMinutes" class="mt-4" format="24hr" scrollable
+                                                    min="9:30" max="22:15"></v-time-picker>
                                             </v-col>
-    
-  </v-row>
+                                            <v-col cols="12" sm="6" md="12">
+                                                    <v-text-field label="OBS:"
+                                                        hint="example of persistent helper text" persistent-hint
+                                                        required></v-text-field>
+                                                </v-col>
+                                        </v-row>
                                         <small>*indicates required field</small>
                                     </v-card-text>
                                     <v-card-actions class="justify-end">
@@ -228,14 +217,15 @@
 // import  Carousel from "../Carousel"
 import PortalLayout from "../../Templates/PortalLayout.vue";
 export default {
-    props: ["imovel",'startingImage', 'autoSlideInterval', 'showProgressBar'],
+    props: ["imovel", 'startingImage', 'autoSlideInterval', 'showProgressBar'],
     components: {
         PortalLayout,
 
     },
     data: () => ({
-        date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        // props: ['startingImage', 'autoSlideInterval', 'showProgressBar'],
+        dias_data: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substring(0, 10),
+        
+       // props: ['startingImage', 'autoSlideInterval', 'showProgressBar'],
         images: [
             {
 
@@ -268,7 +258,7 @@ export default {
             {
                 big: '/images/p4.jpeg',
                 thumb: '/images/thumbs/p4.jpeg'
-            },{
+            }, {
                 big: '/images/p2.jpeg',
                 thumb: '/images/thumbs/p2.jpeg'
             },
@@ -315,6 +305,10 @@ export default {
             'Fourth',
             'Fifth',
         ],
+        // dias_data:'',
+        DatePickerFormat: 'dd/MM/yyyy',
+        disabledDates: {
+          to: new Date(Date.now() - 8640000)}
     }),
 
     mounted() {
@@ -335,16 +329,17 @@ export default {
     },
 
     created() {
+        alert(this.dias_data)
         this.paginacao();
         //Check if startingImage prop was given and if the index is inside the images array bounds
-        if(this.startingImage 
+        if (this.startingImage
             && this.startingImage >= 0
             && this.startingImage < this.images.length) {
             this.activeImage = this.startingImage;
         }
 
         //Check if autoSlideInterval prop was given and if it is a positive number
-        if(this.autoSlideInterval
+        if (this.autoSlideInterval
             && this.autoSlideInterval > this.countdownInterval) {
             //Start the timer to go to the next image
             this.startTimer(this.autoSlideInterval);
@@ -418,7 +413,7 @@ export default {
                 }
             }, this.countdownInterval);
         },
-        
+
         say() {
             this.dialogN = true
         },
@@ -435,23 +430,9 @@ export default {
             // alert(this.imovel.id);
         },
 
-        showDialogAddCondominio() {
-            this.dialogAddCondominio = true;
-        },
-        continuar(stepe, form) {
-            if (this.$refs[form].validate()) {
-                this.e1 = stepe;
-            }
-        },
-        continuar2(stepe, form) {
-            if (this.$refs[form].validate()) {
-                this.e1 = stepe;
-            }
-        },
-
-        filtrarTicket() {
+        filtrarImoveis() {
             axios
-                .get("/tickets/filtrar-ticket", {
+                .get("/imoveis/filtrar-imoveis", {
                     params: this.query,
                 })
                 .then((response) => {
@@ -482,6 +463,7 @@ export default {
     color: #ffffff;
     /* Substitua pelo código de cor desejado */
 }
+
 .card-carousel {
     margin-top: 0.1%;
     user-select: none;
@@ -497,14 +479,14 @@ export default {
     z-index: 1;
 }
 
-.progressbar > div {
+.progressbar>div {
     background-color: rgba(255, 255, 255, 0.52);
     height: 100%;
 }
 
 .thumbnails {
     display: flex;
-    justify-content:center;
+    justify-content: center;
     flex-direction: row;
 }
 
@@ -515,16 +497,16 @@ export default {
     padding: 2px;
 }
 
-.thumbnail-image > img {
+.thumbnail-image>img {
     width: 100%;
     height: 6rem;
     transition: all 250ms;
 }
 
-.thumbnail-image:hover > img, 
-.thumbnail-image.active > img {
+.thumbnail-image:hover>img,
+.thumbnail-image.active>img {
     opacity: 0.6;
-    box-shadow: 2px 2px 6px 1px rgba(0,0,0, 0.5);
+    box-shadow: 2px 2px 6px 1px rgba(0, 0, 0, 0.5);
 }
 
 .card-img {
@@ -533,7 +515,7 @@ export default {
     width: auto;
 }
 
-.card-img > img {
+.card-img>img {
     display: block;
     margin: 0 auto;
 }
@@ -551,21 +533,21 @@ export default {
     color: #585858;
 }
 
-.actions > span {
+.actions>span {
     cursor: pointer;
     transition: all 250ms;
     font-size: 45px;
 }
 
-.actions > span.prev {
+.actions>span.prev {
     margin-left: 5px;
 }
 
-.actions > span.next {
+.actions>span.next {
     margin-right: 5px;
 }
 
-.actions > span:hover {
+.actions>span:hover {
     color: #eee;
 }
 </style>

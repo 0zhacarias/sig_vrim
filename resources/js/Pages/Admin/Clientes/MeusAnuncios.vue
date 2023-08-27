@@ -1,7 +1,9 @@
 <template>
     <v-app>
-        <v-subheader>Meus Anúcios</v-subheader>
+        <!-- <v-subheader>Meus Anúcios</v-subheader> -->
+        <v-container  class="w-90 justify-space-around">
         <v-row>
+            <v-subheader class="text-h5 text-bold mt-10 ">Meus Anuncios</v-subheader>
             <v-col v-for="item in clientes" :key="item.id" cols="12" sm="6" md="4" :lg="clientes.length <= 3 ? 6 : 4">
                 <v-hover v-slot="{ hover }">
 
@@ -52,6 +54,7 @@
                 </v-hover>
             </v-col>
         </v-row>
+    </v-container>
     </v-app>
 </template>
 

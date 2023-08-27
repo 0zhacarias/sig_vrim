@@ -90,7 +90,7 @@ Route::get('/', function () {
     return Inertia::render('Portal/PortalIndex');
     // return view('welcome');
 })->name('index');
-Route::get('/perfil-usuario',[App\Http\Controllers\ClienteController::class,'perfil_cliente'])->name('meu_perfil');
+Route::get('/perfil',[App\Http\Controllers\ClienteController::class,'perfil_cliente']);
 Route::resource('/home', App\Http\Controllers\HomeController::class);
 Route::resource('/moradores', App\Http\Controllers\MoradorController::class);
 Route::resource('/condominios', App\Http\Controllers\CondominioController::class);

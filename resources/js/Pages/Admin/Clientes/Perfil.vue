@@ -1,17 +1,22 @@
 <template>
     <v-app>
-
-        <v-subheader class="text-h5 text-bold mt-10 ">Meus Dados</v-subheader>
         <template>
-            <v-container class="w-75 justify-space-around">
+            <v-container v-if="editarform" class="w-75 justify-space-around">
+                <v-subheader class="text-h5 text-bold mt-10 ">Meus Dados</v-subheader>
                 <validation-observer ref="observer" v-slot="{ invalid }">
                     <form @submit.prevent="submit">
                         <v-row class="m-2">
-                            <v-col cols="6">
+                            <v-col cols="12">
 
                                 <validation-provider v-slot="{ errors }" name="Name" rules="required|max:10">
-                                    <v-text-field v-model="name" outlined :counter="10" :error-messages="errors"
-                                        label="Name" required></v-text-field>
+                                    <v-text-field dense v-model="name" outlined :counter="10" :error-messages="errors"
+                                        label="Nome Completo" required></v-text-field>
+                                </validation-provider>
+                            </v-col>
+                            
+                            <v-col cols="6"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
+                                    <v-text-field disabled dense v-model="email" outlined :error-messages="errors" label="E-mail"
+                                        required></v-text-field>
                                 </validation-provider>
                             </v-col>
                             <v-col cols="6"> <validation-provider v-slot="{ errors }" name="Numero do telefone" :rules="{
@@ -19,74 +24,80 @@
                                 digits: 12,
                                 regex: '^(244)\\d{9}$'
                             }">
-                                    <v-text-field v-model="phoneNumber" outlined :counter="7" :error-messages="errors"
-                                        label="Phone Number" required></v-text-field>
+                                    <v-text-field dense v-model="phoneNumber" outlined :counter="12" :error-messages="errors"
+                                        label="Numero do telefone" required></v-text-field>
                                 </validation-provider></v-col>
+                           
+                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="tipo de documentação" rules="required|email">
+                                    <!-- <v-text-field dense v-model="tipo_documentacao" outlined :error-messages="errors" label="E-mail"
+                                        required></v-text-field> -->
+
+                                        <v-select dense v-model="tipo_documentacao" outlined :items="items" :error-messages="errors"
+                                        label="tipo de documentação" data-vv-name="tipo de documentação" required></v-select>
+                                </validation-provider>
+                            </v-col>
+
+                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="BI" rules="required|bi">
+                                    <v-text-field dense v-model="bi" outlined :error-messages="errors" label="Bilhete de identidade"
+                                        required></v-text-field>
+                                </validation-provider>
+                            </v-col>
+                          
+                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
+                                    <v-text-field dense v-model="email" outlined :error-messages="errors" label="E-mail"
+                                        required></v-text-field>
+                                </validation-provider>
+                            </v-col>
+                            <v-col cols="12"><v-divider></v-divider>
+                                Dados Profissionais
+                                <v-divider></v-divider></v-col>
+                            <v-col :cols="associado==true? 2:3"> <validation-provider v-slot="{ errors }" name="Código do Corretor" rules="required|codigoCorretor">
+                                    <v-text-field  dense v-model="codigo_profissional" outlined :error-messages="errors" label="Código do corretor"
+                                        required></v-text-field>
+                                </validation-provider>
+                            </v-col>
+
+                            <v-col :cols="associado==true? 2:4"> <validation-provider v-slot="{ errors }" name="Tipo corretor" rules="required|tipoCorretor">
+                                <v-select dense v-model="tipo_corrector" outlined  @change="escolherTipoCorretor()" :items="tipoCorretor" :error-messages="errors"
+                                        label="Tipo de corretor" data-vv-name="Tipo de corretor" required></v-select>
+                                </validation-provider>
+                            </v-col>
+                            <v-col cols="4" v-if="associado==true"> <validation-provider v-slot="{ errors }" name="Nome da Imobiliaria" rules="required|nomeImobiliaria">
+                                <v-select dense v-model="nome_imobiliaria" outlined :items="items" :error-messages="errors"
+                                        label="Nome da Imóbiliaria" data-vv-name="Nome da Imóbiliaria" required></v-select>
+                                </validation-provider>
+                            </v-col>
+
+                            <v-col :cols="associado==true? 4:5"> <validation-provider v-slot="{ errors }" name="Zona de actuaçao" rules="required|zonaAtuacao">
+                                    <v-select dense v-model="zona_actuacao" :items="items" outlined :error-messages="errors" label="Zona de actuaçao"
+                                        required></v-select>
+                                </validation-provider>
+                            </v-col>
                             <v-col cols="6"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field v-model="email" outlined :error-messages="errors" label="E-mail"
+                                    <v-text-field dense v-model="email" outlined :error-messages="errors" label="E-mail"
                                         required></v-text-field>
                                 </validation-provider>
                             </v-col>
                             <v-col cols="6"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field v-model="email" outlined :error-messages="errors" label="E-mail"
+                                    <v-text-field dense v-model="email" outlined :error-messages="errors" label="E-mail"
                                         required></v-text-field>
                                 </validation-provider>
                             </v-col>
                             <v-col cols="4"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field v-model="email" outlined :error-messages="errors" label="E-mail"
+                                    <v-text-field dense v-model="email" outlined :error-messages="errors" label="E-mail"
                                         required></v-text-field>
                                 </validation-provider>
                             </v-col>
                             <v-col cols="4"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field v-model="email" outlined :error-messages="errors" label="E-mail"
-                                        required></v-text-field>
-                                </validation-provider>
-                            </v-col>
-                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field v-model="email" outlined :error-messages="errors" label="E-mail"
-                                        required></v-text-field>
-                                </validation-provider>
-                            </v-col>
-                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field v-model="email" outlined :error-messages="errors" label="E-mail"
-                                        required></v-text-field>
-                                </validation-provider>
-                            </v-col>
-                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field v-model="email" outlined :error-messages="errors" label="E-mail"
-                                        required></v-text-field>
-                                </validation-provider>
-                            </v-col>
-                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field v-model="email" outlined :error-messages="errors" label="E-mail"
-                                        required></v-text-field>
-                                </validation-provider>
-                            </v-col>
-                            <v-col cols="6"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field v-model="email" outlined :error-messages="errors" label="E-mail"
-                                        required></v-text-field>
-                                </validation-provider>
-                            </v-col>
-                            <v-col cols="6"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field v-model="email" outlined :error-messages="errors" label="E-mail"
-                                        required></v-text-field>
-                                </validation-provider>
-                            </v-col>
-                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field v-model="email" outlined :error-messages="errors" label="E-mail"
-                                        required></v-text-field>
-                                </validation-provider>
-                            </v-col>
-                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field v-model="email" outlined :error-messages="errors" label="E-mail"
+                                    <v-text-field dense v-model="email" outlined :error-messages="errors" label="E-mail"
                                         required></v-text-field>
                                 </validation-provider>
                             </v-col>
                             <v-col cols="4"> <validation-provider v-slot="{ errors }" name="select" rules="required">
-                                    <v-select v-model="select" outlined :items="items" :error-messages="errors"
+                                    <v-select dense v-model="select" outlined :items="items" :error-messages="errors"
                                         label="Select" data-vv-name="select" required></v-select>
                                 </validation-provider></v-col>
-                            <v-col cols="4"> <validation-provider v-slot="{ errors }" rules="required" name="checkbox">
+                            <!-- <v-col cols="4"> <validation-provider v-slot="{ errors }" rules="required" name="checkbox">
                                     <v-checkbox v-model="checkbox" :error-messages="errors" value="1" label="Option"
                                         type="checkbox" required></v-checkbox>
                                 </validation-provider></v-col>
@@ -97,7 +108,7 @@
                             <v-col cols="4"> <validation-provider v-slot="{ errors }" rules="required" name="checkbox">
                                     <v-checkbox v-model="checkbox" :error-messages="errors" value="1" label="Option"
                                         type="checkbox" required></v-checkbox>
-                                </validation-provider></v-col>
+                                </validation-provider></v-col> -->
                             <v-col cols="12"> <v-btn class="mr-4" type="submit" :disabled="invalid">
                                     submit
                                 </v-btn>
@@ -117,8 +128,9 @@
 </template>
 
 <script>
-
-
+// import { extend,setInteractionMode } from 'vee-validate';
+import { required, digits, email, max, regex } from 'vee-validate/dist/rules'
+import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
 setInteractionMode('eager')
 
 extend('digits', {
@@ -143,7 +155,7 @@ extend('regex', {
 
 extend('email', {
     ...email,
-    message: 'Email must be valid',
+    message: 'Email invalido',
 })
 
 export default {
@@ -156,18 +168,29 @@ export default {
         phoneNumber: '',
         email: '',
         select: null,
-        items: [
-            'Item 1',
-            'Item 2',
-            'Item 3',
-            'Item 4',
+        tipoCorretor: [
+            'Singular',
+            'Associado',
+            'agente',
+            'Outros',
         ],
         checkbox: null,
+        editarform:true,
+        associado:false,
     }),
 
     methods: {
         submit() {
             this.$refs.observer.validate()
+        },
+        escolherTipoCorretor(){
+if(this.tipo_corrector=='Associado'){
+    this.associado=true
+    // alert(this.tipo_corrector=='Associado');
+}else{
+
+    this.associado=false         
+}
         },
         clear() {
             this.name = ''

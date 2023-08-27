@@ -7,14 +7,17 @@
                 <template>
                     <v-container>
                         <v-list>
-                            <v-list-item :class="{'item-selected': linhaSelecionado === 'linha1'}" @click="selectItem('linha1') " v-model="meudados">
+                            <v-list-item :class="{'item-selected': linhaSelecionado === 'meusDados'}" @click="selectItem('meusDados') " v-model="meusDados">
                                 Meus Dados
                             </v-list-item>
-                            <v-list-item :class="{'item-selected': linhaSelecionado === 'linha2'}" @click="selectItem('linha2')" v-model="meusAnucios">
+                            <v-list-item :class="{'item-selected': linhaSelecionado === 'meusAnuncios'}" @click="selectItem('meusAnuncios')" v-model="meusAnuncios">
                                 Meus Anúncios
                             </v-list-item>
-                            <v-list-item :class="{'item-selected': linhaSelecionado === 'linha3'}" @click="selectItem('linha3')" v-model="meusProceso">
+                            <v-list-item :class="{'item-selected': linhaSelecionado === 'imoveisProcesso'}" @click="selectItem('imoveisProcesso')" v-model="meusProceso">
                                 Imoveis em processo
+                            </v-list-item>
+                            <v-list-item :class="{'item-selected': linhaSelecionado === 'meusPagamentos'}" @click="selectItem('meusPagamentos')" v-model="meusPagamentos">
+                                Meus Pagamentos
                             </v-list-item>
                         </v-list>
                     </v-container>
@@ -23,13 +26,15 @@
             </v-list>
         </v-col>
         <v-col cols="8" sm="8" md="7" lg="9">
-                <perfil v-if="this.linhaSelecionado==='linha1'">
+                <perfil v-if="this.linhaSelecionado==='meusDados'">
                 </perfil>
             
-                <MeusAnuncios v-if="this.linhaSelecionado==='linha2'">
+                <MeusAnuncios v-if="this.linhaSelecionado==='meusAnuncios'">
                 </MeusAnuncios>
-                <MeusImoveisCompra class="mt-n16" v-if="this.linhaSelecionado==='linha3'">
+                <MeusImoveisCompra class="mt-n16" v-if="this.linhaSelecionado==='imoveisProcesso'">
                 </MeusImoveisCompra>
+                <meusPagamentos class="mt-n16" v-if="this.linhaSelecionado==='meusPagamentos'">
+                </meusPagamentos>
             
         </v-col>
     </v-row>
@@ -152,6 +157,7 @@ import AdminLayout from "../../../Templates/AdminLayout";
 import Perfil from "../Clientes/Perfil";
 import MeusAnuncios from "../Clientes/MeusAnuncios";
 import MeusImoveisCompra from "../Clientes/MeusImoveisCompra";
+import meusPagamentos from "../Clientes/MeusPagamentos.vue"
 // import PerfilCliente from "../Clientes/PerfilCliente";
 export default {
     props: ["generos"],
@@ -161,6 +167,7 @@ export default {
         // PerfilCliente,
         MeusAnuncios,
         MeusImoveisCompra,
+        meusPagamentos,
     },
     data: () => ({
         items: [{
@@ -179,9 +186,10 @@ export default {
         editedIndex: -1,
         dialogNovoCadastro: false,
         linhaSelecionado: null,
-        meudados: 1,
-        meusAnucios: 2,
+        meusDados: 1,
+        meusAnuncios: 2,
         meusProceso: 3,
+        meusPagamentos: 4,
     }),
 
     computed: {

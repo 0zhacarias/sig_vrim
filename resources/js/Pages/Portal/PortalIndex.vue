@@ -3,12 +3,12 @@
 
         <template class="pb-0 ">
 
-            <v-toolbar-title class="deep-purple darken-3 elevation-0" :style="'border-radius: 0px 0px 0px 300px'">
+            <v-toolbar-title class="deep-purple darken-3 elevation-0" :style="'border-radius: 0px 0px 0px 350px; height:450px'">
                 <!-- <v-card-title>
                  <span class="headline">Título do Card</span> 
                 </v-card-title> -->
                 <v-row class="p-0">
-                    <v-col cols="12" sm="5" md="3" :style="' white-space:nowrap; padding:0; '">
+                    <v-col cols="12" sm="4" md="4" :style="' white-space:nowrap; padding:0; '">
 
                         <!-- <v-card-text>
                             <v-img gradient="to top right, rgba(255,115,201,.1), rgba(25,32,72,.7)"
@@ -18,11 +18,11 @@
                             <div class="bottom-gradient"></div>
                         </v-card-text> -->
                     </v-col>
-                    <v-col cols="12" sm="7" md="9">
-                        <v-card-text class="white--text" :style="'justify-content: center; padding-top:10rem'">
-                            <h1> No Kubico tem. O imóvel que deseja e o que procuras está aqui</h1>
+                    <v-col cols="12" sm="8" md="8">
+                        <v-card-text class="white--text" :style="'justify-content: center; padding-top:5rem; font-size:1rem'">
+                            <h1> <p class="text-bold">No Kubico tem.</p></h1><h2> O imóvel que deseja e o que procuras está aqui</h2>
 
-                            <p>compra, arrenda ou vende o seu imóvel residencial.</p>
+                            <p class="text-h4 pt-3">compra, arrenda ou vende o seu imóvel residencial.</p>
 
                             <v-row class="px-5">
                                 <v-col cols="12" md="6" align="center">

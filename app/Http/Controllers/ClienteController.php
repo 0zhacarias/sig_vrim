@@ -92,7 +92,7 @@ class ClienteController extends Controller
     }
     public function perfil_cliente()
     {
-        
+               
         return Inertia::render('Admin/Clientes/Cliente');
     }
     public function login_google()
