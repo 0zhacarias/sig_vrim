@@ -67,16 +67,16 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         
-        dd(session('url.intended'));
+        // dd(session('url.intended'));
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
         
-        if (session('url.intended')) {
+        // if (session('url.intended')) {
            
-            return redirect()->intended($this->redirectPath());
-        }
+        //     return redirect()->intended($this->redirectPath());
+        // }
     }
 }

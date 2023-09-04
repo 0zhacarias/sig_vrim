@@ -23,4 +23,7 @@ public function usuario(){
 public function estadoImovel(){
     return $this->belongsTo(EstadoImoveis::class);
 }
+public function fotosImoveis(){
+    return $this->belongsTo(FotosImoveis::class,'imoveis_id');
+}
 }

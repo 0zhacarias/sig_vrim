@@ -304,10 +304,10 @@
                                                     </v-col>
 
                                                     <v-col cols="12" :md="this.getvender == false ? 6 : 4" v-if="this.getvender == true">
-                                                        <v-text-field outlined dense label="Quantidade de prestações*" v-model="imovel.nif"></v-text-field>
+                                                        <v-text-field outlined dense label="Quantidade de prestações*" v-model="imovel.meses"></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" :md="this.getarrendar == true ? 6 : 4" v-if="this.getarrendar == true">
-                                                        <v-autocomplete outlined label="Tempo de arrendamento" dense :items="tipo_regimes" item-value="id" item-text="designacao" v-model="imovel.tipo_regime_id
+                                                        <v-autocomplete outlined label="Tempo de arrendamento" dense :items="tipo_regimes" item-value="id" item-text="designacao" v-model="imovel.tempo_arrendar
                                                                     " />
                                                     </v-col>
                                                     <v-col cols="12" md="4" v-if="this.getcolaborador == true && this.getvender == true">

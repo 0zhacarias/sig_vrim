@@ -430,7 +430,7 @@ export default {
             // alert(this.imovel.id);
         },
 
-        filtrarImoveis() {
+        getdados() {
             axios
                 .get("/imoveis/filtrar-imoveis", {
                     params: this.query,

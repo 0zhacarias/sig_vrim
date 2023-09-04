@@ -48,7 +48,7 @@ class ImoveisController extends Controller
         // $data = $request->all();
         // Imoveis::created($data);
         // dd($request->get('mutiplaImagem'));
-
+        dd($request);
         $imovel = Imoveis::create([
             'designacao' => $request->get('designacao'),
             'descricao' => $request->get('descricao'),
@@ -61,14 +61,15 @@ class ImoveisController extends Controller
             'numero_andar' => $request->get('numero_andar'),
             'metros' => $request->get('metros'),
             'numero_banheiro' => $request->get('numero_banheiro'),
-            'tempo_arrendar' => $request->get('numero_banheiro'),
+            'tempo_arrendar' => $request->get('tempo_arrendar'),
             'imposto_predial' => $request->get('imposto_predial'),
             'mesa_cadeira' => $request->get('mesa_cadeira'),
             'armario_embutido' => $request->get('armario_embutido'),
             'armario_cozinha' => $request->get('armario_cozinha'),
             'piscina' => $request->get('piscina'),
-            'numero_banheiro' => $request->get('numero_banheiro'),
-            'numero_banheiro' => $request->get('numero_banheiro'),
+            'sofa' => $request->get('sofa'),
+            'preco' => $request->get('preco'),
+            
 
 
         ]);
@@ -105,12 +106,31 @@ class ImoveisController extends Controller
                 ]);
             };
 
+if($request->get('proprietario_id',1)){
+    $proprietario_colaborador=1;
+}elseif($request->get('colaborador_id',1)){
+    $proprietario_colaborador=2;   
+}else{
+    $proprietario_colaborador=0;
+
+}
+if($request->get('arrendamento_id' == 1)){
+    $operacao_imoveis_id=1;
+    $mes=$request->get('meses');
+}else if($request->get('venda_id' == 1)){
+    $operacao_imoveis_id=2;
+    $mes=0;
+}else{
+    $operacao_imoveis_id=0;
+}
+
+
             $actividade = ActividadeImoveis::create([
-                'proprietario_colaborador' => $request->get('numero_banheiro'),
-                'operacao_imoveis_id' => $request->get('numero_banheiro'),
-                'imoveis_id' => $request->get('numero_banheiro'),
-                'users_id' => $request->get('numero_banheiro'),
-                'meses' => $request->get('numero_banheiro'),
+                'proprietario_colaborador' => $proprietario_colaborador,
+                'operacao_imoveis_id' => $operacao_imoveis_id,
+                'imoveis_id' => $imovel->id,
+                'users_id' => auth()->user()->id,
+                'meses' => $mes,
             ]);
         }
     }
@@ -175,8 +195,8 @@ class ImoveisController extends Controller
     public function imovel_selecionado($id)
     {
         $id = base64_decode(base64_decode(base64_decode($id)));
-        $data['imovel'] = Imoveis::find($id);
-        // dd($data['id_imovel']);
+        $data['imovel'] = Imoveis::with('fotosImoveis')->find($id);
+        // dd($data['imovel']);
         return Inertia::render('Portal/ImovelSelecionado', $data);
         // dd();
     }
