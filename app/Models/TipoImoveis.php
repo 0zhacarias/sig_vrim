@@ -4,12 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class EstadoImoveis extends Model
+class TipoImoveis extends Model
 {
-
-    use HasFactory,SoftDeletes;
-    protected $table="estado_imoveis";
+    use HasFactory;
+    protected $table="tipo_imoveis";
     protected $guarded=['id'];
 }

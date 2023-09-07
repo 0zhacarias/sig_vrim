@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SolicitarImoveis extends Model
+class Municipios extends Model
 {
     use HasFactory,SoftDeletes;
-    
-    protected $table="solicitar_visitas";
+    protected $table="municipios";
     protected $guarded=['id'];
 }

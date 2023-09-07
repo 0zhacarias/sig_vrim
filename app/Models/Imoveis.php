@@ -20,10 +20,16 @@ public function tipologiaImoveis() {
 public function usuario(){
     return $this->belongsTo(User::class,'created_by');
 }
-public function estadoImovel(){
-    return $this->belongsTo(EstadoImoveis::class);
+public function condicaoImoveis(){
+    return $this->belongsTo(CondicaoImoveis::class,);
 }
-public function fotosImoveis(){
-    return $this->belongsTo(FotosImoveis::class,'imoveis_id');
+public function fotosimoveis(){
+    return $this->hasMany(FotosImoveis::class,'imoveis_id');
+}
+public function actividadeImoveis(){
+    return $this->hasMany(ActividadeImoveis::class,'imoveis_id');
+}
+public function estadoImoveis(){
+    return $this->belongsTo(EstadoImoveis::class,);
 }
 }

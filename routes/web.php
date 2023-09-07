@@ -28,10 +28,11 @@ Route::get('/auth/callback',[App\Http\Controllers\Auth\LoginController::class,'h
 
 Route::get('/login/google', [App\Http\Controllers\ClienteController::class,'redirectToGoogle']);
 Route::get('/login/google/callback', [App\Http\Controllers\ClienteController::class,'handleGoogleCallback']);
-Route::get('/', function () {
-    return Inertia::render('Portal/PortalIndex');
-    // return view('welcome');
-})->name('index');
+// Route::get('/', function () {
+//     return Inertia::render('Portal/PortalIndex');
+//     // return view('welcome');
+// })->name('index');
+Route::get('/',[App\Http\Controllers\ImoveisController::class,'portal_imovel'])->name('index');
 Route::get('/RegistrarConta', function () {
     return Inertia::render('Portal/RegistrarConta');
     // return view('welcome');
@@ -57,7 +58,8 @@ Route::resource('/venda-arendamento',App\Http\Controllers\VendaController::class
 Route::resource('/Solicitar-venda',App\Http\Controllers\VendaController::class);
 Route::resource('/Solicitar-arrendamento',App\Http\Controllers\ArrendamentoController::class);
 Route::resource('/Pagamento',App\Http\Controllers\PagamentoController::class);
-Route::get('/Solicitar-visita/{id}',[App\Http\Controllers\ImoveisController::class,'solicitar_visita']);
+Route::post('/Solicitar-visita',[App\Http\Controllers\SolicitarImoveisController::class,'solicitar_visita']);
+// Route::post('/Solicitar-visita/{id}',[App\Http\Controllers\ImoveisController::class,'solicitar_visita']);
 Route::get('/imovel-selecionado/{id}',[App\Http\Controllers\ImoveisController::class,'imovel_selecionado']);
 Route::get('/listaImoveisCompras',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_comprar'])->name('comprarimoveis');
 Route::get('/listaImoveisArrendamentos',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_arrendamento'])->name('comprarimoveis');
@@ -86,10 +88,11 @@ Route::get('/login', function () {
 })->name('login');
 Auth::routes();
 // Route::post('/register', App\Http\Controllers\Auth\RegisterController::class);
-Route::get('/', function () {
-    return Inertia::render('Portal/PortalIndex');
-    // return view('welcome');
-})->name('index');
+// Route::get('/', function () {
+//     return Inertia::render('Portal/PortalIndex');
+//     // return view('welcome');
+// })->name('index');
+Route::get('/',[App\Http\Controllers\ImoveisController::class,'portal_imovel'])->name('index');
 Route::get('/perfil',[App\Http\Controllers\ClienteController::class,'perfil_cliente']);
 Route::resource('/home', App\Http\Controllers\HomeController::class);
 Route::resource('/moradores', App\Http\Controllers\MoradorController::class);

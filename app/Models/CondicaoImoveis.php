@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SolicitarImoveis extends Model
+class CondicaoImoveis extends Model
 {
     use HasFactory,SoftDeletes;
-    
-    protected $table="solicitar_visitas";
+    protected $table="condicao_imoveis";
     protected $guarded=['id'];
+    public function imoveis(){
+        return $this->hasMany(Imoveis::class);
+    }
 }

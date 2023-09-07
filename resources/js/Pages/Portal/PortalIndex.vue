@@ -8,7 +8,7 @@
                  <span class="headline">Título do Card</span> 
                 </v-card-title> -->
                 <v-row class="p-0">
-                    <v-col cols="12" sm="4" md="4" :style="' white-space:nowrap; padding:0; '">
+                    <v-col cols="12" sm="2" md="4" :style="' white-space:nowrap; padding:0; '">
 
                         <!-- <v-card-text>
                             <v-img gradient="to top right, rgba(255,115,201,.1), rgba(25,32,72,.7)"
@@ -18,40 +18,43 @@
                             <div class="bottom-gradient"></div>
                         </v-card-text> -->
                     </v-col>
-                    <v-col cols="12" sm="8" md="8">
-                        <v-card-text class="white--text" :style="'justify-content: center; padding-top:5rem; font-size:1rem'">
-                            <h1> <p class="text-bold">No Kubico tem.</p></h1><h2> O imóvel que deseja e o que procuras está aqui</h2>
+                    <v-col cols="12" sm="10" md="8" class="container--fluid">
+                        <v-card elevation="0" color="transparent" class="white--text" :style="'justify-content: center; padding-top:5rem; font-size:0.4rem'">
+                            <h1> <p class="text-bold text-justify">No Kubico tem.</p></h1><h2> O imóvel que deseja e o que procuras está aqui</h2>
 
-                            <p class="text-h4 pt-3">compra, arrenda ou vende o seu imóvel residencial.</p>
-
-                            <v-row class="px-5">
-                                <v-col cols="12" md="6" align="center">
+<p class="text-h4 pt-3 text-justify">compra, arrenda ou vende o seu imóvel residencial.</p>
+<v-row class="px-5">
+                                <v-col cols="6" sm="" md="6" align="center">
                                     <v-btn :disabled="loading" class="ma-1" color="white" text>
                                         Comprar
                                     </v-btn>
                                 </v-col>
-                                <v-col cols="12" md="6" align="center">
+                                <v-col cols="6" md="6" align="center">
                                     <v-btn :disabled="loading" class="ma-1" color="white" plain>
                                         Arrendar
                                     </v-btn>
                                 </v-col>
-                                <v-col cols="12" md="6" class="opens-sans mb-n8">
+                                <v-col cols="6" md="6" class="opens-sans mb-n8">
                                     <v-autocomplete dense item-text="designacao" item-value="id" prepend-icon=""
                                         label="Localização" clearable full-width hover solo>
                                     </v-autocomplete>
                                 </v-col>
-                                <v-col cols="12" md="4" class="opens-sans mb-n8">
+                                <v-col cols="4" md="4" class="opens-sans mb-n8">
                                     <v-autocomplete dense clearable item-text="designacao" item-value="id" prepend-icon=""
                                         label="Estado" full-width solo>
                                     </v-autocomplete>
                                 </v-col>
-                                <v-col md="2">
+                                <v-col cols="2" md="2">
                                     <v-btn dense :disabled="loading" d-none d-lg-flex btn-custom-nm ml-5>
                                         pesquisar
                                     </v-btn>
                                 </v-col>
                             </v-row>
-                        </v-card-text>
+
+</v-card>
+                           
+                           
+                    
 
                     </v-col>
 
@@ -66,16 +69,16 @@
 
                         <v-card-title class="Centralizar-linha">Lançamentos mais recentes</v-card-title>
                     </v-toolbar-title>
-                    <v-col v-for="item in clientes" :key="item.id" cols="12" sm="12" md="" class="mx-1"
-                        :lg="clientes.length <= 3 ? 6 : 4" :style="'max-width: min-content;'">
+                    <v-col v-for="item in novos_imoveis" :key="item.id" cols="12" sm="12" md="" class="mx-1"
+                        :lg="novos_imoveis.length <= 3 ? 6 : 4" :style="'max-width: min-content;'">
                         <v-hover v-slot="{ hover }">
 
                             <v-card :loading="loading" class="mx-5 my-12 elevation-10" max-width="320"
                                 @click.stop="findImoveis(item.id)" :elevation="hover ? 10 : 0">
-                                <v-img height="150" src="/img/Aaa.png"></v-img>
+                                <v-img height="150" :src="'/storage/'+ item.foto_principal"></v-img>
 
                                 <v-card-title>{{ item.title }}</v-card-title>
-                                <v-card-subtitle class="text--subtitle">{{ item.subtitle }}</v-card-subtitle>
+                                <v-card-subtitle class="text--subtitle">{{ item.designacao }}</v-card-subtitle>
 
                                 <v-card-text>
                                     <v-row align="center" class="mx-0">
@@ -98,7 +101,18 @@
                                         <v-chip><span class="mdi mdi-faucet-variant"></span>7:</v-chip>
 
                                         <v-chip>
-                                            <span class="mdi mdi-bed-double"></span>8</v-chip>
+                                            <span class="mdi mdi-bed-double" title="em proceso"></span>8</v-chip>
+                                         <v-chip title="estado do Imóvel">
+                                            <span v-if="item.estado_imoveis_id==1"  class="mdi mdi-archive-lock-open " ></span>
+                                            <span v-if="item.estado_imoveis_id==2"  class="mdi mdi-archive-remove"></span>
+                                            <span v-if="item.estado_imoveis_id==3"  class="mdi mdi-archive-cog "></span>
+                                            <span v-if="item.estado_imoveis_id==4"  class="mdi mdi-archive-eye"></span>
+                                            <span v-if="item.estado_imoveis_id==5"  class="mdi mdi-archive-refresh"></span>
+                                            
+                                            {{ item.estado_imoveis.designacao }}</v-chip>
+                                            <!-- <v-chip v-for="(actidade) in item.actividade_imoveis" :key="actidade.id">
+                                    <span  class="mdi mdi-sale" title="estado do imovel">
+                                    </span>{{actidade.operacao_imoveis.designacao }} </v-chip> -->
                                     </v-chip-group>
                                 </v-card-text>
 
@@ -408,6 +422,8 @@
 <script>
 import PortalLayout from "../../Templates/PortalLayout.vue";
 export default {
+    props: ["imovel",'novos_imoveis', 'mais_proximos','startingImage', 'autoSlideInterval', 'showProgressBar'],
+
     components: {
         PortalLayout,
     },
