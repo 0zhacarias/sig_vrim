@@ -35,10 +35,10 @@
     <a v-bind:href="authUrl" v-html="linkText"></a>
   </div>
 </template> --><template>
-  <div>
-    <a href = '/auth/redirect' >Login with Google</a>
-  </div>
-</template>
+                                            <div>
+                                                <a href='/auth/redirect'>Login with Google</a>
+                                            </div>
+                                        </template>
                                         <div>
                                             <!-- <GoogleLogin :params="params"  :onSuccess="onSuccess" :onFailure="onFailure">Login</GoogleLogin> -->
                                             <!-- <GoogleLogin :params="params" :renderParams="renderParams"
@@ -163,9 +163,9 @@ export default {
 
     methods: {
         loginWithGoogle() {
-      // Redirecionar para a rota de login do Laravel
-      window.location.href = '/login/google';
-    },
+            // Redirecionar para a rota de login do Laravel
+            window.location.href = '/login/google';
+        },
         onSuccess(googleUser) {
             console.log(googleUser);
 
@@ -187,7 +187,7 @@ export default {
             const url1 = this.previousUrls.pop();
             const url2 = this.previousUrls.pop();
             this.previousUrls.unshift();
-            alert(this.url1);
+            alert(this.previousUrls);
             // this.previousUrls.push(url);
 
             // Garantir que o array tenha no máximo duas URLs armazenadas

@@ -62,6 +62,7 @@ Route::get('/imovel-selecionado/{id}',[App\Http\Controllers\ImoveisController::c
 Route::get('/listaImoveisCompras',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_comprar'])->name('comprarimoveis');
 Route::get('/listaImoveisArrendamentos',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_arrendamento'])->name('comprarimoveis');
 Route::get('/filtrarImoveisPaginate',[App\Http\Controllers\ImoveisController::class,'filtrar_imoveis_paginate'])->name('comprarimoveis');
+Route::post('/armazena',[App\Http\Controllers\ImoveisController::class,'armazena'])->name('comprarimoveis');
 });
 
 Route::get('/arrendamento', function () {
@@ -90,8 +91,9 @@ Route::get('/', function () {
     return Inertia::render('Portal/PortalIndex');
     // return view('welcome');
 })->name('index');
+Route::get('/armazena',[App\Http\Controllers\ImoveisController::class,'armazena'])->name('comprarimoveis');
 Route::get('/perfil',[App\Http\Controllers\ClienteController::class,'perfil_cliente']);
-Route::resource('/home', App\Http\Controllers\HomeController::class);
+Route::resource('/homes', App\Http\Controllers\HomeController::class);
 Route::resource('/moradores', App\Http\Controllers\MoradorController::class);
 Route::resource('/condominios', App\Http\Controllers\CondominioController::class);
 Route::get('/paginarwte', [App\Http\Controllers\HomeController::class, 'portal_auth'])->name('home');

@@ -20,6 +20,7 @@ class HomeController extends Controller
 
     public function index()
     {
+        
         return Inertia::render('Portal/PortalIndex');
         // return Inertia::render('Admin/Home');
     }

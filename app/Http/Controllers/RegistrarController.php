@@ -14,7 +14,7 @@ class RegistrarController extends Controller
 {
 
     use RegistersUsers;
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -104,19 +104,28 @@ class RegistrarController extends Controller
     
     protected function registrar_usuario(Request $data)
     {
+        dd(session(['previous_url' => url()->previous()]));
         $validatedData = $data->validate([
             'name' => 'required',
             'email' => 'required',
             'password' => 'required|string|min:6|confirmed',
         ]);
-        dd($data);
+        session(['previous_url' => url()->previous()]);
         $user= User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($data['password']),
         ]);
         Auth::login($user);
-        return redirect('/home');
+        return $this->redirecionarUsuario();
+        // return redirect('/home');
         
     }
+    protected function redirecionarUsuario()
+{
+    // Recupere a URL anterior da sessão ou redirecione para uma rota padrão se não houver uma URL anterior.
+    $previousUrl = session('previous_url', '/home');
+
+    return redirect($previousUrl);
+}
 }

@@ -47,7 +47,7 @@ class ImoveisController extends Controller
 
         // $data = $request->all();
         // Imoveis::created($data);
-        // dd($request->get('mutiplaImagem'));
+        dd($request,session(['url.previous' => $request->url()]));
 
         $imovel = Imoveis::create([
             'designacao' => $request->get('designacao'),
@@ -189,5 +189,21 @@ class ImoveisController extends Controller
     public function solicitar_visita($id)
     {
         return Inertia::render('Admin/Clientes/SolicitarVisista');
+    }
+    public function armazena(Request $request)
+    
+    { $redirectRoute=$request->get('urls');
+        // $redirectRoute=$request->headers->get('referer');
+        //  dd($redirectRoute=="/portal/listaImoveisCompras");
+        if($redirectRoute=="/portal/listaImoveisCompras"){
+            return Inertia::render('Portal/ListaImoveis');
+        }
+        // else
+        // return $redirectRoute;
+        // dd($redirectRoute);
+        
+        // dd($request);
+        // $redirectRoute=$request->get('urls');
+        // return Inertia::render($redirectRoute) ;
     }
 }

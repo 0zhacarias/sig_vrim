@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -57,7 +57,13 @@ class RegisterController extends Controller
         ]);
         
     }
-
+    protected function redirecionarUsuario()
+{
+    // Recupere a URL anterior da sessão ou redirecione para uma rota padrão se não houver uma URL anterior.
+    $previousUrl = session('previous_url', '/homes');
+// dd($previousUrl);
+    return redirect($previousUrl);
+}
     /**
      * Create a new user instance after a valid registration.
      *
@@ -66,17 +72,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        
-        dd(session('url.intended'));
+        // dd(session('url.intended'));
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-        ]);
-        
-        if (session('url.intended')) {
-           
-            return redirect()->intended($this->redirectPath());
-        }
+        ]);    
     }
+    // session(['previous_url' => url()->previous()]);
+    // return $this->redirecionarUsuario();
 }
