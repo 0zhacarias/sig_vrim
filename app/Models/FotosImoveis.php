@@ -15,5 +15,7 @@ class FotosImoveis extends Model
     protected function serializeDate(DateTimeInterface $date){
         return $date->format('d-M-Y H:i:s');
     }
-
+    public function imoveis(){
+        return $this->belongsTo(Imoveis::class);
+    }
 }

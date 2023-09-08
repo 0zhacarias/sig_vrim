@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Imoveis;
 use App\Models\SolicitarImoveis;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SolicitarImoveisController extends Controller
 {
@@ -81,5 +83,23 @@ class SolicitarImoveisController extends Controller
     public function destroy(SolicitarImoveis $solicitarImoveis)
     {
         //
+    }
+    public function solicitar_visita(Request $request)
+    {
+        // dd($request);
+        $solicitar_visita = SolicitarImoveis::create([
+            'designacao' => $request->get('designacao'),
+            'hora_visita' => $request->get('hora_visita'),
+            'data_visita' => $request->get('data_visita'),
+            'actividade_imoveis_id' => $request->get('actividade_imoveis_id'),
+            'imoveis_id' => $request->get('imoveis_id'),
+
+        ]);
+        Imoveis::find($request->get('imoveis_id'))->update([
+            'estado_imoveis_id' => 4,
+        ]);
+        // $data[]=$request;
+
+        return Inertia::render('Admin/Clientes/SolicitarVisista');
     }
 }

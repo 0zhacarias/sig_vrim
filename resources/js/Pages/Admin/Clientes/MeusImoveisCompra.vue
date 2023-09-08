@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-container  class="w-90 justify-space-around my-13 py-10">
-        <v-subheader class="text-h4 text-bold ">Pagamentos</v-subheader>  <v-row>
+        <v-subheader class="text-h4 text-bold ">Pagamentos{{ minha_compra_arrendamentos }}</v-subheader>  <v-row>
             <v-col v-for="item in clientes" :key="item.id" cols="12" sm="6" md="4" :lg="clientes.length <= 3 ? 6 : 4">
                 <v-hover v-slot="{ hover }">
 
@@ -55,7 +55,7 @@
 import AdminLayout from "../../../Templates/AdminLayout";
 export default {
 
-    props: ["condominios"],
+    props: ["minha_compra_arrendamentos"],
     components: {
         AdminLayout
     },

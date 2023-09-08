@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Library\Authenticate;
 use App\Library\GoogleClient;
 use App\Models\Cliente;
+use App\Models\Imoveis;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -92,8 +93,12 @@ class ClienteController extends Controller
     }
     public function perfil_cliente()
     {
-               
-        return Inertia::render('Admin/Clientes/Cliente');
+        
+        $dados['meus_imoveis']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','desc')->get();
+        $dados['meus_pagamentos']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
+        $dados['imoveis_processos']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
+       
+        return Inertia::render('Admin/Clientes/Cliente',$dados);
     }
     public function login_google()
     {

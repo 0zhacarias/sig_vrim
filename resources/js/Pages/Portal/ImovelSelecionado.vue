@@ -6,7 +6,7 @@
                     <div :style="{ width: progressBar + '%' }"></div>
                 </div>
                 <div class="card-img">
-                    <img :src="currentImage" alt="">
+                    <img :src="'/storage/' + currentImage" alt="">
                     <div class="actions">
                         <span @click="prevImage" class="prev">
                             &#8249;
@@ -19,8 +19,8 @@
                 <div class="thumbnails">
                     <div v-for="(image, index) in  images" :key="image.id"
                         :class="['thumbnail-image', (activeImage == index) ? 'active' : '']" @click="activateImage(index)">
-                        <img :src="image.thumb">
-                    </div>
+                        <img :src="'/storage/' + image.foto">
+                    </div>                                  
                 </div>
             </div>
         </template>
@@ -34,60 +34,77 @@
 
             <v-row>
                 <card class="white">
-
                     <v-col md="8" offset-md="2">
                         <v-card-subtitle class="">Arrendamento / Quarto / Cozinha Equipada / Leiria</v-card-subtitle>
                         <v-card-text class="text-h5 ">
-                            <v-card-title class="deep-purple lighten-5"> {{ imovel.designacao }}</v-card-title>
+                            <v-card-title class="deep-purple lighten-5"> {{ imoveis.designacao }}</v-card-title>
                             <v-row>
 
-                                <v-col cols="8"> <v-card-subtitle class="my-0 pt-3">Localização: {{ imovel.localizacao
+                                <v-col cols="4"> <v-card-subtitle class="my-0 pt-3">Localização: {{ imoveis.localizacao
                                 }}</v-card-subtitle></v-col>
+                                <v-col cols="4"> <v-card-subtitle class="my-0 pt-3"> Condição do imovel: {{ imoveis.condicao_imoveis.designacao }}</v-card-subtitle></v-col>
+                                <!-- <v-col cols="3"> <v-card-subtitle class="my-0 pt-3"> Condição do imovel: {{ imovel.condicao_imoveis.designacao }}</v-card-subtitle></v-col> -->
                                 <v-col cols="4"> <v-card-title
-                                        class="my-0 py-0 justify-content-end text-h4 text-bold text-s">Preço: {{
-                                            imovel.preco }},00 KZ</v-card-title></v-col>
+                                        class="my-0 py-0 justify-content-end text-h5 text-bold text-s">Preço: {{
+                                            imoveis.preco }},00 KZ</v-card-title></v-col>
                             </v-row>
-
+<v-divider></v-divider>
 
 
 
                             <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text" column>
-                                <v-chip><span class="mdi mdi-chart-areaspline-variant">m<sup>2</sup></span></v-chip>
-                                <v-chip><span class="mdi mdi-seat-individual-suite">{{ }}</span>Suíte</v-chip>
-                                <v-chip><span class="mdi mdi-car">{{ 1 }}</span>Garagem</v-chip>
+                                <v-chip><span class="mdi mdi-chart-areaspline-variant"> {{imoveis.metros}}m <sup>2 </sup> </span></v-chip>
+                                <v-chip><span class="mdi mdi-seat-individual-suite">{{imoveis.suite }} </span>Dormitório</v-chip>
+                                <v-chip><span class="mdi mdi-car">{{ imoveis.numero_garagem }}</span>Garagem</v-chip>
 
-                                <v-chip><span class="mdi mdi-faucet-variant"></span> Banheiros</v-chip>
+                                <v-chip><span class="mdi mdi-shower-head"></span> Banheiros</v-chip>
+
+                            
+                                <v-chip><span class="mdi mdi-countertop"></span> Cozinha</v-chip>
 
                                 <v-chip>
-                                    <span class="mdi mdi-bed-double"></span>{{ }}</v-chip>
-                                <v-chip>
-                                    <span class="mdi mdi-timer-lock-outline" title="data do contrato"></span>{{ }} </v-chip>
+                                    <span class="mdi mdi-bed-double"></span>{{ imoveis.numero_banheiro}} Quartos</v-chip>
+                                <v-chip v-for="(actidade) in imoveis.actividade_imoveis" :key="actidade.id">
+                                    <span  class="mdi mdi-sale" title="estado do imovel">
+                                    </span>{{actidade.operacao_imoveis.designacao }} </v-chip>
                             </v-chip-group>
+                        
                             <v-divider></v-divider>
 
 
-                            <p class="text-uppercase">Descrição do imóvel:</p>
+                            <p class="text-body">Descrição do imóvel:</p>
                             <v-card-subtitle>
-                                {{ imovel.descricao }}
+                                {{ imoveis.descricao }}
                             </v-card-subtitle>
                             <v-row class="pt-5">
 
 
-                                <v-col cols="12" sm="4" md="4">
-                                    <span class="text-caption">Área de serviço</span><br />
-                                    <span class="text-caption">Churrasqueira</span><br />
-                                    <span class="text-caption">Elevador</span><br />
-                                    <span class="text-caption">Interfone</span>
+                                <v-col cols="12" sm="4" md="4" v-if="imoveis.mobiliado==='TRUE'" >
+
+                                    <span class="text-subtitle-1 text-bold">O Imóvel tem </span><br />
+                                    <v-divider></v-divider>
+                                    <span class="text-caption">Píscina</span><br />
+                                    <span class="text-caption">Ginásio{{  }}</span><br />
+                                    <span class="text-caption">Tanque de água{{  }}</span><br />
+                                    <span class="text-caption">Elevador{{  }}</span>
+                                    <span class="text-caption">Armario Embutido{{  }}</span>
+                                    <span class="text-caption">Piso{{  }}</span>
                                 </v-col>
                                 <v-col sm="4" md="4">
-                                    <span class="text-caption">Piscina</span><br />
-                                    <span class="text-caption">Quadra poliesportiva</span><br />
-                                    <span class="text-caption">Sauna</span><br />
-                                    <span class="text-caption">Varanda gourmet</span><br />
+                                    <span class="text-subtitle-1 text-bold">Imóvel mobiliado.</span><v-divider></v-divider>
+                                 
+                                    <span class="text-caption">Mesa e Cadeira</span><br />
+                                    <span class="text-caption">Ar-condicionados</span><br />
+                                    <span class="text-caption">Churrasqueira</span><br />
+                                    <span class="text-caption">Gerador</span><br />
+                                    <span class="text-caption">Maquina de lavar roupas</span><br />
                                     <!-- <p>Interfone</p> -->
                                 </v-col>
                                 <v-col sm="4" md="4">
-                                    <span class="text-caption">Piscina</span><span
+                                    <span class="text-subtitle-1 text-bold">Piscina</span>
+                                    <v-divider></v-divider>
+                                    <span
+                                    
                                         class="mdi mdi-check-circle-outline"></span><br />
                                     <span class="text-caption">Quadra poliesportiva</span><span
                                         class="mdi mdi-check-circle-outline"></span><br />
@@ -105,10 +122,10 @@
                 </card>
                 <v-col md="8" offset-md="2">
                     <template>
-                        <v-card-title class="deep-purple lighten-5"> Descição do Imovel</v-card-title>
+                        <!-- <v-card-title class="deep-purple lighten-5"> Descição do Imovel</v-card-title> -->
                         <v-card-subtitle>
 
-                            <p>A prioridade são as pessoas!</p>
+                            <!-- <p>A prioridade são as pessoas!</p> -->
 
                             <p class="text-justify subtitle-1">
                                 O seu voto de CONFIANÇA é o nosso compromisso.
@@ -181,24 +198,24 @@
                                         </v-container> -->
                                         <v-row justify="space-around">
                                             <v-col>
-                                                <v-date-picker v-model="dias_data" width="290" :format="DatePickerFormat"
+                                                <v-date-picker v-model="visitar.data_visita" width="290" :format="DatePickerFormat"
                                                 :min="new Date().toISOString().substring(0, 10)" class="mt-4"></v-date-picker>
                                             </v-col>
                                             <v-col>
-                                                <v-time-picker v-model="hora_data" :allowed-hours="allowedHours"
+                                                <v-time-picker v-model="visitar.hora_visita" :allowed-hours="allowedHours"
                                                     :allowed-minutes="allowedMinutes" class="mt-4" format="24hr" scrollable
                                                     min="9:30" max="22:15"></v-time-picker>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="12">
                                                     <v-text-field label="OBS:"
                                                         hint="example of persistent helper text" persistent-hint
-                                                        required></v-text-field>
+                                                        required v-model="visitar.designacao"></v-text-field>
                                                 </v-col>
                                         </v-row>
                                         <small>*indicates required field</small>
                                     </v-card-text>
                                     <v-card-actions class="justify-end">
-                                        <v-btn text @click="enviarSolicitacao()">Solicitar</v-btn>
+                                        <v-btn text @click="enviarSolicitacao()" :disabled="visitar.data_visita==null || visitar.hora_visita==null">Solicitar</v-btn>
 
                                         <v-btn text @click="dialog.value = false">Fechar</v-btn>
                                     </v-card-actions>
@@ -217,61 +234,18 @@
 // import  Carousel from "../Carousel"
 import PortalLayout from "../../Templates/PortalLayout.vue";
 export default {
-    props: ["imovel", 'startingImage', 'autoSlideInterval', 'showProgressBar'],
+    props: ["imoveis", 'startingImage', 'autoSlideInterval', 'showProgressBar'],
     components: {
         PortalLayout,
 
     },
     data: () => ({
         dias_data: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substring(0, 10),
-        
-       // props: ['startingImage', 'autoSlideInterval', 'showProgressBar'],
-        images: [
-            {
-
-                big: '/images/p1.jpeg',
-                thumb: '/images/thumbs/p1.jpeg'
-            },
-            {
-
-                big: '/images/p2.jpeg',
-                thumb: '/images/thumbs/p2.jpeg'
-            },
-            {
-
-                big: '/images/p3.jpeg',
-                thumb: '/images/thumbs/p3.jpeg'
-            },
-            {
-                big: '/images/p4.jpeg',
-                thumb: '/images/thumbs/p4.jpeg'
-            },
-            {
-                big: '/images/p2.jpeg',
-                thumb: '/images/thumbs/p2.jpeg'
-            },
-            {
-
-                big: '/images/p3.jpeg',
-                thumb: '/images/thumbs/p3.jpeg'
-            },
-            {
-                big: '/images/p4.jpeg',
-                thumb: '/images/thumbs/p4.jpeg'
-            }, {
-                big: '/images/p2.jpeg',
-                thumb: '/images/thumbs/p2.jpeg'
-            },
-            {
-
-                big: '/images/p3.jpeg',
-                thumb: '/images/thumbs/p3.jpeg'
-            },
-            {
-                big: '/images/p4.jpeg',
-                thumb: '/images/thumbs/p4.jpeg'
-            },
-        ],
+        images:null,
+        visitar:{
+            data_visita:null,
+            hora_visita:null
+        },
         //Index of the active image
         activeImage: 0,
         //Hold the timeout, so we can clear it when it is needed
@@ -284,18 +258,18 @@ export default {
         timerInterval: null,
         //Every 10ms decrease the timeLeft
         countdownInterval: 10,
-        // items: [
+        // images: [
         //     {
-        //         src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+        //         big: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
         //     },
         //     {
-        //         src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+        //         big: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
         //     },
         //     {
-        //         src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+        //         big: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
         //     },
         //     {
-        //         src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+        //         big: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
         //     },
         // ],
         slides: [
@@ -320,7 +294,7 @@ export default {
         },
         currentImage() {
             this.timeLeft = this.autoSlideInterval;
-            return this.images[this.activeImage].big;
+            return this.images[this.activeImage].foto;
         },
         progressBar() {
             //Calculate the width of the progressbar
@@ -329,11 +303,11 @@ export default {
     },
 
     created() {
-        alert(this.dias_data)
+        // alert(this.dias_data)
+        this.images=this.imoveis.fotos_imoveis
         this.paginacao();
         //Check if startingImage prop was given and if the index is inside the images array bounds
-        if (this.startingImage
-            && this.startingImage >= 0
+        if (this.startingImage && this.startingImage >= 0
             && this.startingImage < this.images.length) {
             this.activeImage = this.startingImage;
         }
@@ -425,12 +399,18 @@ export default {
             // alert(this.imovel.id);
         },
         enviarSolicitacao() {
+            this.visitar.imoveis_id=this.imoveis.id,
+            this.visitar.actividade_imoveis_id=this.imoveis.actividade_imoveis[0].id
+            // this.visitar.actividade_imoveis_id=this.imovel.actividade_imoveis[0].operacao_imoveis.id
+            alert(JSON.stringify(this.visitar))
             // :href="`/portal/Solicitar-visita/${this.imovel.id}` "
-            window.location.href = "/portal/Solicitar-visita/" + btoa(btoa(btoa(this.imovel.id)));
+            // window.location.href = "/portal/Solicitar-visita/"+this.visitar;
+            this.$inertia.post("/portal/Solicitar-visita/", this.visitar, {});
+            // window.location.href = "/portal/Solicitar-visita/" + btoa(btoa(btoa(this.imovel.id)));
             // alert(this.imovel.id);
         },
 
-        filtrarImoveis() {
+        getdados() {
             axios
                 .get("/imoveis/filtrar-imoveis", {
                     params: this.query,

@@ -1,95 +1,127 @@
 <template>
     <PortalLayout>
 
-          
-                <v-row >
-                    <v-col sm="1" md="1"></v-col>
-                    <v-col cols="3">
-                        <v-row class="mx-0 mt-0">
-                            <v-card elevation="0" class="mt-3 transparent px-0" :style="'border-radius: 10px'">
-                                <v-card-title class="deep-purple--text">O que estás a procura</v-card-title>
-                                <v-card-text>
-                                    <v-col cols="12" class="opens-sans mb-n8">
-                                        <v-autocomplete @change="filtrarTicket()" clearable v-model="query.estado_ticket_id"
-                                            :items="estadoTickets" item-text="designacao" item-value="id" prepend-icon=""
-                                            label="Estado" dense no-data-text="sem dados" outlined dark>
-                                        </v-autocomplete>
-                                    </v-col>
-                                    <v-col cols="12" class="pt-6 mb-n8 " v-if="showSecondAutocompleteModulo">
-                                        <v-autocomplete prepend-icon="" label="Tipo de Problema" type="text" clearable
-                                            outlined dense no-data-text="sem dados">
-                                        </v-autocomplete>
-                                    </v-col>
 
-                                    <v-col cols="12" class="pt-6 mb-n8">
-                                        <v-autocomplete @change="filtrarTicket()" clearable v-model="query.operador_id"
-                                            :items="funcionario_operadores" item-text="nome_funcionario" item-value="id"
-                                            prepend-icon="" label="Operadores" outlined dense no-data-text="sem dados">
-                                        </v-autocomplete>
-                                    </v-col>
+        <v-row>
+            <v-col sm="1" md="1"></v-col>
+            <v-col cols="3">
+                <v-row class="mx-0 mt-0">
+                    <v-card elevation="0" class="mt-3 transparent px-0" :style="'border-radius: 10px'">
+                        <v-card-title class="deep-purple--text">O que estás a procura</v-card-title>
+                        <v-card-text>
+                            <v-col cols="12" class="opens-sans mb-n8">
+                                <v-autocomplete @change="filtrarTicket()" clearable v-model="query.estado_ticket_id"
+                                    :items="estadoTickets" item-text="designacao" item-value="id" prepend-icon=""
+                                    label="Estado" dense no-data-text="sem dados" outlined dark>
+                                </v-autocomplete>
+                            </v-col>
+                            <v-col cols="12" class="pt-6 mb-n8 " v-if="showSecondAutocompleteModulo">
+                                <v-autocomplete prepend-icon="" label="Tipo de Problema" type="text" clearable outlined
+                                    dense no-data-text="sem dados">
+                                </v-autocomplete>
+                            </v-col>
 
-                                    <v-col cols="12" class="pt-6 mb-n8">
-                                        <v-autocomplete class="custom-autocomplete" @change="filtrarTicket()" clearable
-                                            v-model="query.tecnico_id" :items="funcionario_tecnicos"
-                                            item-text="nome_funcionario" item-value="id" prepend-icon="" label="Técnicos"
-                                            outlined dense no-data-text="sem dados">
-                                            <!-- <template v-slot:item="data">
+                            <v-col cols="12" class="pt-6 mb-n8">
+                                <v-autocomplete @change="filtrarTicket()" clearable v-model="query.operador_id"
+                                    :items="funcionario_operadores" item-text="nome_funcionario" item-value="id"
+                                    prepend-icon="" label="Operadores" outlined dense no-data-text="sem dados">
+                                </v-autocomplete>
+                            </v-col>
+
+                            <v-col cols="12" class="pt-6 mb-n8">
+                                <v-autocomplete class="custom-autocomplete" @change="filtrarTicket()" clearable
+                                    v-model="query.tecnico_id" :items="funcionario_tecnicos" item-text="nome_funcionario"
+                                    item-value="id" prepend-icon="" label="Técnicos" outlined dense
+                                    no-data-text="sem dados">
+                                    <!-- <template v-slot:item="data">
                                                 {{ data.item.nome_funcionario }}
                                                 {{ data.item.sobre_nome_funcionario }}
                                             </template> -->
-                                        </v-autocomplete>
-                                    </v-col>
-                                    <v-col cols="12" class="pt-13 mb-n8">
-                                        <v-text-field clearable label="Data inicial" class="my-n8 rounded"
-                                            v-model="query.data_inicial" type="date" :error-messages="erros.dat_inicio_real
-                                                " dense outlined>
-                                        </v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" class="pt-13 mb-n8">
-                                        <v-text-field clearable label="Data termino" v-model="query.data_final"
-                                            @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense
-                                            outlined>
-                                        </v-text-field>
-                                    </v-col>
+                                </v-autocomplete>
+                            </v-col>
+                            <v-col cols="12" class="pt-13 mb-n8">
+                                <v-text-field clearable label="Data inicial" class="my-n8 rounded"
+                                    v-model="query.data_inicial" type="date" :error-messages="erros.dat_inicio_real
+                                        " dense outlined>
+                                </v-text-field>
+                            </v-col>
+                            <v-col cols="12" class="pt-13 mb-n8">
+                                <v-text-field clearable label="Data termino" v-model="query.data_final"
+                                    @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense outlined>
+                                </v-text-field>
+                            </v-col>
 
-                                    <v-col cols="12" class="pt-13 mb-n8">
-                                        <v-text-field clearable label="Data termino" v-model="query.data_final"
-                                            @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense
-                                            outlined>
-                                        </v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" class="pt-13 mb-n8">
-                                        <v-text-field clearable label="Data termino" v-model="query.data_final"
-                                            @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense
-                                            outlined>
-                                        </v-text-field>
-                                    </v-col>
+                            <v-col cols="12" class="pt-13 mb-n8">
+                                <v-text-field clearable label="Data termino" v-model="query.data_final"
+                                    @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense outlined>
+                                </v-text-field>
+                            </v-col>
+                            <v-col cols="12" class="pt-13 mb-n8">
+                                <v-text-field clearable label="Data termino" v-model="query.data_final"
+                                    @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense outlined>
+                                </v-text-field>
+                            </v-col>
 
-                                </v-card-text>
-                            </v-card>
-                        </v-row>
-                    </v-col>
+                        </v-card-text>
+                    </v-card>
+                </v-row>
+            </v-col>
 
-                    <v-col cols="7" sm="7" md="7">
-                            <template>
-                                <v-card class="ma-4 pa-4  grey lighten-2 " elevation="0" >
-                                    <v-card-title>
-                                        <!-- <span class="text-uppercase" style="font-size: 20px">
+            <v-col cols="7" sm="7" md="7">
+                <template>
+                    <v-card class="ma-4 pa-4  grey lighten-2 " elevation="0">
+                        <v-card-title>
+                            <!-- <span class="text-uppercase" style="font-size: 20px">
                     {{ formTitle }}</span
                 > -->
-                                    </v-card-title>
-                                </v-card>
+                        </v-card-title>
+                    </v-card>
 
-                                <v-dialog
-             
-                v-model="dialogN"
-                max-width="500px"
-            >
-                <v-card>
-                    <v-card-text class="text-h6 py-2">
+                    <v-dialog v-model="dialogN" max-width="400px">
+                        <v-card class="" max-width="400">
+                            <v-list>
+                                <v-list-item>
+                                    <v-list-item-avatar>
+                                        <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
+                                    </v-list-item-avatar>
+
+                                    <v-list-item-content>
+                                        <v-list-item-title class="subtitle-1 text-h5">KUBICOS</v-list-item-title>
+                                        <v-list-item-subtitle>Entre em contacto com um corretor</v-list-item-subtitle>
+                                    </v-list-item-content>
+
+                                    <v-list-item-action>
+                                        <v-btn :class="fav ? 'red--text' : ''" icon @click="fav = !fav">
+                                            <v-icon>mdi-heart</v-icon>
+                                        </v-btn>
+                                    </v-list-item-action>
+                                </v-list-item>
+                            </v-list>
+                            <v-col cols="12"> 
+                                    <v-text-field v-model="email" outlined dense :error-messages="errors" label="E-mail"
+                                        required></v-text-field>
+                            
+                            </v-col>
+                            <v-col cols="12"> 
+                                    <v-textarea v-model="phoneNumber" dense outlined :error-messages="errors"
+                                        label="Informe o seu comentario aqui" required rows="3"></v-textarea>
+                               </v-col>
+                                                <v-card-actions>
+                                <v-spacer></v-spacer>
+
+                                <v-btn color="red" text @click="dialogN = false">
+                                    Cancel
+                                </v-btn>
+                                <v-btn color="primary" text @click="dialogN = false">
+                                    Save
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                        <!-- <v-card> -->
+                        <!-- <v-card-text class="text-h6 py-2">
                         Não existe funcionario_tecnicos associado!
-                    </v-card-text>
-                    <v-card-actions>
+                    </v-card-text> -->
+                        <!-- <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn
                             color="red"
@@ -99,78 +131,145 @@
                         >
 
                         <v-spacer></v-spacer>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
+                    </v-card-actions> -->
+                        <!-- </v-card> -->
+                    </v-dialog>
+                    <v-dialog v-model="dialogContacto" max-width="400px">
+                        <v-card class="" max-width="400">
+                            <v-list>
+                                <v-list-item>
+                                    <v-list-item-avatar>
+                                        <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
+                                    </v-list-item-avatar>
+
+                                    <v-list-item-content>
+                                        <v-list-item-title class="subtitle-1 text-h5">KUBICOS</v-list-item-title>
+                                        <v-list-item-subtitle>Entre em contacto com um corretor</v-list-item-subtitle>
+                                    </v-list-item-content>
+
+                                    <v-list-item-action>
+                                        <v-btn :class="fav ? 'red--text' : ''" icon @click="fav = !fav">
+                                            <v-icon>mdi-heart</v-icon>
+                                        </v-btn>
+                                    </v-list-item-action>
+                                </v-list-item>
+                            </v-list>
+                            <v-col cols="12"> 
+                                    <v-card-actions>+244 (992-963-9856) /+244 (992-963-9856)</v-card-actions> 
+                                    <v-card-actions>+244 (992-963-9856)</v-card-actions> 
+                                    
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="primary" text @click="dialogContacto = false">
+                                        Ok
+                                    </v-btn>
+                                </v-col>
+                                <v-card-actions>
+                            </v-card-actions>
+                        </v-card>
+                        <!-- <v-card> -->
+                        <!-- <v-card-text class="text-h6 py-2">
+                        Não existe funcionario_tecnicos associado!
+                    </v-card-text> -->
+                        <!-- <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            color="red"
+                            dark
+                            @click="dialogN = false"
+                            >Fechar</v-btn
+                        >
+
+                        <v-spacer></v-spacer>
+                    </v-card-actions> -->
+                        <!-- </v-card> -->
+                    </v-dialog>
 
 
 
 
-                                <template v-for="item in ImoveisComprar">
-                                    <!-- <inertia-link
+                    <template v-for="item in ImoveisComprar">
+                        <!-- <inertia-link
                                                                     :href="`/tickets/visualizar-resposta/${item.id}` "
                                                                 > -->
-                                    <v-hover v-slot="{ hover }" >
-                                        <v-card class="ma-4 pa-0" :elevation="hover ? 6 : 0" @click.stop="findimoveis(item.id)">
-                                    <template>
-                                                <!--   <card> -->
-                                                <v-list-item-content>
-                                                    <v-row >
-                                                        <v-col md="8" class="px-5" justify="center">
-                                                            <v-card-text>
-                                                            <!-- <v-spacer></v-spacer> -->
-                                                            
-                                                            <v-list-item-title class="font-weight-bold text-h3">
-                                                                <span class="">{{
-                                                                    item.designacao
+                        <v-hover v-slot="{ hover }">
+                            <v-card class="ma-4 pa-0" :elevation="hover ? 6 : 0" @click.stop="findimoveis(item.id)">
+                                <template>
+                                    <!--   <card> -->
+                                    <v-list-item-content>
+                                        <v-row>
+                                            <v-col md="8" class="px-5" justify="center">
+                                                <v-card-text>
+                                                    <!-- <v-spacer></v-spacer> -->
 
-                                                                }}</span>
-                                                            </v-list-item-title>
-                                                            <v-list-item-title class="text-subtitle-2" >
-                                                                <p class="lighten-1--text" v-html="quebraDeLinhaItem(item.descricao)"></p>
-                                                            </v-list-item-title>
+                                                    <v-list-item-title class="font-weight-bold text-h5">
+                                                        <span class="">{{
+                                                            item.designacao
 
-                                                            <v-list-item-title class="font-weight-bold text-h5">
-                                                                <span class="">Total KZ: {{
-                                                                    item.preco
+                                                        }}</span>
+                                                    </v-list-item-title>
+                                                    <v-list-item-title class="text-subtitle-2">
+                                                        <p class="lighten-1--text"
+                                                            v-html="quebraDeLinhaItem(item.descricao)"></p>
+                                                    </v-list-item-title>
 
-                                                                }}</span>
-                                                            </v-list-item-title>
-                                                    
-                                                                <v-chip-group v-model="selection"
-                                                                    active-class="deep-purple accent-4 white--text" column>
-                                                                    <v-chip><span class="mdi mdi-seat-individual-suite">{{item.suite }}</span></v-chip>
-                                                                    <v-chip><span class="mdi mdi-car">{{item.suite }}</span></v-chip>
-                                                                    <v-chip><span
-                                                                            class="mdi mdi-chart-areaspline-variant"></span></v-chip>
+                                                    <v-list-item-title class="font-weight-bold text-h6">
+                                                        <span class="">Total KZ: {{
+                                                            item.preco
 
-                                                                    <v-chip><span
-                                                                            class="mdi mdi-faucet-variant"></span></v-chip>
+                                                        }}</span>
+                                                    </v-list-item-title>
 
-                                                                    <v-chip>
-                                                                        <span class="mdi mdi-bed-double"></span>{{
-                                                                            item.tempo_arrendar }}</v-chip>
-                                                                    <v-chip>
-                                                                        <span class="mdi mdi-timer-lock-outline"
-                                                                            title="data do contrato"></span>{{
-                                                                                item.tempo_arrendar }} </v-chip>
-                                                                </v-chip-group>
-                                                                        <v-btn v-on:click.stop="say()" depressed class="mr-10">
-                                                                            Telefone
-                                                                        </v-btn>
-                                                                        <v-btn v-on:click.stop="say()" depressed color="primary">
-                                                                            Mensagem
-                                                                        </v-btn>
+                                                    <v-chip-group v-model="selection"
+                                                        active-class="deep-purple accent-4 white--text" column>
+                                                        <v-chip><span class="mdi mdi-seat-individual-suite"
+                                                                title="Dormitório">{{ item.suite }}</span></v-chip>
+                                                        <v-chip><span class="mdi mdi-car"
+                                                                title="Garagem">{{ item.numero_garagem }}</span></v-chip>
+                                                        <v-chip><span class="mdi mdi-chart-areaspline-variant"
+                                                                title="Superficie ">{{ item.metros
+                                                                }}<sup>2</sup></span></v-chip>
 
-                                                                        <!-- <v-btn v-on:click.stop="say()">Diga tchau</v-btn> -->
-                                                                        
-                                                                 
-                                                             
-                                                              
-                                                            </v-card-text>
-                                                        </v-col>
-                                                        <v-col md="4" class="ma-0 pa-0">
-                                                            <!-- <v-img
+                                                        <v-chip title="Cozinha"><span
+                                                                class="mdi mdi-countertop"></span>{{ item.cozinha }}</v-chip>
+                                                        <v-chip title="Quarto de Banho">
+                                                            <span class="mdi mdi-shower-head"></span>{{
+                                                                item.numero_banheiro }}</v-chip>
+                                                        <v-chip v-for="(actidade) in item.actividade_imoveis"
+                                                            :key="actidade.id" v-if="actidade.tempo_arrendar > 0">
+
+                                                            <span class="mdi mdi-timer-lock-outline"
+                                                                title="Arrendamento"></span>{{
+                                                                    actidade.tempo_arrendar }} </v-chip>
+                                                        <v-chip :title="item.estado_imoveis.designacao">
+                                                            <span v-if="item.estado_imoveis_id == 1"
+                                                                class="mdi mdi-archive-lock-open "></span>
+                                                            <span v-if="item.estado_imoveis_id == 2"
+                                                                class="mdi mdi-archive-remove"></span>
+                                                            <span v-if="item.estado_imoveis_id == 3"
+                                                                class="mdi mdi-archive-cog "></span>
+                                                            <span v-if="item.estado_imoveis_id == 4"
+                                                                class="mdi mdi-archive-eye"></span>
+                                                            <span v-if="item.estado_imoveis_id == 5"
+                                                                class="mdi mdi-archive-refresh"></span>
+
+                                                            estado</v-chip>
+                                                    </v-chip-group>
+                                                    <v-btn v-on:click.stop="contacto()" depressed class="mr-10">
+                                                        Telefone
+                                                    </v-btn>
+                                                    <v-btn v-on:click.stop="say()" depressed color="primary">
+                                                        Mensagem
+                                                    </v-btn>
+
+                                                    <!-- <v-btn v-on:click.stop="say()">Diga tchau</v-btn> -->
+
+
+
+
+                                                </v-card-text>
+                                            </v-col>
+                                            <v-col md="4" class="ma-0 pa-0">
+                                                <!-- <v-img
                                                             max-height="300"
                                                             max-width="300"
                                                             @click="
@@ -181,15 +280,18 @@
                                                                 item.ficheiro_resposta
                                                             "
                                                         ></v-img> -->
-                                                            <v-img height="300"
-                                                            src="/img/Aaa.png"></v-img>
-                                                        </v-col>
+                                                <!-- <v-img height="250"
+                                                            src="/img/Aaa.png"></v-img> -->
+                                                <v-img height="250" :src="'/storage/' +
+                                                    item.foto_principal
+                                                    " alt="Avatar"></v-img>
+                                            </v-col>
 
-                                                    </v-row>
+                                        </v-row>
 
 
 
-                                                    <!-- <v-row justify="space-between" dense no-gutters>
+                                        <!-- <v-row justify="space-between" dense no-gutters>
                                                         <v-col md="6">
                                                             <v-row justify="start" dense>
                                                                 <v-col cols="12" md="1" class="my-content texto_do_card">
@@ -273,21 +375,21 @@
                                                             </v-col>
                                                         </v-row>
                                                     </v-row> -->
-                                                </v-list-item-content>
+                                    </v-list-item-content>
 
-                                                <!--  </card> -->
-                                            </template>
-                                        
-                                        </v-card>
-                                    </v-hover>
-                                <!-- </inertia-link> -->
+                                    <!--  </card> -->
                                 </template>
-                            </template>
-                        
 
-                      
+                            </v-card>
+                        </v-hover>
+                        <!-- </inertia-link> -->
+                    </template>
+                </template>
 
-                        <!-- <v-row class="fill-height" align-content="center" justify="center" >
+
+
+
+                <!-- <v-row class="fill-height" align-content="center" justify="center" >
                             <v-col class="text-subtitle-1 text-center" cols="12">
                                 Carregando os seus dados
                             </v-col>
@@ -295,10 +397,10 @@
                                 <v-progress-linear color="#002e5b" indeterminate rounded height="6"></v-progress-linear>
                             </v-col>
                         </v-row> -->
-                    </v-col>
-<v-col cols="1" sm="1" md="1"></v-col>
-                </v-row>
-           
+            </v-col>
+            <v-col cols="1" sm="1" md="1"></v-col>
+        </v-row>
+
     </PortalLayout>
 </template>
 <script>
@@ -309,6 +411,7 @@ export default {
     },
     data: () => ({
         dialogN: false,
+        dialogContacto: false,
         page: 1,
         last_page: 1,
         estadoTickets: [],
@@ -385,13 +488,13 @@ export default {
         formTitle() {
             return this.editedIndex === -1 ? "Novo Condomínio" : "Editar ";
         },
-        
+
 
     },
 
     created() {
         this.paginacao()
-       
+
     },
 
     watch: {
@@ -403,21 +506,24 @@ export default {
     },
 
     methods: {
-        say(){
-            this.dialogN=true
+        say() {
+            this.dialogN = true
+        },
+        contacto() {
+            this.dialogContacto = true
         },
         quebraDeLinhaItem(texto) {
-      const tamanhoMaximo = 95;
-      let novoTexto = '';
+            const tamanhoMaximo = 95;
+            let novoTexto = '';
 
-      for (let i = 0; i < texto.length; i += tamanhoMaximo) {
-        novoTexto += texto.slice(i, i + tamanhoMaximo) + '<br>';
-      }
+            for (let i = 0; i < texto.length; i += tamanhoMaximo) {
+                novoTexto += texto.slice(i, i + tamanhoMaximo) + '<br>';
+            }
 
-      return novoTexto;
-    },
-        findimoveis(id){
-            window.location.href="/portal/imovel-selecionado/" + btoa(btoa(btoa(id)));
+            return novoTexto;
+        },
+        findimoveis(id) {
+            window.location.href = "/portal/imovel-selecionado/" + btoa(btoa(btoa(id)));
             // alert(id);
         },
         setNovoCondominio() {
@@ -513,7 +619,6 @@ export default {
 };
 </script>
 <style scoped>
-
 .custom-autocomplete .v-input__control {
     background-color: #ff0000;
     /* Substitua pelo código de cor desejado */

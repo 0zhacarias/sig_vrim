@@ -29,9 +29,9 @@
                 <perfil v-if="this.linhaSelecionado==='meusDados'">
                 </perfil>
             
-                <MeusAnuncios v-if="this.linhaSelecionado==='meusAnuncios'">
+                <MeusAnuncios v-if="this.linhaSelecionado==='meusAnuncios'" :meus_anuncios="meus_imoveis">
                 </MeusAnuncios>
-                <MeusImoveisCompra class="mt-n16" v-if="this.linhaSelecionado==='imoveisProcesso'">
+                <MeusImoveisCompra class="mt-n16" v-if="this.linhaSelecionado==='imoveisProcesso' " :minha_compra_arrendamentos="imoveis_processos">
                 </MeusImoveisCompra>
                 <meusPagamentos class="mt-n16" v-if="this.linhaSelecionado==='meusPagamentos'">
                 </meusPagamentos>
@@ -160,7 +160,7 @@ import MeusImoveisCompra from "../Clientes/MeusImoveisCompra";
 import meusPagamentos from "../Clientes/MeusPagamentos.vue"
 // import PerfilCliente from "../Clientes/PerfilCliente";
 export default {
-    props: ["generos"],
+    props: ["meus_imoveis","imoveis_processos"],
     components: {
         AdminLayout,
         Perfil,
