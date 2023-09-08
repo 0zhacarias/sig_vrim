@@ -93,8 +93,26 @@ Auth::routes();
 //     // return view('welcome');
 // })->name('index');
 Route::get('/',[App\Http\Controllers\ImoveisController::class,'portal_imovel'])->name('index');
+
 Route::get('/perfil',[App\Http\Controllers\ClienteController::class,'perfil_cliente']);
 Route::resource('/home', App\Http\Controllers\HomeController::class);
 Route::resource('/moradores', App\Http\Controllers\MoradorController::class);
 Route::resource('/condominios', App\Http\Controllers\CondominioController::class);
 Route::get('/paginarwte', [App\Http\Controllers\HomeController::class, 'portal_auth'])->name('home');
+Route::group(['prefix' => 'portal', 'middlewere'=>'auth'], function () {
+    Route::resource('/imoveis',App\Http\Controllers\ImoveisController::class);
+    // Route::resource('/imovel-selecionado',App\Http\Controllers\ImoveisController::class);
+    Route::resource('/funcionario',App\Http\Controllers\FuncionarioController::class);
+    Route::resource('/cliente',App\Http\Controllers\ClienteController::class);
+    Route::resource('/imobiliaria-proprietario',App\Http\Controllers\ProprietarioController::class);
+    Route::resource('/venda-arendamento',App\Http\Controllers\VendaController::class);
+    Route::resource('/Solicitar-venda',App\Http\Controllers\VendaController::class);
+    Route::resource('/Solicitar-arrendamento',App\Http\Controllers\ArrendamentoController::class);
+    Route::resource('/Pagamento',App\Http\Controllers\PagamentoController::class);
+    Route::post('/Solicitar-visita',[App\Http\Controllers\SolicitarImoveisController::class,'solicitar_visita']);
+    // Route::post('/Solicitar-visita/{id}',[App\Http\Controllers\ImoveisController::class,'solicitar_visita']);
+    Route::get('/imovel-selecionado/{id}',[App\Http\Controllers\ImoveisController::class,'imovel_selecionado']);
+    Route::get('/listaImoveisCompras',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_comprar'])->name('comprarimoveis');
+    Route::get('/listaImoveisArrendamentos',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_arrendamento'])->name('comprarimoveis');
+    Route::get('/filtrarImoveisPaginate',[App\Http\Controllers\ImoveisController::class,'filtrar_imoveis_paginate'])->name('comprarimoveis');
+    });
