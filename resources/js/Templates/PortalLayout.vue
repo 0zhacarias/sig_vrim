@@ -60,8 +60,8 @@
                     elevation="0" text>
                     Comprar
                 </v-btn>
-                <v-btn dense @click="storePreviousUrl('/portal/imoveis')" class="d-none d-lg-flex btn-custom-nm ml-5"
-                    color="#fff" href="/portal/imoveis" elevation="0" text>
+                <v-btn dense @click="anuncios()" class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff"
+                    href="/portal/imoveis" elevation="0" text>
                     Anuciar
                 </v-btn>
             </v-toolbar-items>
@@ -239,11 +239,12 @@
                                                         </span>
                                                         <v-col cols="12">
                                                             <div class="text-center pb-3">
-                                            <v-btn href="/auth/redirect" block rounded outlined x-large color="blue darken-1">
-                                                <v-icon>mdi mdi-google</v-icon>
-                                                Google
-                                            </v-btn>
-                                        </div>
+                                                                <v-btn href="/auth/redirect" block rounded outlined x-large
+                                                                    color="blue darken-1">
+                                                                    <v-icon>mdi mdi-google</v-icon>
+                                                                    Google
+                                                                </v-btn>
+                                                            </div>
 
                                                             <v-alert outlined dismissible transition="scale-transition" text
                                                                 v-if="alert.type == 'success'" type="success">
@@ -300,7 +301,8 @@
                                                     <p class="text-h5">Aumente sua receita com o nosso sistema</p>
                                                     <p>O SIG-VRIM é a plataforma de financiamento imobiliário que
                                                         <br />oferece crédito ao seu
-                                                        cliente de uma maneira fácil e sem burocracia.</p>
+                                                        cliente de uma maneira fácil e sem burocracia.
+                                                    </p>
 
                                                 </v-card-text>
 
@@ -378,9 +380,9 @@ export default {
             overlay: false,
             user: {},
             alert: {
-            text: "",
-            type: ""
-        },
+                text: "",
+                type: ""
+            },
         };
     },
 
@@ -402,6 +404,20 @@ export default {
 
             this.dialogLogin = true;
         },
+        anuncios() {
+            if (this.$page.props.auth.user) {
+                this.$inertia.get('/portal/imoveis').then((response) => {
+                // window.location.reload();
+            }).catch((error) => {
+                console.log(error);
+                // Tratamento de erro, se necessário
+            });
+            }else{
+                this.dialogLogin=true;
+            }
+            
+        },
+
         logar() {
             this.$inertia.get("/logar").then((response) => {
                 // window.location.reload();
@@ -426,18 +442,19 @@ export default {
             const url2 = this.previousUrls.pop();
             this.previousUrls.unshift();
             this.previousUrl = window.location.href;
-            alert(this.previousUrl);
+            // alert(this.previousUrl);
             // this.previousUrls.push(url);
 
             // Garantir que o array tenha no máximo duas URLs armazenadas
             if (this.previousUrls.length > 2) {
                 this.previousUrls.shift(); // Remover a URL mais antiga
             }
-            // this.previousUrl = window.location.href;
-            //   alert( this.previousUrls);
+            this.previousUrl = window.location.href;
+              alert( this.previousUrls);
 
             this.$inertia.post("/login", this.user, {});
-            // this.dialogLogin = false;
+            this.dialogLogin = false;
+            // window.location.reload();
         },
         logout() {
             axios.post("/logout").then((response) => {
@@ -480,5 +497,4 @@ body {
     text-decoration: none !important;
     color: #4527A0;
 
-}
-</style>
+}</style>

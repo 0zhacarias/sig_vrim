@@ -30,34 +30,37 @@ class HomeController extends Controller
         session(['previous_url' => url()->previous()]);
         $previousUrl = session('previous_url', '/home');
         $urlLogin =  env('LOCAL_URL') . '/logar';
+        // dd($urlLogin,$previousUrl);
         $urlListarArrendado =  env('LOCAL_URL') . '/portal/listaImoveisArrendamentos';
         $urlListarComprar =  env('LOCAL_URL') . '/portal/listaImoveisCompras';
         $urlAnunciar =  env('LOCAL_URL') . '/portal/imoveis';
         // $urlLogin = 'http://' . env('APP_URL') . '/logar';
-        if($previousUrl== $urlLogin){
-            // dd($urlLogin,$previousUrl);
-            //  dd($previousUrl);
-          
-            return Inertia::render('Portal/ListaImoveis');  
-            }else if($previousUrl== $urlLogin){
-                return Inertia::render('Portal/ListaImoveis');  
-            }else if($previousUrl== $urlListarArrendado){
-                return Inertia::render('Portal/ListaImoveis');  
-            }else if($previousUrl== $urlListarComprar){
-                return Inertia::render('Portal/ListaImoveis');  
-            }else if($previousUrl==$urlAnunciar){
-                return Inertia::render('Portal/PortalLayout');  
-            }
         $dados['provincias']=Provincias::all();
         $dados['municipios']=Municipios::all();
         $dados['tipologiaImoveis']=Tipologia::all();
         $dados['tipoImoveis']=TipoImoveis::all();
         $dados['novos_imoveis']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','desc')->get();
         $dados['mais_proximos']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
-        // dd($dados);
+      
+        if($previousUrl== $urlLogin){
+            // dd($previousUrl);
+           
+          
+            return Inertia::render('Portal/PortalIndex',$dados);  
+            }else if($previousUrl== $urlLogin){
+                return Inertia::render('Portal/PortalIndex',$dados);  
+            }else if($previousUrl== $urlListarArrendado){
+                return Inertia::render('Portal/ListaImoveis',$dados);  
+            }else if($previousUrl== $urlListarComprar){
+                return Inertia::render('Portal/ListaImoveis',$dados);  
+            }else if($previousUrl==$urlAnunciar){
+
+                return Inertia::render('Portal/ImoveisCriar',$dados);  
+            }
+     // dd($dados);
         // $this->redirecionarUsuario();
         
-        // return Inertia::render('Portal/PortalIndex', $dados);
+        return Inertia::render('Portal/PortalIndex', $dados);
         // return Inertia::render('Admin/Home');
     }
     protected function redirecionarUsuario()
