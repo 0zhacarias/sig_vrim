@@ -162,7 +162,7 @@
             <template>
                 <v-row justify="space-around">
                     <v-col cols="auto">
-                        <v-dialog transition="dialog-bottom-transition" max-width="700">
+                        <v-dialog transition="dialog-bottom-transition" max-width="500" persistent>
 
                             <template v-slot:activator="{ on, attrs }">
 
@@ -174,7 +174,7 @@
                             </template>
                             <template v-slot:default="dialog">
                                 <v-card>
-                                    <v-toolbar class="text-h6" color="primary" dark>Solicitando uma visita</v-toolbar>
+                                    <v-toolbar class="text-h6" color="primary" dark>Marcar visita</v-toolbar>
                                     <!-- <v-card-text>
                                     <div class="text-h2 pa-12">Hello world!</div>
                                 </v-card-text> -->
@@ -196,15 +196,15 @@
                                                 </v-col>
                                             </v-row>
                                         </v-container> -->
-                                        <v-row justify="space-around">
+                                        <v-row>
                                             <v-col>
-                                                <v-date-picker v-model="visitar.data_visita" width="290" :format="DatePickerFormat"
+                                                <v-date-picker v-model="visitar.data_visita" width="200" :format="DatePickerFormat"
                                                 :min="new Date().toISOString().substring(0, 10)" class="mt-4"></v-date-picker>
                                             </v-col>
                                             <v-col>
                                                 <v-time-picker v-model="visitar.hora_visita" :allowed-hours="allowedHours"
                                                     :allowed-minutes="allowedMinutes" class="mt-4" format="24hr" scrollable
-                                                    min="9:30" max="22:15"></v-time-picker>
+                                                    min="8:30" max="17:00" width="200"></v-time-picker>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="12">
                                                     <v-text-field label="OBS:"
@@ -223,6 +223,27 @@
                             </template>
                         </v-dialog>
                     </v-col>
+                    <template>
+  <div class="text-center">
+    <v-btn
+      dark
+      color="red darken-2"
+      @click="snackbar = true"
+    >
+      Open Snackbar
+    </v-btn>
+
+    <v-snackbar
+      v-model="snackbar"
+      :multi-line="multiLine"
+      :timeout="-1"
+      outlined
+      color="deep-purple accent-4"
+    >
+      {{ text }}
+    </v-snackbar>
+  </div>
+</template>
                 </v-row>
             </template>
             <Carousel></Carousel>
@@ -258,20 +279,10 @@ export default {
         timerInterval: null,
         //Every 10ms decrease the timeLeft
         countdownInterval: 10,
-        // images: [
-        //     {
-        //         big: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-        //     },
-        //     {
-        //         big: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-        //     },
-        //     {
-        //         big: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-        //     },
-        //     {
-        //         big: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-        //     },
-        // ],
+        multiLine: true,
+      snackbar: false,
+      text: `Obrigado por fazer a marcação responderemos o mais rápido possível..`,
+      vertical: true,
         slides: [
             'First',
             'Second',
@@ -401,11 +412,11 @@ export default {
         enviarSolicitacao() {
             this.visitar.imoveis_id=this.imoveis.id,
             this.visitar.actividade_imoveis_id=this.imoveis.actividade_imoveis[0].id
-            // this.visitar.actividade_imoveis_id=this.imovel.actividade_imoveis[0].operacao_imoveis.id
-            alert(JSON.stringify(this.visitar))
+            // this.visitar.actividade_imoveis_id=this.imovel.actividade_imoveis[0].operacao_imoveis.i
             // :href="`/portal/Solicitar-visita/${this.imovel.id}` "
             // window.location.href = "/portal/Solicitar-visita/"+this.visitar;
-            this.$inertia.post("/portal/Solicitar-visita/", this.visitar, {});
+            // this.$inertia.post("/portal/Solicitar-visita/", this.visitar, {});
+            this.snackbar = true
             // window.location.href = "/portal/Solicitar-visita/" + btoa(btoa(btoa(this.imovel.id)));
             // alert(this.imovel.id);
         },

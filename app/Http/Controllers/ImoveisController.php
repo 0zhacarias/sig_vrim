@@ -84,6 +84,8 @@ class ImoveisController extends Controller
             'preco' => $request->get('preco'),
             'estado_imoveis_id' => 3,
             'cozinha' => $request->get('numero_cozinha'),
+            'tipologia_imoveis_id' => $request->get('tipologia_id'),
+            'categoria_imoveis_id' => $request->get('categoria_imoveis_id'),
             'suite' => $request->get('numero_quartos'),
             'condicao_imoveis_id' => $request->get('condicao_imovel'),
             'sala_de_estar' => $request->get('sala_de_estar'),
@@ -105,6 +107,7 @@ class ImoveisController extends Controller
             'ginasio' => $request->get('ginasio'),
             'tanqueagua' => $request->get('tanqueagua'),
             'foto_principal' => $request->get('foto_principal'),
+            'cadastrado_por' => auth()->user()->id,
 
         ]);
         if ($request->hasFile('foto_principal')) {
@@ -141,7 +144,7 @@ class ImoveisController extends Controller
 
             if ($request->get('proprietario_id')== 1) {
                 $proprietario_colaborador = 1;
-            } elseif ($request->get('colaborador_id')== 2) {
+            } elseif ($request->get('colaborador_id')== 1) {
                 $proprietario_colaborador = 2;
             } else {
                 $proprietario_colaborador = 0;
@@ -164,7 +167,7 @@ class ImoveisController extends Controller
                 'imoveis_id' => $imovel->id,
                 'tempo_arrendar' => $request->get('tempo_arrendar'),
                 'quantidade_prestacoes' => $request->get('quantidade_prestacoes'),
-                // 'users_id' => auth()->user()->id,
+                'cadastrado_por' => auth()->user()->id,
             ]);
         }
     }

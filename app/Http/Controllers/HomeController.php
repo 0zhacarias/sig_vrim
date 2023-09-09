@@ -28,6 +28,7 @@ class HomeController extends Controller
         // session(['previous_url' => url()->current()]);
         // $previousUrl2 = session('previous_url');
         session(['previous_url' => url()->previous()]);
+       
         $previousUrl = session('previous_url', '/home');
         $urlLogin =  env('LOCAL_URL') . '/logar';
         // dd($urlLogin,$previousUrl);
@@ -52,6 +53,8 @@ class HomeController extends Controller
             }else if($previousUrl== $urlListarArrendado){
                 return Inertia::render('Portal/ListaImoveis',$dados);  
             }else if($previousUrl== $urlListarComprar){
+                // session()->flush();
+          
                 return Inertia::render('Portal/ListaImoveis',$dados);  
             }else if($previousUrl==$urlAnunciar){
 
@@ -60,7 +63,7 @@ class HomeController extends Controller
      // dd($dados);
         // $this->redirecionarUsuario();
         
-        return Inertia::render('Portal/PortalIndex', $dados);
+        // return Inertia::render('Portal/PortalIndex', $dados);
         // return Inertia::render('Admin/Home');
     }
     protected function redirecionarUsuario()

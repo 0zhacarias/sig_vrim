@@ -61,7 +61,7 @@
                     Comprar
                 </v-btn>
                 <v-btn dense @click="anuncios()" class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff"
-                    href="/portal/imoveis" elevation="0" text>
+                    elevation="0" text>
                     Anuciar
                 </v-btn>
             </v-toolbar-items>
@@ -75,12 +75,12 @@
                     href="/RegistrarConta" elevation="0" text>
                     Cadastrar
                 </v-btn>
-                <v-btn v-if="isLoggedIn" text dense class="white--text text-lowercase" href="/perfil">
-                    {{ user.name }}<br />
+                <v-btn v-if="isLoggedIn " text dense class="white--text text-lowercase" href="/perfil">
+                    {{ user }}<br />
                     <!-- {{ user.email}} -->
                 </v-btn>
                 <v-btn class="white--text hidden-xs-only" v-if="isLoggedIn" @click="logout" title="Terminar Sessão" icon>
-                    <v-icon>mdi-export</v-icon>
+                    <v-icon>mdi-export{{  }}</v-icon>
                 </v-btn>
             </v-toolbar-items>
             <div class="hidden-sm-and-up">
@@ -96,10 +96,10 @@
                             <v-list-item-title><router-link to="/about">Arrendamento</router-link></v-list-item-title>
                         </v-list-item>
                         <v-list-item>
-                            <v-list-item-title><router-link to="/contact">Venda</router-link></v-list-item-title>
+                            <v-list-item-title><router-link to="/contact">Anuciar</router-link></v-list-item-title>
                         </v-list-item>
-                        <v-list-item>
-                            <v-list-item-title v-if="isLoggedIn"><router-link
+                        <v-list-item v-if="isLoggedIn">
+                            <v-list-item-title ><router-link
                                     to="/logout">sair</router-link></v-list-item-title>
                         </v-list-item>
                     </v-list>
@@ -395,6 +395,10 @@ export default {
             return this.$page.props.auth.user;
         },
     },
+    created(){
+        
+
+    },
     methods: {
         // storePreviousUrl(url) {
         // Emite um evento global com a URL
@@ -405,17 +409,17 @@ export default {
             this.dialogLogin = true;
         },
         anuncios() {
-            if (this.$page.props.auth.user) {
+            if (this.$page.props.auth.user!==null) {
                 this.$inertia.get('/portal/imoveis').then((response) => {
-                // window.location.reload();
-            }).catch((error) => {
-                console.log(error);
-                // Tratamento de erro, se necessário
-            });
-            }else{
-                this.dialogLogin=true;
+                    // window.location.reload();
+                }).catch((error) => {
+                    console.log(error);
+                    // Tratamento de erro, se necessário
+                });
+            } else {
+                this.dialogLogin = true;
             }
-            
+
         },
 
         logar() {
@@ -437,24 +441,16 @@ export default {
         },
         setLogin() {
             //    this.$inertia.visit('/login', { data: { redirectRoute: window.location.href } });
-            // this.user.rotas=
-            const url1 = this.previousUrls.pop();
-            const url2 = this.previousUrls.pop();
-            this.previousUrls.unshift();
-            this.previousUrl = window.location.href;
-            // alert(this.previousUrl);
-            // this.previousUrls.push(url);
-
-            // Garantir que o array tenha no máximo duas URLs armazenadas
-            if (this.previousUrls.length > 2) {
-                this.previousUrls.shift(); // Remover a URL mais antiga
-            }
-            this.previousUrl = window.location.href;
-              alert( this.previousUrls);
-
-            this.$inertia.post("/login", this.user, {});
-            this.dialogLogin = false;
+           
+            this.$inertia.post("/login", this.user, {
+                // preserveState: true,
+            // preserveScroll: true,
+            });
+            this.isLoggedIn= true,
+            this.isLoggedOut= false,
+            // location.reload()
             // window.location.reload();
+            this.dialogLogin = false;
         },
         logout() {
             axios.post("/logout").then((response) => {
@@ -497,4 +493,5 @@ body {
     text-decoration: none !important;
     color: #4527A0;
 
-}</style>
+}
+</style>

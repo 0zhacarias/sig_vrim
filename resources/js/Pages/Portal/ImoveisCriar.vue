@@ -58,13 +58,15 @@
                                                         </span>
                                                         <v-col cols="12" sm="6" md="6">
                                                             <v-autocomplete outlined dense :rules="tipoImovelRules"
-                                                                label="Tipo de Imovel*" v-model="imovel.tipoImovel_id
-                                                                    " :items="tipoImoveis" item-text="designacao" item-value="id" item-color="red"></v-autocomplete>
+                                                                label="Tipo de Imovel*" v-model="imovel.categoria_imoveis_id
+                                                                    " :items="tipoImoveis" item-text="designacao"
+                                                                item-value="id" item-color="red"></v-autocomplete>
                                                         </v-col>
                                                         <v-col cols="12" sm="6" md="6">
                                                             <v-autocomplete outlined dense :rules="tipologiaRules" required
                                                                 label="Tipologia*" v-model="imovel.tipologia_id
-                                                                    " :items="tipologiaImoveis" item-text="designacao" item-value="id"></v-autocomplete>
+                                                                    " :items="tipologiaImoveis" item-text="designacao"
+                                                                item-value="id"></v-autocomplete>
                                                         </v-col>
 
                                                     </v-row>
@@ -76,7 +78,7 @@
                                                             </v-textarea>
                                                         </v-col>
                                                     </v-row>
-                                                   
+
 
                                                     <v-divider></v-divider>
                                                     <v-row>
@@ -315,17 +317,19 @@
                                                     </v-row>
                                                     <v-divider></v-divider>
                                                     <v-divider></v-divider>
-                                                  
+
                                                     <v-row>
                                                         <v-col cols="12" md="6">
-                                                            <v-autocomplete v-model="imovel.provincia" dense  :items="this.provincias" item-value="id" item-text="designacao"
-                                                                label="Provincia**" outlined>
+                                                            <v-autocomplete v-model="imovel.provincia" dense
+                                                                :items="this.provincias" item-value="id"
+                                                                item-text="designacao" label="Provincia**" outlined>
 
                                                             </v-autocomplete>
                                                         </v-col>
                                                         <v-col cols="12" md="6">
-                                                            <v-autocomplete  :items="this.municipios" item-value="id" item-text="designacao" v-model="imovel.cidades" label="Cidades*" dense
-                                                                outlined>
+                                                            <v-autocomplete :items="this.municipios" item-value="id"
+                                                                item-text="designacao" v-model="imovel.cidades"
+                                                                label="Cidades*" dense outlined>
 
                                                             </v-autocomplete>
                                                         </v-col>
@@ -335,7 +339,7 @@
 
                                                             </v-text-field>
                                                         </v-col>
-                                            
+
                                                     </v-row>
                                                 </v-container>
                                             </v-form>
@@ -378,12 +382,12 @@
                                                                 v-model="imovel.tempo_arrendar
                                                                     " />
                                                         </v-col>
-                                                        <v-col cols="12" md="4"
+                                                        <!-- <v-col cols="12" md="4"
                                                             v-if="this.getcolaborador == true && this.getvender == true">
                                                             <v-text-field dense outlined type="number"
                                                                 label="percentagem a receber do valor do Imóvel*" v-model="imovel.valor_colaborador
                                                                     "></v-text-field>
-                                                        </v-col>
+                                                        </v-col> -->
                                                         <v-col cols="12" md="12"
                                                             v-if="this.getcolaborador == true && this.getarrendar == true">
                                                             <span>O pagamento referente a o arrendamento é o primeiro mês
@@ -392,9 +396,7 @@
                                                     </v-row>
                                                     <v-divider></v-divider>
                                                     <v-divider></v-divider>
-                                                    <v-row>
-
-
+                                                    <!-- <v-row> 
                                                         <v-col cols="5">
                                                             <span class="text-h6">Pagas Imposto Predial?</span>
 
@@ -416,9 +418,9 @@
                                                         </v-col>
 
 
-                                                    </v-row>
+                                                    </v-row> 
                                                     <v-divider></v-divider>
-                                                    <v-divider></v-divider>
+                                                    <v-divider></v-divider>-->
 
                                                     <v-row>
 
@@ -455,21 +457,22 @@
                                                         <v-col cols="7">
                                                             <span>
                                                                 <v-btn elevation="0" outlined rounded
-                                                                     @click="simMobiliado()" v-model="imovel.mobiliado"
+                                                                    @click="simMobiliado()" v-model="imovel.mobiliado"
                                                                     class="simmobiliado"> sim</v-btn>
-                                                                <v-btn outlined rounded
-                                                                    @click="naoMobiliado()" v-model="imovel.mobiliado"
+                                                                <v-btn outlined rounded @click="naoMobiliado()"
+                                                                    v-model="imovel.mobiliado"
                                                                     class="naomobiliado">não</v-btn>
                                                             </span>
                                                         </v-col>
 
 
                                                     </v-row>
-                                                    <v-list subheader two-line flat v-if="this.mostrarMobiliado==true">
-                                                        <v-subheader>Você vai deixar no imóvel alguns desses itens?</v-subheader>
+                                                    <v-list subheader two-line flat v-if="this.mostrarMobiliado == true">
+                                                        <v-subheader>Você vai deixar no imóvel alguns desses
+                                                            itens?</v-subheader>
 
-                                                      <v-row>
-                                                        <!-- <v-col>
+                                                        <v-row>
+                                                            <!-- <v-col>
                                                             <v-list-item-group v-model="settings" multiple>
                                                             <v-list-item>
                                                                 <template v-slot:default="{ active, }">
@@ -538,108 +541,112 @@
                                                             </v-list-item>
                                                         </v-list-item-group>
                                                         </v-col> -->
-                                                        <v-col>  <v-list-item-group v-model="settings" multiple>
-                                                                                                                        <v-list-item>
-                                                                <template v-slot:default="{ active }">
-                                                                    <v-list-item-content>
-                                                                        <v-list-item-title>Mesa e cadeiras de
-                                                                            jantar</v-list-item-title>
-                                                                    </v-list-item-content>
-                                                                    <v-list-item-action>
-                                                                        <v-checkbox :input-value="active"
-                                                                            v-model="imovel.mesa_cadeira"
-                                                                            style="background-color: #e9e5f5; border-radius: 10px;"
-                                                                            color="primary"></v-checkbox>
-                                                                    </v-list-item-action>
+                                                            <v-col> <v-list-item-group v-model="settings" multiple>
+                                                                    <v-list-item>
+                                                                        <template v-slot:default="{ active }">
+                                                                            <v-list-item-content>
+                                                                                <v-list-item-title>Mesa e cadeiras de
+                                                                                    jantar</v-list-item-title>
+                                                                            </v-list-item-content>
+                                                                            <v-list-item-action>
+                                                                                <v-checkbox :input-value="active"
+                                                                                    v-model="imovel.mesa_cadeira"
+                                                                                    style="background-color: #e9e5f5; border-radius: 10px;"
+                                                                                    color="primary"></v-checkbox>
+                                                                            </v-list-item-action>
 
-                                                                </template>
-                                                            </v-list-item>
-                                                            <v-list-item>
-                                                                <template v-slot:default="{ active, }">
-                                                                    <v-list-item-content>
-                                                                        <v-list-item-title>Ar Condicionados</v-list-item-title>
-                                                                        <!-- <v-list-item-subtitle>Allownotifications</v-list-item-subtitle> -->
-                                                                    </v-list-item-content>
-                                                                    <v-list-item-action>
-                                                                        <v-checkbox :input-value="active"
-                                                                            v-model="imovel.ar_condicionados"
-                                                                            style="background-color: #e9e5f5; border-radius: 10px;"
-                                                                            color="primary"></v-checkbox>
-                                                                    </v-list-item-action>
+                                                                        </template>
+                                                                    </v-list-item>
+                                                                    <v-list-item>
+                                                                        <template v-slot:default="{ active, }">
+                                                                            <v-list-item-content>
+                                                                                <v-list-item-title>Ar
+                                                                                    Condicionados</v-list-item-title>
+                                                                                <!-- <v-list-item-subtitle>Allownotifications</v-list-item-subtitle> -->
+                                                                            </v-list-item-content>
+                                                                            <v-list-item-action>
+                                                                                <v-checkbox :input-value="active"
+                                                                                    v-model="imovel.ar_condicionados"
+                                                                                    style="background-color: #e9e5f5; border-radius: 10px;"
+                                                                                    color="primary"></v-checkbox>
+                                                                            </v-list-item-action>
 
-                                                                </template>
-                                                            </v-list-item>
+                                                                        </template>
+                                                                    </v-list-item>
 
-                                                            <v-list-item>
-                                                                <template v-slot:default="{ active }">
-                                                                    <v-list-item-content>
-                                                                        <v-list-item-title>Maquina de lavar Roupa</v-list-item-title>
-                                                                    </v-list-item-content>
-                                                                    <v-list-item-action>
-                                                                        <v-checkbox :input-value="active"
-                                                                            v-model="imovel.maquina_lavar_roupa"
-                                                                            style="background-color: #e9e5f5; border-radius: 10px;"
-                                                                            color="primary"></v-checkbox>
-                                                                    </v-list-item-action>
+                                                                    <v-list-item>
+                                                                        <template v-slot:default="{ active }">
+                                                                            <v-list-item-content>
+                                                                                <v-list-item-title>Maquina de lavar
+                                                                                    Roupa</v-list-item-title>
+                                                                            </v-list-item-content>
+                                                                            <v-list-item-action>
+                                                                                <v-checkbox :input-value="active"
+                                                                                    v-model="imovel.maquina_lavar_roupa"
+                                                                                    style="background-color: #e9e5f5; border-radius: 10px;"
+                                                                                    color="primary"></v-checkbox>
+                                                                            </v-list-item-action>
 
-                                                                </template>
-                                                            </v-list-item>
+                                                                        </template>
+                                                                    </v-list-item>
 
-                                                            <v-list-item>
-                                                                <template v-slot:default="{ active }">
-                                                                    <v-list-item-content>
-                                                                        <v-list-item-title>Churrasqueira</v-list-item-title>
+                                                                    <v-list-item>
+                                                                        <template v-slot:default="{ active }">
+                                                                            <v-list-item-content>
+                                                                                <v-list-item-title>Churrasqueira</v-list-item-title>
 
-                                                                    </v-list-item-content>
-                                                                    <v-list-item-action>
-                                                                        <v-checkbox :input-value="active"
-                                                                            v-model="imovel.churrasqueira"
-                                                                            style="background-color: #e9e5f5; border-radius: 10px;"
-                                                                            color="primary"></v-checkbox>
-                                                                    </v-list-item-action>
+                                                                            </v-list-item-content>
+                                                                            <v-list-item-action>
+                                                                                <v-checkbox :input-value="active"
+                                                                                    v-model="imovel.churrasqueira"
+                                                                                    style="background-color: #e9e5f5; border-radius: 10px;"
+                                                                                    color="primary"></v-checkbox>
+                                                                            </v-list-item-action>
 
-                                                                </template>
-                                                            </v-list-item>
+                                                                        </template>
+                                                                    </v-list-item>
 
-                                                            <v-list-item>
-                                                                <template v-slot:default="{ active }">
-                                                                    <v-list-item-content>
-                                                                        <v-list-item-title>Gerador Industrial</v-list-item-title>
+                                                                    <v-list-item>
+                                                                        <template v-slot:default="{ active }">
+                                                                            <v-list-item-content>
+                                                                                <v-list-item-title>Gerador
+                                                                                    Industrial</v-list-item-title>
 
-                                                                    </v-list-item-content>
-                                                                    <v-list-item-action>
-                                                                        <v-checkbox :input-value="active"
-                                                                            v-model="imovel.gerador"
-                                                                            style="background-color: #e9e5f5; border-radius: 10px;"
-                                                                            color="primary"></v-checkbox>
-                                                                    </v-list-item-action>
+                                                                            </v-list-item-content>
+                                                                            <v-list-item-action>
+                                                                                <v-checkbox :input-value="active"
+                                                                                    v-model="imovel.gerador"
+                                                                                    style="background-color: #e9e5f5; border-radius: 10px;"
+                                                                                    color="primary"></v-checkbox>
+                                                                            </v-list-item-action>
 
-                                                                </template>
-                                                            </v-list-item>
-                                                            <v-list-item>
-                                                                <template v-slot:default="{ active }">
-                                                                    <v-list-item-content>
-                                                                        <v-list-item-title>piscina </v-list-item-title>
+                                                                        </template>
+                                                                    </v-list-item>
+                                                                    <v-list-item>
+                                                                        <template v-slot:default="{ active }">
+                                                                            <v-list-item-content>
+                                                                                <v-list-item-title>piscina
+                                                                                </v-list-item-title>
 
-                                                                    </v-list-item-content>
-                                                                    <v-list-item-action>
-                                                                        <v-checkbox :input-value="active"
-                                                                            v-model="imovel.piscina"
-                                                                            style="background-color: #e9e5f5; border-radius: 10px;"
-                                                                            color="primary"></v-checkbox>
-                                                                    </v-list-item-action>
+                                                                            </v-list-item-content>
+                                                                            <v-list-item-action>
+                                                                                <v-checkbox :input-value="active"
+                                                                                    v-model="imovel.piscina"
+                                                                                    style="background-color: #e9e5f5; border-radius: 10px;"
+                                                                                    color="primary"></v-checkbox>
+                                                                            </v-list-item-action>
 
-                                                                </template>
-                                                            </v-list-item>
-                                                        </v-list-item-group></v-col>
-                                                      </v-row>
+                                                                        </template>
+                                                                    </v-list-item>
+                                                                </v-list-item-group></v-col>
+                                                        </v-row>
                                                     </v-list>
                                                     <v-divider></v-divider>
                                                     <v-divider></v-divider>
-                                                    
-                                                      <v-list subheader two-line flat>
+
+                                                    <v-list subheader two-line flat>
                                                         <v-card-title>O Seu imovel possué esses itens?</v-card-title>
-                                                            <v-list-item-group v-model="settings" multiple>
+                                                        <v-list-item-group v-model="settings" multiple>
                                                             <v-list-item>
                                                                 <template v-slot:default="{ active, }">
                                                                     <v-list-item-content>
@@ -678,7 +685,8 @@
                                                             <v-list-item>
                                                                 <template v-slot:default="{ active }">
                                                                     <v-list-item-content>
-                                                                        <v-list-item-title>Tanque da água</v-list-item-title>
+                                                                        <v-list-item-title>Tanque da
+                                                                            água</v-list-item-title>
 
                                                                     </v-list-item-content>
                                                                     <v-list-item-action>
@@ -721,7 +729,7 @@
                                                                 </template>
                                                             </v-list-item>
                                                         </v-list-item-group>
-                                                       </v-list>
+                                                    </v-list>
                                                     <v-card-actions>
                                                         <v-btn color="warning" @click="e1 = 1">Voltar</v-btn>
 
@@ -835,6 +843,14 @@
                                                 }}
                                             </v-btn>
                                         </v-card-actions>
+                                        <div class="text-center">
+
+
+                                            <v-snackbar v-model="snackbar" :multi-line="multiLine" :timeout="-1" outlined
+                                                color="deep-purple accent-4">
+                                                {{ text }}
+                                            </v-snackbar>
+                                        </div>
                                     </v-stepper-content>
                                 </v-stepper-items>
                             </v-col>
@@ -851,11 +867,15 @@
 <script>
 import PortalLayout from "../../Templates/PortalLayout.vue";
 export default {
-    props: ["provincias","municipios",'tipologiaImoveis', 'tipoImoveis','startingImage', 'autoSlideInterval', 'showProgressBar'],
+    props: ["provincias", "municipios", 'tipologiaImoveis', 'tipoImoveis', 'startingImage', 'autoSlideInterval', 'showProgressBar'],
     components: {
         PortalLayout,
     },
     data: () => ({
+        multiLine: true,
+        snackbar: false,
+        text: `O seu anuncio foi cadastrado com sucesso`,
+        vertical: true,
         qquarto: "1",
         getarrendar: false,
         getvender: false,
@@ -868,39 +888,39 @@ export default {
             designacao: "2 Meses"
         },
         {
-            id: 1,
+            id: 2,
             designacao: "3 Meses"
         },
         {
-            id: 2,
+            id: 3,
             designacao: "6 Meses"
         },
         {
-            id: 2,
+            id: 4,
             designacao: "1 Ano"
         },
         {
-            id: 2,
+            id: 5,
             designacao: "2 Anos"
         },
         {
-            id: 2,
+            id: 6,
             designacao: "3 Anos"
         },
         {
-            id: 2,
+            id: 7,
             designacao: "4 Anos"
         },
         {
-            id: 2,
+            id: 8,
             designacao: "5 Anos"
         },
         {
-            id: 2,
+            id: 9,
             designacao: "10 Anos"
         },
         {
-            id: 2,
+            id: 10,
             designacao: "15 Anos"
         },
         ],
@@ -915,7 +935,7 @@ export default {
         ],
         loading: null,
         imovel: {
-            condicao_imovel:null,
+            condicao_imovel: null,
             colaborador_id: null,
             proprietario_id: null,
             venda_id: null,
@@ -925,7 +945,7 @@ export default {
             localizacao: null,
             descricao: null,
             tipologia_id: null,
-            tipoImovel_id: null,
+            categoria_imoveis_id: null,
             numero_quartos: 0,
             numero_cozinha: 0,
             numero_banheiro: 0,
@@ -941,7 +961,7 @@ export default {
             tempo_arrendar: 0,
             quantidade_prestacoes: 0,
             // estado_nao_acabado: null,
-           
+
             imposto_predial: null,
             mesa_cadeira: null,
             armario_embutido: null,
@@ -1126,7 +1146,7 @@ export default {
             simimposto_predial.style.color = "black";
         },
         simMobiliado() {
-            this.imovel.mobiliado=true
+            this.imovel.mobiliado = true
             this.mostrarMobiliado = true;
             const simmobiliado = document.querySelector(".simmobiliado");
             const naomobiliado = document.querySelector(".naomobiliado");
@@ -1136,7 +1156,7 @@ export default {
             naomobiliado.style.color = "black";
         },
         naoMobiliado() {
-            this.imovel.mobiliado=false
+            this.imovel.mobiliado = false
             this.mostrarMobiliado = false;
             const simmobiliado = document.querySelector(".simmobiliado");
             const naomobiliado = document.querySelector(".naomobiliado");
@@ -1210,12 +1230,14 @@ export default {
                                 msg:
                                     "" + this.$page.props.flash.success,
                             });
+                            this.snackbar = true
                         }
                         if (this.$page.props.flash.error != null) {
                             Vue.toasted.global.defaultError({
                                 msg: "" + this.$page.props.flash.error,
                             });
                         }
+                        
                         this.closeSave();
                     },
                 }
@@ -1319,11 +1341,13 @@ export default {
 };
 </script>
 
-<style>.no-padding-messages .v-messages.theme--light,
+<style>
+.no-padding-messages .v-messages.theme--light,
 .no-padding-details .v-text-field__details {
     padding: 0 !important;
     margin: 0px 0 0 0 !important;
 
 }
 
-;</style>
+;
+</style>

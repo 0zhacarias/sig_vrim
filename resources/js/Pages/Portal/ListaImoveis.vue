@@ -3,73 +3,87 @@
 
 
         <v-row>
-            <v-col sm="1" md="1"></v-col>
-            <v-col cols="3">
-                <v-row class="mx-0 mt-0">
-                    <v-card elevation="0" class="mt-3 transparent px-0" :style="'border-radius: 10px'">
-                        <v-card-title class="deep-purple--text">O que estás a procura</v-card-title>
-                        <v-card-text>
-                            <v-col cols="12" class="opens-sans mb-n8">
-                                <v-autocomplete @change="filtrarTicket()" clearable v-model="query.estado_ticket_id"
-                                    :items="estadoTickets" item-text="designacao" item-value="id" prepend-icon=""
-                                    label="Estado" dense no-data-text="sem dados" outlined dark>
-                                </v-autocomplete>
-                            </v-col>
-                            <v-col cols="12" class="pt-6 mb-n8 " v-if="showSecondAutocompleteModulo">
-                                <v-autocomplete prepend-icon="" label="Tipo de Problema" type="text" clearable outlined
-                                    dense no-data-text="sem dados">
-                                </v-autocomplete>
-                            </v-col>
+            <v-col cols="4" >
+                <v-card class="my-4 py-4 grey lighten-4" elevation="0">
+                <v-row>
+                    <v-col cols="2">
+                
+            </v-col>
+            <v-col cols="10">
+              
+                    <v-row class="mx-0 mt-0">
+                        <v-card elevation="0" class="mt-3 px-0 transparent" :style="'border-radius: 10px'">
+                            <v-card-title color="deep-purple--text">O que estás a procura</v-card-title>
+                            <v-card-text color="deep-purple accent-4">
+                                <v-col cols="12" class="opens-sans mb-n8">
+                                    <v-autocomplete @change="filtrarTicket()" clearable v-model="query.operacao_id"
+                                        :items="estadoTickets" item-text="designacao" item-value="id" prepend-icon=""
+                                        label="Serviços" dense no-data-text="sem dados" outlined>
+                                    </v-autocomplete>
+                                </v-col>
+                                <v-col cols="12" class="pt-6 mb-n8 " v-if="showSecondAutocompleteModulo">
+                                    <v-autocomplete prepend-icon="" label="Provincia" type="text" clearable outlined dense
+                                        no-data-text="sem dados">
+                                    </v-autocomplete>
+                                </v-col>
 
-                            <v-col cols="12" class="pt-6 mb-n8">
-                                <v-autocomplete @change="filtrarTicket()" clearable v-model="query.operador_id"
-                                    :items="funcionario_operadores" item-text="nome_funcionario" item-value="id"
-                                    prepend-icon="" label="Operadores" outlined dense no-data-text="sem dados">
-                                </v-autocomplete>
-                            </v-col>
+                                <v-col cols="12" class="pt-6 mb-n8">
+                                    <v-autocomplete @change="filtrarTicket()" clearable v-model="query.operador_id"
+                                        :items="funcionario_operadores" item-text="nome_funcionario" item-value="id"
+                                        prepend-icon="" label="Valores" outlined dense no-data-text="sem dados">
+                                    </v-autocomplete>
+                                </v-col>
 
-                            <v-col cols="12" class="pt-6 mb-n8">
-                                <v-autocomplete class="custom-autocomplete" @change="filtrarTicket()" clearable
-                                    v-model="query.tecnico_id" :items="funcionario_tecnicos" item-text="nome_funcionario"
-                                    item-value="id" prepend-icon="" label="Técnicos" outlined dense
-                                    no-data-text="sem dados">
-                                    <!-- <template v-slot:item="data">
+                                <v-col cols="12" class="pt-6 mb-n8">
+                                    <v-autocomplete class="custom-autocomplete" @change="filtrarTicket()" clearable
+                                        v-model="query.tecnico_id" :items="funcionario_tecnicos"
+                                        item-text="nome_funcionario" item-value="id" prepend-icon="" label="Técnicos"
+                                        outlined dense no-data-text="sem dados">
+                                        <!-- <template v-slot:item="data">
                                                 {{ data.item.nome_funcionario }}
                                                 {{ data.item.sobre_nome_funcionario }}
                                             </template> -->
-                                </v-autocomplete>
-                            </v-col>
-                            <v-col cols="12" class="pt-13 mb-n8">
-                                <v-text-field clearable label="Data inicial" class="my-n8 rounded"
-                                    v-model="query.data_inicial" type="date" :error-messages="erros.dat_inicio_real
-                                        " dense outlined>
-                                </v-text-field>
-                            </v-col>
-                            <v-col cols="12" class="pt-13 mb-n8">
-                                <v-text-field clearable label="Data termino" v-model="query.data_final"
-                                    @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense outlined>
-                                </v-text-field>
-                            </v-col>
+                                    </v-autocomplete>
+                                </v-col>
+                                <v-col cols="12" class="pt-13 mb-n8">
+                                    <v-text-field clearable label="Data inicial" class="my-n8 rounded"
+                                        v-model="query.data_inicial" type="date" :error-messages="erros.dat_inicio_real
+                                            " dense outlined>
+                                    </v-text-field>
+                                </v-col>
+                                <v-col cols="12" class="pt-13 mb-n8">
+                                    <v-text-field clearable label="Data termino" v-model="query.data_final"
+                                        @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense
+                                        outlined>
+                                    </v-text-field>
+                                </v-col>
 
-                            <v-col cols="12" class="pt-13 mb-n8">
-                                <v-text-field clearable label="Data termino" v-model="query.data_final"
-                                    @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense outlined>
-                                </v-text-field>
-                            </v-col>
-                            <v-col cols="12" class="pt-13 mb-n8">
-                                <v-text-field clearable label="Data termino" v-model="query.data_final"
-                                    @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense outlined>
-                                </v-text-field>
-                            </v-col>
+                                <v-col cols="12" class="pt-13 mb-n8">
+                                    <v-text-field clearable label="Data termino" v-model="query.data_final"
+                                        @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense
+                                        outlined>
+                                    </v-text-field>
+                                </v-col>
+                                <v-col cols="12" class="pt-13 mb-n8">
+                                    <v-text-field clearable label="Data termino" v-model="query.data_final"
+                                        @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense
+                                        outlined>
+                                    </v-text-field>
+                                </v-col>
 
-                        </v-card-text>
-                    </v-card>
-                </v-row>
+                            </v-card-text>
+                        </v-card>
+                    </v-row>
+             
             </v-col>
+                </v-row>
+            </v-card>
+            </v-col>
+            
 
             <v-col cols="7" sm="7" md="7">
                 <template>
-                    <v-card class="ma-4 pa-4  grey lighten-2 " elevation="0">
+                    <v-card class="ma-4 pa-4  grey lighten-4 " elevation="0">
                         <v-card-title>
                             <!-- <span class="text-uppercase" style="font-size: 20px">
                     {{ formTitle }}</span
@@ -97,16 +111,16 @@
                                     </v-list-item-action>
                                 </v-list-item>
                             </v-list>
-                            <v-col cols="12"> 
-                                    <v-text-field v-model="email" outlined dense :error-messages="errors" label="E-mail"
-                                        required></v-text-field>
-                            
+                            <v-col cols="12">
+                                <v-text-field v-model="email" outlined dense :error-messages="errors" label="E-mail"
+                                    required></v-text-field>
+
                             </v-col>
-                            <v-col cols="12"> 
-                                    <v-textarea v-model="phoneNumber" dense outlined :error-messages="errors"
-                                        label="Informe o seu comentario aqui" required rows="3"></v-textarea>
-                               </v-col>
-                                                <v-card-actions>
+                            <v-col cols="12">
+                                <v-textarea v-model="phoneNumber" dense outlined :error-messages="errors"
+                                    label="Informe o seu comentario aqui" required rows="3"></v-textarea>
+                            </v-col>
+                            <v-card-actions>
                                 <v-spacer></v-spacer>
 
                                 <v-btn color="red" text @click="dialogN = false">
@@ -154,16 +168,16 @@
                                     </v-list-item-action>
                                 </v-list-item>
                             </v-list>
-                            <v-col cols="12"> 
-                                    <v-card-actions>+244 (992-963-9856) /+244 (992-963-9856)</v-card-actions> 
-                                    <v-card-actions>+244 (992-963-9856)</v-card-actions> 
-                                    
-                                    <v-spacer></v-spacer>
-                                    <v-btn color="primary" text @click="dialogContacto = false">
-                                        Ok
-                                    </v-btn>
-                                </v-col>
-                                <v-card-actions>
+                            <v-col cols="12">
+                                <v-card-actions>+244 (992-963-9856) /+244 (992-963-9856)</v-card-actions>
+                                <v-card-actions>+244 (992-963-9856)</v-card-actions>
+
+                                <v-spacer></v-spacer>
+                                <v-btn color="primary" text @click="dialogContacto = false">
+                                    Ok
+                                </v-btn>
+                            </v-col>
+                            <v-card-actions>
                             </v-card-actions>
                         </v-card>
                         <!-- <v-card> -->
@@ -192,17 +206,17 @@
                                                                     :href="`/tickets/visualizar-resposta/${item.id}` "
                                                                 > -->
                         <v-hover v-slot="{ hover }">
-                            <v-card class="ma-4 pa-0" :elevation="hover ? 6 : 0" @click.stop="findimoveis(item.id)">
+                            <v-card class="ma-5 pa-0" :elevation="hover ? 6 : 0" @click.stop="findimoveis(item.id)">
                                 <template>
                                     <!--   <card> -->
                                     <v-list-item-content>
                                         <v-row>
-                                            <v-col md="8" class="px-5" justify="center">
+                                            <v-col md="8" class="px-4" justify="center">
                                                 <v-card-text>
                                                     <!-- <v-spacer></v-spacer> -->
 
-                                                    <v-list-item-title class="font-weight-bold text-h5">
-                                                        <span class="">{{
+                                                    <v-list-item-title class="font-weight-bold  text-subtitle-1">
+                                                        <span class="deep-purple--text">{{
                                                             item.designacao
 
                                                         }}</span>
@@ -223,14 +237,14 @@
                                                         active-class="deep-purple accent-4 white--text" column>
                                                         <v-chip><span class="mdi mdi-seat-individual-suite"
                                                                 title="Dormitório">{{ item.suite }}</span></v-chip>
-                                                        <v-chip><span class="mdi mdi-car"
-                                                                title="Garagem">{{ item.numero_garagem }}</span></v-chip>
+                                                        <v-chip><span class="mdi mdi-car" title="Garagem">{{
+                                                            item.numero_garagem }}</span></v-chip>
                                                         <v-chip><span class="mdi mdi-chart-areaspline-variant"
                                                                 title="Superficie ">{{ item.metros
                                                                 }}<sup>2</sup></span></v-chip>
 
-                                                        <v-chip title="Cozinha"><span
-                                                                class="mdi mdi-countertop"></span>{{ item.cozinha }}</v-chip>
+                                                        <v-chip title="Cozinha"><span class="mdi mdi-countertop"></span>{{
+                                                            item.cozinha }}</v-chip>
                                                         <v-chip title="Quarto de Banho">
                                                             <span class="mdi mdi-shower-head"></span>{{
                                                                 item.numero_banheiro }}</v-chip>
@@ -257,7 +271,7 @@
                                                     <v-btn v-on:click.stop="contacto()" depressed class="mr-10">
                                                         Telefone
                                                     </v-btn>
-                                                    <v-btn v-on:click.stop="say()" depressed color="primary">
+                                                    <v-btn  v-on:click.stop="say()"outlined depressed color="deep-purple">
                                                         Mensagem
                                                     </v-btn>
 
@@ -268,7 +282,7 @@
 
                                                 </v-card-text>
                                             </v-col>
-                                            <v-col md="4" class="ma-0 pa-0">
+                                            <v-col md="4" class="ma-0 pa-0 imagensFocos " :class="{ 'on-hover': hover }">
                                                 <!-- <v-img
                                                             max-height="300"
                                                             max-width="300"
@@ -281,8 +295,8 @@
                                                             "
                                                         ></v-img> -->
                                                 <!-- <v-img height="250"
-                                                            src="/img/Aaa.png"></v-img> -->
-                                                <v-img height="250" :src="'/storage/' +
+                                                            src="/img/Aaa.png"></v-img>:class="{ 'on-hover': hover }" -->
+                                                <v-img max-height="255"  max-width="490" :src="'/storage/' +
                                                     item.foto_principal
                                                     " alt="Avatar"></v-img>
                                             </v-col>
@@ -472,6 +486,7 @@ export default {
                 new Date().getFullYear() - new Date(v).getFullYear() >= 18 ||
                 "Idade informada é Inferior a 18",
         ],
+        transparent: 'rgba(255, 255, 255, 0)',
     }),
 
     mounted() {
@@ -513,7 +528,7 @@ export default {
             this.dialogContacto = true
         },
         quebraDeLinhaItem(texto) {
-            const tamanhoMaximo = 95;
+            const tamanhoMaximo = 50;
             let novoTexto = '';
 
             for (let i = 0; i < texto.length; i += tamanhoMaximo) {
@@ -594,6 +609,7 @@ export default {
                 .catch((error) => {
                     console.log(error);
                 });
+
         },
         filtrarTicket() {
             axios
@@ -624,5 +640,17 @@ export default {
     /* Substitua pelo código de cor desejado */
     color: #ffffff;
     /* Substitua pelo código de cor desejado */
+}
+
+.imagensFocos {
+    transition: opacity .4s ease-in-out;
+}
+
+.imagensFocos:not(.on-hover) {
+    opacity: 0.6;
+}
+
+.show-btns {
+    color: rgba(255, 255, 255, 1) !important;
 }
 </style>
