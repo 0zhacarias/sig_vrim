@@ -632,7 +632,7 @@ export default {
     },
         paginacaoImovelProximo(pageProximo = 1) {
             axios
-                .get("/portal/imoveisProximoPginacao?page=" + pageProximo, {
+                .get("/portal/imoveisProximoPaginacao?page=" + pageProximo, {
                 })
                 .then((response) => {
                     // alert(JSON.stringify(response.data.data))

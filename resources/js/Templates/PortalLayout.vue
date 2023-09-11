@@ -200,12 +200,12 @@
                                 <v-btn icon dark @click="dialogLogin = false">
                                     <v-icon>mdi-close</v-icon>
                                 </v-btn>
-                                <v-toolbar-title>Settings</v-toolbar-title>
+                                <v-toolbar-title>Voltar</v-toolbar-title>
                                 <v-spacer></v-spacer>
                                 <v-toolbar-items>
-                                    <v-btn dark text @click="dialogLogin = false">
+                                    <!-- <v-btn dark text @click="dialogLogin = false">
                                         Save
-                                    </v-btn>
+                                    </v-btn> -->
                                 </v-toolbar-items>
                             </v-toolbar>
                             <v-row align="center" justify="center">
@@ -430,19 +430,11 @@ export default {
             });
             // href="/logar"
         },
-        storePreviousUrl(event) {
-            this.previousUrl = window.location.href;
-            // alert(this.previousUrl);
-        },
-        setLogin() {
-            //    this.$inertia.visit('/login', { data: { redirectRoute: window.location.href } });
-           
+        setLogin() {           
             this.$inertia.post("/login", this.usuario, {
                 // preserveState: true,
             // preserveScroll: true,
             });
-            // location.reload()
-            // window.location.reload();
             this.dialogLogin = false;
         },
         logout() {
@@ -466,10 +458,6 @@ export default {
 };
 </script>
 <style>
-/* @import "vuetify/dist/vuetify.min.css"; */
-
-/* @import "./assets/scss/_custom-variable.scss";
-@import "./assets/scss/style.scss"; */
 body {
     font-family: 'Poppins-Regular';
 }

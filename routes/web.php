@@ -65,7 +65,7 @@ Route::get('/listaImoveisCompras',[App\Http\Controllers\ImoveisController::class
 Route::get('/listaImoveisArrendamentos',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_arrendamento'])->name('comprarimoveis');
 Route::post('/filtrarImoveisPaginate',[App\Http\Controllers\ImoveisController::class,'filtrar_imoveis_paginate'])->name('comprarimoveis');
 Route::get('/imoveisPaginacao',[App\Http\Controllers\ImoveisController::class,'imoveis_paginacao'])->name('imoveis');
-Route::get('/imoveisProximoPginacao',[App\Http\Controllers\ImoveisController::class,'paginacao_imoveis_proximo'])->name('imoveis');
+Route::get('/imoveisProximoPaginacao',[App\Http\Controllers\ImoveisController::class,'paginacao_imoveis_proximo'])->name('imoveis');
 
 });
 

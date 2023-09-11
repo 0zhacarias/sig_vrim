@@ -579,9 +579,6 @@ export default {
                                 "" + this.$page.props.flash.success,
                         });
                         this.snackbar = true
-                        this.isLoggedIn = true,
-                            this.isLoggedOut = false,
-                            this.dialogLogin = false;
                     }
                     if (this.$page.props.flash.error != null) {
                         Vue.toasted.global.defaultError({

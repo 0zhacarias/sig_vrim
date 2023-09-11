@@ -173,6 +173,7 @@ class ImoveisController extends Controller
                 'cadastrado_por' => auth()->user()->id,
             ]);
         }
+        return redirect()->back()->with('success','successo');
     }
 
     /**
@@ -255,10 +256,9 @@ class ImoveisController extends Controller
     public function paginacao_imoveis_proximo(Request $request)
     { if(auth()->user()){
         $userLogado=auth()->user()->id;
-        $localizacao=Pessoa::select('provincia_id')->find($userLogado);
-        
+        // $localizacao=Pessoa::select('provincia_id')->find($userLogado);
             $dados['mais_proximos'] = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->whereIn('provincia_id',[1,13])->paginate(6);
-            // dd($imoveis);
+            // dd($dados['mais_proximos']);
         }else{
             $dados['mais_proximos'] = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->paginate(6);
             // dd($imoveis);
