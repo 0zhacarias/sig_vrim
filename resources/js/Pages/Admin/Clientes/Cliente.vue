@@ -1,13 +1,69 @@
 <template>
 <AdminLayout>
     <v-row>
-        <v-col cols="4" sm="4" md="5" lg="3">
+        <v-col cols="12" sm="4" md="4" lg="2">
+            <template>
+  <v-card
+    class="mx-auto"
+    max-width="300"
+    tile
+  >
+    <v-list rounded >
+      <v-subheader>REPORTS</v-subheader>
+      <v-container>
+      <v-list-item-group
+        v-model="selectedItem"
+        color="primary"
+      > 
+        <v-list-item  v-model="meusDados"  @click="selectItem('meusDados') "  active-class="deep-purple--text"
+        >
+          <v-list-item-icon>
+            <v-icon >mdi-account</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title> Meus Dados</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item  v-model="meusAnuncios"  @click="selectItem('meusAnuncios') "  active-class="deep-purple--text"
+        >
+          <v-list-item-icon>
+            <v-icon >mdi-clock</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Meus Anúncios</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item  v-model="imoveisProcesso"  @click="selectItem('imoveisProcesso') " active-class="deep-purple--text"
+        >
+          <v-list-item-icon>
+            <v-icon >mdi-clock</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Imoveis em processo</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item  v-model="meusPagamentos"  @click="selectItem('meusPagamentos') " active-class="deep-purple--text"
+        >
+          <v-list-item-icon>
+            <v-icon >mdi mdi-cash</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title> Meus Pagamentos</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
+    </v-container>
+    </v-list>
+
+  </v-card>
+</template>
+<!-- 
             <v-list subheader two-line flat>
-                <!-- <v-subheader >Meus dados</v-subheader> -->
+            <v-subheader >Meus dados</v-subheader> 
                 <template>
                     <v-container>
                         <v-list>
-                            <v-list-item :class="{'item-selected': linhaSelecionado === 'meusDados'}" @click="selectItem('meusDados') " v-model="meusDados">
+                            <v-list-item :class="{'item-selected': linhaSelecionado === 'meusDados'}"  v-model="meusDados">
                                 Meus Dados
                             </v-list-item>
                             <v-list-item :class="{'item-selected': linhaSelecionado === 'meusAnuncios'}" @click="selectItem('meusAnuncios')" v-model="meusAnuncios">
@@ -23,9 +79,9 @@
                     </v-container>
                 </template>
 
-            </v-list>
+            </v-list> -->
         </v-col>
-        <v-col cols="8" sm="8" md="7" lg="9">
+        <v-col cols="12" sm="8" md="8" lg="10">
                 <perfil v-if="this.linhaSelecionado==='meusDados'">
                 </perfil>
             
@@ -38,118 +94,7 @@
             
         </v-col>
     </v-row>
-    <!-- <v-dialog v-if="dialogNovoCadastro" v-model="dialogNovoCadastro" persistent max-width="900px">
-        <v-card>
-            <v-card-title class="text-h5 grey lighten-2">
-                <span class="text-h5"> {{ formTitle }}</span>
-                <v-spacer></v-spacer>
-                <v-toolbar-items>
-                    <v-btn dark text class="text-h5" @click="close()">
-                        <v-icon color="red">close</v-icon>
-                    </v-btn>
-                </v-toolbar-items>
-            </v-card-title>
-            <v-card-text>
-                <v-container>
-                    <v-stepper flat v-model="e1">
-                        <v-stepper-header>
-                            <v-stepper-step :complete="e1 > 1" step="1">Dados Pessoais</v-stepper-step>
-
-                            <v-divider></v-divider>
-
-                            <v-stepper-step step="2">Contrato</v-stepper-step>
-                        </v-stepper-header>
-
-                        <v-stepper-items flat>
-                            <v-stepper-content step="1">
-                                <v-card class="mb-12" flat>
-                                    <v-form ref="form" lazy-validation>
-                                        <v-container>
-                                            <v-row dense>
-                                                <v-col cols="12" md="12">
-                                                    <v-text-field label="Nome completo*" :rules="[
-                                                                rules.required,
-                                                            ]" v-model="morador.nome_completo
-    "></v-text-field>
-                                                </v-col>
-                                                <v-col cols="12" md="6">
-                                                    <v-text-field label="Nome do Pai" v-model="morador.pai
-                                                                "></v-text-field>
-                                                </v-col>
-
-                                                <v-col cols="12" md="6">
-                                                    <v-text-field label="Nome da Mãe" v-model="morador.mae
-                                                                "></v-text-field>
-                                                </v-col>
-
-                                                <v-col cols="12" md="6">
-                                                    <v-text-field label="Nº do documento" v-model="morador.n_identificacao
-                                                                " :rules="[
-        rules.required,
-    ]" :error-messages="erros.n_identificacao
-    "></v-text-field>
-                                                </v-col>
-
-                                                <v-col cols="12" md="6">
-                                                    <v-text-field label="Data de emissão" type="date" v-model="morador.data_emissao
-                                                                "></v-text-field>
-                                                </v-col>
-
-                                                <v-col cols="12" md="6">
-                                                    <v-text-field label="Data de validade" type="date" v-model="morador.data_validade
-                                                                "></v-text-field>
-                                                </v-col>
-
-                                                <v-col cols="12" md="6">
-                                                    <v-autocomplete v-model="morador.genero_id
-                                                                " prepend-icon="assignment" label="Generos*" item-value="id" item-text="designacao" :items="generos"></v-autocomplete>
-                                                </v-col>
-                                            </v-row>
-                                        </v-container>
-                                    </v-form>
-                                </v-card>
-                                <v-card-actions>
-                                    <v-spacer />
-                                    <v-btn color="primary" @click="continuar(2, 'form')">
-                                        Continuar
-                                    </v-btn>
-                                </v-card-actions>
-                            </v-stepper-content>
-
-                            <v-stepper-content step="2">
-                                <v-card flat>
-                                    <v-form ref="form2" lazy-validation>
-                                        <v-container>
-                                            <v-row dense>
-                                                <v-col cols="12" md="6">
-                                                    <v-text-field label="Data de validade" type="date" v-model="morador.data_validade
-                                                                "></v-text-field>
-                                                </v-col>
-                                            </v-row>
-                                        </v-container>
-                                    </v-form>
-                                </v-card>
-
-                                <v-card-actions>
-                                    <v-btn color="warning" @click="e1 = 1">Voltar</v-btn>
-
-                                    <v-spacer />
-                                    <v-btn class="bg-primary darken-4 white--text" @click="save">
-                                        {{
-                                                    editedIndex > -1
-                                                    ? "Actualizar"
-                                                    : "Guardar"
-                                                }}
-                                    </v-btn>
-                                </v-card-actions>
-                            </v-stepper-content>
-                        </v-stepper-items>
-                    </v-stepper>
-                </v-container>
-            </v-card-text>
-        </v-card>
-    </v-dialog> -->
-</AdminLayout>
+    </AdminLayout>
 </template>
 
 <script>
@@ -157,7 +102,7 @@ import AdminLayout from "../../../Templates/AdminLayout";
 import Perfil from "../Clientes/Perfil";
 import MeusAnuncios from "../Clientes/MeusAnuncios";
 import MeusImoveisCompra from "../Clientes/MeusImoveisCompra";
-import meusPagamentos from "../Clientes/MeusPagamentos.vue"
+import meusPagamentos from "../Clientes/MeusPagamentos"
 // import PerfilCliente from "../Clientes/PerfilCliente";
 export default {
     props: ["meus_imoveis","imoveis_processos"],
@@ -190,6 +135,12 @@ export default {
         meusAnuncios: 2,
         meusProceso: 3,
         meusPagamentos: 4,
+        selectedItem: 0,
+      items: [
+        { text: 'Real-Time', icon: 'mdi-clock' },
+        { text: 'Audience', icon: 'mdi-account' },
+        { text: 'Conversions', icon: 'mdi-flag' },
+      ],
     }),
 
     computed: {

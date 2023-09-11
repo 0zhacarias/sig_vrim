@@ -3,8 +3,9 @@
         <!-- <v-subheader>Meus Anúcios</v-subheader> -->
         <v-container  class="w-90 justify-space-around">
         <v-row>
-            <v-subheader class="text-h5 text-bold mt-10 ">Meus Anuncios</v-subheader>
-            <v-col v-for="item in meus_anuncios" :key="item.id" cols="12" sm="6" md="3" :lg="meus_anuncios.length <= 3 ? 6 : 3">
+            <v-subheader class="text-h5 text-bold mt-10 ">Meus Anuncios{{ meus_anuncios.length }}</v-subheader>
+            <!-- :lg="meus_anuncios.length > 3 ? 3 : 4" -->
+            <v-col v-for="item in meus_anuncios" :key="item.id" cols="12" sm="12" md="4" lg="4">
                 <v-hover v-slot="{ hover }">
 
                     <v-card :loading="!loading" class=" elevation-10 pa-2 ma-3 border" :elevation="hover ? 10 : 0">

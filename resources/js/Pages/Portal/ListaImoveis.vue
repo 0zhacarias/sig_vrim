@@ -3,91 +3,90 @@
 
 
         <v-row>
-            <v-col cols="4" >
+            <v-col cols="4">
                 <v-card class="my-4 py-4 grey lighten-4" elevation="0">
-                <v-row>
-                    <v-col cols="2">
-                
-            </v-col>
-            <v-col cols="10">
-              
-                    <v-row class="mx-0 mt-0">
-                        <v-card elevation="0" class="mt-3 px-0 transparent" :style="'border-radius: 10px'">
-                            <v-card-title color="deep-purple--text">O que estás a procura</v-card-title>
-                            <v-card-text color="deep-purple accent-4">
-                                <v-col cols="12" class="opens-sans mb-n8">
-                                    <v-autocomplete @change="filtrarTicket()" clearable v-model="query.operacao_id"
-                                        :items="estadoTickets" item-text="designacao" item-value="id" prepend-icon=""
-                                        label="Serviços" dense no-data-text="sem dados" outlined>
-                                    </v-autocomplete>
-                                </v-col>
-                                <v-col cols="12" class="pt-6 mb-n8 " v-if="showSecondAutocompleteModulo">
-                                    <v-autocomplete prepend-icon="" label="Provincia" type="text" clearable outlined dense
-                                        no-data-text="sem dados">
-                                    </v-autocomplete>
-                                </v-col>
+                    <v-row>
+                        <v-col cols="2">
 
-                                <v-col cols="12" class="pt-6 mb-n8">
-                                    <v-autocomplete @change="filtrarTicket()" clearable v-model="query.operador_id"
-                                        :items="funcionario_operadores" item-text="nome_funcionario" item-value="id"
-                                        prepend-icon="" label="Valores" outlined dense no-data-text="sem dados">
-                                    </v-autocomplete>
-                                </v-col>
+                        </v-col>
+                        <v-col cols="10">
 
-                                <v-col cols="12" class="pt-6 mb-n8">
-                                    <v-autocomplete class="custom-autocomplete" @change="filtrarTicket()" clearable
-                                        v-model="query.tecnico_id" :items="funcionario_tecnicos"
-                                        item-text="nome_funcionario" item-value="id" prepend-icon="" label="Técnicos"
-                                        outlined dense no-data-text="sem dados">
-                                        <!-- <template v-slot:item="data">
+                            <v-row class="mx-0 mt-0">
+                                <v-card elevation="0" class="mt-3 px-0 transparent" :style="'border-radius: 10px'">
+                                    <v-card-title color="deep-purple--text">O que estás a procura</v-card-title>
+                                    <v-card-text color="deep-purple accent-4">
+                                        <v-col cols="12" class="opens-sans mb-n8">
+                                            <v-autocomplete @change="filtrarTicket()" clearable v-model="query.operacao_id"
+                                                :items="estadoTickets" item-text="designacao" item-value="id"
+                                                prepend-icon="" label="Serviços" dense no-data-text="sem dados" outlined>
+                                            </v-autocomplete>
+                                        </v-col>
+                                        <v-col cols="12" class="pt-6 mb-n8 " v-if="showSecondAutocompleteModulo">
+                                            <v-autocomplete prepend-icon="" label="Provincia" type="text" clearable outlined
+                                                dense no-data-text="sem dados">
+                                            </v-autocomplete>
+                                        </v-col>
+
+                                        <v-col cols="12" class="pt-6 mb-n8">
+                                            <v-autocomplete @change="filtrarTicket()" clearable v-model="query.operador_id"
+                                                :items="funcionario_operadores" item-text="nome_funcionario" item-value="id"
+                                                prepend-icon="" label="Valores" outlined dense no-data-text="sem dados">
+                                            </v-autocomplete>
+                                        </v-col>
+
+                                        <v-col cols="12" class="pt-6 mb-n8">
+                                            <v-autocomplete class="custom-autocomplete" @change="filtrarTicket()" clearable
+                                                v-model="query.tecnico_id" :items="funcionario_tecnicos"
+                                                item-text="nome_funcionario" item-value="id" prepend-icon=""
+                                                label="Técnicos" outlined dense no-data-text="sem dados">
+                                                <!-- <template v-slot:item="data">
                                                 {{ data.item.nome_funcionario }}
                                                 {{ data.item.sobre_nome_funcionario }}
                                             </template> -->
-                                    </v-autocomplete>
-                                </v-col>
-                                <v-col cols="12" class="pt-13 mb-n8">
-                                    <v-text-field clearable label="Data inicial" class="my-n8 rounded"
-                                        v-model="query.data_inicial" type="date" :error-messages="erros.dat_inicio_real
-                                            " dense outlined>
-                                    </v-text-field>
-                                </v-col>
-                                <v-col cols="12" class="pt-13 mb-n8">
-                                    <v-text-field clearable label="Data termino" v-model="query.data_final"
-                                        @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense
-                                        outlined>
-                                    </v-text-field>
-                                </v-col>
+                                            </v-autocomplete>
+                                        </v-col>
+                                        <v-col cols="12" class="pt-13 mb-n8">
+                                            <v-text-field clearable label="Data inicial" class="my-n8 rounded"
+                                                v-model="query.data_inicial" type="date" :error-messages="erros.dat_inicio_real
+                                                    " dense outlined>
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" class="pt-13 mb-n8">
+                                            <v-text-field clearable label="Data termino" v-model="query.data_final"
+                                                @input="filtrarTicket()" type="date" :error-messages="erros.data_final"
+                                                dense outlined>
+                                            </v-text-field>
+                                        </v-col>
 
-                                <v-col cols="12" class="pt-13 mb-n8">
-                                    <v-text-field clearable label="Data termino" v-model="query.data_final"
-                                        @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense
-                                        outlined>
-                                    </v-text-field>
-                                </v-col>
-                                <v-col cols="12" class="pt-13 mb-n8">
-                                    <v-text-field clearable label="Data termino" v-model="query.data_final"
-                                        @input="filtrarTicket()" type="date" :error-messages="erros.data_final" dense
-                                        outlined>
-                                    </v-text-field>
-                                </v-col>
+                                        <v-col cols="12" class="pt-13 mb-n8">
+                                            <v-text-field clearable label="Data termino" v-model="query.data_final"
+                                                @input="filtrarTicket()" type="date" :error-messages="erros.data_final"
+                                                dense outlined>
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" class="pt-13 mb-n8">
+                                            <v-text-field clearable label="Data termino" v-model="query.data_final"
+                                                @input="filtrarTicket()" type="date" :error-messages="erros.data_final"
+                                                dense outlined>
+                                            </v-text-field>
+                                        </v-col>
 
-                            </v-card-text>
-                        </v-card>
+                                    </v-card-text>
+                                </v-card>
+                            </v-row>
+
+                        </v-col>
                     </v-row>
-             
+                </v-card>
             </v-col>
-                </v-row>
-            </v-card>
-            </v-col>
-            
+
 
             <v-col cols="7" sm="7" md="7">
                 <template>
                     <v-card class="ma-4 pa-4  grey lighten-4 " elevation="0">
                         <v-card-title>
-                            <!-- <span class="text-uppercase" style="font-size: 20px">
-                    {{ formTitle }}</span
-                > -->
+                            <span class="text-uppercase" style="font-size: 20px">
+                                Total: {{ totalImoveis }}</span>
                         </v-card-title>
                     </v-card>
 
@@ -251,10 +250,10 @@
                                                         <v-chip v-for="(actidade) in item.actividade_imoveis"
                                                             :key="actidade.id" v-if="actidade.tempo_arrendar > 0">
 
-                                                            <span class="mdi mdi-timer-lock-outline"
-                                                                title="Arrendamento"></span>{{
+                                                            <span class="mdi mdi-timer-lock-outline" 
+                                                                title="Arrendamento"  ></span >{{
                                                                     actidade.tempo_arrendar }} </v-chip>
-                                                        <v-chip :title="item.estado_imoveis.designacao">
+                                                        <v-chip color="deep-purple" title="estado do imovel" class="white--text">
                                                             <span v-if="item.estado_imoveis_id == 1"
                                                                 class="mdi mdi-archive-lock-open "></span>
                                                             <span v-if="item.estado_imoveis_id == 2"
@@ -266,12 +265,12 @@
                                                             <span v-if="item.estado_imoveis_id == 5"
                                                                 class="mdi mdi-archive-refresh"></span>
 
-                                                            estado</v-chip>
+                                                            {{ item.estado_imoveis.designacao }} </v-chip>
                                                     </v-chip-group>
                                                     <v-btn v-on:click.stop="contacto()" depressed class="mr-10">
                                                         Telefone
                                                     </v-btn>
-                                                    <v-btn  v-on:click.stop="say()"outlined depressed color="deep-purple">
+                                                    <v-btn v-on:click.stop="say()" outlined depressed color="deep-purple">
                                                         Mensagem
                                                     </v-btn>
 
@@ -296,99 +295,18 @@
                                                         ></v-img> -->
                                                 <!-- <v-img height="250"
                                                             src="/img/Aaa.png"></v-img>:class="{ 'on-hover': hover }" -->
-                                                <v-img max-height="255"  max-width="490" :src="'/storage/' +
+                                                <!-- <v-img max-height="255" max-width="490" :src="'/storage/' +
                                                     item.foto_principal
-                                                    " alt="Avatar"></v-img>
+                                                    " alt="Avatar"></v-img> -->
+                                                    <template >
+                <v-carousel hide-delimiters :style="'height: 255px;'">
+                    <v-carousel-item  max-height="255" max-width="490" v-for="(imagem, i) in item.fotos_imoveis" :key="i" :src="'/storage/' + imagem.foto" 
+                     ></v-carousel-item>
+                </v-carousel>
+            </template>
                                             </v-col>
 
                                         </v-row>
-
-
-
-                                        <!-- <v-row justify="space-between" dense no-gutters>
-                                                        <v-col md="6">
-                                                            <v-row justify="start" dense>
-                                                                <v-col cols="12" md="1" class="my-content texto_do_card">
-                                                                    <v-list-item-title class="opens-sans">
-
-
-                                                                        ></v-list-item-title>
-                                                                </v-col>
-                                                                <v-col md="1" cols="12" class="my-content texto_do_card">
-                                                                    <v-list-item-title class="opens-sans">
-                                                                        <v-chip color="black" dark>
-
-                                                                        </v-chip></v-list-item-title>
-                                                                </v-col>
-                                                                <v-col md="2" cols="12" class="my-content texto_do_card">
-                                                                    <v-list-item-title class="opens-sans">
-                                                                        <v-chip color="#002e5b"
-                                                                            outlined></v-chip></v-list-item-title>
-                                                                </v-col>
-                                                            </v-row>
-                                                        </v-col>
-                                                        <v-row justify="end" dense>
-                                                            <v-col md="2">
-                                                                <v-icon dense class="mr-2" color="black" title="Editar"
-                                                                    @click="
-                                                                    editItem(
-                                                                        item
-                                                                    )
-                                                                        ">
-                                                                    mdi-pencil
-                                                                </v-icon>
-                                                            </v-col>
-                                                            <v-col md="2" class="my-content text-center">
-                                                                <v-icon color="red" dense title="Apagar" @click="
-                                                                    deleteItem(
-                                                                        item
-                                                                    )
-                                                                    ">
-                                                                    mdi-delete
-                                                                </v-icon>
-                                                            </v-col>
-                                                            <v-col md="2" class="my-content text-center">
-                                                                <inertia-link :href="`/tickets/visualizar-resposta/$`">
-                                                                    <v-badge color="primary">
-                                                                        <v-icon color="#002e5b" dense title="Responder">
-                                                                            fa fa-reply
-                                                                        </v-icon>
-                                                                    </v-badge>
-                                                                </inertia-link>
-                                                            </v-col>
-                                                            <v-col md="2">
-                                                                <v-icon color="#002e5b" dense class="mr-2" title="Atribuir"
-                                                                    @click="
-                                                                        atribuiResponsavel(
-                                                                            item
-                                                                        )
-                                                                        ">
-                                                                    fa
-                                                                    fa-sitemap</v-icon>
-                                                            </v-col>
-                                                            <v-col md="1" class="my-content text-center">
-                                                                <v-icon dense color="black" @click="
-                                                                    verDetalhe(
-                                                                        item
-                                                                    )
-                                                                    " title="Detalhes">
-                                                                    mdi-details
-                                                                </v-icon>
-                                                            </v-col>
-                                                            <v-col md="2" class="my-content text-center">
-                                                                <v-icon color="#002e5b" @click="
-                                                                    concluir_atribuicao(
-                                                                        item
-                                                                    )
-                                                                    " left>mdi-check</v-icon>
-                                                                <v-icon color="red" @click="
-                                                                    rejeitar_atribuicao(
-                                                                        item
-                                                                    )
-                                                                    " left>mdi-close</v-icon>
-                                                            </v-col>
-                                                        </v-row>
-                                                    </v-row> -->
                                     </v-list-item-content>
 
                                     <!--  </card> -->
@@ -411,22 +329,41 @@
                                 <v-progress-linear color="#002e5b" indeterminate rounded height="6"></v-progress-linear>
                             </v-col>
                         </v-row> -->
+
+                <v-row class="mb-10" justify="end">
+                    <v-col cols="7">
+
+                    </v-col>
+                    <v-spacer />
+                    <v-col cols="5">
+                        <v-pagination @input="paginacao(dados.page)" v-model="dados.page" :length="last_page" circle></v-pagination>
+                    </v-col>
+                </v-row>
             </v-col>
-            <v-col cols="1" sm="1" md="1"></v-col>
+       
+        <v-col cols="1" sm="1" md="1"></v-col>
         </v-row>
+
+
 
     </PortalLayout>
 </template>
 <script>
-import PortalLayout from "../../Templates/PortalLayout.vue";
+import PortalLayout from "../../Templates/PortalLayout";
 export default {
+props:['operacao_imoveis'],
     components: {
         PortalLayout,
     },
     data: () => ({
+        images: null,
         dialogN: false,
+        totalImoveis: 0,
         dialogContacto: false,
-        page: 1,
+        dados:{
+            page: 1,
+        },
+        
         last_page: 1,
         estadoTickets: [],
         ticketpaginas: [],
@@ -460,11 +397,6 @@ export default {
         //         href: "/",
         //     },
         // ],
-        e1: 1,
-        steps: 3,
-        editedIndex: -1,
-        dialogAddCondominio: false,
-        morador: {},
         erros: [],
         rules: {
             required: (value) => !!value || "Campos obrigatório.",
@@ -490,10 +422,10 @@ export default {
     }),
 
     mounted() {
-        // this.loading = true;
-        // setTimeout(function () {
-        //     this.loading = false;
-        // }, 4000);
+        this.loading = true;
+        setTimeout(function () {
+            this.loading = false;
+        }, 4000);
         // alert(this.condominios);
     },
     computed: {
@@ -590,20 +522,16 @@ export default {
             // }, 2000);
         },
         paginacao(page = 1) {
-            //   this.imoveis.id;
-
-
+            this.dados.operacao_id=this.operacao_imoveis
             axios
-                .get("/portal/filtrarImoveisPaginate?page=" + page, {
-                    // .get("/portal/filtrarImoveisP", {
+                .post("/portal/filtrarImoveisPaginate", this.dados, {
                 })
                 .then((response) => {
                     // alert(JSON.stringify(response.data.data))
                     this.ImoveisComprar = response.data.data;
-                    /*           this. mensagem_lida = response.data.tickets.resposta_count
-; */
                     this.last_page = response.data.last_page;
-                    this.totalTicket = response.data.imoveis.total;
+                    this.totalImoveis = response.data.total;
+                    this.images = response.data.data;
 
                 })
                 .catch((error) => {

@@ -1,12 +1,12 @@
 <template>
     <v-app>
-        <v-container  class="w-90 justify-space-around my-13 py-10">
+        <v-container  class="my-13 py-10">
         <v-subheader class="text-h4 text-bold ">Pagamentos</v-subheader>
         <v-row>
-            <v-col v-for="item in pagamentos" :key="item.id" cols="12" sm="6" md="4" :lg="pagamentos.length <= 3 ? 6 : 4">
+            <v-col v-for="item in pagamentos" :key="item.id" cols="12" sm="6" md="4" :lg="pagamentos.length <= 4 ? 6 : 3">
                 <v-hover v-slot="{ hover }">
 
-                    <v-card :loading="!loading" class=" elevation-10 pa-2 ma-3 border" :elevation="hover ? 10 : 0">
+                    <v-card :loading="!loading" class=" elevation-10 pa-2 ma-1 border" :elevation="hover ? 10 : 0">
                         <!-- <v-img height="150" src="/img/pexels-dids-2969915.jpg"></v-img> -->
                         <!-- <v-img height="200"  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.2)" :src="item.src" ></v-img> -->
                         <v-row>
@@ -32,7 +32,7 @@ ID do processo: 81704</span></v-col>
                             <!-- <v-btn icon color="deep-purple lighten-2" outlined rounded  title="Gostei do Imóvel"> -->
                             <!-- </v-btn> -->
                             
-                            <v-btn icon color="#885cda" class="mx-2" outlined rounded  title="Cancelar pagamento" @click="teminarNegociacaoPagamentos()" >
+                            <v-btn icon color="#885cda" class="mx-2" outlined rounded  title="Confirmar pagamento" @click="teminarNegociacaoPagamentos()" >
                                 <v-icon>
                                     mdi mdi-handshake-outline
                                 </v-icon>

@@ -93,13 +93,14 @@ class SolicitarImoveisController extends Controller
             'data_visita' => $request->get('data_visita'),
             'actividade_imoveis_id' => $request->get('actividade_imoveis_id'),
             'imoveis_id' => $request->get('imoveis_id'),
+            'user_marca_visita' => auth()->user()->id,
 
         ]);
         Imoveis::find($request->get('imoveis_id'))->update([
             'estado_imoveis_id' => 4,
         ]);
         // $data[]=$request;
-
-        return Inertia::render('Admin/Clientes/SolicitarVisista');
+return redirect()->back()->with('success','sucesso');
+        // return Inertia::render('Admin/Clientes/SolicitarVisista');
     }
 }

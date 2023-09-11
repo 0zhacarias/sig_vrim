@@ -7,6 +7,7 @@ use App\Models\Documentacoes;
 use App\Models\FotosImoveis;
 use App\Models\Imoveis;
 use App\Models\Municipios;
+use App\Models\Pessoa;
 use App\Models\Provincias;
 use App\Models\SolicitarImoveis;
 use App\Models\TipoDeDocumento;
@@ -26,19 +27,21 @@ class ImoveisController extends Controller
 
     public function portal_imovel()
     {
+        
         $dados['provincias']=Provincias::all();
         $dados['municipios']=Municipios::all();
         $dados['tipologiaImoveis']=Tipologia::all();
         $dados['tipoImoveis']=TipoImoveis::all();
-        $dados['novos_imoveis']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','desc')->get();
-        $dados['mais_proximos']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
-        // dd($dados);
+        // $dados['novos_imoveis']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','desc')->get();
+        // $dados['mais_proximos']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
+        // // dd($dados);
         return Inertia::render('Portal/PortalIndex', $dados);
         // return Inertia::render('Portal/Carousel');
         // return view();
     }
     public function index()
     {
+        
         $dados['provincias']=Provincias::all();
         $dados['municipios']=Municipios::all();
         $dados['tipologiaImoveis']=Tipologia::all();
@@ -220,12 +223,12 @@ class ImoveisController extends Controller
         //
     }
     public function lista_imoveis_comprar()
-    {
-        return Inertia::render('Portal/ListaImoveis');
+    { $dados['operacao_imoveis']=1;
+        return Inertia::render('Portal/ListaImoveis',$dados);
     }
     public function lista_imoveis_arrendamento()
-    {
-        return Inertia::render('Portal/ListaImoveis');
+    {   $dados['operacao_imoveis']=2;
+        return Inertia::render('Portal/ListaImoveis',$dados);
         // dd();
     }
     public function imovel_selecionado($id)
@@ -238,10 +241,29 @@ class ImoveisController extends Controller
     }
     public function filtrar_imoveis_paginate(Request $request)
     {
-        // $imoveis = Imoveis::with('fotosimoveis')->get();
-        $imoveis = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->paginate(20);
-        // dd($imoveis);
+        $actividadeImoveis=ActividadeImoveis::where('operacao_imoveis_id',$request->get('operacao_id'))->select('imoveis_id')->get();
+        $imoveis = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')
+                           ->whereIn('id',$actividadeImoveis)
+                            ->paginate(3);
         return response()->json($imoveis);
+    }
+    public function imoveis_paginacao(Request $request)
+    {
+        $dados['novos_imoveis'] = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','asc')->paginate(6);
+        return response()->json($dados);
+    }
+    public function paginacao_imoveis_proximo(Request $request)
+    { if(auth()->user()){
+        $userLogado=auth()->user()->id;
+        $localizacao=Pessoa::select('provincia_id')->find($userLogado);
+        
+            $dados['mais_proximos'] = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->whereIn('provincia_id',[1,13])->paginate(6);
+            // dd($imoveis);
+        }else{
+            $dados['mais_proximos'] = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->paginate(6);
+            // dd($imoveis);
+        }
+        return response()->json($dados);
     }
    
 }

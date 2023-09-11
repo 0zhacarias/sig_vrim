@@ -6,6 +6,7 @@ use App\Library\Authenticate;
 use App\Library\GoogleClient;
 use App\Models\Cliente;
 use App\Models\Imoveis;
+use App\Models\SolicitarImoveis;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,7 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
         //
@@ -93,11 +95,18 @@ class ClienteController extends Controller
     }
     public function perfil_cliente()
     {
+        if(auth()->user()){
+            $userLog=auth()->user()->id;
+            $dados['meus_imoveis']=Imoveis::where('cadastrado_por',$userLog)->with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','desc')->get();
+            $dados['meus_pagamentos']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
+            $id_user_marca_visita=SolicitarImoveis::where('user_marca_visita',$userLog=auth()->user()->id)->select('imoveis_id')->get();
+            $dados['imoveis_processos']=Imoveis::whereIn('id',$id_user_marca_visita)->with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
+        }else{
+            $dados['vazio']='';
+        }
         
-        $dados['meus_imoveis']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','desc')->get();
-        $dados['meus_pagamentos']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
-        $dados['imoveis_processos']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
-       
+
+    //    dd($dados['imoveis_processos']);
         return Inertia::render('Admin/Clientes/Cliente',$dados);
     }
     public function login_google()

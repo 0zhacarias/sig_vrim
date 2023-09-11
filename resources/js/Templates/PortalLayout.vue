@@ -66,20 +66,20 @@
                 </v-btn>
             </v-toolbar-items>
             <v-toolbar-items>
-                <v-btn v-if="isLoggedOut" class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" @click="loginDialog()"
+                <v-btn v-if="user==null"  class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" @click="loginDialog()"
                     elevation="0" text>
                     Login
                 </v-btn>
 
-                <v-btn v-if="isLoggedOut" dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff"
+                <v-btn v-if="user==null" dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff"
                     href="/RegistrarConta" elevation="0" text>
                     Cadastrar
                 </v-btn>
-                <v-btn v-if="isLoggedIn " text dense class="white--text text-lowercase" href="/perfil">
-                    {{ user }}<br />
+                <v-btn v-if="user!==null" text dense class="white--text text-lowercase" href="/perfil">
+                    {{ user.name }}<br />
                     <!-- {{ user.email}} -->
                 </v-btn>
-                <v-btn class="white--text hidden-xs-only" v-if="isLoggedIn" @click="logout" title="Terminar Sessão" icon>
+                <v-btn class="white--text hidden-xs-only" v-if="user!==null" @click="logout" title="Terminar Sessão" icon>
                     <v-icon>mdi-export{{  }}</v-icon>
                 </v-btn>
             </v-toolbar-items>
@@ -219,13 +219,13 @@
                                                 <v-form v-model="isValid">
                                                     <v-row class="justify-center">
                                                         <v-col cols="12">
-                                                            <v-text-field :rules="[rules.required]" placeholder="Email"
+                                                            <v-text-field :rules="[rules.required]" placeholder="Email ou telefone"
                                                                 outlined rounded label="Email" name="email"
-                                                                v-model="user.email" prepend-icon="mdi-account-circle" />
+                                                                v-model="usuario.email" prepend-icon="mdi-account-circle" />
                                                         </v-col>
                                                         <v-col cols="12">
                                                             <v-text-field :rules="[rules.required]" outlined rounded
-                                                                id="password" label="Palavra-Passe" v-model="user.password"
+                                                                id="password" label="Palavra-Passe" v-model="usuario.password"
                                                                 name="password" prepend-icon="mdi-lock" :append-icon="showPassword
                                                                     ? 'mdi-eye'
                                                                     : 'mdi-eye-off'
@@ -354,6 +354,7 @@
 export default {
     data() {
         return {
+            usuario:{},
             icons: [
                 "fab fa-facebook",
                 "fab fa-twitter",
@@ -364,21 +365,19 @@ export default {
             drawer: true,
             mini: true,
             totalNotificacoes: 0,
-            isLoggedIn: false,
-            isLoggedOut: true,
-            previousUrl: null,
+          
             dialogLogin: false,
             notifications: false,
             sound: true,
             widgets: false,
-            previousUrls: [],
+         
             rules: {
                 required: (value) => !!value || "Campos obrigatório.",
             },
             showPassword: false,
             isValid: true,
             overlay: false,
-            user: {},
+           
             alert: {
                 text: "",
                 type: ""
@@ -387,7 +386,7 @@ export default {
     },
 
     mounted() {
-        this.checkLoginStatus();
+       
     },
 
     computed: {
@@ -435,19 +434,13 @@ export default {
             this.previousUrl = window.location.href;
             // alert(this.previousUrl);
         },
-        checkLoginStatus() {
-            this.isLoggedIn = this.$page.props.auth.user !== null;
-            this.isLoggedOut = !this.isLoggedIn;
-        },
         setLogin() {
             //    this.$inertia.visit('/login', { data: { redirectRoute: window.location.href } });
            
-            this.$inertia.post("/login", this.user, {
+            this.$inertia.post("/login", this.usuario, {
                 // preserveState: true,
             // preserveScroll: true,
             });
-            this.isLoggedIn= true,
-            this.isLoggedOut= false,
             // location.reload()
             // window.location.reload();
             this.dialogLogin = false;
@@ -467,7 +460,7 @@ export default {
                 console.log(error);
                 // Tratamento de erro, se necessário
             });
-            // this.$inertia.post("/login", this.user, {});
+            // this.$inertia.post("/login", this.usuario, {});
         }
     },
 };

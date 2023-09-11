@@ -3,7 +3,8 @@
 
         <template class="pb-0 ">
 
-            <v-toolbar-title class="deep-purple darken-3 elevation-0" :style="'border-radius: 0px 0px 0px 350px; height:450px'">
+            <v-toolbar-title class="deep-purple darken-3 elevation-0"
+                :style="'border-radius: 0px 0px 0px 350px; height:450px'">
                 <!-- <v-card-title>
                  <span class="headline">Título do Card</span> 
                 </v-card-title> -->
@@ -19,11 +20,15 @@
                         </v-card-text> -->
                     </v-col>
                     <v-col cols="12" sm="10" md="8" class="container--fluid">
-                        <v-card elevation="0" color="transparent" class="white--text" :style="'justify-content: center; padding-top:5rem; font-size:0.4rem'">
-                            <h1> <p class="text-bold text-justify">No Kubico tem.</p></h1><h2> O imóvel que deseja e o que procuras está aqui</h2>
+                        <v-card elevation="0" color="transparent" class="white--text"
+                            :style="'justify-content: center; padding-top:5rem; font-size:0.4rem'">
+                            <h1>
+                                <p class="text-bold text-justify">No Kubico tem.</p>
+                            </h1>
+                            <h2> O imóvel que deseja e o que procuras está aqui</h2>
 
-<p class="text-h4 pt-3 text-justify">compra, arrenda ou vende o seu imóvel residencial.</p>
-<v-row class="px-5">
+                            <p class="text-h4 pt-3 text-justify">compra, arrenda ou vende o seu imóvel residencial.</p>
+                            <v-row class="px-5">
                                 <v-col cols="6" sm="" md="6" align="center">
                                     <v-btn :disabled="loading" class="ma-1" color="white" text>
                                         Comprar
@@ -51,10 +56,10 @@
                                 </v-col>
                             </v-row>
 
-</v-card>
-                           
-                           
-                    
+                        </v-card>
+
+
+
 
                     </v-col>
 
@@ -75,7 +80,7 @@
 
                             <v-card :loading="loading" class="mx-5 my-12 elevation-10" max-width="320"
                                 @click.stop="findImoveis(item.id)" :elevation="hover ? 10 : 0">
-                                <v-img height="150" :src="'/storage/'+ item.foto_principal"></v-img>
+                                <v-img height="150" :src="'/storage/' + item.foto_principal"></v-img>
 
                                 <v-card-title>{{ item.title }}</v-card-title>
                                 <v-card-subtitle class="text--subtitle">{{ item.designacao }}</v-card-subtitle>
@@ -94,26 +99,41 @@
                                 <v-divider class="mx-4"></v-divider>
 
                                 <v-card-text>
-                                    <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
-                                        column>
-                                        <v-chip><span class="mdi mdi-car"></span>5</v-chip>
+                                    <v-chip-group v-model="selection"
+                                                        active-class="deep-purple accent-4 white--text" column>
+                                                        <v-chip><span class="mdi mdi-seat-individual-suite"
+                                                                title="Dormitório">{{ item.suite }}</span></v-chip>
+                                                        <v-chip><span class="mdi mdi-car" title="Garagem">{{
+                                                            item.numero_garagem }}</span></v-chip>
+                                                        <v-chip><span class="mdi mdi-chart-areaspline-variant"
+                                                                title="Superficie ">{{ item.metros
+                                                                }}<sup>2</sup></span></v-chip>
 
-                                        <v-chip><span class="mdi mdi-faucet-variant"></span>7:</v-chip>
+                                                        <v-chip title="Cozinha"><span class="mdi mdi-countertop"></span>{{
+                                                            item.cozinha }}</v-chip>
+                                                        <v-chip title="Quarto de Banho">
+                                                            <span class="mdi mdi-shower-head"></span>{{
+                                                                item.numero_banheiro }}</v-chip>
+                                                        <v-chip v-for="(actidade) in item.actividade_imoveis"
+                                                            :key="actidade.id" v-if="actidade.tempo_arrendar > 0">
 
-                                        <v-chip>
-                                            <span class="mdi mdi-bed-double" title="em proceso"></span>8</v-chip>
-                                         <v-chip title="estado do Imóvel">
-                                            <span v-if="item.estado_imoveis_id==1"  class="mdi mdi-archive-lock-open " ></span>
-                                            <span v-if="item.estado_imoveis_id==2"  class="mdi mdi-archive-remove"></span>
-                                            <span v-if="item.estado_imoveis_id==3"  class="mdi mdi-archive-cog "></span>
-                                            <span v-if="item.estado_imoveis_id==4"  class="mdi mdi-archive-eye"></span>
-                                            <span v-if="item.estado_imoveis_id==5"  class="mdi mdi-archive-refresh"></span>
-                                            
-                                            {{ item.estado_imoveis.designacao }}</v-chip>
-                                            <!-- <v-chip v-for="(actidade) in item.actividade_imoveis" :key="actidade.id">
-                                    <span  class="mdi mdi-sale" title="estado do imovel">
-                                    </span>{{actidade.operacao_imoveis.designacao }} </v-chip> -->
-                                    </v-chip-group>
+                                                            <span class="mdi mdi-timer-lock-outline" 
+                                                                title="Arrendamento"  ></span >{{
+                                                                    actidade.tempo_arrendar }} </v-chip>
+                                                        <v-chip color="deep-purple" title="estado do imovel" class="white--text">
+                                                            <span v-if="item.estado_imoveis_id == 1"
+                                                                class="mdi mdi-archive-lock-open "></span>
+                                                            <span v-if="item.estado_imoveis_id == 2"
+                                                                class="mdi mdi-archive-remove"></span>
+                                                            <span v-if="item.estado_imoveis_id == 3"
+                                                                class="mdi mdi-archive-cog "></span>
+                                                            <span v-if="item.estado_imoveis_id == 4"
+                                                                class="mdi mdi-archive-eye"></span>
+                                                            <span v-if="item.estado_imoveis_id == 5"
+                                                                class="mdi mdi-archive-refresh"></span>
+
+                                                            {{ item.estado_imoveis.designacao }} </v-chip>
+                                                    </v-chip-group>
                                 </v-card-text>
 
                                 <!-- <v-card-actions>
@@ -124,6 +144,16 @@
                             </v-card>
                         </v-hover>
                     </v-col>
+                    <v-row class="mb-10" justify="end">
+                    <v-col cols="7">
+
+                    </v-col>
+                    <v-spacer />
+                    <v-col cols="5">
+                        <v-pagination @input="paginacao(page)" v-model="page" :length="last_page" circle></v-pagination>
+                    </v-col>
+                </v-row>
+            </v-col>
                 </v-row>
             </v-container>
         </template>
@@ -136,15 +166,15 @@
             </v-toolbar-title>
             <v-container>
                 <v-row no-gutters justify="pt-15" :style="'justify-content: center;'" class="pt-14">
-                    <v-col v-for="item in clientes" :key="item.id" cols="12" sm="12" md="" class="mx-1"
-                        :lg="clientes.length <= 3 ? 6 : 4" :style="'max-width: min-content;'">
+                    <v-col v-for="item in mais_proximos" :key="item.id" cols="12" sm="12" md="" class="mx-1"
+                        :lg="mais_proximos.length <= 3 ? 6 : 4" :style="'max-width: min-content;'">
                         <v-hover v-slot="{ hover }">
 
                             <v-card :loading="loading" class="mx-5 my-12 elevation-10" max-width="320"
                                 @click.stop="findImoveis(item.id)" :elevation="hover ? 10 : 0">
-                                <v-img height="150" src="/img/jason-briscoe.jpg"></v-img>
+                                <v-img height="150" :src="'/storage/' + item.foto_principal"></v-img>
 
-                                <v-card-title>{{ item.title }}</v-card-title>
+                                <v-card-title>{{ item.designacao }}</v-card-title>
                                 <v-card-subtitle class="text--subtitle">{{ item.subtitle }}</v-card-subtitle>
 
                                 <v-card-text>
@@ -161,15 +191,41 @@
                                 <v-divider class="mx-4"></v-divider>
 
                                 <v-card-text>
-                                    <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
-                                        column>
-                                        <v-chip><span class="mdi mdi-car"></span>5</v-chip>
+                                    <v-chip-group v-model="selection"
+                                                        active-class="deep-purple accent-4 white--text" column>
+                                                        <v-chip><span class="mdi mdi-seat-individual-suite"
+                                                                title="Dormitório">{{ item.suite }}</span></v-chip>
+                                                        <v-chip><span class="mdi mdi-car" title="Garagem">{{
+                                                            item.numero_garagem }}</span></v-chip>
+                                                        <v-chip><span class="mdi mdi-chart-areaspline-variant"
+                                                                title="Superficie ">{{ item.metros
+                                                                }}<sup>2</sup></span></v-chip>
 
-                                        <v-chip><span class="mdi mdi-faucet-variant"></span>7:</v-chip>
+                                                        <v-chip title="Cozinha"><span class="mdi mdi-countertop"></span>{{
+                                                            item.cozinha }}</v-chip>
+                                                        <v-chip title="Quarto de Banho">
+                                                            <span class="mdi mdi-shower-head"></span>{{
+                                                                item.numero_banheiro }}</v-chip>
+                                                        <v-chip v-for="(actidade) in item.actividade_imoveis"
+                                                            :key="actidade.id" v-if="actidade.tempo_arrendar > 0">
 
-                                        <v-chip>
-                                            <span class="mdi mdi-bed-double"></span>8</v-chip>
-                                    </v-chip-group>
+                                                            <span class="mdi mdi-timer-lock-outline" 
+                                                                title="Arrendamento"  ></span >{{
+                                                                    actidade.tempo_arrendar }} </v-chip>
+                                                        <v-chip color="deep-purple" title="estado do imovel" class="white--text">
+                                                            <span v-if="item.estado_imoveis_id == 1"
+                                                                class="mdi mdi-archive-lock-open "></span>
+                                                            <span v-if="item.estado_imoveis_id == 2"
+                                                                class="mdi mdi-archive-remove"></span>
+                                                            <span v-if="item.estado_imoveis_id == 3"
+                                                                class="mdi mdi-archive-cog "></span>
+                                                            <span v-if="item.estado_imoveis_id == 4"
+                                                                class="mdi mdi-archive-eye"></span>
+                                                            <span v-if="item.estado_imoveis_id == 5"
+                                                                class="mdi mdi-archive-refresh"></span>
+
+                                                            {{ item.estado_imoveis.designacao }} </v-chip>
+                                                    </v-chip-group>
                                 </v-card-text>
 
                                 <!-- <v-card-actions>
@@ -180,6 +236,16 @@
                             </v-card>
                         </v-hover>
                     </v-col>
+                    <v-row class="mb-10" justify="end">
+                    <v-col cols="7">
+
+                    </v-col>
+                    <v-spacer />
+                    <v-col cols="5">
+                        <v-pagination @input="paginacao(page)" v-model="page" :length="last_page_proximo" circle></v-pagination>
+                    </v-col>
+                </v-row>
+            
                 </v-row>
             </v-container>
         </template>
@@ -223,7 +289,7 @@
                                 <v-card-text>
                                     <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
                                         column>
-                                        <v-chip>5</v-chip>
+                                        <v-chip text-color="white" color="indigo">5</v-chip>
 
                                         <v-chip>7</v-chip>
 
@@ -376,7 +442,7 @@
                 </v-row>
                 <v-divider></v-divider>
             </v-container>
-            
+
         </template>
 
         <!-- Contactos
@@ -420,14 +486,24 @@
 </template>
 
 <script>
-import PortalLayout from "../../Templates/PortalLayout.vue";
+import AdminLayout from "../../Templates/AdminLayout";
+import PortalLayout from "../../Templates/PortalLayout";
 export default {
-    props: ["imovel",'novos_imoveis', 'mais_proximos','startingImage', 'autoSlideInterval', 'showProgressBar'],
+    props: ['startingImage', 'autoSlideInterval', 'showProgressBar'],
 
     components: {
+        AdminLayout,
         PortalLayout,
     },
     data: () => ({
+        page:1,
+        pageProximo:1,
+        last_page:1,
+        last_page_proximo:1,
+        total_imoveis_proximos:1,
+        total_tmoveis:0,
+        novos_imoveis:[],
+        mais_proximos:[],
         valid: true,
         name: "",
         nameRules: [
@@ -522,6 +598,11 @@ export default {
     }),
 
     mounted() { },
+    created(){
+        this.paginacao()
+        this.paginacaoImovelProximo()
+
+    },
     methods: {
         findImoveis(id) {
             window.location.href = "/portal/imovel-selecionado/" + btoa(btoa(btoa(id)));
@@ -535,7 +616,37 @@ export default {
         reset() {
             this.$refs.form.reset();
         },
+        paginacao(page = 1) {
+            axios
+                .get("/portal/imoveisPaginacao?page=" + page, {
+                })
+                .then((response) => {
+                    // alert(JSON.stringify(response.data.data))
+                    this.novos_imoveis = response.data.novos_imoveis.data;
+                    this.last_page = response.data.novos_imoveis.last_page;
+                    this.total_imoveis = response.data.novos_imoveis.total;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
     },
+        paginacaoImovelProximo(pageProximo = 1) {
+            axios
+                .get("/portal/imoveisProximoPginacao?page=" + pageProximo, {
+                })
+                .then((response) => {
+                    // alert(JSON.stringify(response.data.data))
+                   
+                    this.mais_proximos = response.data.mais_proximos.data;
+                    this.last_page_proximo = response.data.mais_proximos.last_page;
+                    this.total_imoveis_proximos = response.data.mais_proximos.total;
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+    },
+},
     computed: {
         user() {
             return this.$page.props.auth.user;
@@ -560,7 +671,6 @@ export default {
 </script>
 
 <style>
-@import "vuetify/dist/vuetify.min.css";
 
 table {
     font-weight: bolder;
@@ -608,5 +718,4 @@ v-card {
     /* background-image:linear-gradient(to bottom right, #0077c2, #0093ff) */
 }
 
-;
-</style>
+;</style>

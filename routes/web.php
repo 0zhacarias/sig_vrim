@@ -32,7 +32,7 @@ Route::get('/login/google/callback', [App\Http\Controllers\ClienteController::cl
 //     return Inertia::render('Portal/PortalIndex');
 //     // return view('welcome');
 // })->name('index');
-Route::get('/',[App\Http\Controllers\ImoveisController::class,'portal_imovel'])->name('index');
+Route::get('/',[App\Http\Controllers\ImoveisController::class,'index'])->name('index');
 Route::get('/RegistrarConta', function () {
     return Inertia::render('Portal/RegistrarConta');
     // return view('welcome');
@@ -63,7 +63,10 @@ Route::post('/Solicitar-visita',[App\Http\Controllers\SolicitarImoveisController
 Route::get('/imovel-selecionado/{id}',[App\Http\Controllers\ImoveisController::class,'imovel_selecionado']);
 Route::get('/listaImoveisCompras',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_comprar'])->name('comprarimoveis');
 Route::get('/listaImoveisArrendamentos',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_arrendamento'])->name('comprarimoveis');
-Route::get('/filtrarImoveisPaginate',[App\Http\Controllers\ImoveisController::class,'filtrar_imoveis_paginate'])->name('comprarimoveis');
+Route::post('/filtrarImoveisPaginate',[App\Http\Controllers\ImoveisController::class,'filtrar_imoveis_paginate'])->name('comprarimoveis');
+Route::get('/imoveisPaginacao',[App\Http\Controllers\ImoveisController::class,'imoveis_paginacao'])->name('imoveis');
+Route::get('/imoveisProximoPginacao',[App\Http\Controllers\ImoveisController::class,'paginacao_imoveis_proximo'])->name('imoveis');
+
 });
 
 Route::get('/arrendamento', function () {
@@ -116,4 +119,7 @@ Route::get('/paginarwte', [App\Http\Controllers\HomeController::class, 'portal_a
 //     Route::get('/listaImoveisCompras',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_comprar'])->name('comprarimoveis');
 //     Route::get('/listaImoveisArrendamentos',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_arrendamento'])->name('comprarimoveis');
 //     Route::get('/filtrarImoveisPaginate',[App\Http\Controllers\ImoveisController::class,'filtrar_imoveis_paginate'])->name('comprarimoveis');
-//     });
+//     Route::get('/imoveisPaginacao',[App\Http\Controllers\HomeController::class,'imoveis_paginacao'])->name('imoveis');
+//     Route::get('/imoveisProximoPginacao',[App\Http\Controllers\HomeController::class,'paginacao_imoveis_proximo'])->name('imoveis');
+     
+// });

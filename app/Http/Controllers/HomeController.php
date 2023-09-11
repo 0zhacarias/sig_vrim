@@ -18,43 +18,50 @@ class HomeController extends Controller
      *
      * @return void
      */
+    protected $userLogado;
+
     public function __construct()
     {
+        
         $this->middleware('auth');
+      
     }
-
+ public function users($request){
+ if(auth()->user()){
+    return $request;
+ }
+}
     public function index()
     {
+
         // session(['previous_url' => url()->current()]);
         // $previousUrl2 = session('previous_url');
         session(['previous_url' => url()->previous()]);
-       
-        $previousUrl = session('previous_url', '/home');
+        $previousUrl = session('previous_url', '/perfil');
         $urlLogin =  env('LOCAL_URL') . '/logar';
-        // dd($urlLogin,$previousUrl);
+        // dd($previousUrl);
+        // dd($previousUrl);
         $urlListarArrendado =  env('LOCAL_URL') . '/portal/listaImoveisArrendamentos';
         $urlListarComprar =  env('LOCAL_URL') . '/portal/listaImoveisCompras';
         $urlAnunciar =  env('LOCAL_URL') . '/portal/imoveis';
-        // $urlLogin = 'http://' . env('APP_URL') . '/logar';
+        $urlPerfil =  env('LOCAL_URL').'/perfil';
+        $urlHome = env('LOCAL_URL') . '/home';
         $dados['provincias']=Provincias::all();
         $dados['municipios']=Municipios::all();
         $dados['tipologiaImoveis']=Tipologia::all();
         $dados['tipoImoveis']=TipoImoveis::all();
-        $dados['novos_imoveis']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','desc')->get();
-        $dados['mais_proximos']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
+        // $dados['novos_imoveis']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','desc')->get();
+        // $dados['mais_proximos']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
       
-        if($previousUrl== $urlLogin){
+        if($previousUrl== $urlPerfil ||$previousUrl== $urlLogin ||$previousUrl== $urlHome){
             // dd($previousUrl);
-           
-          
-            return Inertia::render('Portal/PortalIndex',$dados);  
-            }else if($previousUrl== $urlLogin){
-                return Inertia::render('Portal/PortalIndex',$dados);  
+            return Inertia::render('Portal/PortalIndex');  
+            // }else if($previousUrl== $urlLogin){
+            //     return Inertia::render('Portal/PortalIndex');  
             }else if($previousUrl== $urlListarArrendado){
                 return Inertia::render('Portal/ListaImoveis',$dados);  
             }else if($previousUrl== $urlListarComprar){
                 // session()->flush();
-          
                 return Inertia::render('Portal/ListaImoveis',$dados);  
             }else if($previousUrl==$urlAnunciar){
 
@@ -66,6 +73,7 @@ class HomeController extends Controller
         // return Inertia::render('Portal/PortalIndex', $dados);
         // return Inertia::render('Admin/Home');
     }
+
     protected function redirecionarUsuario()
     {
          // Recupere a URL anterior da sessão ou redirecione para uma rota padrão se não houver uma URL anterior.
@@ -86,4 +94,5 @@ if($previousUrl=="http://127.0.0.1:8000/logar"){
     {
         return Inertia::render('Admin/Portal');
     }
+
 }
