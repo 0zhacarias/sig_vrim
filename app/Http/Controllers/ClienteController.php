@@ -100,7 +100,8 @@ class ClienteController extends Controller
             $dados['meus_imoveis']=Imoveis::where('cadastrado_por',$userLog)->with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','desc')->get();
             $dados['meus_pagamentos']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
             $id_user_marca_visita=SolicitarImoveis::where('user_marca_visita',$userLog=auth()->user()->id)->select('imoveis_id')->get();
-            $dados['imoveis_processos']=Imoveis::whereIn('id',$id_user_marca_visita)->with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
+            $dados['imoveis_processos']=Imoveis::whereIn('id',$id_user_marca_visita)->whereIn('estado_imoveis_id',[5,4,8])
+            ->with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
         }else{
             $dados['vazio']='';
         }

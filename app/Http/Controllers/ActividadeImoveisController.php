@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActividadeImoveis;
+use App\Models\Imoveis;
 use Illuminate\Http\Request;
 
 class ActividadeImoveisController extends Controller
@@ -82,4 +83,27 @@ class ActividadeImoveisController extends Controller
     {
         //
     }
+    public function validar_processo(Request $request)
+    {
+        
+        $imovel=Imoveis::find($request->imovel_id);
+        // dd($imovel);
+        $imovel->update([
+            'estado_imoveis_id'=>8,
+        ]
+            
+        );
+    }
+    public function nao_validar_processo(Request $request)
+    {
+        
+        $imovel=Imoveis::find($request->imovel_id);
+        // dd($imovel);
+        $imovel->update([
+            'estado_imoveis_id'=>3,
+        ]
+            
+        );
+    }
+
 }

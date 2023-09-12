@@ -1,7 +1,8 @@
 <template>
     <v-app>
         <v-container  class="w-80 justify-space-around my-13 py-10">
-        <v-subheader class="text-h4 text-bold ">Minhas solicitações</v-subheader>  <v-row>
+        <v-subheader class="text-h4 text-bold ">Minhas solicitações {{ this.minha_compra_arrendamentos[0].estado_imoveis_id }}</v-subheader>  <v-row>
+
             <v-col v-for="item in minha_compra_arrendamentos" :key="item.id" cols="12" sm="6" md="4" :lg="minha_compra_arrendamentos.length <= 3 ? 6 : 4">
                 <v-hover v-slot="{ hover }">
 
@@ -63,9 +64,24 @@
                                                     </v-chip-group>
                         </v-card-actions>
                         <v-card-actions class="justify-end m-0 p-0">
-                            <v-btn icon color="deep-purple lighten-2" outlined rounded  title="Gostei do Imóvel">
+                            <v-btn icon :disabled="item.estado_imoveis_id == 4" color="deep-purple lighten-2" outlined rounded  title="Gostei do Imóvel" @click="validarProcesso(item.id) " v-model="validar_processo.valiado">
                                 <v-icon>
                                     mdi mdi-thumb-up-outline
+                                </v-icon>
+                            </v-btn>
+                            <v-btn icon  :disabled="item.estado_imoveis_id == 4" color="red" outlined rounded  title="Não vou continuar a negociação" @click="naoValidarProcesso( item.id)" v-model="validar_processo.naoValiado">
+                                <v-icon>
+                                    mdi mdi-hand-back-left-off-outline
+                                </v-icon>
+                            </v-btn>
+                            <v-btn icon  v-if="item.estado_imoveis_id == 4" color="indigo" outlined rounded  title="Aprovar a visita do imóvel" @click="naoValidarProcesso( item.id)" v-model="validar_processo.aprovaVisita">
+                                <v-icon>
+                                    mdi mdi-thumb-up-outline
+                                </v-icon>
+                            </v-btn>
+                            <v-btn icon  v-if="item.estado_imoveis_id == 4" color="red" outlined rounded  title="Aprovar a visita do imóvel" @click="naoValidarProcesso( item.id)" v-model="validar_processo.naoAprovarVisita">
+                                <v-icon>
+                                    mdi mdi-hand-back-left-off-outline
                                 </v-icon>
                             </v-btn>
                         </v-card-actions>
@@ -73,6 +89,24 @@
                 </v-hover>
             </v-col>
         </v-row>
+        <div class="text-center">
+                    <v-snackbar v-model="snackbar" :multi-line="multiLine" :timeout="8000" outlined
+                        color="deep-purple accent-4">
+                        {{ textvalidado }}
+                        <v-btn color="indigo" text @click="snackbar = false">
+                            Close
+                        </v-btn>
+                    </v-snackbar>
+                     </div>
+        <div class="text-center">
+                    <v-snackbar v-model="snackbarNaovalidado" :multi-line="multiLine" :timeout="8000" outlined
+                        color="deep-purple accent-4">
+                        {{ textnaovalidado }}
+                        <v-btn color="indigo" text @click="snackbarNaovalidado = false">
+                            Close
+                        </v-btn>
+                    </v-snackbar>
+                     </div>
         </v-container>
     </v-app>
 </template>
@@ -87,35 +121,11 @@ export default {
     },
     data: () => ({
         loading: null,
-        condominio: {},
-        clientes: [
-            {
-                id: 1,
-                title: "Casa 1",
-                subtitle: "Localização 1",
-                src: "/img/pexels-dids-2969915.jpg",
-            },
-            {
-                id: 2,
-                title: "Residencial T4",
-                subtitle: "Localização 2",
-                src: "https://cdn.quasar.dev/img/parallax2.jpg",
-            },
-            {
-                id: 3,
-                title: "Resincia em contrução 3",
-                subtitle: "LOCALIZAÇÃO 3",
-                src: "https://cdn.quasar.dev/img/parallax2.jpg",
-            },
-            {
-                id: 4,
-                title: "CLIENTE 3",
-                subtitle: "LOCALIZAÇÃO 3",
-                // description:
-                //     "Aliquam albucius mei ei, debitis torquatos et pro, eos natum scribentur no. Putant verear constituto te qui. Adolescens persequeris vim ei. Vel nullam reprimique te.",
-                src: "https://cdn.quasar.dev/img/parallax2.jpg",
-            },
-        ],
+        snackbar:false,
+        textnaovalidado: `Descontinuidade do processo da negociação do Imóvel`,
+        textvalidado: `Confirmaste a continuação da negociação do Imóvel Confirmaste a continuação da negociação do Imóvel`,
+        snackbarNaovalidado:false,
+        validar_processo:{},
     }),
 
 
@@ -150,23 +160,46 @@ export default {
     },
 
     methods: {
-        setNovoCondominio() {
-            // this.loading = true;
+        validarProcesso(item) {
+            this.loading = true;
 
-            this.$inertia.post("/condominios", this.condominio, {});
+            // this.$inertia.post("/condominios", this.condominio, {});
+            this.validar_processo.imovel_id=item
+            // alert(JSON.stringify( this.validar_processo));
+            axios
+                .post("/validar-processo", this.validar_processo)
+                .then((response) => {
+                    this.loading = true;
+                    this.snackbar=true;
+                    alert(JSON.stringify(response.data));
+                    //   this.resposta = response.data
+                })
+                .catch(() => {
+                    alert(JSON.stringify(response.data));
 
-            // axios
-            //     .post(this.base_url + "/condominios", this.condominio)
-            //     .then((response) => {
-            //         this.loading = false;
-            //         alert(JSON.stringify(response.data));
-            //         //   this.resposta = response.data
-            //     })
-            //     .catch(() => {
-            //         alert(JSON.stringify(response.data));
+                    //   console.log('Falha ao registar os dados na base de dados!...')
+                });
+        },
+        naoValidarProcesso(item) {
+            this.loading = true;
 
-            //         //   console.log('Falha ao registar os dados na base de dados!...')
-            //     });
+            // this.$inertia.post("/condominios", this.condominio, {});
+            this.validar_processo.imovel_id=item
+            // alert(JSON.stringify( this.validar_processo));
+            axios
+                .post("/nao-validar-processo", this.validar_processo)
+                .then((response) => {
+                    this.loading = true;
+                    this.snackbarNaovalidado=true;
+                    alert(JSON.stringify(response.data));
+                    //   this.resposta = response.data
+                })
+                .catch(() => {
+                    // alert(JSON.stringify(response.data));
+
+                    //   console.log('Falha ao registar os dados na base de dados!...')
+                });
+                location.reload();
         },
         showDialogAddCondominio() {
             this.dialogAddCondominio = true;

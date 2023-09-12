@@ -242,7 +242,7 @@
                     </v-col>
                     <v-spacer />
                     <v-col cols="5">
-                        <v-pagination @input="paginacao(page)" v-model="page" :length="last_page_proximo" circle></v-pagination>
+                        <v-pagination @input="paginacaoImovelProximo(pageProximo)" v-model="pageProximo" :length="last_page_proximo" ></v-pagination>
                     </v-col>
                 </v-row>
             

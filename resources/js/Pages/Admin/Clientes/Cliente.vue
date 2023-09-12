@@ -82,6 +82,8 @@
             </v-list> -->
         </v-col>
         <v-col cols="12" sm="8" md="8" lg="10">
+          <v-subheader v-if="this.linhaSelecionado==null" class="text-h5 text-bold mt-10 ">Meu Perfil</v-subheader>
+        
                 <perfil v-if="this.linhaSelecionado==='meusDados'">
                 </perfil>
             
@@ -135,7 +137,7 @@ export default {
         meusAnuncios: 2,
         meusProceso: 3,
         meusPagamentos: 4,
-        selectedItem: 0,
+        selectedItem: null,
       items: [
         { text: 'Real-Time', icon: 'mdi-clock' },
         { text: 'Audience', icon: 'mdi-account' },

@@ -154,16 +154,12 @@ class ImoveisController extends Controller
             }
             // dd($proprietario_colaborador);
             if ($request->get('arrendamento_id' )== 1) {
-                $operacao_imoveis_id = 1;
-                $mes = $request->get('meses');
-            } else if ($request->get('venda_id')== 1) {
                 $operacao_imoveis_id = 2;
-                $mes = 0;
+            } else if ($request->get('venda_id')== 1) {
+                $operacao_imoveis_id = 1;
             } else {
                 $operacao_imoveis_id = 0;
             }
-
-
             $actividade = ActividadeImoveis::create([
                 'proprietario_colaborador' => $proprietario_colaborador,
                 'operacao_imoveis_id' => $operacao_imoveis_id,
@@ -250,18 +246,18 @@ class ImoveisController extends Controller
     }
     public function imoveis_paginacao(Request $request)
     {
-        $dados['novos_imoveis'] = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','asc')->paginate(6);
+        $dados['novos_imoveis'] = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','asc')->paginate(8);
         return response()->json($dados);
     }
     public function paginacao_imoveis_proximo(Request $request)
     { if(auth()->user()){
         $userLogado=auth()->user()->id;
         // $localizacao=Pessoa::select('provincia_id')->find($userLogado);
-            $dados['mais_proximos'] = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->whereIn('provincia_id',[1,13])->paginate(6);
+            $dados['mais_proximos'] = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->whereIn('provincia_id',[1,13])->paginate(8);
             // dd($dados['mais_proximos']);
         }else{
-            $dados['mais_proximos'] = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->paginate(6);
-            // dd($imoveis);
+            $dados['mais_proximos'] = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->paginate(8);
+            // dd($dados);
         }
         return response()->json($dados);
     }
