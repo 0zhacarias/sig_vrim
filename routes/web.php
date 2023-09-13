@@ -59,8 +59,11 @@ Route::resource('/Solicitar-venda',App\Http\Controllers\VendaController::class);
 Route::resource('/Solicitar-arrendamento',App\Http\Controllers\ArrendamentoController::class);
 Route::resource('/Pagamento',App\Http\Controllers\PagamentoController::class);
 Route::post('/Solicitar-visita',[App\Http\Controllers\SolicitarImoveisController::class,'solicitar_visita']);
+Route::post('/municipios',[App\Http\Controllers\ImoveisController::class,'municipios']);
+Route::post('/tipo-tipologia',[App\Http\Controllers\ImoveisController::class,'tipo_tipologia']);
 // Route::post('/Solicitar-visita/{id}',[App\Http\Controllers\ImoveisController::class,'solicitar_visita']);
 Route::get('/imovel-selecionado/{id}',[App\Http\Controllers\ImoveisController::class,'imovel_selecionado']);
+Route::get('/imoveis-provincia/{id}',[App\Http\Controllers\ImoveisController::class,'imoveis_provincia']);
 Route::get('/listaImoveisCompras',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_comprar'])->name('comprarimoveis');
 Route::get('/listaImoveisArrendamentos',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_arrendamento'])->name('comprarimoveis');
 Route::post('/filtrarImoveisPaginate',[App\Http\Controllers\ImoveisController::class,'filtrar_imoveis_paginate'])->name('comprarimoveis');
@@ -104,6 +107,7 @@ Route::resource('/condominios', App\Http\Controllers\CondominioController::class
 Route::get('/paginarwte', [App\Http\Controllers\HomeController::class, 'portal_auth'])->name('home');
 Route::post('/validar-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'validar_processo'])->name('home');
 Route::post('/nao-validar-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'nao_validar_processo'])->name('home');
+Route::post('/carregar-imoveis-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'carregar_imoveis_processo'])->name('carregar_imoveis');
 
 // Route::group(['prefix' => 'portal'], function () {
 //     Route::resource('/imoveis',App\Http\Controllers\ImoveisController::class);

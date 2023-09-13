@@ -69,7 +69,7 @@
                             <v-list-item :class="{'item-selected': linhaSelecionado === 'meusAnuncios'}" @click="selectItem('meusAnuncios')" v-model="meusAnuncios">
                                 Meus Anúncios
                             </v-list-item>
-                            <v-list-item :class="{'item-selected': linhaSelecionado === 'imoveisProcesso'}" @click="selectItem('imoveisProcesso')" v-model="meusProceso">
+                            <v-list-item :class="{'item-selected': linhaSelecionado === 'imoveisProcesso'}" @click="selectItem('imoveisProcesso')" v-model="imoveisProcesso">
                                 Imoveis em processo
                             </v-list-item>
                             <v-list-item :class="{'item-selected': linhaSelecionado === 'meusPagamentos'}" @click="selectItem('meusPagamentos')" v-model="meusPagamentos">
@@ -89,8 +89,8 @@
             
                 <MeusAnuncios v-if="this.linhaSelecionado==='meusAnuncios'" :meus_anuncios="meus_imoveis">
                 </MeusAnuncios>
-                <MeusImoveisCompra class="mt-n16" v-if="this.linhaSelecionado==='imoveisProcesso' " :minha_compra_arrendamentos="imoveis_processos">
-                </MeusImoveisCompra>
+                <imoveisProcesso class="mt-n16" v-if="this.linhaSelecionado==='imoveisProcesso' " :minha_compra_arrendamentos="imoveis_processos">
+                </imoveisProcesso>
                 <meusPagamentos class="mt-n16" v-if="this.linhaSelecionado==='meusPagamentos'">
                 </meusPagamentos>
             
@@ -103,7 +103,7 @@
 import AdminLayout from "../../../Templates/AdminLayout";
 import Perfil from "../Clientes/Perfil";
 import MeusAnuncios from "../Clientes/MeusAnuncios";
-import MeusImoveisCompra from "../Clientes/MeusImoveisCompra";
+import imoveisProcesso from "../Clientes/MeusImoveisCompra";
 import meusPagamentos from "../Clientes/MeusPagamentos"
 // import PerfilCliente from "../Clientes/PerfilCliente";
 export default {
@@ -113,7 +113,7 @@ export default {
         Perfil,
         // PerfilCliente,
         MeusAnuncios,
-        MeusImoveisCompra,
+        imoveisProcesso,
         meusPagamentos,
     },
     data: () => ({
@@ -135,7 +135,7 @@ export default {
         linhaSelecionado: null,
         meusDados: 1,
         meusAnuncios: 2,
-        meusProceso: 3,
+        imoveisProcesso: 3,
         meusPagamentos: 4,
         selectedItem: null,
       items: [

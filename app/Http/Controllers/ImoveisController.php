@@ -39,6 +39,16 @@ class ImoveisController extends Controller
         // return Inertia::render('Portal/Carousel');
         // return view();
     }
+    public function municipios(Request $request){
+        // dd($request);
+$dados=Municipios::where('provincia_id',$request->id)->get();
+        return response()->json($dados);
+    }
+    public function tipo_tipologia(Request $request){
+        // dd($request);
+$dados=Tipologia::where('tipo_imoveis_id',$request->id)->get();
+        return response()->json($dados);
+    }
     public function index()
     {
         
@@ -236,12 +246,31 @@ class ImoveisController extends Controller
         return Inertia::render('Portal/ImovelSelecionado', $data);
         // dd();
     }
+    public function imoveis_provincia($id)
+    {
+        $dados['operacao_imoveis']=0;
+        $dados['provincia_selecionado'] = $id;
+         // $dados['provincia'] = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->where('provincia_id',$id)->get();
+// dd($dados);
+        ;
+        return Inertia::render('Portal/ListaImoveis', $dados);
+        // dd();
+    }
     public function filtrar_imoveis_paginate(Request $request)
     {
-        $actividadeImoveis=ActividadeImoveis::where('operacao_imoveis_id',$request->get('operacao_id'))->select('imoveis_id')->get();
-        $imoveis = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')
-                           ->whereIn('id',$actividadeImoveis)
-                            ->paginate(3);
+        // dd($request);
+        $provincia_id=$request->get('provincia_id');
+        if($provincia_id){
+                    $imoveis = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')
+                    ->where('provincia_id',$provincia_id)->paginate(10);;
+
+        }else{
+
+            $actividadeImoveis=ActividadeImoveis::where('operacao_imoveis_id',$request->get('operacao_id'))->select('imoveis_id')->get();
+            $imoveis = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')
+                               ->whereIn('id',$actividadeImoveis)
+                                ->paginate(10);
+        }
         return response()->json($imoveis);
     }
     public function imoveis_paginacao(Request $request)
@@ -257,8 +286,10 @@ class ImoveisController extends Controller
             // dd($dados['mais_proximos']);
         }else{
             $dados['mais_proximos'] = Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->paginate(8);
-            // dd($dados);
+            
         }
+        
+        $dados['provincias']=Provincias::orderBy('designacao','asc')->get();
         return response()->json($dados);
     }
    

@@ -105,5 +105,7 @@ class ActividadeImoveisController extends Controller
             
         );
     }
-
+public function carregar_imoveis_processo() {
+    return response()->json(2);
+}
 }

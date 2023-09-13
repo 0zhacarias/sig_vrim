@@ -402,6 +402,7 @@ export default {
            rules: {
                 required: (value) => !!value || "Campos obrigatório.",
             },
+            selection:null,
             showPassword: false,
             isValid: true,
             overlay: false,
@@ -411,8 +412,7 @@ export default {
                 type: ""
             },
         dialogLogin: false,
-        isLoggedIn: false,
-        isLoggedOut: true,
+    
         dialogMarcarVisita: false,
         dias_data: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substring(0, 10),
         images: null,
@@ -470,7 +470,6 @@ export default {
     created() {
         // alert(this.dias_data)
         this.images = this.imoveis.fotos_imoveis
-        this.paginacao();
         //Check if startingImage prop was given and if the index is inside the images array bounds
         if (this.startingImage && this.startingImage >= 0
             && this.startingImage < this.images.length) {

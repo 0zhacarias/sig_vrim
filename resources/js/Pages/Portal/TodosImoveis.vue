@@ -351,7 +351,7 @@
 <script>
 import PortalLayout from "../../Templates/PortalLayout";
 export default {
-props:['operacao_imoveis','provincia_selecionado'],
+props:['operacao_imoveis'],
     components: {
         PortalLayout,
     },
@@ -523,7 +523,6 @@ props:['operacao_imoveis','provincia_selecionado'],
         },
         paginacao(page = 1) {
             this.dados.operacao_id=this.operacao_imoveis
-            this.dados.provincia_id=this.provincia_selecionado
             axios
                 .post("/portal/filtrarImoveisPaginate", this.dados, {
                 })

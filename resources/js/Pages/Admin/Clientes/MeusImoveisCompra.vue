@@ -48,7 +48,7 @@
                                                             <span class="mdi mdi-timer-lock-outline"
                                                                 title="Arrendamento"></span>{{
                                                                     actidade.tempo_arrendar }} </v-chip>
-                                                        <v-chip title="estado do imóvel">
+                                                        <v-chip title="estado do imóvel" :color="getcor(item.estado_imoveis_id)">
                                                             <span v-if="item.estado_imoveis_id == 1"
                                                                 class="mdi mdi-archive-lock-open "></span>
                                                             <span v-if="item.estado_imoveis_id == 2"
@@ -126,6 +126,7 @@ export default {
         textvalidado: `Confirmaste a continuação da negociação do Imóvel Confirmaste a continuação da negociação do Imóvel`,
         snackbarNaovalidado:false,
         validar_processo:{},
+        dadoscarregado:[],
     }),
 
 
@@ -146,6 +147,8 @@ export default {
     },
 
     created() {
+        this.getcor(estado_imoveis_id)
+      this.getImoveisprocesso()
         setTimeout(() => {
             this.overlay = false;
         }, 2000);
@@ -160,6 +163,38 @@ export default {
     },
 
     methods: {
+        getcor(estado_imoveis_id){
+if(estado_imoveis_id==1){
+return 'red'
+}else if(estado_imoveis_id==2){
+    return 'blue'
+
+}else if(estado_imoveis_id==3){
+    return 'green'
+}else if(estado_imoveis_id==8){
+   return 'green'
+}
+        },
+        getImoveisprocesso() {
+            this.loading = true;
+
+            // this.$inertia.post("/condominios", this.condominio, {});
+            this.validar_processo.imovel_id=item
+            // alert(JSON.stringify( this.validar_processo));
+            axios
+                .get("/carregar-imoveis-processo")
+                .then((response) => {
+                    this.dadoscarregado = response.data;
+                    this.snackbar=true;
+                    alert(JSON.stringify(response.data));
+                    //   this.resposta = response.data
+                })
+                .catch(() => {
+                    alert(JSON.stringify(response.data));
+
+                    //   console.log('Falha ao registar os dados na base de dados!...')
+                });
+        },
         validarProcesso(item) {
             this.loading = true;
 
