@@ -30,6 +30,8 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    //REPLICANDO A FUNÇÃO REDIRECTTO E USANDO A VARIAVEL PERFIL PARA OMPREENDER O REDIRECIONAMENTO.
+    protected $redirectPe = RouteServiceProvider::PERFIL;
 
     /**
      * Create a new controller instance.
@@ -42,9 +44,7 @@ class LoginController extends Controller
     }
     //LOGIN COM O GOOGLE
     public function redirectToGoogle()
-    {
-        // dd(1);
-      
+    {      
         return Socialite::driver('google')->redirect();
     }
     

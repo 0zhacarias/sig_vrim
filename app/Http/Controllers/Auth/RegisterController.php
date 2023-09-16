@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Imobiliaria;
+use App\Models\Pessoa;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -31,6 +33,9 @@ class RegisterController extends Controller
      */
     // protected $redirectTo = RouteServiceProvider::HOME;
 
+    //REPLICANDO A FUNÇÃO REDIRECTTO E USANDO A VARIAVEL PERFIL PARA OMPREENDER O REDIRECIONAMENTO.
+    // protected $redirectPe = RouteServiceProvider::PERFIL;
+
     /**
      * Create a new controller instance.
      *
@@ -49,21 +54,20 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', ],
+            'tipo_user' => ['required', 'string'],
         ]);
-        
     }
     protected function redirecionarUsuario()
-{
-    // Recupere a URL anterior da sessão ou redirecione para uma rota padrão se não houver uma URL anterior.
-    $previousUrl = session('previous_url', '/homes');
-// dd($previousUrl);
-    return redirect($previousUrl);
-}
+    {
+        // Recupere a URL anterior da sessão ou redirecione para uma rota padrão se não houver uma URL anterior.
+        $previousUrl = session('previous_url', '/homes');
+        // dd($previousUrl);
+        return redirect($previousUrl);
+    }
     /**
      * Create a new user instance after a valid registration.
      *
@@ -72,16 +76,34 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        
+
         // dd(session('url.intended'));
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'tipo_user' => $data['tipo_user'],
             'password' => Hash::make($data['password']),
         ]);
-        
+       
+        if ($data['pessoa']) {
+            Pessoa::created([
+                'user_id'=>$user->id,
+                'tipo_documentacoes_id'=>$data['tipo_documentacoes_id'],
+                'numero_identificacao'=>$data['numero_identificacao'],
+    
+            ]);
+            
+        } else {
+            Imobiliaria::created([
+                'user_id'=>$user->id,
+                'designacao'=>$data['name'],
+                'nif'=>$data['nif'],
+    
+            ]);
+        }
+        return $user;
         // if (session('url.intended')) {
-           
+
         //     return redirect()->intended($this->redirectPath());
         // }
     }

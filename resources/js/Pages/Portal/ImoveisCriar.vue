@@ -94,7 +94,7 @@
                                                             <v-col cols="12" sm="12" md="2" class="text-center">
 
                                                                 <v-btn outlined dense color="indigo"
-                                                                    @click="decrementquarto">
+                                                                    @click="decrementquarto" block>
                                                                     -
                                                                 </v-btn>
 
@@ -111,7 +111,7 @@
 
                                                             <v-col cols="12" sm="12" md="2" class="text-center">
                                                                 <v-btn outlined dense color="indigo"
-                                                                    @click="incrementquarto">
+                                                                    @click="incrementquarto" block>
                                                                     +
                                                                 </v-btn>
                                                             </v-col>
@@ -130,7 +130,7 @@
                                                             <v-col cols="12" sm="12" md="2" class="text-center">
 
                                                                 <v-btn outlined dense color="indigo"
-                                                                    @click="decrementbanheiro">
+                                                                    @click="decrementbanheiro" block>
                                                                     -
                                                                 </v-btn>
 
@@ -146,7 +146,7 @@
 
                                                             <v-col cols="1" sm="12" md="2" class="text-center">
                                                                 <v-btn outlined dense color="indigo"
-                                                                    @click="incrementbanheiro">
+                                                                    @click="incrementbanheiro" block>
                                                                     +
                                                                 </v-btn>
                                                             </v-col>
@@ -176,7 +176,7 @@
                                                             <v-col cols="12" sm="12" md="2" class="text-center">
 
                                                                 <v-btn outlined dense color="indigo"
-                                                                    @click="decrementGaragem">
+                                                                    @click="decrementGaragem" block>
                                                                     -
                                                                 </v-btn>
 
@@ -191,7 +191,7 @@
 
                                                             <v-col cols="12" sm="12" md="2" class="text-center">
                                                                 <v-btn outlined dense color="indigo"
-                                                                    @click="incrementGaragem">
+                                                                    @click="incrementGaragem" block>
                                                                     +
                                                                 </v-btn>
                                                             </v-col>
@@ -223,7 +223,7 @@
                                                             <v-col cols="12" sm="12" md="2" class="text-center">
 
                                                                 <v-btn dense outlined color="indigo"
-                                                                    @click="decrementnumero_cozinha">
+                                                                    @click="decrementnumero_cozinha" block>
                                                                     -
                                                                 </v-btn>
 
@@ -238,14 +238,15 @@
 
                                                             <v-col cols="1" sm="12" md="2" class="text-center">
                                                                 <v-btn outlined dense color="indigo"
-                                                                    @click="incrementnumero_cozinha">
+                                                                    @click="incrementnumero_cozinha" block>
                                                                     +
                                                                 </v-btn>
                                                             </v-col>
                                                         </v-row>
                                                         <v-divider></v-divider>
                                                         <v-divider></v-divider>
-                                                        <v-row>
+                                                        <v-row class="pa-0 ma-0
+                                                        ">
                                                             <v-col cols="12" sm="12" md="5">
                                                                 <span class="text-body-1 text-black indigo--text">Andar
                                                                     do imóvel</span><br />
@@ -256,7 +257,7 @@
                                                             <v-col cols="12" sm="12" md="2" class="text-center">
 
                                                                 <v-btn dense outlined color="indigo"
-                                                                    @click="decrementnumero_andar">
+                                                                    @click="decrementnumero_andar" block>
                                                                     -
                                                                 </v-btn>
 
@@ -265,13 +266,13 @@
                                                             <v-col cols="12" sm="12" md="3">
                                                                 <v-text-field dense color="indigo" outlined
                                                                     v-model="imovel.numero_andar"
-                                                                    class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
+                                                                    class="no-padding-messages no-padding-details v-messages.theme--light pa-0">
                                                                 </v-text-field>
                                                             </v-col>
 
-                                                            <v-col cols="1" sm="12" md="2" class="text-right">
+                                                            <v-col cols="1" sm="12" md="2" class="text-center">
                                                                 <v-btn outlined dense color="indigo"
-                                                                    @click="incrementnumero_andar">
+                                                                    @click="incrementnumero_andar" block>
                                                                     +
                                                                 </v-btn>
                                                             </v-col>
@@ -840,14 +841,18 @@
                                 <v-stepper-content step="4">
                                     <v-card flat>
                                         <v-form ref="form4" lazy-validation>
-                                            <v-container>
+                                            <v-container  class="py-15 ma-8">
                                                 <v-row dense>
                                                     <template>
-                                                        <span class="text-h1">JÁ NÃO SEI O QUE COLOCAR MAIS AQUI
+                                                        <span >
+                                                            <v-card-text  class="text-center text-h4">Entraremos com o senhor:  <b>{{ user.name }}</b>  para conferrir a veracidade do seu imóvel.</v-card-text>
+                                             
                                                         </span><br />
-                                                        <span class="subtitle">Ao divulgarmos esses dados iremos colocar
-                                                            marca d'água no documento para proteger as
-                                                            informações.</span>
+                                                        <v-card-text class="text-center text-h6">
+                                                            Ao divulgarmos as fotos e documentações iremos colocar
+                                                            marca d'água no documento para proteger as informações.
+                                                        </v-card-text>           
+                                                       
                                                     </template>
                                                 </v-row>
                                             </v-container>
@@ -1092,17 +1097,14 @@ export default {
     },
 
     created() {
-        setTimeout(() => {
-            this.overlay = false;
-        }, 2000);
     },
 
     watch: {
-        steps(val) {
-            if (this.e1 > val) {
-                this.e1 = val;
-            }
-        },
+        overlay (val) {
+        val && setTimeout(() => {
+          this.overlay = false
+        }, 3000)
+      },
     },
 
     methods: {

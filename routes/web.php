@@ -15,6 +15,7 @@ use Laravel\Socialite\Facades\Socialite;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |*/
+//Rotas para fazer o login com a conta google usando o Socialite.
 Route::get('/auth/redirect',[App\Http\Controllers\Auth\LoginController::class,'redirectToGoogle'])->name('login.google');
 Route::get('/auth/callback',[App\Http\Controllers\Auth\LoginController::class,'handleGoogleCallback'])->name('callback.google');
 // Route::get('/auth/redirect', function () {
@@ -51,24 +52,22 @@ Route::get('/condominio/create', function () {
 Route::group(['prefix' => 'portal'], function () {
 Route::resource('/imoveis',App\Http\Controllers\ImoveisController::class);
 // Route::resource('/imovel-selecionado',App\Http\Controllers\ImoveisController::class);
-Route::resource('/funcionario',App\Http\Controllers\FuncionarioController::class);
-Route::resource('/cliente',App\Http\Controllers\ClienteController::class);
 Route::resource('/imobiliaria-proprietario',App\Http\Controllers\ProprietarioController::class);
 Route::resource('/venda-arendamento',App\Http\Controllers\VendaController::class);
 Route::resource('/Solicitar-venda',App\Http\Controllers\VendaController::class);
 Route::resource('/Solicitar-arrendamento',App\Http\Controllers\ArrendamentoController::class);
 Route::resource('/Pagamento',App\Http\Controllers\PagamentoController::class);
-Route::post('/Solicitar-visita',[App\Http\Controllers\SolicitarImoveisController::class,'solicitar_visita']);
-Route::post('/municipios',[App\Http\Controllers\ImoveisController::class,'municipios']);
-Route::post('/tipo-tipologia',[App\Http\Controllers\ImoveisController::class,'tipo_tipologia']);
+Route::post('/Solicitar-visita',[App\Http\Controllers\SolicitarImoveisController::class,'solicitar_visita'])->name('solicitar-visita');
+Route::post('/municipios',[App\Http\Controllers\ImoveisController::class,'municipios'])->name('municipios');
+Route::post('/tipo-tipologia',[App\Http\Controllers\ImoveisController::class,'tipo_tipologia'])->name('tipo-tipologia');
 // Route::post('/Solicitar-visita/{id}',[App\Http\Controllers\ImoveisController::class,'solicitar_visita']);
-Route::get('/imovel-selecionado/{id}',[App\Http\Controllers\ImoveisController::class,'imovel_selecionado']);
+Route::get('/imovel-selecionado/{id}',[App\Http\Controllers\ImoveisController::class,'imovel_selecionado'])->name('immovel-selecionado');
 Route::get('/imoveis-provincia/{id}',[App\Http\Controllers\ImoveisController::class,'imoveis_provincia']);
-Route::get('/listaImoveisCompras',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_comprar'])->name('comprarimoveis');
-Route::get('/listaImoveisArrendamentos',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_arrendamento'])->name('comprarimoveis');
-Route::post('/filtrarImoveisPaginate',[App\Http\Controllers\ImoveisController::class,'filtrar_imoveis_paginate'])->name('comprarimoveis');
-Route::get('/imoveisPaginacao',[App\Http\Controllers\ImoveisController::class,'imoveis_paginacao'])->name('imoveis');
-Route::get('/imoveisProximoPaginacao',[App\Http\Controllers\ImoveisController::class,'paginacao_imoveis_proximo'])->name('imoveis');
+Route::get('/listaImoveisCompras',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_comprar'])->name('comprar-imoveis');
+Route::get('/listaImoveisArrendamentos',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_arrendamento'])->name('arrendar-imoveis');
+Route::post('/filtrarImoveisPaginate',[App\Http\Controllers\ImoveisController::class,'filtrar_imoveis_paginate'])->name('pesquisar-imoveis');
+Route::get('/imoveisPaginacao',[App\Http\Controllers\ImoveisController::class,'imoveis_paginacao'])->name('novos-imoveis');
+Route::get('/imoveisProximoPaginacao',[App\Http\Controllers\ImoveisController::class,'paginacao_imoveis_proximo'])->name('imoveis-proximos');
 
 });
 
@@ -108,7 +107,8 @@ Route::get('/paginarwte', [App\Http\Controllers\HomeController::class, 'portal_a
 Route::post('/validar-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'validar_processo'])->name('home');
 Route::post('/nao-validar-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'nao_validar_processo'])->name('home');
 Route::post('/carregar-imoveis-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'carregar_imoveis_processo'])->name('carregar_imoveis');
-
+Route::resource('/funcionario',App\Http\Controllers\FuncionarioController::class);
+Route::resource('/cliente',App\Http\Controllers\ClienteController::class);
 // Route::group(['prefix' => 'portal'], function () {
 //     Route::resource('/imoveis',App\Http\Controllers\ImoveisController::class);
 //     // Route::resource('/imovel-selecionado',App\Http\Controllers\ImoveisController::class);

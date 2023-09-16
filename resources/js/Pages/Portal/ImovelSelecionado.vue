@@ -366,6 +366,59 @@
                         </v-row>
                     </template>
                     <template>
+  <v-card
+    class="mx-auto elevation-20"
+    color="purple"
+    dark
+    style="max-width: 400px;"
+  >
+    <v-row justify="space-between">
+      <v-col cols="8">
+        <v-card-title>
+          <div>
+            <div class="text-h5">
+              Halycon Days
+            </div>
+            <div>Ellie Goulding</div>
+            <div>(2013)</div>
+          </div>
+        </v-card-title>
+      </v-col>
+      <v-img
+        class="shrink ma-2"
+        contain
+        height="125px"
+        :src="'/storage/' + imoveis.foto_principal"
+        style="flex-basis: 125px"
+      ></v-img>
+    </v-row>
+    <v-divider dark></v-divider>
+    <v-card-actions class="pa-4">
+      Rate this album
+      <v-spacer></v-spacer>
+      <span class="grey--text text--lighten-2 text-caption mr-2">
+        ({{ rating }})
+      </span>
+      <v-rating
+        v-model="rating"
+        background-color="white"
+        color="yellow accent-4"
+        dense
+        half-increments
+        hover
+        size="18"
+      ></v-rating>
+    </v-card-actions>
+  </v-card>
+</template>
+<v-overlay :value="overlay">
+      <v-progress-circular
+        indeterminate
+        size="64"
+      ></v-progress-circular>
+    </v-overlay>
+
+                    <template>
                         <div class="text-center">
                             <v-snackbar v-model="snackbar" :multi-line="multiLine" :timeout="4000" outlined
                                 color="deep-purple accent-4">
@@ -406,6 +459,7 @@ export default {
             showPassword: false,
             isValid: true,
             overlay: false,
+            rating: 4.3,
             usuario: {},
              alert: {
                 text: "",
@@ -494,6 +548,11 @@ export default {
                 this.e1 = val;
             }
         },
+        overlay (val) {
+        val && setTimeout(() => {
+          this.overlay = false
+        }, 3000)
+      },
     },
 
     methods: {
@@ -560,12 +619,15 @@ export default {
             // alert(id);
         },
         marcarVisita() {
-            
-            if (this.$page.props.auth.user !== null) {
-                this.dialogMarcarVisita = true;
-            } else {
-                this.dialogLogin = true;
-            }
+           
+            this.setTimeout(() => {
+          this.overlay = false
+        }, 3000)
+            // if (this.$page.props.auth.user !== null) {
+            //     this.dialogMarcarVisita = true;
+            // } else {
+            //     this.dialogLogin = true;
+            // }
         },
         setLogin() {
             //    this.$inertia.visit('/login', { data: { redirectRoute: window.location.href } });
@@ -591,6 +653,7 @@ export default {
 
         },
         enviarSolicitacao() {
+            
             this.visitar.imoveis_id = this.imoveis.id,
                 this.visitar.actividade_imoveis_id = this.imoveis.actividade_imoveis[0].id
             // this.visitar.actividade_imoveis_id=this.imovel.actividade_imoveis[0].operacao_imoveis.i

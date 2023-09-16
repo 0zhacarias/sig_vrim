@@ -311,9 +311,9 @@ export default {
     },
 
     created() {
-        setTimeout(() => {
-            this.overlay = false;
-        }, 2000);
+        // setTimeout(() => {
+        //     this.overlay = false;
+        // }, 2000);
     },
 
     watch: {

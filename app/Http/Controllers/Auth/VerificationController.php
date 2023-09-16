@@ -27,6 +27,8 @@ class VerificationController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    //REPLICANDO A FUNÇÃO REDIRECTTO E USANDO A VARIAVEL PERFIL PARA OMPREENDER O REDIRECIONAMENTO.
+    protected $redirectPe = RouteServiceProvider::PERFIL;
 
     /**
      * Create a new controller instance.

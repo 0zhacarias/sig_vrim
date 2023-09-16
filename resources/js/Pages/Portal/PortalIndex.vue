@@ -413,7 +413,49 @@
 
                 <v-divider></v-divider>
             </v-container>
+            <template>
+  <div class="text-center">
+    <v-btn
+      color="deep-purple accent-4"
+      class="white--text"
+      @click="overlay = !overlay"
+    >
+      Launch Application
+      <v-icon right>
+        mdi-open-in-new
+      </v-icon>
+    </v-btn>
 
+    <v-overlay :value="overlay">
+      <v-progress-circular
+        indeterminate
+        size="64"
+      ></v-progress-circular>
+    </v-overlay>
+  </div>
+</template><template>
+  <v-row justify="center">
+    <v-img
+    src="/img/cms-image.jpg"
+      lazy-src="/img/cms-images.jpg"
+      max-width="500"
+      max-height="300"
+    >
+      <template v-slot:placeholder>
+        <v-row
+          class="fill-height ma-0"
+          align="center"
+          justify="center"
+        >
+          <v-progress-circular
+            indeterminate
+            color="grey lighten-5"
+          ></v-progress-circular>
+        </v-row>
+      </template>
+    </v-img>
+  </v-row>
+</template>
         </template>
 
         <!-- Contactos
@@ -478,6 +520,8 @@ export default {
         mais_proximos: [],
         valid: true,
         name: "",
+        overlay : false,
+
         nameRules: [
             (v) => !!v || "Name is required",
             (v) =>
@@ -509,7 +553,13 @@ export default {
             // },
         ],
     }),
-
+    watch: {
+      overlay (val) {
+        val && setTimeout(() => {
+          this.overlay = false
+        }, 3000)
+      },
+    },
     mounted() { },
     created() {
         this.paginacao()

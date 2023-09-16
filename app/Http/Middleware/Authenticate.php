@@ -18,4 +18,11 @@ class Authenticate extends Middleware
             return route('index');
         }
     }
+    //REPLICANDO A FUNÇÃO REDIRECTTO E USANDO A VARIAVEL PERFIL PARA OMPREENDER O REDIRECIONAMENTO.
+    protected function redirectPe($request)
+    {
+        if (! $request->expectsJson()) {
+            return route('index');
+        }
+    }
 }
