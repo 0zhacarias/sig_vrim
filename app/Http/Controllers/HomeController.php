@@ -33,12 +33,12 @@ class HomeController extends Controller
 }
     public function index()
     {
-
         // session(['previous_url' => url()->current()]);
         // $previousUrl2 = session('previous_url');
         session(['previous_url' => url()->previous()]);
         $previousUrl = session('previous_url', '/perfil');
         $urlLogin =  env('LOCAL_URL') . '/logar';
+        // dd($previousUrl);
         // dd($previousUrl);
         // dd($previousUrl);
         $urlListarArrendado =  env('LOCAL_URL') . '/portal/listaImoveisArrendamentos';

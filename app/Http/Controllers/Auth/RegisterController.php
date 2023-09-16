@@ -34,7 +34,7 @@ class RegisterController extends Controller
     // protected $redirectTo = RouteServiceProvider::HOME;
 
     //REPLICANDO A FUNÇÃO REDIRECTTO E USANDO A VARIAVEL PERFIL PARA OMPREENDER O REDIRECIONAMENTO.
-    // protected $redirectPe = RouteServiceProvider::PERFIL;
+    protected $redirectPe = RouteServiceProvider::PERFIL;
 
     /**
      * Create a new controller instance.
@@ -54,11 +54,13 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        
 
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'tipo_user' => ['required', 'string'],
+            'password' => ['required', 'string', 'min:8'],
+            // 'tipo_user' => ['required', 'string'],
         ]);
     }
     protected function redirecionarUsuario()
@@ -76,31 +78,31 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
+        // dd( $data);
         // dd(session('url.intended'));
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'tipo_user' => $data['tipo_user'],
+            // 'tipo_user' => $data['tipo_user'],
             'password' => Hash::make($data['password']),
         ]);
        
-        if ($data['pessoa']) {
-            Pessoa::created([
-                'user_id'=>$user->id,
-                'tipo_documentacoes_id'=>$data['tipo_documentacoes_id'],
-                'numero_identificacao'=>$data['numero_identificacao'],
+        // if ($data['pessoa']) {
+        //     Pessoa::created([
+        //         'user_id'=>$user->id,
+        //         'tipo_documentacoes_id'=>$data['tipo_documentacoes_id'],
+        //         'numero_identificacao'=>$data['numero_identificacao'],
     
-            ]);
+        //     ]);
             
-        } else {
-            Imobiliaria::created([
-                'user_id'=>$user->id,
-                'designacao'=>$data['name'],
-                'nif'=>$data['nif'],
+        // } else {
+        //     Imobiliaria::created([
+        //         'user_id'=>$user->id,
+        //         'designacao'=>$data['name'],
+        //         'nif'=>$data['nif'],
     
-            ]);
-        }
+        //     ]);
+        // }
         return $user;
         // if (session('url.intended')) {
 

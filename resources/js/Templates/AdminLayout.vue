@@ -21,7 +21,7 @@
 
                 
                 <v-spacer/>
-            
+            <span></span>
             <v-btn icon class="white--text">
                 <v-icon>mdi-magnify</v-icon>
             </v-btn>

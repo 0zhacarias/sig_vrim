@@ -620,14 +620,14 @@ export default {
         },
         marcarVisita() {
            
-            this.setTimeout(() => {
-          this.overlay = false
-        }, 3000)
-            // if (this.$page.props.auth.user !== null) {
-            //     this.dialogMarcarVisita = true;
-            // } else {
-            //     this.dialogLogin = true;
-            // }
+        //     this.setTimeout(() => {
+        //   this.overlay = false
+        // }, 3000)
+            if (this.$page.props.auth.user !== null) {
+                this.dialogMarcarVisita = true;
+            } else {
+                this.dialogLogin = true;
+            }
         },
         setLogin() {
             //    this.$inertia.visit('/login', { data: { redirectRoute: window.location.href } });
