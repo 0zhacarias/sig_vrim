@@ -1,24 +1,25 @@
 <template>
     <v-app>
-      
+
         <v-row align="center" justify="center">
             <v-col cols="12" md="7">
                 <v-img src="/img/cms-image.jpg" :style="'height: 100vh; '" align="center" justify="center"
                     gradient="to top right, rgba(10,115,201,.33), rgba(25,32,72,.7)">
                     <v-container>
-                    <v-row class="alinnharcentro white--text ">
-                            <v-card-text >
-                          <p class="text-h1 font-weight-bold p-0 m-0">SIG-VAI</p>
-                          <p class="subtitle pb-5 m-0">Sistema de Gestão de Imóbiliaria (Kubicos)</p>
-                          <p class="text-h5">Aumente sua receita com o nosso sistema</p>
-                           <p>O ZAP+Fin é a plataforma de financiamento imobiliário que <br/>oferece crédito ao seu cliente de uma maneira fácil e sem burocracia.</p>
-                            
-                        </v-card-text>
-                        
+                        <v-row class="alinnharcentro white--text ">
+                            <v-card-text>
+                                <p class="text-h1 font-weight-bold p-0 m-0">KUBICOS</p>
+                                <p class="subtitle pb-5 m-0">Sistema de Gestão de Imóbiliaria (SIG-VAI)</p>
+                                <p class="text-h5">Aumente sua receita com o nosso sistema</p>
+                                <p>O ZAP+Fin é a plataforma de financiamento imobiliário que <br />oferece crédito ao seu
+                                    cliente de uma maneira fácil e sem burocracia.</p>
+
+                            </v-card-text>
+
                         </v-row>
-                                       
+
                     </v-container>
-                   
+
                 </v-img>
             </v-col>
             <v-col cols="12" md="5">
@@ -30,17 +31,28 @@
                         <v-card-text class="text-h3"> SIG-VAI</v-card-text>
                         <v-card-text fluid class="justify-center">
                             <v-form v-model="isValid">
-                            
                                 <v-row class="justify-center">
-                                    
+                                    <template>
+                                        <v-tabs v-model="tab" color="indigo" centered class="text-h2 py-3 text-h2"
+                                            show-arrows icons-and-text center-active>
+                                            <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 text-h2 text-lowercase"
+                                                @click="cliente()">Cliente</v-tab>
+                                            <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 text-lowercase"
+                                                @click="pambaleiro()">Pambaleiro</v-tab>
+                                            <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 text-h2 text-lowercase"
+                                                @click="proprietario()">Proprietário</v-tab>
+                                            <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 text-lowercase"
+                                                @click="corrector()">Corrector</v-tab>
+                                        </v-tabs>
+                                    </template>
                                     <v-col cols="12">
-                                        <v-text-field :rules="[rules.required]" placeholder="Nome completo*" outlined rounded
-                                            label="Nome completo*" name="name" v-model="user.name"
+                                        <v-text-field :rules="[rules.required]" placeholder="Nome completo*" outlined
+                                            rounded label="Nome completo*" name="name" v-model="user.name"
                                             prepend-icon="mdi-account-circle" />
                                     </v-col>
                                     <v-col cols="12">
-                                        <v-text-field :rules="[rules.required]" placeholder="Email*" outlined rounded
-                                            label="Email" name="email" v-model="user.email"
+                                        <v-text-field :rules="[rules.required]" placeholder="Email/ nº telefone*" outlined
+                                            rounded label="Email ou Nº Telefone" name="email" v-model="user.email"
                                             prepend-icon="mdi-account-circle" />
                                     </v-col>
                                     <v-col cols="12">
@@ -54,11 +66,19 @@
         showPassword = !showPassword
         " required />
                                     </v-col>
+                                    <v-col cols="12" v-if="this.getimobiliaria">
+                                        <v-autocomplete :rules="[rules.required]" outlined rounded id="espacotrabalho"
+                                            :label="getcorrector ? 'Nome da Imóbiliaria' : 'Nome da Placa'"
+                                            v-model="user.zona_trabalho" name="zona_trabalho"
+                                            :items="getcorrector ? tipoImoveis : placa" prepend-icon="mdi-lock"
+                                            item-color="indigo" required />
+                                    </v-col>
                                     <span class="subtitle">--------------- Entrar com ---------------------
                                     </span>
                                     <v-col cols="12">
                                         <div class="text-center pb-3">
-                                            <v-btn href="login/google" block rounded outlined x-large color="blue darken-1">
+                                            <v-btn href="/auth/redirect" block rounded outlined x-large
+                                                color="blue darken-1">
                                                 <v-icon>mdi mdi-google</v-icon>
                                                 Google
                                             </v-btn>
@@ -72,7 +92,7 @@
                                             {{ alert.text }}
                                         </v-alert>
 
-                                        <v-btn block rounded color="#4527A0" dark x-large @click="setLogin()"
+                                        <v-btn block rounded color="indigo" dark x-large @click="setLogin()"
                                             :disabled="!isValid"><v-icon>login</v-icon> Iniciar
                                             Sessão</v-btn>
                                     </v-col>
@@ -84,7 +104,7 @@
                             </v-form>
                         </v-card-text>
                         <!-- <v-card-actions> -->
-                            <!-- <p class="ml-4 pb-6 subtitle">
+                        <!-- <p class="ml-4 pb-6 subtitle">
                                 <a href="/reset-password" class="linkstilo">
                                     Esqueci a minha senha!</a><br />
                                 Não possui uma conta?<a href="/reset-password" class="linkstilo">
@@ -93,7 +113,7 @@
 
                         <!-- </v-card-actions> -->
                         <div>
-                            <v-btn href="" rounded outlined color="deep-purple darken-3">
+                            <v-btn href="" rounded outlined color="indigo">
                                 <a href="/logar" style="text-decoration: none; color: #4527A0; ">
 
 
@@ -123,10 +143,21 @@ export default {
         showPassword: false,
         isValid: true,
         overlay: false,
-        user: {},
+        getimobiliaria: false,
+        getcorrector: false,
+        user: {
+            zona_trabalho:null,
+        },
         rules: {
             required: (value) => !!value || "Campos obrigatório.",
         },
+        placa: ['Rangel', 'Benfica', 'Cazenga', 'BO',
+         'Marçal', 'Vila-lice', 'Nova Urbanização de Cacuado', 
+         'Maianga', 'Rangel', 'Benfica', 'Cazenga', 'BO',
+         'Cassenda', 'Benfica', 'Cazenga', 'Outros',],
+
+        tipoImoveis: ['Imooliveira', 'AAfrica', 
+        'KindaHome', 'ImoBeto'],
     }),
     computed: {},
 
@@ -138,11 +169,30 @@ export default {
     mounted() { },
 
     methods: {
+        pambaleiro() {
+            this.user.tipo_usuario = 4
+            this.getimobiliaria = true;
+            this.getcorrector = false;
+            // alert(this.user.tipo_usuario)
+        },
+        corrector() {
+            this.user.tipo_usuario = 5
+            this.getimobiliaria = true;
+            this.getcorrector = true;
+        },
+        proprietario() {
+            this.user.tipo_usuario = 3
+            this.getimobiliaria = false;
+        },
+        cliente() {
+            this.user.tipo_usuario = 2
+            this.getimobiliaria = false;
+        },
         setLogin() {
-        
+
             // window.sessionStorage.setItem('redirectRoute', this.$route.fullPath),
             this.$inertia.post("register", this.user, {
-                
+
             });
             // if(response.status === 201){
             //     this.alert(1)
@@ -173,5 +223,4 @@ body {
     text-decoration: none !important;
     color: #4527A0;
 
-}
-</style>
+}</style>

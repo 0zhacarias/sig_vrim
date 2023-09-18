@@ -11,6 +11,7 @@ class Imoveis extends Model
     use HasFactory,SoftDeletes;
     protected $table="imoveis";
     protected $guarded=['id'];
+    
 public function categoria() {
     return $this->belongsTo(Categoria::class);
 }

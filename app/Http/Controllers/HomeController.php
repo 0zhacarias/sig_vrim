@@ -40,12 +40,12 @@ class HomeController extends Controller
         $urlLogin =  env('LOCAL_URL') . '/logar';
         // dd($previousUrl);
         // dd($previousUrl);
-        // dd($previousUrl);
         $urlListarArrendado =  env('LOCAL_URL') . '/portal/listaImoveisArrendamentos';
         $urlListarComprar =  env('LOCAL_URL') . '/portal/listaImoveisCompras';
         $urlAnunciar =  env('LOCAL_URL') . '/portal/imoveis';
         $urlPerfil =  env('LOCAL_URL').'/perfil';
         $urlHome = env('LOCAL_URL') . '/home';
+        $urlRegistrar = env('LOCAL_URL') . '/RegistrarConta';
         $dados['provincias']=Provincias::all();
         $dados['municipios']=Municipios::all();
         $dados['tipologiaImoveis']=Tipologia::all();
@@ -66,6 +66,10 @@ class HomeController extends Controller
             }else if($previousUrl==$urlAnunciar){
 
                 return Inertia::render('Portal/ImoveisCriar',$dados);  
+            
+            }else if($previousUrl==$urlRegistrar){
+
+                return Inertia::render('Admin/Clientes/Perfil',$dados);  
             }
      // dd($dados);
         // $this->redirecionarUsuario();

@@ -7,7 +7,7 @@
 
                     <v-card align="center" justify="center" elevation="0" class="w-75">
 
-                        <v-card-text class="text-h3"> SIG-VAI</v-card-text>
+                        <v-card-text class="text-h3">KUBICOS </v-card-text>
                         <v-card-text fluid class="justify-center">
                             <v-form v-model="isValid">
                                 <v-row class="justify-center">
@@ -175,7 +175,7 @@ export default {
         storePreviousUrl(url) {
             // Adiciona a nova URL à frente do array
             this.previousUrls.unshift(url);
-            alert(url);
+            // alert(url);
             // Garante que o array tenha no máximo duas URLs armazenadas
             if (this.previousUrls.length > 2) {
                 this.previousUrls.pop(); // Remove a URL mais antiga

@@ -31,10 +31,10 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     //REPLICANDO A FUNÇÃO REDIRECTTO E USANDO A VARIAVEL PERFIL PARA OMPREENDER O REDIRECIONAMENTO.
-    protected $redirectPe = RouteServiceProvider::PERFIL;
+    // protected $redirectPe = RouteServiceProvider::PERFIL;
 
     /**
      * Create a new controller instance.
@@ -44,7 +44,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-    }
+    } 
 
     /**
      * Get a validator for an incoming registration request.
@@ -60,15 +60,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
-            // 'tipo_user' => ['required', 'string'],
+            'tipo_usuario' => ['required'],
         ]);
-    }
-    protected function redirecionarUsuario()
-    {
-        // Recupere a URL anterior da sessão ou redirecione para uma rota padrão se não houver uma URL anterior.
-        $previousUrl = session('previous_url', '/homes');
-        // dd($previousUrl);
-        return redirect($previousUrl);
     }
     /**
      * Create a new user instance after a valid registration.
@@ -78,13 +71,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // dd( $data);
+    //  dd( $data);
         // dd(session('url.intended'));
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            // 'tipo_user' => $data['tipo_user'],
+            'tipo_user_id' => $data['tipo_usuario'],
             'password' => Hash::make($data['password']),
+        ]);
+        Pessoa::create([
+            'nome'=>$data['name'],
+            'sobre_nome'=>$data['name'],
+            'email' => $data['email'],
+            'user_id'=>$user->id,
+            'zona_trabalho'=>$data['zona_trabalho'],
         ]);
        
         // if ($data['pessoa']) {

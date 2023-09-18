@@ -36,7 +36,7 @@
                 <card class="white">
                     <v-col md="8" offset-md="2">
                         <v-card-subtitle class="">Arrendamento / Quarto / Cozinha Equipada / Leiria</v-card-subtitle>
-                        <v-card-text class="text-h5 ">
+       <v-card-text class="text-h5 ">
                             <v-card-title class="deep-purple lighten-5"> {{ imoveis.designacao }}</v-card-title>
                             <v-row>
 
@@ -50,28 +50,27 @@
                                             imoveis.preco }},00 KZ</v-card-title></v-col>
                             </v-row>
                             <v-divider></v-divider>
-
-
-
+<v-row>
+    <v-col cols="10">
                             <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text" column>
                                 <v-chip><span class="mdi mdi-chart-areaspline-variant"> {{ imoveis.metros }}m <sup>2 </sup>
                                     </span></v-chip>
                                 <v-chip><span class="mdi mdi-seat-individual-suite">{{ imoveis.suite }}
                                     </span>Dormitório</v-chip>
                                 <v-chip><span class="mdi mdi-car">{{ imoveis.numero_garagem }}</span>Garagem</v-chip>
-
                                 <v-chip><span class="mdi mdi-shower-head"></span> Banheiros</v-chip>
-
-
                                 <v-chip><span class="mdi mdi-countertop"></span> Cozinha</v-chip>
-
                                 <v-chip>
                                     <span class="mdi mdi-bed-double"></span>{{ imoveis.numero_banheiro }} Quartos</v-chip>
                                 <v-chip v-for="(actidade) in imoveis.actividade_imoveis" :key="actidade.id">
                                     <span class="mdi mdi-sale" title="estado do imovel">
                                     </span>{{ actidade.operacao_imoveis.designacao }} </v-chip>
                             </v-chip-group>
-
+                        </v-col>
+                           <v-col cols="2">
+                            <v-btn :disabled="imoveis.estado_imoveis_id!==3" text class="ml-auto" color="#4527A0" dense  @click="marcarVisita()"> {{ imoveis.estado_imoveis_id==3 ? 'Marcação de visita' : 'Pedido de marcação feito' }} </v-btn>
+                        </v-col>
+                        </v-row>
                             <v-divider></v-divider>
 
 
@@ -347,7 +346,7 @@
                                                                 (Kubicos)
                                                             </p>
                                                             <p class="text-h5">Aumente sua receita com o nosso sistema</p>
-                                                            <p>O SIG-VRIM é a plataforma de financiamento imobiliário que
+                                                            <p>O SIG-VAI é a plataforma de financiamento imobiliário que
                                                                 <br />oferece crédito ao seu
                                                                 cliente de uma maneira fácil e sem burocracia.
                                                             </p>
@@ -365,52 +364,7 @@
                             </v-dialog>
                         </v-row>
                     </template>
-                    <template>
-  <v-card
-    class="mx-auto elevation-20"
-    color="purple"
-    dark
-    style="max-width: 400px;"
-  >
-    <v-row justify="space-between">
-      <v-col cols="8">
-        <v-card-title>
-          <div>
-            <div class="text-h5">
-              Halycon Days
-            </div>
-            <div>Ellie Goulding</div>
-            <div>(2013)</div>
-          </div>
-        </v-card-title>
-      </v-col>
-      <v-img
-        class="shrink ma-2"
-        contain
-        height="125px"
-        :src="'/storage/' + imoveis.foto_principal"
-        style="flex-basis: 125px"
-      ></v-img>
-    </v-row>
-    <v-divider dark></v-divider>
-    <v-card-actions class="pa-4">
-      Rate this album
-      <v-spacer></v-spacer>
-      <span class="grey--text text--lighten-2 text-caption mr-2">
-        ({{ rating }})
-      </span>
-      <v-rating
-        v-model="rating"
-        background-color="white"
-        color="yellow accent-4"
-        dense
-        half-increments
-        hover
-        size="18"
-      ></v-rating>
-    </v-card-actions>
-  </v-card>
-</template>
+
 <v-overlay :value="overlay">
       <v-progress-circular
         indeterminate
@@ -639,15 +593,21 @@ export default {
                             msg:
                                 "" + this.$page.props.flash.success,
                         });
-                        this.snackbar = true
+                        // this.snackbar = true
+                        // if (this.$page.props.auth.user !== null) {
+                // this.dialogMarcarVisita = true;
+           // }
                     }
                     if (this.$page.props.flash.error != null) {
                         Vue.toasted.global.defaultError({
                             msg: "" + this.$page.props.flash.error,
                         });
                     }
-
-                    this.closeSave();
+                    if (this.$page.props.auth.user !== null) {
+                            this.snackbar = true
+                this.dialogMarcarVisita = true;
+                // this.closeSave();
+           }
                 },
             });
 

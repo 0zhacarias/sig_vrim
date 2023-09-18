@@ -4,32 +4,39 @@
         <template class="pb-0 ">
 
             <v-toolbar-title class="deep-purple darken-3 elevation-0"
-                :style="'border-radius: 0px 0px 0px 350px; height:450px'">
+                :style="'border-radius: 0px 0px 0px 350px; height:70vh'">
+                
+                            <v-img gradient="to top right, rgba(255,115,201,.3), rgba(25,32,72,.7)"
+                                :style="'white-space:nowrap; padding:0;max-width: 100%;height:75vh; position:relative;top:20px; ; border-radius: 0 80px 0px 60px;'"
+                                src="/img/angola.jpg" >
                 <!-- <v-card-title>
                  <span class="headline">Título do Card</span> 
                 </v-card-title> -->
                 <v-row class="p-0">
-                    <v-col cols="12" sm="2" md="4" :style="' white-space:nowrap; padding:0; '">
-
-                        <!-- <v-card-text>
-                            <v-img gradient="to top right, rgba(255,115,201,.1), rgba(25,32,72,.7)"
-                                :style="'white-space:nowrap; padding:0;max-width: 100%;height:55vh; position:relative;top:50px;left:-5px; ; border-radius: 0 80px 0px 60px;'"
-                                src="/img/jason-briscoe.jpg" >
-                                </v-img>
-                            <div class="bottom-gradient"></div>
-                        </v-card-text> -->
+                    <v-col cols="12" sm="2" md="4" :style="' white-space:nowrap; padding:0; '">                       
                     </v-col>
                     <v-col cols="12" sm="10" md="8" class="container--fluid">
                         <v-card elevation="0" color="transparent" class="white--text"
-                            :style="'justify-content: center; padding-top:5rem; font-size:0.4rem'">
+                            :style="'justify-content: center; padding-top:8rem; font-size:0.7rem'">
                             <h1>
                                 <p class="text-bold text-justify">No Kubico tem.</p>
                             </h1>
                             <h2> O imóvel que deseja e o que procuras está aqui</h2>
 
                             <p class="text-h4 pt-3 text-justify">compra, arrenda ou vende o seu imóvel residencial.</p>
-                            <v-row class="px-5">
-                                <v-col cols="6" sm="" md="6" align="center">
+                            <v-row  class="px-5">
+                                <v-col cols="8">
+                                    <template>
+                                    <v-tabs v-model="tab" centered class="text-h2 py-lg-10" show-arrows background-color="transparent"
+                                        dark icons-and-text center-active>
+                                        <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1">Comprar</v-tab>
+                                        <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1">Arrendar</v-tab>
+                                        <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1">Meio periódo</v-tab>
+                                    </v-tabs>
+                                </template>
+                                </v-col>
+                              <v-row>
+                                <!-- <v-col cols="6" sm="" md="6" align="center">
                                     <v-btn :disabled="loading" class="ma-1" color="white" text>
                                         Comprar
                                     </v-btn>
@@ -38,22 +45,26 @@
                                     <v-btn :disabled="loading" class="ma-1" color="white" plain>
                                         Arrendar
                                     </v-btn>
-                                </v-col>
-                                <v-col cols="6" md="6" class="opens-sans mb-n8">
-                                    <v-autocomplete dense item-text="designacao" item-value="id" prepend-icon=""
-                                        label="Localização" clearable full-width hover solo>
+                                </v-col> -->
+
+                                <v-col cols="4" md="4" class="opens-sans" >
+                                    <v-autocomplete color="indigo" outlined rounded auto-select-first chips clearable deletable-chips
+                                        small-chips item-text="designacao" item-value="id" prepend-icon="" hide-details
+                                        label="Localização" class="indigo lighten-5">
                                     </v-autocomplete>
                                 </v-col>
                                 <v-col cols="4" md="4" class="opens-sans mb-n8">
-                                    <v-autocomplete dense clearable item-text="designacao" item-value="id" prepend-icon=""
-                                        label="Estado" full-width solo>
+                                    <v-autocomplete outlined rounded auto-select-first chips clearable deletable-chips
+                                        small-chips item-text="designacao" item-value="id"
+                                        prepend-icon="" label="Estado" full-width hide-details class="indigo lighten-5">
                                     </v-autocomplete>
                                 </v-col>
                                 <v-col cols="2" md="2">
-                                    <v-btn dense :disabled="loading" d-none d-lg-flex btn-custom-nm ml-5>
+                                    <v-btn rounded x-large  class="bottom-gradient">
                                         pesquisar
                                     </v-btn>
                                 </v-col>
+                            </v-row>
                             </v-row>
 
                         </v-card>
@@ -64,6 +75,7 @@
                     </v-col>
 
                 </v-row>
+            </v-img>
             </v-toolbar-title>
         </template>
         <!-- Lançamentos mais recentes -->
@@ -78,8 +90,8 @@
                         :lg="novos_imoveis.length <= 3 ? 6 : 4" :style="'max-width: min-content;'">
                         <v-hover v-slot="{ hover }">
 
-                            <v-card  class="mx-5 my-12 elevation-10" max-width="320"
-                                @click="findImoveis(item.id)" :elevation="hover ? 10 : 0">
+                            <v-card class="mx-5 my-12 elevation-10" max-width="320" @click="findImoveis(item.id)"
+                                :elevation="hover ? 10 : 0">
                                 <v-img height="150" :src="'/storage/' + item.foto_principal"></v-img>
 
                                 <v-card-title>{{ item.title }}</v-card-title>
@@ -351,8 +363,7 @@
                     <v-col cols="12" sm="12" md="4" class="mx-3" :style="'flex-basis: min-content;'">
                         <v-hover v-slot="{ hover }">
 
-                            <v-card class="mx-auto my-12 elevation-10" max-width="350"
-                                :elevation="hover ? 10 : 0">
+                            <v-card class="mx-auto my-12 elevation-10" max-width="350" :elevation="hover ? 10 : 0">
                                 <template slot="progress">
                                     <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
                                 </template>
@@ -396,66 +407,46 @@
                             </v-card>
                         </v-hover>
                     </v-col>
-                    
-                <v-row :style="'justify-content: center;'">
-                    <h2 class="mx-1 text-center">Municipios</h2>
-                    <v-col @click.stop="findImoveisProvincia(item.id)" v-for="item in provincias" :key="item.id" class="mx-1 text-center"
-                        :lg="provincias.length <= 8 ? 6 : 3"  >
-                        <v-hover v-slot="{ hover }">
-                            <v-card  class="elevation-1"  width="320" color="transparent"
-                                :elevation="hover ? 2 : 0">
-                                <v-card-title  class="justify-center" >{{ item.designacao }}</v-card-title>
-                            </v-card>
-                        </v-hover>
-                    </v-col>
-                </v-row>
+
+                    <v-row :style="'justify-content: center;'">
+                        <h2 class="mx-1 text-center">Municipios</h2>
+                        <v-col @click.stop="findImoveisProvincia(item.id)" v-for="item in provincias" :key="item.id"
+                            class="mx-1 text-center" :lg="provincias.length <= 8 ? 6 : 3">
+                            <v-hover v-slot="{ hover }">
+                                <v-card class="elevation-1" width="320" color="transparent" :elevation="hover ? 2 : 0">
+                                    <v-card-title class="justify-center">{{ item.designacao }}</v-card-title>
+                                </v-card>
+                            </v-hover>
+                        </v-col>
+                    </v-row>
                 </v-row>
 
                 <v-divider></v-divider>
             </v-container>
             <template>
-  <div class="text-center">
-    <v-btn
-      color="deep-purple accent-4"
-      class="white--text"
-      @click="overlay = !overlay"
-    >
-      Launch Application
-      <v-icon right>
-        mdi-open-in-new
-      </v-icon>
-    </v-btn>
+                <div class="text-center">
+                    <v-btn color="deep-purple accent-4" class="white--text" @click="overlay = !overlay">
+                        Launch Application
+                        <v-icon right>
+                            mdi-open-in-new
+                        </v-icon>
+                    </v-btn>
 
-    <v-overlay :value="overlay">
-      <v-progress-circular
-        indeterminate
-        size="64"
-      ></v-progress-circular>
-    </v-overlay>
-  </div>
-</template><template>
-  <v-row justify="center">
-    <v-img
-    src="/img/cms-image.jpg"
-      lazy-src="/img/cms-images.jpg"
-      max-width="500"
-      max-height="300"
-    >
-      <template v-slot:placeholder>
-        <v-row
-          class="fill-height ma-0"
-          align="center"
-          justify="center"
-        >
-          <v-progress-circular
-            indeterminate
-            color="grey lighten-5"
-          ></v-progress-circular>
-        </v-row>
-      </template>
-    </v-img>
-  </v-row>
-</template>
+                    <v-overlay :value="overlay">
+                        <v-progress-circular indeterminate size="64"></v-progress-circular>
+                    </v-overlay>
+                </div>
+            </template><template>
+                <v-row justify="center">
+                    <v-img src="/img/cms-image.jpg" lazy-src="/img/cms-images.jpg" max-width="500" max-height="300">
+                        <template v-slot:placeholder>
+                            <v-row class="fill-height ma-0" align="center" justify="center">
+                                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                            </v-row>
+                        </template>
+                    </v-img>
+                </v-row>
+            </template>
         </template>
 
         <!-- Contactos
@@ -520,7 +511,7 @@ export default {
         mais_proximos: [],
         valid: true,
         name: "",
-        overlay : false,
+        overlay: false,
 
         nameRules: [
             (v) => !!v || "Name is required",
@@ -554,11 +545,11 @@ export default {
         ],
     }),
     watch: {
-      overlay (val) {
-        val && setTimeout(() => {
-          this.overlay = false
-        }, 3000)
-      },
+        overlay(val) {
+            val && setTimeout(() => {
+                this.overlay = false
+            }, 3000)
+        },
     },
     mounted() { },
     created() {
@@ -571,8 +562,8 @@ export default {
             window.location.href = "/portal/imovel-selecionado/" + btoa(btoa(btoa(id)));
             // alert(id);
         },
-        findImoveisProvincia(id){
-            window.location.href="/portal/imoveis-provincia/"+ id;
+        findImoveisProvincia(id) {
+            window.location.href = "/portal/imoveis-provincia/" + id;
         },
         validate() {
             if (this.$refs.form.validate()) {
@@ -672,6 +663,7 @@ table {
     /* max-width: max-content; */
 
 }
+
 /* div.container6 p {
   margin: 0 } */
 .circulo {

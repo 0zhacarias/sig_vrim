@@ -44,7 +44,7 @@
         <v-toolbar flat class="header1 elevation-0 py-0" color="deep-purple darken-3 ">
             <v-toolbar-title><a href="/" style="text-decoration: none"><v-avatar size="40"
                         color="deep-purple darken-3"><v-icon color="white" large>home</v-icon></v-avatar>
-                    <span class="white--text hidden-xs-only"> KUBICO - (SIG-VAI)</span>
+                    <span class="white--text hidden-xs-only"> KUBICOS - (SIG-VAI)</span>
                 </a>
             </v-toolbar-title>
             <v-spacer class=""></v-spacer>
@@ -62,7 +62,7 @@
                 </v-btn>
                 <v-btn dense @click="anuncios()" class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff"
                     elevation="0" text>
-                    Anuciar
+                    Anunciar
                 </v-btn>
             </v-toolbar-items>
             <v-toolbar-items>

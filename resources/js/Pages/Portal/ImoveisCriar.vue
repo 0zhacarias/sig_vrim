@@ -80,13 +80,39 @@
                                                         </v-textarea>
                                                     </v-col>
                                                 </v-row>
+
+                                                <v-row>
+                                                    <v-col cols="12" md="3">
+                                                        <v-autocomplete v-model="imovel.provincia" dense
+                                                            :items="this.provincias" item-value="id" item-text="designacao"
+                                                            label="Provincia**" @change="getMunicipio()" outlined>
+
+                                                        </v-autocomplete>
+                                                    </v-col>
+                                                    <v-col cols="12" md="3">
+                                                        <v-autocomplete :items="this.municipios" item-value="id"
+                                                            item-text="designacao" v-model="imovel.cidades" label="Cidades*"
+                                                            dense outlined>
+
+                                                        </v-autocomplete>
+                                                    </v-col>
+                                                    <v-col cols="12" md="6">
+                                                        <v-text-field v-model="imovel.localizacao_geografica" dense
+                                                            label="Rua, Bairo" outlined type="gps">
+
+                                                        </v-text-field>
+                                                    </v-col>
+
+                                                </v-row>
+                                                <v-divider></v-divider>
+                                                <v-divider></v-divider>
                                                 <v-row>
                                                     <v-col cols="12" sm="12" md="6">
 
                                                         <v-row>
                                                             <v-col cols="12" sm="12" md="5">
                                                                 <span class="text-body-1 text-black indigo--text">Número
-                                                                    de quartos</span><br />
+                                                                    de quarto</span><br />
                                                                 <span class="text-caption">Incluindo suítes</span>
 
                                                             </v-col>
@@ -312,32 +338,7 @@
                                                             </v-row>
                                                         </v-card-text> -->
                                                 </v-row>
-                                                <v-divider></v-divider>
-                                                <v-divider></v-divider>
-
-                                                <v-row>
-                                                    <v-col cols="12" md="3">
-                                                        <v-autocomplete v-model="imovel.provincia" dense
-                                                            :items="this.provincias" item-value="id" item-text="designacao"
-                                                            label="Provincia**" @change="getMunicipio()" outlined>
-
-                                                        </v-autocomplete>
-                                                    </v-col>
-                                                    <v-col cols="12" md="3">
-                                                        <v-autocomplete :items="this.municipios" item-value="id"
-                                                            item-text="designacao" v-model="imovel.cidades" label="Cidades*"
-                                                            dense outlined>
-
-                                                        </v-autocomplete>
-                                                    </v-col>
-                                                    <v-col cols="12" md="6">
-                                                        <v-text-field v-model="imovel.localizacao_geografica" dense
-                                                            label="Rua, Bairo" outlined type="gps">
-
-                                                        </v-text-field>
-                                                    </v-col>
-
-                                                </v-row>
+                                                
                                             </v-container>
                                         </v-form>
                                     </v-card>
@@ -722,6 +723,21 @@
 
                                                             </template>
                                                         </v-list-item>
+                                                        <v-list-item>
+                                                            <template v-slot:default="{ active }">
+                                                                <v-list-item-content>
+                                                                    <v-list-item-title> Re-Chão</v-list-item-title>
+
+                                                                </v-list-item-content>
+                                                                <v-list-item-action>
+                                                                    <v-checkbox :input-value="active"
+                                                                        v-model="imovel.rechao"
+                                                                        style="background-color: #e9e5f5; border-radius: 10px;"
+                                                                        color="primary"></v-checkbox>
+                                                                </v-list-item-action>
+
+                                                            </template>
+                                                        </v-list-item>
                                                     </v-list-item-group>
                                                 </v-list>
                                                 <v-card-actions>
@@ -845,7 +861,7 @@
                                                 <v-row dense>
                                                     <template>
                                                         <span >
-                                                            <v-card-text  class="text-center text-h4">Entraremos com o senhor:  <b>{{ user.name }}</b>  para conferrir a veracidade do seu imóvel.</v-card-text>
+                                                            <v-card-text  class="text-center text-h4">Entraremos em contacto com o senhor:  <b>{{ user.name }}</b>  para conferir a veracidade do seu imóvel.</v-card-text>
                                              
                                                         </span><br />
                                                         <v-card-text class="text-center text-h6">
@@ -1197,7 +1213,7 @@ export default {
             simimposto_predial.style.color = "black";
         },
         simMobiliado() {
-            this.imovel.mobiliado = true
+            this.imovel.mobiliado = 1
             this.mostrarMobiliado = true;
             const simmobiliado = document.querySelector(".simmobiliado");
             const naomobiliado = document.querySelector(".naomobiliado");
@@ -1207,7 +1223,7 @@ export default {
             naomobiliado.style.color = "black";
         },
         naoMobiliado() {
-            this.imovel.mobiliado = false
+            this.imovel.mobiliado = 2
             this.mostrarMobiliado = false;
             const simmobiliado = document.querySelector(".simmobiliado");
             const naomobiliado = document.querySelector(".naomobiliado");

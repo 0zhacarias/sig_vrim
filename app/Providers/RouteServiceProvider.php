@@ -19,7 +19,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/home';
     //REPLICANDO A FUNÇÃO REDIRECTTO E USANDO A VARIAVEL PERFIL PARA COMPREENDER O REDIRECIONAMENTO.
-    public const PERFIL = '/perfil';
+    // public const PERFIL = '/perfil';
 
     /**
      * The controller namespace for the application.
