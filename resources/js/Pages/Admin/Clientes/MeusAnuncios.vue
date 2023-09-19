@@ -67,12 +67,17 @@
                         </v-card-actions>
 
                         <v-card-actions class="justify-end">
-                            <v-btn icon color="deep-purple lighten-2" outlined rounded  title="Gostei do Imóvel">
+                            <v-btn icon  v-if="item.estado_imoveis_id == 4" color="indigo" outlined rounded  title="Aprovar a visita do imóvel" @click="naoValidarProcesso( item.id)" v-model="validar_processo.aprovaVisita">
+                                <v-icon>
+                                    mdi mdi-thumb-up-outline
+                                </v-icon>
+                            </v-btn>
+                            <v-btn icon color="deep-purple lighten-2" outlined rounded  title="Editar Imóvel">
                                 <v-icon>
                                     mdi mdi-pencil-outline
                                 </v-icon>
                             </v-btn>
-                            <v-btn icon color="red" outlined rounded  title="Gostei do Imóvel">
+                            <v-btn icon color="red" outlined rounded  title="Remover o Imóvel">
                                 <v-icon>
                                     mdi mdi-delete-outline
                                 </v-icon>

@@ -34,14 +34,14 @@
                                 <v-row class="justify-center">
                                     <template>
                                         <v-tabs v-model="tab" color="indigo" centered class="text-h2 py-3 text-h2"
-                                            show-arrows icons-and-text center-active>
-                                            <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 text-h2 text-lowercase"
+                                            show-arrows icons-and-text >
+                                            <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 text-h2 text-lowercase  indigo--text"
                                                 @click="cliente()">Cliente</v-tab>
-                                            <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 text-lowercase"
+                                            <v-tab color="indigo"  class="text-h6 px-lg-6 px-md-2 px-sm-1 text-lowercase indigo--text"
                                                 @click="pambaleiro()">Pambaleiro</v-tab>
-                                            <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 text-h2 text-lowercase"
+                                            <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 text-h2 text-lowercase  indigo--text"
                                                 @click="proprietario()">Proprietário</v-tab>
-                                            <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 text-lowercase"
+                                            <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 text-lowercase  indigo--text"
                                                 @click="corrector()">Corrector</v-tab>
                                         </v-tabs>
                                     </template>
@@ -51,7 +51,7 @@
                                             prepend-icon="mdi-account-circle" />
                                     </v-col>
                                     <v-col cols="12">
-                                        <v-text-field :rules="[rules.required]" placeholder="Email/ nº telefone*" outlined
+                                        <v-text-field :rules="emailRules" placeholder="Email/ nº telefone*" outlined
                                             rounded label="Email ou Nº Telefone" name="email" v-model="user.email"
                                             prepend-icon="mdi-account-circle" />
                                     </v-col>
@@ -84,12 +84,12 @@
                                             </v-btn>
                                         </div>
                                         <v-alert outlined dismissible transition="scale-transition" text
-                                            v-if="alert.type == 'success'" type="success">
+                                            v-if="alert" type="success">
                                             {{ alert.text }}
                                         </v-alert>
                                         <v-alert dismissible transition="scale-transition" outlined
-                                            v-if="alert.type == 'error'" type="error">
-                                            {{ alert.text }}
+                                            v-if="alertError" type="error">
+                                            Escolhe o tipo de utilizador
                                         </v-alert>
 
                                         <v-btn block rounded color="indigo" dark x-large @click="setLogin()"
@@ -139,7 +139,8 @@ export default {
     },
 
     data: () => ({
-        alert: { text: "", type: "" },
+        alert: false,
+        alertError: false,
         showPassword: false,
         isValid: true,
         overlay: false,
@@ -147,10 +148,15 @@ export default {
         getcorrector: false,
         user: {
             zona_trabalho:null,
+            // tipo_usuario:2,
         },
         rules: {
             required: (value) => !!value || "Campos obrigatório.",
         },
+        emailRules: [
+            (value) => /.+@.+\..+/.test(value) || /^\d{9}$/.test(value)|| "E-mail ou numero de telefone válido",
+                    ],
+
         placa: ['Rangel', 'Benfica', 'Cazenga', 'BO',
          'Marçal', 'Vila-lice', 'Nova Urbanização de Cacuado', 
          'Maianga', 'Rangel', 'Benfica', 'Cazenga', 'BO',
@@ -189,11 +195,16 @@ export default {
             this.getimobiliaria = false;
         },
         setLogin() {
+            // alert(this.user.tipo_usuario)
+            if(this.user.tipo_usuario==null){
+                this.alertError=true
+            }else{
+                this.$inertia.post("register", this.user, {
 
+});
+            }
             // window.sessionStorage.setItem('redirectRoute', this.$route.fullPath),
-            this.$inertia.post("register", this.user, {
-
-            });
+            
             // if(response.status === 201){
             //     this.alert(1)
             // }

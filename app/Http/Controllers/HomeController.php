@@ -69,7 +69,7 @@ class HomeController extends Controller
             
             }else if($previousUrl==$urlRegistrar){
 
-                return Inertia::render('Admin/Clientes/Perfil',$dados);  
+                return Inertia::render('Admin/Clientes/Cliente',$dados);  
             }
      // dd($dados);
         // $this->redirecionarUsuario();

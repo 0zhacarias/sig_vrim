@@ -58,7 +58,7 @@ class RegisterController extends Controller
 
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'tipo_usuario' => ['required'],
         ]);
@@ -71,21 +71,38 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-    //  dd( $data);
-        // dd(session('url.intended'));
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'tipo_user_id' => $data['tipo_usuario'],
-            'password' => Hash::make($data['password']),
-        ]);
-        Pessoa::create([
-            'nome'=>$data['name'],
-            'sobre_nome'=>$data['name'],
-            'email' => $data['email'],
-            'user_id'=>$user->id,
-            'zona_trabalho'=>$data['zona_trabalho'],
-        ]);
+        if(is_numeric($data['email'])){
+            
+            $user = User::create([
+                'name' => $data['name'],
+                'telefone' => $data['email'],
+                'tipo_user_id' => $data['tipo_usuario'],
+                'password' => Hash::make($data['password']),
+            ]);
+            // dd($data['email'],$user);
+            Pessoa::create([
+                'nome'=>$data['name'],
+                'sobre_nome'=>$data['name'],
+                'numero_telefone' => $data['email'],
+                'user_id'=>$user->id,
+                'zona_trabalho'=>$data['zona_trabalho'],
+            ]);
+        }else{
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'tipo_user_id' => $data['tipo_usuario'],
+                'password' => Hash::make($data['password']),
+            ]);
+            Pessoa::create([
+                'nome'=>$data['name'],
+                'sobre_nome'=>$data['name'],
+                'email' => $data['email'],
+                'user_id'=>$user->id,
+                'zona_trabalho'=>$data['zona_trabalho'],
+            ]);
+        }
+     
        
         // if ($data['pessoa']) {
         //     Pessoa::created([

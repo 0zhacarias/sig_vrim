@@ -6,7 +6,7 @@
             <v-toolbar-title class="deep-purple darken-3 elevation-0"
                 :style="'border-radius: 0px 0px 0px 350px; height:70vh'">
                 
-                            <v-img gradient="to top right, rgba(255,115,201,.3), rgba(25,32,72,.7)"
+                            <v-img gradient="to top right, rgba(255,115,201,.1), rgba(25,32,72,.6)"
                                 :style="'white-space:nowrap; padding:0;max-width: 100%;height:75vh; position:relative;top:20px; ; border-radius: 0 80px 0px 60px;'"
                                 src="/img/angola.jpg" >
                 <!-- <v-card-title>
@@ -29,9 +29,9 @@
                                     <template>
                                     <v-tabs v-model="tab" centered class="text-h2 py-lg-10" show-arrows background-color="transparent"
                                         dark icons-and-text center-active>
-                                        <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1">Comprar</v-tab>
-                                        <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1">Arrendar</v-tab>
-                                        <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1">Meio periódo</v-tab>
+                                        <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 ">Comprar</v-tab>
+                                        <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 ">Arrendar</v-tab>
+                                        <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 ">Meio periódo</v-tab>
                                     </v-tabs>
                                 </template>
                                 </v-col>
