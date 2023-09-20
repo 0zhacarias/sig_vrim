@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\EmailImoveilNegociacao;
 use App\Models\ActividadeImoveis;
 use App\Models\Imoveis;
+use App\Models\SolicitarImoveis;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ActividadeImoveisController extends Controller
 {
@@ -85,6 +89,40 @@ class ActividadeImoveisController extends Controller
     }
     public function validar_processo(Request $request)
     {
+        $userLog=auth()->user()->load('tipo_user');
+        $imovel=Imoveis::find($request->imovel_id);
+        $solicitavisita=SolicitarImoveis::with('usuario_marca_visita')->where('imoveis_id',$request->imovel_id)->where('funcionario_id',null)->first();
+       $email_marca_visita=$solicitavisita->usuario_marca_visita->email;
+       $nome_marca_visita=$solicitavisita->usuario_marca_visita->name;
+        $mensagem='A sua marcacao foi aceite no horario escolhido.';
+        $url = action([ImoveisController::class, 'index']);
+
+        // dd($url);
+        $imovel->update([
+            // 'estado_imoveis_id'=>5,
+        ]
+            
+        );
+        $solicitavisita->update([
+            // 'funcionario_id'=>auth()->user()->id,
+        ]);
+        $marca_visita=User::find($solicitavisita->user_marca_visita);
+        // dd($imovel, $solicitavisita->usuario_marca_visita->email);
+        Mail::to('angelfiremilonga@gmail.com')->send(new EmailImoveilNegociacao ($mensagem,$nome_marca_visita,$url));
+    }
+    public function nao_validar_processo(Request $request)
+    {
+        
+        $imovel=Imoveis::find($request->imovel_id);
+        // dd($imovel);
+        $imovel->update([
+            'estado_imoveis_id'=>3,
+        ]
+            
+        );
+    }
+    public function gostar_imovel(Request $request)
+    {
         
         $imovel=Imoveis::find($request->imovel_id);
         // dd($imovel);
@@ -94,7 +132,7 @@ class ActividadeImoveisController extends Controller
             
         );
     }
-    public function nao_validar_processo(Request $request)
+    public function nao_gostar_imovel(Request $request)
     {
         
         $imovel=Imoveis::find($request->imovel_id);

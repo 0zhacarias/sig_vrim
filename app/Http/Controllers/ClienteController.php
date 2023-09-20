@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 // use Socialite;
 use App\Library\Authenticate;
 use App\Library\GoogleClient;
+use App\Mail\EmailImoveilNegociacao;
 use App\Models\Cliente;
 use App\Models\Imoveis;
 use App\Models\SolicitarImoveis;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 // use App\Http\Controllers\Socialite;
 use Laravel\Socialite\Facades\Socialite;
@@ -95,13 +97,27 @@ class ClienteController extends Controller
     }
     public function perfil_cliente()
     {
+       
+ /*        $mensagem='A sua marcacao foi aceite no horario escolhido.';
+        $url = action([ImoveisController::class, 'index']);
+       
+        // dd($imovel, $solicitavisita->usuario_marca_visita->email);
+        Mail::to('angelfiremilonga@gmail.com')->send(new EmailImoveilNegociacao ($mensagem,$url));
+     */
+        $userLog=auth()->user()->load('tipo_user');
+
         if(auth()->user()){
-            $userLog=auth()->user()->id;
-            $dados['meus_imoveis']=Imoveis::where('cadastrado_por',$userLog)->with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','desc')->get();
+            $dados['meus_imoveis']=Imoveis::where('cadastrado_por',$userLog->id)->with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','desc')->get();
             $dados['meus_pagamentos']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
-            $id_user_marca_visita=SolicitarImoveis::where('user_marca_visita',$userLog=auth()->user()->id)->select('imoveis_id')->get();
-            $dados['imoveis_processos']=Imoveis::whereIn('id',$id_user_marca_visita)->whereIn('estado_imoveis_id',[5,4,8])
-            ->with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
+            $id_user_marca_visita=SolicitarImoveis::where('user_marca_visita',$userLog->id)->select('imoveis_id')->get();
+            if($userLog->tipo_users_id==1){
+                $dados['imoveis_processos']=Imoveis::whereIn('estado_imoveis_id',[4,5,6,7,8])
+            ->with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')
+            ->get(); 
+            }else{
+                $dados['imoveis_processos']=Imoveis::whereIn('id',$id_user_marca_visita)->whereIn('estado_imoveis_id',[4,5,6,7,8])
+                ->with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
+            }
         }else{
             $dados['vazio']='';
         }

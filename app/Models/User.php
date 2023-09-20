@@ -49,5 +49,10 @@ class User extends Authenticatable
     protected function serializeDate(DateTimeInterface $date){
         return $date->format('d M Y');
     }
+    public function tipo_user()
+{
+    return $this->belongsTo(TipoUser::class,'tipo_users_id');
+    # code...
+}
 
 }
