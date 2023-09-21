@@ -496,7 +496,7 @@ export default {
     },
 
     watch: {
-        git (val) {
+        overlay (val) {
         val && setTimeout(() => {
           this.overlay = false
         }, 3000)
@@ -617,7 +617,8 @@ export default {
         enviarSolicitacao() {
             
             this.visitar.imoveis_id = this.imoveis.id,
-                this.visitar.actividade_imoveis_id = this.imoveis.actividade_imoveis[0].id
+            // alert(this.imoveis.actividade_imoveis[0].id )
+            this.visitar.actividade_imoveis_id = this.imoveis.actividade_imoveis[0].id
             // this.visitar.actividade_imoveis_id=this.imovel.actividade_imoveis[0].operacao_imoveis.i
             // :href="`/portal/Solicitar-visita/${this.imovel.id}` "
             // window.location.href = "/portal/Solicitar-visita/"+this.visitar;

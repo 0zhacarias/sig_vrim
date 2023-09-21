@@ -11,15 +11,17 @@ class EmailImoveilNegociacao extends Mailable
 {
     use Queueable, SerializesModels;
 public $mensagem;
+public $nome_marca_visita;
 public $url;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(string $mensagem,string $url)
+    public function __construct(string $mensagem,string $nome_marca_visita, string $url)
     {
         $this->mensagem=$mensagem;
+        $this->nome_marca_visita=$nome_marca_visita;
         $this->url=$url;
         
     }

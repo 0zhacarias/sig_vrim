@@ -7,6 +7,7 @@ use App\Library\GoogleClient;
 use App\Mail\EmailImoveilNegociacao;
 use App\Models\Cliente;
 use App\Models\Imoveis;
+use App\Models\Pessoa;
 use App\Models\SolicitarImoveis;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -98,15 +99,17 @@ class ClienteController extends Controller
     public function perfil_cliente()
     {
        
- /*        $mensagem='A sua marcacao foi aceite no horario escolhido.';
-        $url = action([ImoveisController::class, 'index']);
+        // $mensagem='A sua marcacao foi aceite no horario escolhido.';
+        // $url = action([ImoveisController::class, 'index']);
        
-        // dd($imovel, $solicitavisita->usuario_marca_visita->email);
-        Mail::to('angelfiremilonga@gmail.com')->send(new EmailImoveilNegociacao ($mensagem,$url));
-     */
+        // // dd($imovel, $solicitavisita->usuario_marca_visita->email);
+        // Mail::to('zhacarias50@outlook.com')->send(new EmailImoveilNegociacao ($mensagem));
+    
         $userLog=auth()->user()->load('tipo_user');
 
         if(auth()->user()){
+            $dados['cliente']=User::where('id',$userLog->id)->first();
+
             $dados['meus_imoveis']=Imoveis::where('cadastrado_por',$userLog->id)->with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','desc')->get();
             $dados['meus_pagamentos']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
             $id_user_marca_visita=SolicitarImoveis::where('user_marca_visita',$userLog->id)->select('imoveis_id')->get();

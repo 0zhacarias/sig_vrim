@@ -84,7 +84,7 @@
         <v-col cols="12" sm="8" md="8" lg="10">
           <v-subheader v-if="this.linhaSelecionado==null" class="text-h5 text-bold mt-10 ">Meu Perfil</v-subheader>
         
-                <perfil v-if="this.linhaSelecionado==='meusDados'">
+                <perfil v-if="this.linhaSelecionado==='meusDados'" :cliente="cliente">
                 </perfil>
             
                 <MeusAnuncios v-if="this.linhaSelecionado==='meusAnuncios'" :meus_anuncios="meus_imoveis">
@@ -107,7 +107,7 @@ import imoveisProcesso from "../Clientes/MeusImoveisCompra";
 import meusPagamentos from "../Clientes/MeusPagamentos"
 // import PerfilCliente from "../Clientes/PerfilCliente";
 export default {
-    props: ["meus_imoveis","imoveis_processos"],
+    props: ["meus_imoveis","imoveis_processos" ,"cliente"],
     components: {
         AdminLayout,
         Perfil,

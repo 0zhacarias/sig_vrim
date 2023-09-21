@@ -1,5 +1,5 @@
 @component('mail::message')
-    Cordiais saudações senhor :XX
+    Cordiais saudações senhor :{{ $nome_marca_visita }}
     <p>Tens uma visita marcada para o dia X nas Horas X{{ $mensagem }} </p>
     <p>Por favor confirme a nesse mesmo E-mail</p>
 

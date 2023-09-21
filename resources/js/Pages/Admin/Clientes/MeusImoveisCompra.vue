@@ -63,14 +63,14 @@
                                     color="green" outlined rounded title="Gostei do Imóvel" @click="gostarImovel(item.id)"
                                     v-model="validar_gostar.valiado">
                                     <v-icon>
-                                        mdi mdi-thumb-up-outline
+                                        mdi mdi-thumb-up
                                     </v-icon>
                                 </v-btn>
                                 <v-btn icon :disabled="item.estado_imoveis_id !== 5 || user.tipo_user.id == 1 " color="red" outlined rounded
                                     title="Não gostei do Imóvel" @click="naogostarImovel(item.id)"
                                     v-model="validar_gostar.naoValiado">
                                     <v-icon>
-                                        mdi mdi-hand-back-left-off-outline
+                                        mdi mdi-thumb-down
                                     </v-icon>
                                 </v-btn>
                                 <v-btn icon v-if="user.tipo_user.id == 1  && item.estado_imoveis_id ==4 " color="red" outlined rounded
@@ -85,7 +85,7 @@
                                     title="Aprovar a visita do imóvel" @click="validaVisita(item.id)"
                                     v-model="validar_processo.naoAprovarVisita">
                                     <v-icon>
-                                        mdi mdi-thumb-up-outline
+                                        mdi mdi-handshake
                                     </v-icon>
                                 </v-btn>
                             </v-card-actions>

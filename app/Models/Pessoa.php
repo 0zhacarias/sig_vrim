@@ -11,4 +11,7 @@ class Pessoa extends Model
     use HasFactory,SoftDeletes;
     protected $table='pessoas';
     protected $guarded=['id'];
+    public function usuario(){
+        return $this->belongsTo(User::class,'user_id');
+    }
 }
