@@ -26,11 +26,6 @@ class HomeController extends Controller
         $this->middleware('auth');
       
     }
- public function users($request){
- if(auth()->user()){
-    return $request;
- }
-}
     public function index()
     {
         // session(['previous_url' => url()->current()]);

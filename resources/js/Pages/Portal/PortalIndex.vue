@@ -7,7 +7,7 @@
                 :style="'border-radius: 0px 0px 0px 350px; height:70vh'">
                 
                             <v-img gradient="to top right, rgba(255,115,201,.1), rgba(25,32,72,.6)"
-                                :style="'white-space:nowrap; padding:0;max-width: 100%;height:75vh; position:relative;top:20px; ; border-radius: 0 80px 0px 60px;'"
+                                :style="'white-space:nowrap; padding:0;max-width: 100%;height:75vh; position:relative;top:10px; ; border-radius: 0 80px 0px 60px;'"
                                 src="/img/angola.jpg" >
                 <!-- <v-card-title>
                  <span class="headline">Título do Card</span> 
@@ -17,7 +17,7 @@
                     </v-col>
                     <v-col cols="12" sm="10" md="8" class="container--fluid">
                         <v-card elevation="0" color="transparent" class="white--text"
-                            :style="'justify-content: center; padding-top:8rem; font-size:0.7rem'">
+                            :style="'justify-content: center; padding-top:6rem; font-size:0.7rem'">
                             <h1>
                                 <p class="text-bold text-justify">No Kubico tem.</p>
                             </h1>

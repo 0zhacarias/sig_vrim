@@ -12,4 +12,8 @@ class SolicitarImoveis extends Model
     
     protected $table="solicitar_visitas";
     protected $guarded=['id'];
+
+    public function usuario_marca_visita() {
+       return $this->belongsTo(User::class,'user_marca_visita');
+    }
 }
