@@ -87,77 +87,109 @@ class ActividadeImoveisController extends Controller
     {
         //
     }
+    public function emailValidar($solicitavisita, $mensagem)
+    {
+        $email_marca_visita = $solicitavisita->usuario_marca_visita->email;
+        $nome_marca_visita = $solicitavisita->usuario_marca_visita->name;
+        // Imovel
+        $designacao_imovel = $solicitavisita->imovel->designacao;
+        $localizacao = $solicitavisita->imovel->localizacao;
+        $preco = $solicitavisita->imovel->preco;
+        $condicao_imovel = $solicitavisita->imovel->condicaoImoveis->designacao;
+        //Informação da visita
+        $data_visita = $solicitavisita->data_visita;
+        $hora_visita = $solicitavisita->hora_visita;
+        $url = action([ImoveisController::class, 'portal_imovel']);
+        // dd($solicitavisita);
+        Mail::to('zhacarias50@outlook.com')->send(new EmailImoveilNegociacao(
+            $mensagem,
+            $nome_marca_visita,
+            $url,
+            $designacao_imovel,
+            $localizacao,
+            $preco,
+            $condicao_imovel,
+            $data_visita,
+            $hora_visita
+        ));
+    }
     public function validar_processo(Request $request)
     {
-        $userLog=auth()->user()->load('tipo_user');
-        $imovel=Imoveis::find($request->imovel_id);
-        $solicitavisita=SolicitarImoveis::with('usuario_marca_visita')->where('imoveis_id',$request->imovel_id)->where('funcionario_id',null)->first();
-       $email_marca_visita=$solicitavisita->usuario_marca_visita->email;
-       $nome_marca_visita=$solicitavisita->usuario_marca_visita->name;
-        $mensagem='A sua marcacao foi aceite no horario escolhido.';
-        $url = action([ImoveisController::class, 'portal_imovel']);
+        $userLog = auth()->user()->load('tipo_user');
+        $imovel = Imoveis::find($request->imovel_id);
+        $solicitavisita = SolicitarImoveis::with('usuario_marca_visita')->where('imoveis_id', $request->imovel_id)->where('funcionario_id', null)->first();
+        $mensagem = 'A sua marcação foi aceite no horário desejado.';
+
+        
 
         // dd($url);
-        $imovel->update([
-            'estado_imoveis_id'=>5,
-        ]
-            
+        $imovel->update(
+            [
+                'estado_imoveis_id'=>5,
+            ]
+
         );
         $solicitavisita->update([
-            'funcionario_id'=>auth()->user()->id,
+            'funcionario_id' => auth()->user()->id,
         ]);
-        $marca_visita=User::find($solicitavisita->user_marca_visita);
+        $this->emailValidar($solicitavisita, $mensagem);
         // dd($imovel, $solicitavisita->usuario_marca_visita->email);
-        Mail::to('zhacarias50@outlook.com')->send(new EmailImoveilNegociacao ($mensagem,$nome_marca_visita,$url));
+
     }
     public function nao_validar_processo(Request $request)
-    {
-        
-        $imovel=Imoveis::find($request->imovel_id);
-        $imovel->update([
-            'estado_imoveis_id'=>3,
-        ]
-            
+    {$imovel = Imoveis::find($request->imovel_id);
+        $solicitavisita = SolicitarImoveis::with('usuario_marca_visita')->where('imoveis_id', $request->imovel_id)->where('funcionario_id', null)->first();
+        $mensagem = 'A sua marcação não foi aceite no horário desejado, por favor volte a reagendar o mesmo.';
+        $this->emailValidar($solicitavisita, $mensagem);
+        $imovel = Imoveis::find($request->imovel_id);
+        $imovel->update(
+            [
+                'estado_imoveis_id' => 3,
+            ]
+
         );
     }
     public function gostar_imovel(Request $request)
     {
-        $imovel=Imoveis::find($request->imovel_id);
-        $imovel->update([
-            // 'estado_imoveis_id'=>8,
-        ]
-            
+        $imovel = Imoveis::find($request->imovel_id);
+        $imovel->update(
+            [
+                // 'estado_imoveis_id'=>8,
+            ]
+
         );
-        $imovel=Imoveis::find($request->imovel_id);
-        $solicitavisita=SolicitarImoveis::with('confirmar_marcacao_visita','imovel.condicaoImoveis')->where('imoveis_id',$request->imovel_id)->first();
+        $imovel = Imoveis::find($request->imovel_id);
+        $solicitavisita = SolicitarImoveis::with('confirmar_marcacao_visita', 'imovel.condicaoImoveis')->where('imoveis_id', $request->imovel_id)->first();
         //Informação do funcionario
-       $email_marca_visita=$solicitavisita->usuario_marca_visita->email;
-       $nome_confirma_visita=$solicitavisita->confirmar_marcacao_visita->name;
-       //Informação do imovel
-       $designacao_imovel=$solicitavisita->imovel->designacao;
-       $localizacao=$solicitavisita->imovel->localizacao;
-       $preco=$solicitavisita->imovel->preco;
-       $preco=$solicitavisita->imovel->condicaoImoveis->designacao;
-       //Informação da visita
-       $data_visita=$solicitavisita->data_visita;
-       $hora_visita=$solicitavisita->hora_visita;
-       dd($solicitavisita);
-        $mensagem='Gostaste do Imoóvel.';
+        $email_marca_visita = $solicitavisita->usuario_marca_visita->email;
+        $nome_confirma_visita = $solicitavisita->confirmar_marcacao_visita->name;
+        //Informação do imovel
+        $designacao_imovel = $solicitavisita->imovel->designacao;
+        $localizacao = $solicitavisita->imovel->localizacao;
+        $preco = $solicitavisita->imovel->preco;
+        $preco = $solicitavisita->imovel->condicaoImoveis->designacao;
+        //Informação da visita
+        $data_visita = $solicitavisita->data_visita;
+        $hora_visita = $solicitavisita->hora_visita;
+        dd($solicitavisita);
+        $mensagem = 'Gostaste do Imoóvel.';
         $url = action([ImoveisController::class, 'portal_imovel']);
-        Mail::to('zhacarias50@outlook.com')->send(new EmailImoveilNegociacao ($mensagem,$nome_confirma_visita,$url));
+        Mail::to('zhacarias50@outlook.com')->send(new EmailImoveilNegociacao($mensagem, $nome_confirma_visita, $url));
     }
     public function nao_gostar_imovel(Request $request)
     {
-        
-        $imovel=Imoveis::find($request->imovel_id);
+
+        $imovel = Imoveis::find($request->imovel_id);
         // dd($imovel);
-        $imovel->update([
-            'estado_imoveis_id'=>3,
-        ]
-            
+        $imovel->update(
+            [
+                'estado_imoveis_id' => 3,
+            ]
+
         );
     }
-public function carregar_imoveis_processo() {
-    return response()->json(2);
-}
+    public function carregar_imoveis_processo()
+    {
+        return response()->json(2);
+    }
 }

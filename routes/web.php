@@ -65,7 +65,8 @@ Route::get('/imovel-selecionado/{id}',[App\Http\Controllers\ImoveisController::c
 Route::get('/imoveis-provincia/{id}',[App\Http\Controllers\ImoveisController::class,'imoveis_provincia']);
 Route::get('/listaImoveisCompras',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_comprar'])->name('comprar-imoveis');
 Route::get('/listaImoveisArrendamentos',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_arrendamento'])->name('arrendar-imoveis');
-Route::post('/filtrarImoveisPaginate',[App\Http\Controllers\ImoveisController::class,'filtrar_imoveis_paginate'])->name('pesquisar-imoveis');
+Route::post('/filtrarImoveisPaginate',[App\Http\Controllers\ImoveisController::class,'filtrar_imoveis_paginate'])->name('filtrar-imoveis');
+Route::get('/pesquisarImovel',[App\Http\Controllers\ImoveisController::class,'peesquisar_imoveis'])->name('pesquisar-imoveis');
 Route::get('/imoveisPaginacao',[App\Http\Controllers\ImoveisController::class,'imoveis_paginacao'])->name('novos-imoveis');
 Route::get('/imoveisProximoPaginacao',[App\Http\Controllers\ImoveisController::class,'paginacao_imoveis_proximo'])->name('imoveis-proximos');
 

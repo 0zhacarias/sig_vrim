@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-container  class="my-13 py-10">
+        <v-container  class="w-90 justify-space-around">
         <v-subheader class="text-h4 text-bold ">Pagamentos</v-subheader>
         <v-row>
             <v-col v-for="item in pagamentos" :key="item.id" cols="12" sm="6" md="4" :lg="pagamentos.length <= 4 ? 6 : 3">

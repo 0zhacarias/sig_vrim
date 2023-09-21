@@ -6,29 +6,38 @@
             <v-col cols="4">
                 <v-card class="my-4 py-4 grey lighten-4" elevation="0">
                     <v-row>
-                        <v-col cols="2">
+                        <v-col cols="4">
 
                         </v-col>
-                        <v-col cols="10">
+                        <v-col cols="8">
 
                             <v-row class="mx-0 mt-0">
                                 <v-card elevation="0" class="mt-3 px-0 transparent" :style="'border-radius: 10px'">
                                     <v-card-title color="deep-purple--text">O que estás a procura</v-card-title>
                                     <v-card-text color="deep-purple accent-4">
-                                        <v-col cols="12" class="opens-sans mb-n8">
-                                            <v-autocomplete @change="filtrarTicket()" clearable v-model="query.operacao_id"
-                                                :items="estadoTickets" item-text="designacao" item-value="id"
-                                                prepend-icon="" label="Serviços" dense no-data-text="sem dados" outlined>
+                                        <v-row>                                        <v-col cols="6" class="opens-sans mb-n8">
+                                            <v-autocomplete  @change="filtrarTicket()" clearable v-model="query.preco_inicio"
+                                                :items="itervalo_precos" item-text="designacao" item-value="id"
+                                                prepend-icon="" label="Intervalo de preço" dense no-data-text="sem dados" outlined type="number">
                                             </v-autocomplete>
                                         </v-col>
-                                        <v-col cols="12" class="pt-6 mb-n8 " v-if="showSecondAutocompleteModulo">
-                                            <v-autocomplete prepend-icon="" label="Provincia" type="text" clearable outlined
-                                                dense no-data-text="sem dados">
+                                        <v-col cols="6" class="opens-sans mb-n8">
+                                            <v-autocomplete  @change="filtrarTicket()" clearable v-model="query.preco_final"
+                                                :items="itervalo_precos " item-text="designacao" item-value="id"
+                                                prepend-icon="" label="Intervalo de preço" dense no-data-text="sem dados" outlined type="number">
+                                            </v-autocomplete>
+                                        </v-col>
+                                    </v-row>
+                                    <v-row>
+                                        <v-col cols="12" class="pt-6 mb-n8 ">
+                                            <v-autocomplete prepend-icon=""  :items="provincias " item-text="designacao" 
+                                            item-value="id" label="Provincia"  type="text" clearable outlined v-model="query.provincia_id"
+                                                dense no-data-text="sem dados" @change="filtrarTicket()">
                                             </v-autocomplete>
                                         </v-col>
 
                                         <v-col cols="12" class="pt-6 mb-n8">
-                                            <v-autocomplete @change="filtrarTicket()" clearable v-model="query.operador_id"
+                                            <v-autocomplete @change="filtrarTicket()" clearable v-model="query.valor"
                                                 :items="funcionario_operadores" item-text="nome_funcionario" item-value="id"
                                                 prepend-icon="" label="Valores" outlined dense no-data-text="sem dados">
                                             </v-autocomplete>
@@ -36,41 +45,41 @@
 
                                         <v-col cols="12" class="pt-6 mb-n8">
                                             <v-autocomplete class="custom-autocomplete" @change="filtrarTicket()" clearable
-                                                v-model="query.tecnico_id" :items="funcionario_tecnicos"
-                                                item-text="nome_funcionario" item-value="id" prepend-icon=""
-                                                label="Técnicos" outlined dense no-data-text="sem dados">
+                                                v-model="query.condicoes_imoveis_id" :items="CondicoesImoveis"
+                                                item-text="designacao" item-value="id" prepend-icon=""
+                                                label="Condições do imóvel" outlined dense no-data-text="sem dados">
                                                 <!-- <template v-slot:item="data">
                                                 {{ data.item.nome_funcionario }}
                                                 {{ data.item.sobre_nome_funcionario }}
                                             </template> -->
                                             </v-autocomplete>
                                         </v-col>
-                                        <v-col cols="12" class="pt-13 mb-n8">
+                                        <v-col cols="12" class="pt-6 mb-n8">
+                                            <v-autocomplete class="custom-autocomplete" @change="filtrarTicket()" clearable
+                                                v-model="query.estado_imoveis_id" :items="estadoImoveis"
+                                                item-text="designacao" item-value="id" prepend-icon=""
+                                                label="Estado do imóvel" outlined dense no-data-text="sem dados">
+                                                <!-- <template v-slot:item="data">
+                                                {{ data.item.nome_funcionario }}
+                                                {{ data.item.sobre_nome_funcionario }}
+                                            </template> -->
+                                            </v-autocomplete>
+                                        </v-col>
+                                    </v-row>
+                                        <v-row>
+                                        <v-col cols="6" class="pt-13">
                                             <v-text-field clearable label="Data inicial" class="my-n8 rounded"
                                                 v-model="query.data_inicial" type="date" :error-messages="erros.dat_inicio_real
                                                     " dense outlined>
                                             </v-text-field>
                                         </v-col>
-                                        <v-col cols="12" class="pt-13 mb-n8">
-                                            <v-text-field clearable label="Data termino" v-model="query.data_final"
+                                        <v-col cols="6" class="pt-13">
+                                            <v-text-field clearable label="Data termino" v-model="query.data_final" class="my-n8 rounded"
                                                 @input="filtrarTicket()" type="date" :error-messages="erros.data_final"
                                                 dense outlined>
                                             </v-text-field>
                                         </v-col>
-
-                                        <v-col cols="12" class="pt-13 mb-n8">
-                                            <v-text-field clearable label="Data termino" v-model="query.data_final"
-                                                @input="filtrarTicket()" type="date" :error-messages="erros.data_final"
-                                                dense outlined>
-                                            </v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" class="pt-13 mb-n8">
-                                            <v-text-field clearable label="Data termino" v-model="query.data_final"
-                                                @input="filtrarTicket()" type="date" :error-messages="erros.data_final"
-                                                dense outlined>
-                                            </v-text-field>
-                                        </v-col>
-
+                                    </v-row>
                                     </v-card-text>
                                 </v-card>
                             </v-row>
@@ -86,7 +95,7 @@
                     <v-card class="ma-4 pa-4  grey lighten-4 " elevation="0">
                         <v-card-title>
                             <span class="text-uppercase" style="font-size: 20px">
-                                Total: {{ totalImoveis }}</span>
+                                Total: {{ ImoveisComprar.length }}</span>
                         </v-card-title>
                     </v-card>
 
@@ -351,7 +360,7 @@
 <script>
 import PortalLayout from "../../Templates/PortalLayout";
 export default {
-props:['operacao_imoveis','provincia_selecionado'],
+props:['operacao_imoveis','provincia_selecionado','provincias','estadoImoveis','CondicoesImoveis'],
     components: {
         PortalLayout,
     },
@@ -374,10 +383,27 @@ props:['operacao_imoveis','provincia_selecionado'],
         funcionario_tecnicos: [],
         showSecondAutocompleteProjecto: [],
         projectos: [],
-        query: {},
-        tipo_regimes: [
-            { id: 1, designacao: "GERAL" },
-            { id: 2, designacao: "ESPECÍFICO" },
+        query: {
+            estado_imoveis_id:null,
+            condicoes_imoveis_id:null,
+            provincia_id:null,
+            preco_inicio:null,
+            preco_final:null,
+            tipologia:null,
+        },
+        itervalopreco:{
+           
+           
+        },
+        itervalo_precos: [
+            { id: 10000, designacao: '10.000' },
+            { id: 20000, designacao: '20.000'},
+            { id: 50000, designacao: '50.000' },
+            { id: 100000, designacao: '100.000'},
+            { id: 500000, designacao: '500.000' },
+            { id: 1000000, designacao: '1.000.000'},
+            { id: 150000, designacao: '1.500.0000' },
+            { id: 5000000, designacao: '5.000.000'},
         ],
         tipo_clientes: [
             { id: 1, designacao: "SINGULAR" },
@@ -385,39 +411,7 @@ props:['operacao_imoveis','provincia_selecionado'],
         ],
         // loading: null,
         imoveis: {},
-        // items: [
-        //     {
-        //         text: "Início",
-        //         disabled: false,
-        //         href: "/home",
-        //     },
-        //     {
-        //         text: "Listar Condomínios",
-        //         disabled: true,
-        //         href: "/",
-        //     },
-        // ],
         erros: [],
-        rules: {
-            required: (value) => !!value || "Campos obrigatório.",
-            max: (v) => v.length == 9 || "Tem que ter 9 caracteres",
-            emailMatch: () => `The email and password you entered don't match`,
-        },
-        emailRules: [(v) => /.+@.+\..+/.test(v) || "E-mail deve ser válido"],
-        telefoneRules: [
-            (v) => !!v || "Campo telefone obrigatório.",
-            (v) => (v && v.length == 9) || "Tem que ter 9 caracteres",
-        ],
-        documentoRules: [(v) => !!v || "Campo telefone obrigatório."],
-        dateNascRules: [
-            (v) => !!v || "Data é Obrigatório",
-            (v) =>
-                v < new Date().toISOString().substr(0, 10) ||
-                "Data de Nascimento deve ser Menor que a Data Actual!",
-            (v) =>
-                new Date().getFullYear() - new Date(v).getFullYear() >= 18 ||
-                "Idade informada é Inferior a 18",
-        ],
         transparent: 'rgba(255, 255, 255, 0)',
     }),
 
@@ -432,11 +426,6 @@ props:['operacao_imoveis','provincia_selecionado'],
         user() {
             return this.$page.props.auth.user;
         },
-        formTitle() {
-            return this.editedIndex === -1 ? "Novo Condomínio" : "Editar ";
-        },
-
-
     },
 
     created() {
@@ -466,7 +455,6 @@ props:['operacao_imoveis','provincia_selecionado'],
             for (let i = 0; i < texto.length; i += tamanhoMaximo) {
                 novoTexto += texto.slice(i, i + tamanhoMaximo) + '<br>';
             }
-
             return novoTexto;
         },
         findimoveis(id) {
@@ -491,21 +479,7 @@ props:['operacao_imoveis','provincia_selecionado'],
             //         //   console.log('Falha ao registar os dados na base de dados!...')
             //     });
         },
-        showDialogAddCondominio() {
-            this.dialogAddCondominio = true;
-        },
-        continuar(stepe, form) {
-            if (this.$refs[form].validate()) {
-                this.e1 = stepe;
-            }
-        },
-        continuar2(stepe, form) {
-            if (this.$refs[form].validate()) {
-                this.e1 = stepe;
-            }
-        },
-
-        validate() {
+         validate() {
             this.$refs.form.validate();
             this.$refs.form2.validate();
         },
@@ -541,20 +515,16 @@ props:['operacao_imoveis','provincia_selecionado'],
 
         },
         filtrarTicket() {
+            // alert(JSON.stringify(this.query));
+            // alert(itervalo_precos)
+            this.query.operacao_id=this.operacao_imoveis
             axios
-                .get("/tickets/filtrar-ticket", {
+                .get("/portal/pesquisarImovel", {
                     params: this.query,
                 })
                 .then((response) => {
-                    this.dadostickets = response.data.ticket.data;
-                    this.mensagem_lida = response.data.ticket.resposta_count;
-                    this.empresas = response.data.empresas;
-                    // this.resposta_nao = response.data.resposta_nao;
-                    this.funcionario_tecnicos =
-                        response.data.tecnicos_projectos;
-                    this.modulos_projectos = response.data.modulos_projectos;
-                    this.last_page = response.data.ticket.last_page;
-                    this.totalTicket = response.data.ticket.total;
+                    this.ImoveisComprar = response.data;
+                  
                 })
                 .catch((error) => {
                     //toastr.warning('Houve uma falha ao carregar os dados!...');

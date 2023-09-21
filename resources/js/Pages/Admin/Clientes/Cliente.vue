@@ -1,5 +1,5 @@
 <template>
-<AdminLayout>
+<PortalLayout>
     <v-row>
         <v-col cols="12" sm="4" md="4" lg="2">
             <template>
@@ -89,18 +89,18 @@
             
                 <MeusAnuncios v-if="this.linhaSelecionado==='meusAnuncios'" :meus_anuncios="meus_imoveis">
                 </MeusAnuncios>
-                <imoveisProcesso class="mt-n16" v-if="this.linhaSelecionado==='imoveisProcesso' " :minha_compra_arrendamentos="imoveis_processos">
+                <imoveisProcesso class="" v-if="this.linhaSelecionado==='imoveisProcesso' " :minha_compra_arrendamentos="imoveis_processos">
                 </imoveisProcesso>
-                <meusPagamentos class="mt-n16" v-if="this.linhaSelecionado==='meusPagamentos'">
+                <meusPagamentos class="" v-if="this.linhaSelecionado==='meusPagamentos'">
                 </meusPagamentos>
             
         </v-col>
     </v-row>
-    </AdminLayout>
+    </PortalLayout>
 </template>
 
 <script>
-import AdminLayout from "../../../Templates/AdminLayout";
+import PortalLayout from "../../../Templates/PortalLayout";
 import Perfil from "../Clientes/Perfil";
 import MeusAnuncios from "../Clientes/MeusAnuncios";
 import imoveisProcesso from "../Clientes/MeusImoveisCompra";
@@ -109,7 +109,7 @@ import meusPagamentos from "../Clientes/MeusPagamentos"
 export default {
     props: ["meus_imoveis","imoveis_processos" ,"cliente"],
     components: {
-        AdminLayout,
+        PortalLayout,
         Perfil,
         // PerfilCliente,
         MeusAnuncios,
