@@ -46,8 +46,7 @@
                                     imoveis.condicao_imoveis.designacao }}</v-card-subtitle></v-col>
                                 <!-- <v-col cols="3"> <v-card-subtitle class="my-0 pt-3"> Condição do imovel: {{ imovel.condicao_imoveis.designacao }}</v-card-subtitle></v-col> -->
                                 <v-col cols="4"> <v-card-title
-                                        class="my-0 py-0 justify-content-end text-h5 text-bold text-s">Preço: {{
-                                            imoveis.preco }},00 KZ</v-card-title></v-col>
+                                        class="my-0 py-0 justify-content-end text-h5 text-bold text-s">Preço: {{ formatValor(imoveis.preco) }},00 KZ</v-card-title></v-col>
                             </v-row>
                             <v-divider></v-divider>
 <v-row>
@@ -497,12 +496,7 @@ export default {
     },
 
     watch: {
-        steps(val) {
-            if (this.e1 > val) {
-                this.e1 = val;
-            }
-        },
-        overlay (val) {
+        git (val) {
         val && setTimeout(() => {
           this.overlay = false
         }, 3000)
@@ -510,6 +504,14 @@ export default {
     },
 
     methods: {
+        formatValor: function(atual){
+        const valorFormatado = Intl.NumberFormat("pt-br", {
+            style: "currency",
+            currency: "AOA",
+        }).format(atual);
+
+        return valorFormatado;
+      },
         nextImage() {
             var active = this.activeImage + 1;
             if (active >= this.images.length) {
