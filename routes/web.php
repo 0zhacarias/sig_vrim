@@ -105,6 +105,7 @@ Route::resource('/home', App\Http\Controllers\HomeController::class);
 Route::resource('/moradores', App\Http\Controllers\MoradorController::class);
 Route::resource('/condominios', App\Http\Controllers\CondominioController::class);
 Route::get('/paginarwte', [App\Http\Controllers\HomeController::class, 'portal_auth'])->name('home');
+Route::get('/pdf-declaracao', [App\Http\Controllers\ClienteController::class, 'pdf_declaracao'])->name('declaracao');
 Route::post('/nao-validar-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'nao_validar_processo'])->name('gostar');
 Route::post('/validar-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'validar_processo'])->name('home');
 Route::post('/gostar-imovel', [App\Http\Controllers\ActividadeImoveisController::class, 'gostar_imovel'])->name('naogostar');

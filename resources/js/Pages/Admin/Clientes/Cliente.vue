@@ -83,6 +83,7 @@
         </v-col>
         <v-col cols="12" sm="8" md="8" lg="10">
           <v-subheader v-if="this.linhaSelecionado==null" class="text-h5 text-bold mt-10 ">Meu Perfil</v-subheader>
+          <a class="btn btn-primary" href="/pdf-declaracao">Export to PDF</a>
         
                 <perfil v-if="this.linhaSelecionado==='meusDados'" :cliente="cliente">
                 </perfil>

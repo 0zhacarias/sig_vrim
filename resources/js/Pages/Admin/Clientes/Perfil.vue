@@ -27,8 +27,15 @@
                                     <v-text-field dense v-model="cliente.telefone" outlined :counter="12" :error-messages="errors"
                                         label="Numero do telefone" required></v-text-field>
                                 </validation-provider></v-col>
-                           
-                            <v-col cols="6"> <validation-provider v-slot="{ errors }" name="tipo de documentação" rules="required|email">
+                                <v-col cols="4"> <validation-provider v-slot="{ errors }" name="provincia" rules="required|bi">
+                                    <v-autocomplete outlined dense :error-messages="errors"
+                                                                label="Provincia*" v-model="cliente.provincia_id
+                                                                    " :items="provincias" item-text="designacao"
+                                                           
+                                                                item-value="id" item-color="red" data-vv-name="provincia" required ></v-autocomplete>
+                                </validation-provider>
+                            </v-col>
+                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="tipo de documentação" rules="required|email">
                                     <!-- <v-text-field dense v-model="tipo_documentacao" outlined :error-messages="errors" label="E-mail"
                                         required></v-text-field> -->
 
@@ -36,11 +43,12 @@
                                         label="tipo de documentação" data-vv-name="tipo de documentação" required></v-select>
                                 </validation-provider>
                             </v-col>
-                            <v-col cols="6"> <validation-provider v-slot="{ errors }" name="BI" rules="required|bi">
+                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="BI" rules="required|bi">
                                     <v-text-field dense v-model="cliente.bi" outlined :error-messages="errors" label="Bilhete de identidade"
                                         required></v-text-field>
                                 </validation-provider>
                             </v-col>
+                           
 
                                                      
                             <!-- <v-col cols="4"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">

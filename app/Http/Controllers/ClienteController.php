@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
+use PDF;
 // use App\Http\Controllers\Socialite;
 use Laravel\Socialite\Facades\Socialite;
 class ClienteController extends Controller
@@ -105,9 +106,9 @@ class ClienteController extends Controller
         // // dd($imovel, $solicitavisita->usuario_marca_visita->email);
         // Mail::to('zhacarias50@outlook.com')->send(new EmailImoveilNegociacao ($mensagem));
     
-        $userLog=auth()->user()->load('tipo_user');
-
+        
         if(auth()->user()){
+            $userLog=auth()->user()->load('tipo_user');
             $dados['cliente']=User::where('id',$userLog->id)->first();
 
             $dados['meus_imoveis']=Imoveis::where('cadastrado_por',$userLog->id)->with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','desc')->get();
@@ -121,14 +122,39 @@ class ClienteController extends Controller
                 $dados['imoveis_processos']=Imoveis::whereIn('id',$id_user_marca_visita)->whereIn('estado_imoveis_id',[4,5,6,7,8])
                 ->with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
             }
+            return Inertia::render('Admin/Clientes/Cliente',$dados);
         }else{
             $dados['vazio']='';
         }
         
 
     //    dd($dados['imoveis_processos']);
-        return Inertia::render('Admin/Clientes/Cliente',$dados);
+        // return Inertia::render('Admin/Clientes/Cliente',$dados);
     }
+    public function pdf_declaracao()
+    {
+        $userLog=auth()->user()->load('tipo_user');
+        $declaracao=User::where('id',$userLog->id)->get();
+        // $quantidade=count($tipo_problema_projeto);
+        // dd($tipo_problema_projeto);
+        $pdf = PDF::loadView('declaracaoPDF', [
+            'declaracaoPDF' => $declaracao,
+            'datatime' => date("Y-m-d"),
+            // 'quantidade_modulo_projecto'=>$quantidade,
+        ]);
+        return $pdf->stream('Listos tipo de problemas projecto.pdf');
+        # code...
+    }
+     // Generate PDF
+     public function createPDF() {
+        // retreive all records from db
+        $data = Employee::all();
+        // share data to view
+        view()->share('employee',$data);
+        $pdf = PDF::loadView('pdf_view', $data);
+        // download PDF file with download method
+        return $pdf->download('pdf_file.pdf');
+      }
     public function login_google()
     {
         
