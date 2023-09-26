@@ -170,22 +170,21 @@ export default {
     methods: {
         getcor(estado_imoveis_id) {
             if (estado_imoveis_id == 1) {
-                return 'red'
+                return 'green'
             } else if (estado_imoveis_id == 2) {
-                return 'blue'
+                return 'deep-orange darken-4'
             } else if (estado_imoveis_id == 3) {
-                return 'light-blue darken-4'
-
+                return 'blue-grey darken-4'
             } else if (estado_imoveis_id == 4) {
-                return '#3949AB'
+                return 'yellow darken-3'
             } else if (estado_imoveis_id == 5) {
-                return 'green'
+                return 'deep-purple darken-2'
             } else if (estado_imoveis_id == 6) {
-                return 'green'
+                return 'red darken-4'
             } else if (estado_imoveis_id == 7) {
-                return 'green'
+                return 'red darken-4'
             } else if (estado_imoveis_id == 8) {
-                return 'green'
+                return 'amber accent-4'
             }
         },
         getImoveisprocesso() {

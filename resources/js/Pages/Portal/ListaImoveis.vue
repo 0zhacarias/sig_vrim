@@ -262,7 +262,7 @@
                                                             <span class="mdi mdi-timer-lock-outline" 
                                                                 title="Arrendamento"  ></span >{{
                                                                     actidade.tempo_arrendar }} </v-chip>
-                                                        <v-chip color="deep-purple" title="estado do imovel" class="white--text">
+                                                        <v-chip :color="getcor(item.estado_imoveis_id)" title="estado do imovel" class="white--text">
                                                             <span v-if="item.estado_imoveis_id == 1"
                                                                 class="mdi mdi-archive-lock-open "></span>
                                                             <span v-if="item.estado_imoveis_id == 2"
@@ -430,6 +430,7 @@ props:['operacao_imoveis','provincia_selecionado','provincias','estadoImoveis','
 
     created() {
         this.paginacao()
+        this.getcor(estado_imoveis_id)
 
     },
 
@@ -442,6 +443,25 @@ props:['operacao_imoveis','provincia_selecionado','provincias','estadoImoveis','
     },
 
     methods: {
+        getcor(estado_imoveis_id) {
+            if (estado_imoveis_id == 1) {
+                return 'green'
+            } else if (estado_imoveis_id == 2) {
+                return 'deep-orange darken-4'
+            } else if (estado_imoveis_id == 3) {
+                return 'blue-grey darken-4'
+            } else if (estado_imoveis_id == 4) {
+                return 'yellow darken-3'
+            } else if (estado_imoveis_id == 5) {
+                return 'deep-purple darken-2'
+            } else if (estado_imoveis_id == 6) {
+                return 'red darken-4'
+            } else if (estado_imoveis_id == 7) {
+                return 'red darken-4'
+            } else if (estado_imoveis_id == 8) {
+                return 'amber accent-4'
+            }
+        },
         say() {
             this.dialogN = true
         },

@@ -111,7 +111,7 @@
                                 <v-divider class="mx-4"></v-divider>
 
                                 <v-card-text>
-                                    <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text"
+                                    <v-chip-group v-model="selection"  active-class="deep-purple accent-4 white--text"
                                         column>
                                         <v-chip><span class="mdi mdi-seat-individual-suite" title="Dormitório">{{ item.suite
                                         }}</span></v-chip>
@@ -131,7 +131,7 @@
 
                                             <span class="mdi mdi-timer-lock-outline" title="Arrendamento"></span>{{
                                                 actidade.tempo_arrendar }} </v-chip>
-                                        <v-chip color="deep-purple" title="estado do imovel" class="white--text">
+                                        <v-chip :color="getcor(item.estado_imoveis_id)" title="estado do imovel" class="white--text">
                                             <span v-if="item.estado_imoveis_id == 1"
                                                 class="mdi mdi-archive-lock-open "></span>
                                             <span v-if="item.estado_imoveis_id == 2" class="mdi mdi-archive-remove"></span>
@@ -218,7 +218,7 @@
 
                                             <span class="mdi mdi-timer-lock-outline" title="Arrendamento"></span>{{
                                                 actidade.tempo_arrendar }} </v-chip>
-                                        <v-chip color="deep-purple" title="estado do imovel" class="white--text">
+                                        <v-chip :color="getcor(item.estado_imoveis_id)" title="estado do imovel" class="white--text">
                                             <span v-if="item.estado_imoveis_id == 1"
                                                 class="mdi mdi-archive-lock-open "></span>
                                             <span v-if="item.estado_imoveis_id == 2" class="mdi mdi-archive-remove"></span>
@@ -425,27 +425,10 @@
             </v-container>
             <template>
                 <div class="text-center">
-                    <v-btn color="deep-purple accent-4" class="white--text" @click="overlay = !overlay">
-                        Launch Application
-                        <v-icon right>
-                            mdi-open-in-new
-                        </v-icon>
-                    </v-btn>
-
-                    <v-overlay :value="overlay">
+                    <v-overlay v-if="overlay">
                         <v-progress-circular indeterminate size="64"></v-progress-circular>
                     </v-overlay>
                 </div>
-            </template><template>
-                <v-row justify="center">
-                    <v-img src="/img/cms-image.jpg" lazy-src="/img/cms-images.jpg" max-width="500" max-height="300">
-                        <template v-slot:placeholder>
-                            <v-row class="fill-height ma-0" align="center" justify="center">
-                                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                            </v-row>
-                        </template>
-                    </v-img>
-                </v-row>
             </template>
         </template>
 
@@ -545,21 +528,50 @@ export default {
         ],
     }),
     watch: {
-        overlay(val) {
-            val && setTimeout(() => {
-                this.overlay = false
-            }, 3000)
-        },
+     
+            
+                
+       
     },
     mounted() { },
     created() {
         this.paginacao()
         this.paginacaoImovelProximo()
+        this.getcor(estado_imoveis_id)
 
     },
     methods: {
+        getcor(estado_imoveis_id) {
+            if (estado_imoveis_id == 1) {
+                return 'green'
+            } else if (estado_imoveis_id == 2) {
+                return 'deep-orange darken-4'
+            } else if (estado_imoveis_id == 3) {
+                return 'blue-grey darken-4'
+            } else if (estado_imoveis_id == 4) {
+                return 'yellow darken-3'
+            } else if (estado_imoveis_id == 5) {
+                return 'deep-purple darken-2'
+            } else if (estado_imoveis_id == 6) {
+                return 'red darken-4'
+            } else if (estado_imoveis_id == 7) {
+                return 'red darken-4'
+            } else if (estado_imoveis_id == 8) {
+                return 'amber accent-4'
+            }
+        },
+        // overlay(val) {
+        //     val && setTimeout(() => {
+        //         this.overlay = false
+        //     }, 3000)
+        // },
         findImoveis(id) {
-            window.location.href = "/portal/imovel-selecionado/" + btoa(btoa(btoa(id)));
+            this.overlay = true
+            setTimeout(() => {  
+                this.overlay = false
+                window.location.href = "/portal/imovel-selecionado/" + btoa(btoa(btoa(id)));
+            }, 2000)
+         
             // alert(id);
         },
         findImoveisProvincia(id) {

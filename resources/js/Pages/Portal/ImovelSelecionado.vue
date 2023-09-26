@@ -67,7 +67,8 @@
                             </v-chip-group>
                         </v-col>
                            <v-col cols="2">
-                            <v-btn :disabled="imoveis.estado_imoveis_id!==3" text class="ml-auto" color="#4527A0" dense  @click="marcarVisita()"> {{ imoveis.estado_imoveis_id==3 ? 'Marcação de visita' : 'Pedido de marcação feito' }} </v-btn>
+                            <v-btn :disabled="imoveis.estado_imoveis_id!==3" text class="ml-auto" color="#4527A0" dense  @click="marcarVisita()">
+                                 {{ imoveis.estado_imoveis_id==3 ? 'Marcação de visita' : 'Pedido de marcação feito' }} </v-btn>
                         </v-col>
                         </v-row>
                             <v-divider></v-divider>
@@ -233,143 +234,143 @@
                     </v-col>
                     <template>
                         <v-row justify="center">
-                            <v-dialog v-if="dialogLogin == true" v-model="dialogLogin" fullscreen hide-overlay
-                                transition="dialog-bottom-transition">
-                                <v-card>
-                                    <v-toolbar dark color="primary">
-                                        <v-btn icon dark @click="dialogLogin = false">
-                                            <v-icon>mdi-close</v-icon>
-                                        </v-btn>
-                                        <v-toolbar-title>Settings</v-toolbar-title>
-                                        <v-spacer></v-spacer>
-                                        <v-toolbar-items>
-                                            <v-btn dark text @click="dialogLogin = false">
-                                                Save
-                                            </v-btn>
-                                        </v-toolbar-items>
-                                    </v-toolbar>
-                                    <v-row align="center" justify="center">
-                                        <v-col cols="12" md="6" lg="5">
-                                            <v-container class=" alinnharcentro">
+                    <v-dialog v-if="dialogLogin == true" v-model="dialogLogin" fullscreen hide-overlay
+                        transition="dialog-bottom-transition">
+                        <v-card>
+                            <v-toolbar dark color="primary">
+                                <v-btn icon dark @click="dialogLogin = false">
+                                    <v-icon>mdi-close</v-icon>
+                                </v-btn>
+                                <v-toolbar-title>Voltar</v-toolbar-title>
+                                <v-spacer></v-spacer>
+                                <v-toolbar-items>
+                                    <!-- <v-btn dark text @click="dialogLogin = false">
+                                        Save
+                                    </v-btn> -->
+                                </v-toolbar-items>
+                            </v-toolbar>
+                            <v-row align="center" justify="center">
+                                <v-col cols="12" md="6" lg="5">
+                                    <v-container class=" alinnharcentro">
 
-                                                <v-card align="center" justify="center" elevation="0" class="w-75">
+                                        <v-card align="center" justify="center" elevation="0" class="w-75">
 
-                                                    <v-card-text class="text-h3"> SIG-VAI</v-card-text>
-                                                    <v-card-text fluid class="justify-center">
-                                                        <v-form v-model="isValid">
-                                                            <v-row class="justify-center">
-                                                                <v-col cols="12">
-                                                                    <v-text-field :rules="[rules.required]"
-                                                                        placeholder="Email" outlined rounded label="Email"
-                                                                        name="email" v-model="usuario.email"
-                                                                        prepend-icon="mdi-account-circle" />
-                                                                </v-col>
-                                                                <v-col cols="12">
-                                                                    <v-text-field :rules="[rules.required]" outlined rounded
-                                                                        id="password" label="Palavra-Passe"
-                                                                        v-model="usuario.password" name="password"
-                                                                        prepend-icon="mdi-lock" :append-icon="showPassword
-                                                                            ? 'mdi-eye'
-                                                                            : 'mdi-eye-off'
-                                                                            " :type="showPassword ? 'text' : 'password'
+                                            <v-card-text class="text-h3"> SIG-VAI</v-card-text>
+                                            <v-card-text fluid class="justify-center">
+                                                <v-form v-model="isValid">
+                                                    <v-row class="justify-center">
+                                                        <v-col cols="12">
+                                                            <v-text-field :rules="[rules.required]" placeholder="Email ou telefone"
+                                                                outlined rounded label="Email" name="email"
+                                                                v-model="usuario.email" prepend-icon="mdi-account-circle" />
+                                                        </v-col>
+                                                        <v-col cols="12">
+                                                            <v-text-field :rules="[rules.required]" outlined rounded
+                                                                id="password" label="Palavra-Passe" v-model="usuario.password"
+                                                                name="password" prepend-icon="mdi-lock" :append-icon="showPassword
+                                                                    ? 'mdi-eye'
+                                                                    : 'mdi-eye-off'
+                                                                    " :type="showPassword ? 'text' : 'password'
         " v-on:keyup.enter="login" @click:append="
         showPassword = !showPassword
         " required />
-                                                                </v-col>
-                                                                <span class="subtitle">--------------- Entrar com
-                                                                    ---------------------
-                                                                </span>
-                                                                <v-col cols="12">
-                                                                    <div class="text-center pb-3">
-                                                                        <v-btn href="/auth/redirect" block rounded outlined
-                                                                            x-large color="blue darken-1">
-                                                                            <v-icon>mdi mdi-google</v-icon>
-                                                                            Google
-                                                                        </v-btn>
-                                                                    </div>
+                                                        </v-col>
+                                                        <span class="subtitle">--------------- Entrar com
+                                                            ---------------------
+                                                        </span>
+                                                        <v-col cols="12">
+                                                            <div class="text-center pb-3">
+                                                                <v-btn href="/auth/redirect" block rounded outlined x-large
+                                                                    color="blue darken-1">
+                                                                    <v-icon>mdi mdi-google</v-icon>
+                                                                    Google
+                                                                </v-btn>
+                                                            </div>
 
-                                                                    <v-alert outlined dismissible
-                                                                        transition="scale-transition" text
-                                                                        v-if="alert.type == 'success'" type="success">
-                                                                        {{ alert.text }}
-                                                                    </v-alert>
-                                                                    <v-alert dismissible transition="scale-transition"
-                                                                        outlined v-if="alert.type == 'error'" type="error">
-                                                                        {{ alert.text }}
-                                                                    </v-alert>
+                                                            <v-alert outlined dismissible transition="scale-transition" text
+                                                                v-if="alert.type == 'success'" type="success">
+                                                                {{ alert.text }}
+                                                            </v-alert>
+                                                            <v-alert dismissible transition="scale-transition" outlined
+                                                                v-if="alert.type == 'error'" type="error">
+                                                                {{ alert.text }}
+                                                            </v-alert>
 
-                                                                    <v-btn block rounded color="#4527A0" dark x-large
-                                                                        @click="setLogin()" :disabled="!isValid">
-                                                                        <v-icon>login</v-icon> Iniciar
-                                                                        Sessão
-                                                                    </v-btn>
-                                                                </v-col>
+                                                            <v-btn block rounded color="#4527A0" dark x-large
+                                                                @click="setLogin()" :disabled="!isValid">
+                                                                <v-icon>login</v-icon> Iniciar
+                                                                Sessão
+                                                            </v-btn>
+                                                        </v-col>
 
-                                                                <v-col cols="12" md="12">
+                                                        <v-col cols="12" md="12">
 
-                                                                </v-col>
-                                                            </v-row>
-                                                        </v-form>
-                                                    </v-card-text>
-                                                    <v-card-actions>
-                                                        <p class="ml-4 pb-6 subtitle">
-                                                            <a href="/reset-password" class="linkstilo">
-                                                                Esqueci a minha senha!</a><br />
-                                                            Não possui uma conta?<a href="/RegistrarConta"
-                                                                class="linkstilo">
-                                                                Cadastra AQUI!</a>
-                                                        </p>
-
-                                                    </v-card-actions>
-                                                    <div class=" px-6">
-                                                        <v-btn href="" rounded outlined color="deep-purple darken-3">
-                                                            <a href="/" style="text-decoration: none; color: #4527A0; ">
-
-                                                                <v-icon>mdi mdi-arrow-left-circle</v-icon>
-                                                                Voltar
-                                                            </a>
-                                                        </v-btn>
-                                                    </div>
-                                                </v-card>
-                                            </v-container>
-                                        </v-col>
-                                        <v-col cols="12" md="6" lg="7">
-                                            <v-img src="/img/cms-image.jpg" :style="'height: 100vh; '" align="center"
-                                                justify="center"
-                                                gradient="to top right, rgba(10,115,201,.33), rgba(25,32,72,.7)">
-                                                <v-container>
-                                                    <v-row class="alinnharcentro white--text ">
-                                                        <v-card-text>
-                                                            <p class="text-h1 font-weight-bold p-0 m-0">SIG-VAI</p>
-                                                            <p class="subtitle pb-5 m-0">Sistema de Gestão de Imóbiliaria
-                                                                (Kubicos)
-                                                            </p>
-                                                            <p class="text-h5">Aumente sua receita com o nosso sistema</p>
-                                                            <p>O SIG-VAI é a plataforma de financiamento imobiliário que
-                                                                <br />oferece crédito ao seu
-                                                                cliente de uma maneira fácil e sem burocracia.
-                                                            </p>
-
-                                                        </v-card-text>
-
+                                                        </v-col>
                                                     </v-row>
+                                                </v-form>
+                                            </v-card-text>
+                                            <v-card-actions>
+                                                <p class="ml-4 pb-6 subtitle">
+                                                    <a href="/reset-password" class="linkstilo">
+                                                        Esqueci a minha senha!</a><br />
+                                                    Não possui uma conta?<a href="/RegistrarConta" class="linkstilo">
+                                                        Cadastra AQUI!</a>
+                                                </p>
 
-                                                </v-container>
+                                            </v-card-actions>
+                                            <div class=" px-6">
+                                                <v-btn href="" rounded outlined color="deep-purple darken-3">
+                                                    <a href="/" style="text-decoration: none; color: #4527A0; ">
 
-                                            </v-img>
-                                        </v-col>
-                                    </v-row>
-                                </v-card>
-                            </v-dialog>
-                        </v-row>
+                                                        <v-icon>mdi mdi-arrow-left-circle</v-icon>
+                                                        Voltar
+                                                    </a>
+                                                </v-btn>
+                                            </div>
+                                        </v-card>
+                                    </v-container>
+                                </v-col>
+                                <v-col cols="12" md="6" lg="7">
+                                    <v-img src="/img/cms-image.jpg" :style="'height: 100vh; '" align="center"
+                                        justify="center" gradient="to top right, rgba(10,115,201,.33), rgba(25,32,72,.7)">
+                                        <v-container>
+                                            <v-row class="alinnharcentro white--text ">
+                                                <v-card-text>
+                                                    <p class="text-h1 font-weight-bold p-0 m-0">SIG-VAI</p>
+                                                    <p class="subtitle pb-5 m-0">Sistema de Gestão de Imóbiliaria (Kubicos)
+                                                    </p>
+                                                    <p class="text-h5">Aumente sua receita com o nosso sistema</p>
+                                                    <p>O SIG-VRIM é a plataforma de financiamento imobiliário que
+                                                        <br />oferece crédito ao seu
+                                                        cliente de uma maneira fácil e sem burocracia.
+                                                    </p>
+
+                                                </v-card-text>
+
+                                            </v-row>
+
+                                        </v-container>
+
+                                    </v-img>
+                                </v-col>
+                            </v-row>
+                        </v-card>
+                    </v-dialog>
+                </v-row>
                     </template>
 
-<v-overlay :value="overlay">
-      <v-progress-circular
-        indeterminate
-        size="64"
-      ></v-progress-circular>
-    </v-overlay>
+                    <div class="text-center">
+                    <!-- <v-btn color="deep-purple accent-4" class="white--text" @click="overlay = !overlay">
+                        Launch Application
+                        <v-icon right>
+                            mdi-open-in-new
+                        </v-icon>
+                    </v-btn> -->
+
+                    <v-overlay v-if="overlay">
+                        <v-progress-circular indeterminate size="64"></v-progress-circular>
+                    </v-overlay>
+                </div>
 
                     <template>
                         <div class="text-center">
@@ -458,7 +459,7 @@ export default {
     }),
 
     mounted() {
-
+        this.overlay = false
     },
     computed: {
         user() {
@@ -496,14 +497,16 @@ export default {
     },
 
     watch: {
-        overlay (val) {
-        val && setTimeout(() => {
-          this.overlay = false
-        }, 3000)
-      },
+    //     overlay (val) {
+    //     val && setTimeout(() => {
+    //         this.marcarVisita() 
+    //       this.overlay = false
+    //     }, 3000)
+    //   },
     },
 
     methods: {
+        
         formatValor: function(atual){
         const valorFormatado = Intl.NumberFormat("pt-br", {
             style: "currency",
@@ -575,19 +578,20 @@ export default {
             // alert(id);
         },
         marcarVisita() {
-           
-        //     this.setTimeout(() => {
-        //   this.overlay = false
-        // }, 3000)
-            if (this.$page.props.auth.user !== null) {
+            this.overlay = true
+            setTimeout(() => {
+                this.overlay = false
+                if (this.$page.props.auth.user !== null) {
                 this.dialogMarcarVisita = true;
             } else {
                 this.dialogLogin = true;
             }
+        }, 3000)
+           
         },
         setLogin() {
             //    this.$inertia.visit('/login', { data: { redirectRoute: window.location.href } });
-
+         
             this.$inertia.post("/login", this.usuario, {
                 onFinish: () => {
                     if (this.$page.props.flash.success != null) {
@@ -595,23 +599,24 @@ export default {
                             msg:
                                 "" + this.$page.props.flash.success,
                         });
-                        // this.snackbar = true
-                        // if (this.$page.props.auth.user !== null) {
-                // this.dialogMarcarVisita = true;
-           // }
                     }
                     if (this.$page.props.flash.error != null) {
                         Vue.toasted.global.defaultError({
                             msg: "" + this.$page.props.flash.error,
                         });
                     }
+                    this.dialogLogin = false;
+                    this.overlay = true
+            setTimeout(() => {  
                     if (this.$page.props.auth.user !== null) {
-                            this.snackbar = true
-                this.dialogMarcarVisita = true;
-                // this.closeSave();
+                        this.dialogMarcarVisita = true;
            }
+           this.overlay = false
+            }, 3000)
                 },
+                
             });
+           
 
         },
         enviarSolicitacao() {

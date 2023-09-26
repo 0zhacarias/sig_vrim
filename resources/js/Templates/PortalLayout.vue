@@ -49,13 +49,13 @@
             </v-toolbar-title>
             <v-spacer class=""></v-spacer>
             <v-toolbar-items>
-                <v-btn @click="storePreviousUrl('/portal/listaImoveisArrendamentos')"
+                <v-btn 
                     class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisArrendamentos"
                     elevation="0" text>
                     Arrendar
                 </v-btn>
 
-                <v-btn @click="storePreviousUrl('/portal/listaImoveisCompras')" dense
+                <v-btn dense
                     class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff" href="/portal/listaImoveisCompras"
                     elevation="0" text>
                     Comprar
