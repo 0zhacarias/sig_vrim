@@ -83,7 +83,7 @@
 
                                                 <v-row>
                                                     <v-col cols="12" md="3">
-                                                        <v-autocomplete v-model="imovel.provincia" dense
+                                                        <v-autocomplete v-model="imovel.provincia_id" dense
                                                             :items="this.provincias" item-value="id" item-text="designacao"
                                                             label="Provincia**" @change="getMunicipio()" outlined>
 
@@ -1002,7 +1002,7 @@ export default {
             metros: 0,
             designacao: null,
             localizacao_geografica: null,
-            provincia: null,
+            provincia_id: null,
             cidades: null,
             simImP: null,
             naoImP: null,
@@ -1270,7 +1270,7 @@ export default {
         },
 
         getMunicipio() {
-            this.id_provincia.id = this.imovel.provincia
+            this.id_provincia.id = this.imovel.provincia_id
             axios
                 .post("/portal/municipios", this.id_provincia)
                 .then((response) => {

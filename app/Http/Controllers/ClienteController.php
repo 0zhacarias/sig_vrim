@@ -7,8 +7,12 @@ use App\Library\GoogleClient;
 use App\Mail\EmailImoveilNegociacao;
 use App\Models\Cliente;
 use App\Models\Imoveis;
+use App\Models\Municipios;
 use App\Models\Pessoa;
+use App\Models\Provincias;
 use App\Models\SolicitarImoveis;
+use App\Models\TipoImoveis;
+use App\Models\Tipologia;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -108,9 +112,13 @@ class ClienteController extends Controller
     
         
         if(auth()->user()){
+            
             $userLog=auth()->user()->load('tipo_user');
             $dados['cliente']=User::where('id',$userLog->id)->first();
-
+            $dados['provincias'] = Provincias::all();
+            // $dados['municipios'] = Municipios::all();
+            $dados['tipologiaImoveis'] = Tipologia::all();
+            $dados['tipoImoveis'] = TipoImoveis::all();
             $dados['meus_imoveis']=Imoveis::where('cadastrado_por',$userLog->id)->with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->orderBy('created_at','desc')->get();
             $dados['meus_pagamentos']=Imoveis::with('fotosImoveis','condicaoImoveis','actividadeImoveis.operacaoImoveis','estadoImoveis')->get();
             $id_user_marca_visita=SolicitarImoveis::where('user_marca_visita',$userLog->id)->select('imoveis_id')->get();

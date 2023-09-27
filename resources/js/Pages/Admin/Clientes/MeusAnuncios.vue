@@ -74,7 +74,7 @@
                                         mdi mdi-pencil-outline
                                     </v-icon>
                                 </v-btn>
-                                <v-btn icon color="red" outlined rounded title="Remover o Imóvel">
+                                <v-btn icon color="red" outlined rounded title="Remover o Imóvel" @click="deleteImovel(item)">
                                     <v-icon>
                                         mdi mdi-delete-outline
                                     </v-icon>
@@ -106,6 +106,7 @@
                                     <v-stepper-content step="1">
                                         <v-card>
                                             <v-container>
+                                            
                                                 <v-form ref="form" lazy-validation>
                                                 <v-row dense>
                                                     <v-col cols="12" sm="6" md="6"> 
@@ -133,8 +134,8 @@
                                                 </v-row>
                                                 <v-row>
                                                     <v-col cols="3" md="4">
-                                                        <v-autocomplete v-model="imovel.provincia" outlined  dense
-                                                            :items="this.provincias" item-value="id" item-text="designacao"
+                                                        <v-autocomplete v-model="imovel.provincia_id" outlined  dense
+                                                            :items="provincias" item-value="id" item-text="designacao"
                                                             label="Provincia**" @change="getMunicipio()">
 
                                                         </v-autocomplete>
@@ -625,6 +626,32 @@
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
+                    <v-dialog
+                    v-if="dialogDelete"
+                    v-model="dialogDelete"
+                    max-width="500px"
+                >
+                    <v-card>
+                        <v-card-title class="text-h6"
+                            >Tens a certeza de que desejas
+                            eliminar?</v-card-title
+                        >
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn rounded outlined color="indigo" @click="dialogDelete=false"
+                                >Não</v-btn
+                            >
+                            <v-btn
+                            rounded outlined
+                                color="red"
+                                
+                                @click="deleteItemConfirm()"
+                                >Sim</v-btn
+                            >
+                            <v-spacer></v-spacer>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
                 </v-row>
             </template>
         </v-container>
@@ -635,7 +662,7 @@
 import AdminLayout from "../../../Templates/AdminLayout";
 export default {
 
-    props: ["meus_anuncios"],
+    props: ["meus_anuncios", "provincias", 'tipologiaImoveis', 'tipoImoveis',],
     components: {
         AdminLayout
     },
@@ -661,12 +688,13 @@ export default {
             metros: 0,
             designacao: null,
             localizacao_geografica: null,
-            provincia: null,
+            provincia_id: null,
             cidades: null,
             simImP: null,
             naoImP: null,
             tempo_arrendar: 0,
             quantidade_prestacoes: 0,
+            dialogDelete:false,
             // estado_nao_acabado: null,
 
             imposto_predial: null,
@@ -713,6 +741,9 @@ export default {
             // sofa: null,
 
         },
+        municipios: null,
+        id_provincia: {},
+        id_tipo_imovel: {},
         e6: 1,
         vertical: true,
         qquarto: "1",
@@ -727,6 +758,47 @@ export default {
             max: (v) => v.length == 9 || "Tem que ter 9 caracteres",
             emailMatch: () => `The email and password you entered don't match`,
         },
+        tipo_regimes: [{
+            id: 1,
+            designacao: "2 Meses"
+        },
+        {
+            id: 2,
+            designacao: "3 Meses"
+        },
+        {
+            id: 3,
+            designacao: "6 Meses"
+        },
+        {
+            id: 4,
+            designacao: "1 Ano"
+        },
+        {
+            id: 5,
+            designacao: "2 Anos"
+        },
+        {
+            id: 6,
+            designacao: "3 Anos"
+        },
+        {
+            id: 7,
+            designacao: "4 Anos"
+        },
+        {
+            id: 8,
+            designacao: "5 Anos"
+        },
+        {
+            id: 9,
+            designacao: "10 Anos"
+        },
+        {
+            id: 10,
+            designacao: "15 Anos"
+        },
+        ],
 
     }),
 
@@ -800,7 +872,7 @@ export default {
         carregarDialogEditarImovel(item) {
             this.editedIndex = this.meus_anuncios.indexOf(item);
             this.imovel = Object.assign({}, item);
-            alert(JSON.stringify(this.editedIndex));
+            // alert(JSON.stringify(this.editedIndex));
             this.dialogEditar = true;
             // let searchServico = this.servicos_por_pagar.find(function (elemento) {
             //     return elemento.id == servico_id;
@@ -824,9 +896,32 @@ export default {
             }) */
         },
         deleteImovel(item) {
-            this.editedIndex = this.projetos.indexOf(item);
-            this.projeto = Object.assign({}, item);
+            this.editedIndex = this.meus_anuncios.indexOf(item);
+            this.imovel = Object.assign({}, item);
             this.dialogDelete = true;
+        },
+        deleteItemConfirm() {
+           
+            this.$inertia.delete(
+                "/portal/imoveis/" + this.imovel.id,
+                {
+                    onFinish: () => {
+                        if (this.$page.props.flash.success != null) {
+                            Vue.toasted.global.defaultSuccess({
+                                msg: "" + this.$page.props.flash.success,
+                            });
+                        }
+                        if (this.$page.props.flash.error != null) {
+                            Vue.toasted.global.defaultError({
+                                msg: "" + this.$page.props.flash.error,
+                            });
+                        }
+                        
+                    },
+                }
+            );
+            this.dialogDelete = false;
+            this.imovel = Object.assign({}, this.defautImovel);
         },
         editarImovel() {
 
@@ -927,7 +1022,7 @@ export default {
         },
 
         getMunicipio() {
-            this.id_provincia.id = this.imovel.provincia
+            this.id_provincia.id = this.imovel.provincia_id
             axios
                 .post("/portal/municipios", this.id_provincia)
                 .then((response) => {
@@ -937,7 +1032,6 @@ export default {
                 });
         },
         getTipologia(item) {
-            alert(item);
             this.id_tipo_imovel.id = item
             axios
                 .post("/portal/tipo-tipologia", this.id_tipo_imovel)

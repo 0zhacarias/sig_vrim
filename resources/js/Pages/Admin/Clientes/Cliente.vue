@@ -88,7 +88,7 @@
                 <perfil v-if="this.linhaSelecionado==='meusDados'" :cliente="cliente">
                 </perfil>
             
-                <MeusAnuncios v-if="this.linhaSelecionado==='meusAnuncios'" :meus_anuncios="meus_imoveis">
+                <MeusAnuncios v-if="this.linhaSelecionado==='meusAnuncios'" :meus_anuncios="meus_imoveis" :provincias="provincias" :tipologiaImoveis="tipologiaImoveis"  :tipoImoveis="tipoImoveis" >
                 </MeusAnuncios>
                 <imoveisProcesso class="" v-if="this.linhaSelecionado==='imoveisProcesso' " :minha_compra_arrendamentos="imoveis_processos">
                 </imoveisProcesso>
@@ -108,7 +108,7 @@ import imoveisProcesso from "../Clientes/MeusImoveisCompra";
 import meusPagamentos from "../Clientes/MeusPagamentos"
 // import PerfilCliente from "../Clientes/PerfilCliente";
 export default {
-    props: ["meus_imoveis","imoveis_processos" ,"cliente"],
+    props: ["meus_imoveis","imoveis_processos" ,"cliente","provincias", 'tipologiaImoveis', 'tipoImoveis',],
     components: {
         PortalLayout,
         Perfil,

@@ -81,23 +81,13 @@ class ImoveisController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-
-        // return response()->json($request);
-
-        // $data = $request->all();
-        // Imoveis::created($data);
-        // dd($request->get('mutiplaImagem'));
-        // dd($request);
-        $imovel = Imoveis::create([
+    {        $imovel = Imoveis::create([
             'designacao' => $request->get('designacao'),
             'descricao' => $request->get('designacao'),
-            // 'mobiliado' => $request->get('mobiliado'),
             'metros' => $request->get('metros'),
             'localizacao' => $request->get('localizacao_geografica'),
-            // 'imposto_predial' => $request->get('imposto_predial'),
             'numero_banheiro' => $request->get('numero_banheiro'),
-            'provincia_id' => $request->get('provincia'),
+            'provincia_id' => $request->get('provincia_id'),
             'preco' => $request->get('preco'),
             'estado_imoveis_id' => 3,
             'cozinha' => $request->get('numero_cozinha'),
@@ -108,14 +98,10 @@ class ImoveisController extends Controller
             'sala_de_estar' => $request->get('sala_de_estar'),
             'numero_quartos' => $request->get('numero_quartos'),
             'numero_andar' => $request->get('numero_andar'),
-            //Vai deixar alguma coisa
             'mobiliado' => $request->get('mobiliado'),
-            //Parte Interna
             'armario_embutido' => $request->get('armario_embutido'),
             'arcondicionados' => $request->get('ar_condicionados'),
             'mesa_cadeira' => $request->get('mesa_cadeira'),
-            // 'maquina_lavar_roupa' => $request->get('maquina_lavar_roupa'),
-            //Exterior
             'numero_garagem' => $request->get('numero_garagem'),
             'maquina_lavar_roupa' => $request->get('maquina_lavar_roupa'),
             'churrasqueira' => $request->get('churrasqueira'),
@@ -125,7 +111,6 @@ class ImoveisController extends Controller
             'tanqueagua' => $request->get('tanqueagua'),
             'foto_principal' => $request->get('foto_principal'),
             'cadastrado_por' => auth()->user()->id,
-
         ]);
         if ($request->hasFile('foto_principal')) {
             $fileFoto = $request->foto_principal->store('Foto_principal');
@@ -229,9 +214,11 @@ class ImoveisController extends Controller
      * @param  \App\Models\Imoveis  $imoveis
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Imoveis $imoveis)
+    public function destroy($id)
     {
-        //
+        $imovel=Imoveis::find($id);
+        $imovel->delete();
+        return redirect()->back()->with('success', 'Dados eliminado com sucesso');
     }
     public function lista_imoveis_comprar()
     {
