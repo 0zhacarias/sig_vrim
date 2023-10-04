@@ -14,4 +14,7 @@ class Pessoa extends Model
     public function usuario(){
         return $this->belongsTo(User::class,'user_id');
     }
+    public function provincias(){
+        return $this->belongsTo(Provincias::class,'provincia_id');
+    }
 }

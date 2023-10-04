@@ -1,10 +1,10 @@
 <template>
-    <v-app>
-        <v-container class="w-80 justify-space-around my-13 py-10">
-            <v-subheader class="text-h4 text-bold ">Minhas solicitações</v-subheader> <v-row>
+    <Cliente>
+        <v-container class="w-90 justify-space-around">
+            <v-subheader class="text-h5 text-bold mt-10 ">Minhas solicitações: {{ imoveis_processos.length }}</v-subheader> <v-row>
 
-                <v-col v-for="item in minha_compra_arrendamentos" :key="item.id" cols="12" sm="6" md="4"
-                    :lg="minha_compra_arrendamentos.length <= 2 ? 6 : 4">
+                <v-col v-for="item in imoveis_processos" :key="item.id" cols="12" sm="6" md="4"
+                    :lg="imoveis_processos.length <= 2 ? 6 : 4">
                     <v-hover v-slot="{ hover }">
 
                         <v-card :loading="!loading" class=" elevation-10 pa-2 ma-3 border" :elevation="hover ? 10 : 0">
@@ -47,8 +47,7 @@
 
                                         <span class="mdi mdi-timer-lock-outline" title="Arrendamento"></span>{{
                                             actidade.tempo_arrendar }} </v-chip>
-                                    <v-chip title="estado do imóvel" :color="getcor(item.estado_imoveis_id)"
-                                        class="white--text text-bold">
+                                    <v-chip title="estado do imóvel" :color="getcor(item.estado_imoveis_id)" class="white--text text-bold">
                                         <span v-if="item.estado_imoveis_id == 1" class="mdi mdi-archive-lock-open "></span>
                                         <span v-if="item.estado_imoveis_id == 2" class="mdi mdi-archive-remove"></span>
                                         <span v-if="item.estado_imoveis_id == 3" class="mdi mdi-archive-cog "></span>
@@ -60,7 +59,7 @@
                             </v-card-actions>
                             <v-card-actions class="justify-end m-0 p-0">
                                 <v-btn icon :disabled="item.estado_imoveis_id !== 5 || user.tipo_user.id == 1"
-                                    color="green" outlined rounded title="Gostei do Imóvel" @click="gostarImovel(item.id)"
+                                    color="green" outlined rounded title="Gostei do Imóvel" @click="gostarImovel()"
                                     v-model="validar_gostar.valiado">
                                     <v-icon>
                                         mdi mdi-thumb-up
@@ -73,19 +72,27 @@
                                         mdi mdi-thumb-down
                                     </v-icon>
                                 </v-btn>
-                                <v-btn icon v-if="user.tipo_user.id == 1  && item.estado_imoveis_id ==4 " color="red" outlined rounded
+                                <v-btn icon v-if="user.tipo_user.id == 1  && item.estado_imoveis_id ==4  && item.estado_imoveis_id !=1" color="orange" outlined rounded
                                     title="Nao Aprovar a visita do imóvel" @click="naoValidarVisita(item.id)"
                                     v-model="validar_processo.aprovaVisita">
                                     <v-icon>
-                                        mdi mdi-hand-back-left-off-outline
+                                        mdi mdi-handshake
 
                                     </v-icon>
                                 </v-btn>
-                                <v-btn icon v-if="user.tipo_user.id == 1 && item.estado_imoveis_id ==4" color="indigo" outlined rounded
+                                <v-btn icon v-if="user.tipo_user.id == 1 && item.estado_imoveis_id ==4 && item.estado_imoveis_id !=1" color="indigo" outlined rounded
                                     title="Aprovar a visita do imóvel" @click="validaVisita(item.id)"
                                     v-model="validar_processo.naoAprovarVisita">
                                     <v-icon>
                                         mdi mdi-handshake
+                                    </v-icon>
+                                </v-btn>
+                                <v-btn icon v-if="user.tipo_user.id == 1 && item.estado_imoveis_id!=6  && item.estado_imoveis_id!=7 " color="red" outlined rounded
+                                    title="Para com a negociação" @click="cancelarProcesso(item.id)"
+                                    v-model="validar_processo.naoAprovarVisita">
+                                    <v-icon>
+                                        mdi mdi-hand-back-left-off-outline
+                                       
                                     </v-icon>
                                 </v-btn>
                             </v-card-actions>
@@ -94,7 +101,7 @@
                 </v-col>
             </v-row>
             <div class="text-center">
-                <v-snackbar v-model="snackbar" :multi-line="multiLine" :timeout="8000" outlined
+                <v-snackbar v-model="snackbar"  :multi-line="multiLine" :timeout="8000" outlined
                     color="deep-purple accent-4">
                     {{ textvalidado }}
                     <v-btn color="indigo" text @click="snackbar = false">
@@ -102,8 +109,9 @@
                     </v-btn>
                 </v-snackbar>
             </div>
+            <!-- :multi-line="multiLine" -->
             <div class="text-center">
-                <v-snackbar v-model="snackbarNaovalidado" :multi-line="multiLine" :timeout="8000" outlined
+                <v-snackbar v-model="snackbarNaovalidado"  :multi-line="multiLine" :timeout="8000" outlined
                     color="deep-purple accent-4">
                     {{ textnaovalidado }}
                     <v-btn color="indigo" text @click="snackbarNaovalidado = false">
@@ -112,16 +120,16 @@
                 </v-snackbar>
             </div>
         </v-container>
-    </v-app>
+    </Cliente>
 </template>
 
 <script>
-import AdminLayout from "../../../Templates/AdminLayout";
+import Cliente from "../Clientes/Cliente";
 export default {
 
-    props: ["minha_compra_arrendamentos"],
+    props: ["imoveis_processos"],
     components: {
-        AdminLayout
+        Cliente
     },
     data: () => ({
         loading: null,
@@ -146,46 +154,38 @@ export default {
         user() {
             return this.$page.props.auth.user;
         },
-        formTitle() {
-            return this.editedIndex === -1 ? "Novo Condomínio" : "Editar ";
-        },
     },
 
     created() {
         this.getcor(estado_imoveis_id)
-        this.getImoveisprocesso()
+        // this.getImoveisprocesso()
         setTimeout(() => {
             this.overlay = false;
         }, 2000);
     },
 
     watch: {
-        steps(val) {
-            if (this.e1 > val) {
-                this.e1 = val;
-            }
-        },
+
     },
 
     methods: {
         getcor(estado_imoveis_id) {
             if (estado_imoveis_id == 1) {
-                return 'red'
+                return 'green'
             } else if (estado_imoveis_id == 2) {
-                return 'blue'
+                return 'deep-orange darken-4'
             } else if (estado_imoveis_id == 3) {
-                return 'light-blue darken-4'
-
+                return 'blue-grey darken-4'
             } else if (estado_imoveis_id == 4) {
-                return '#3949AB'
+                return 'yellow darken-3'
             } else if (estado_imoveis_id == 5) {
-                return 'green'
+                return 'deep-purple darken-2'
             } else if (estado_imoveis_id == 6) {
-                return 'green'
+                return 'red darken-4'
             } else if (estado_imoveis_id == 7) {
-                return 'green'
+                return 'red darken-4'
             } else if (estado_imoveis_id == 8) {
-                return 'green'
+                return 'amber accent-4'
             }
         },
         getImoveisprocesso() {
@@ -264,40 +264,24 @@ export default {
                 });
             location.reload();
         },
+        cancelarProcesso(item){
+            this.loading = true;
+            this.validar_processo.imovel_id = item
+            axios
+                .post("/cancelar-processo", this.validar_processo)
+                .then((response) => {
+                    this.loading = true;
+                    this.snackbarNaovalidado = true;
+                })
+                .catch(() => {
+                    // alert(JSON.stringify(response.data));
+                    //   console.log('Falha ao registar os dados na base de dados!...')
+                });
+            location.reload();
+        }
 
-        showDialogAddCondominio() {
-            this.dialogAddCondominio = true;
-        },
-        continuar(stepe, form) {
-            if (this.$refs[form].validate()) {
-                this.e1 = stepe;
-            }
-        },
-        continuar2(stepe, form) {
-            if (this.$refs[form].validate()) {
-                this.e1 = stepe;
-            }
-        },
-
-        validate() {
-            this.$refs.form.validate();
-            this.$refs.form2.validate();
-        },
-
-        close() {
-            this.morador = {};
-            this.dialogAddCondominio = false;
-            this.$nextTick(() => {
-                this.morador = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            });
-            setTimeout(() => {
-                this.overlay = false;
-            }, 2000);
-        },
     },
 };
 </script>
 <style>
-@import "vuetify/dist/vuetify.min.css";
 </style>

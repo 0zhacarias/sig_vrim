@@ -15,71 +15,85 @@
                                 <v-card elevation="0" class="mt-3 px-0 transparent" :style="'border-radius: 10px'">
                                     <v-card-title color="deep-purple--text">O que estás a procura</v-card-title>
                                     <v-card-text color="deep-purple accent-4">
-                                        <v-row>                                        <v-col cols="6" class="opens-sans mb-n8">
-                                            <v-autocomplete  @change="filtrarTicket()" clearable v-model="query.preco_inicio"
-                                                :items="itervalo_precos" item-text="designacao" item-value="id"
-                                                prepend-icon="" label="Intervalo de preço" dense no-data-text="sem dados" outlined type="number">
-                                            </v-autocomplete>
-                                        </v-col>
-                                        <v-col cols="6" class="opens-sans mb-n8">
-                                            <v-autocomplete  @change="filtrarTicket()" clearable v-model="query.preco_final"
-                                                :items="itervalo_precos " item-text="designacao" item-value="id"
-                                                prepend-icon="" label="Intervalo de preço" dense no-data-text="sem dados" outlined type="number">
-                                            </v-autocomplete>
-                                        </v-col>
-                                    </v-row>
-                                    <v-row>
-                                        <v-col cols="12" class="pt-6 mb-n8 ">
-                                            <v-autocomplete prepend-icon=""  :items="provincias " item-text="designacao" 
-                                            item-value="id" label="Provincia"  type="text" clearable outlined v-model="query.provincia_id"
-                                                dense no-data-text="sem dados" @change="filtrarTicket()">
-                                            </v-autocomplete>
-                                        </v-col>
-
-                                        <v-col cols="12" class="pt-6 mb-n8">
-                                            <v-autocomplete @change="filtrarTicket()" clearable v-model="query.valor"
-                                                :items="funcionario_operadores" item-text="nome_funcionario" item-value="id"
-                                                prepend-icon="" label="Valores" outlined dense no-data-text="sem dados">
-                                            </v-autocomplete>
-                                        </v-col>
-
-                                        <v-col cols="12" class="pt-6 mb-n8">
-                                            <v-autocomplete class="custom-autocomplete" @change="filtrarTicket()" clearable
-                                                v-model="query.condicoes_imoveis_id" :items="CondicoesImoveis"
-                                                item-text="designacao" item-value="id" prepend-icon=""
-                                                label="Condições do imóvel" outlined dense no-data-text="sem dados">
-                                                <!-- <template v-slot:item="data">
-                                                {{ data.item.nome_funcionario }}
-                                                {{ data.item.sobre_nome_funcionario }}
-                                            </template> -->
-                                            </v-autocomplete>
-                                        </v-col>
-                                        <v-col cols="12" class="pt-6 mb-n8">
-                                            <v-autocomplete class="custom-autocomplete" @change="filtrarTicket()" clearable
-                                                v-model="query.estado_imoveis_id" :items="estadoImoveis"
-                                                item-text="designacao" item-value="id" prepend-icon=""
-                                                label="Estado do imóvel" outlined dense no-data-text="sem dados">
-                                                <!-- <template v-slot:item="data">
-                                                {{ data.item.nome_funcionario }}
-                                                {{ data.item.sobre_nome_funcionario }}
-                                            </template> -->
-                                            </v-autocomplete>
-                                        </v-col>
-                                    </v-row>
                                         <v-row>
-                                        <v-col cols="6" class="pt-13">
-                                            <v-text-field clearable label="Data inicial" class="my-n8 rounded"
-                                                v-model="query.data_inicial" type="date" :error-messages="erros.dat_inicio_real
-                                                    " dense outlined>
-                                            </v-text-field>
-                                        </v-col>
-                                        <v-col cols="6" class="pt-13">
-                                            <v-text-field clearable label="Data termino" v-model="query.data_final" class="my-n8 rounded"
-                                                @input="filtrarTicket()" type="date" :error-messages="erros.data_final"
-                                                dense outlined>
-                                            </v-text-field>
-                                        </v-col>
-                                    </v-row>
+                                            <v-col cols="12" class="pt-6 mb-n8 ">
+                                                <v-autocomplete prepend-icon="" :items="tipoImoveis" item-text="designacao"
+                                                    item-value="id" label="Tipo de Imóvel" type="text" clearable outlined
+                                                    v-model="query.id_tipo_imoveis" dense no-data-text="sem dados"
+                                                    @change="FiltrarImoveis()">
+                                                </v-autocomplete>
+                                            </v-col>
+                                            <v-col cols="6" class="opens-sans mb-n8">
+                                                <v-autocomplete @change="FiltrarImoveis()" clearable
+                                                    v-model="query.preco_inicio" :items="itervalo_precos"
+                                                    item-text="designacao" item-value="id" prepend-icon="" 
+                                                    label="Intervalo de preço" dense no-data-text="sem dados" outlined
+                                                    type="number" >
+                                                </v-autocomplete>
+                                            </v-col>
+                                            <v-col cols="6" class="opens-sans mb-n8">
+                                                <v-autocomplete @change="FiltrarImoveis()" clearable
+                                                    v-model="query.preco_final" :items="itervalo_precos"
+                                                    item-text="designacao" item-value="id" prepend-icon=""
+                                                    label="Intervalo de preço" dense no-data-text="sem dados" outlined
+                                                    type="number">
+                                                </v-autocomplete>
+                                            </v-col>
+                                        </v-row>
+                                        <v-row>
+                                            <v-col cols="12" class="pt-6 mb-n8 ">
+                                                <v-autocomplete prepend-icon="" :items="provincias" item-text="designacao"
+                                                    item-value="id" label="Provincia" type="text" clearable outlined
+                                                    v-model="query.provincia_id" dense no-data-text="sem dados"
+                                                    @change="FiltrarImoveis()">
+                                                </v-autocomplete>
+                                            </v-col>
+
+<!--                                             <v-col cols="12" class="pt-6 mb-n8">
+                                                <v-autocomplete @change="FiltrarImoveis()" clearable v-model="query.valor"
+                                                    :items="funcionario_operadores" item-text="nome_funcionario"
+                                                    item-value="id" prepend-icon="" label="Valores" outlined dense
+                                                    no-data-text="sem dados">
+                                                </v-autocomplete>
+                                            </v-col> -->
+
+                                            <v-col cols="12" class="pt-6 mb-n8">
+                                                <v-autocomplete class="custom-autocomplete" @change="FiltrarImoveis()"
+                                                    clearable v-model="query.condicoes_imoveis_id" :items="CondicoesImoveis"
+                                                    item-text="designacao" item-value="id" prepend-icon=""
+                                                    label="Condições do imóvel" outlined dense no-data-text="sem dados">
+                                                    <!-- <template v-slot:item="data">
+                                                {{ data.item.nome_funcionario }}
+                                                {{ data.item.sobre_nome_funcionario }}
+                                            </template> -->
+                                                </v-autocomplete>
+                                            </v-col>
+                                            <v-col cols="12" class="pt-6 mb-n8">
+                                                <v-autocomplete class="custom-autocomplete" @change="FiltrarImoveis()"
+                                                    clearable v-model="query.estado_imoveis_id" :items="estadoImoveis"
+                                                    item-text="designacao" item-value="id" prepend-icon=""
+                                                    label="Estado do imóvel" outlined dense no-data-text="sem dados">
+                                                    <!-- <template v-slot:item="data">
+                                                {{ data.item.nome_funcionario }}
+                                                {{ data.item.sobre_nome_funcionario }}
+                                            </template> -->
+                                                </v-autocomplete>
+                                            </v-col>
+                                        </v-row>
+                                        <v-row>
+                                            <v-col cols="6" class="pt-13">
+                                                <v-text-field clearable label="Data inicial" class="my-n8 rounded"
+                                                    v-model="query.data_inicial" type="date" :error-messages="erros.dat_inicio_real
+                                                        " dense outlined>
+                                                </v-text-field>
+                                            </v-col>
+                                            <v-col cols="6" class="pt-13">
+                                                <v-text-field clearable label="Data termino" v-model="query.data_final"
+                                                    class="my-n8 rounded" @input="FiltrarImoveis()" type="date"
+                                                    :error-messages="erros.data_final" dense outlined>
+                                                </v-text-field>
+                                            </v-col>
+                                        </v-row>
                                     </v-card-text>
                                 </v-card>
                             </v-row>
@@ -259,10 +273,11 @@
                                                         <v-chip v-for="(actidade) in item.actividade_imoveis"
                                                             :key="actidade.id" v-if="actidade.tempo_arrendar > 0">
 
-                                                            <span class="mdi mdi-timer-lock-outline" 
-                                                                title="Arrendamento"  ></span >{{
+                                                            <span class="mdi mdi-timer-lock-outline"
+                                                                title="Arrendamento"></span>{{
                                                                     actidade.tempo_arrendar }} </v-chip>
-                                                        <v-chip color="deep-purple" title="estado do imovel" class="white--text">
+                                                        <v-chip :color="getcor(item.estado_imoveis_id)"
+                                                            title="estado do imovel" class="white--text">
                                                             <span v-if="item.estado_imoveis_id == 1"
                                                                 class="mdi mdi-archive-lock-open "></span>
                                                             <span v-if="item.estado_imoveis_id == 2"
@@ -307,12 +322,13 @@
                                                 <!-- <v-img max-height="255" max-width="490" :src="'/storage/' +
                                                     item.foto_principal
                                                     " alt="Avatar"></v-img> -->
-                                                    <template >
-                <v-carousel hide-delimiters :style="'height: 255px;'">
-                    <v-carousel-item  max-height="255" max-width="490" v-for="(imagem, i) in item.fotos_imoveis" :key="i" :src="'/storage/' + imagem.foto" 
-                     ></v-carousel-item>
-                </v-carousel>
-            </template>
+                                                <template>
+                                                    <v-carousel hide-delimiters :style="'height: 255px;'">
+                                                        <v-carousel-item max-height="255" max-width="490"
+                                                            v-for="(imagem, i) in item.fotos_imoveis" :key="i"
+                                                            :src="'/storage/' + imagem.foto"></v-carousel-item>
+                                                    </v-carousel>
+                                                </template>
                                             </v-col>
 
                                         </v-row>
@@ -345,12 +361,13 @@
                     </v-col>
                     <v-spacer />
                     <v-col cols="5">
-                        <v-pagination @input="paginacao(dados.page)" v-model="dados.page" :length="last_page" circle></v-pagination>
+                        <v-pagination @input="paginacao(dados.page)" v-model="dados.page" :length="last_page"
+                            circle></v-pagination>
                     </v-col>
                 </v-row>
             </v-col>
-       
-        <v-col cols="1" sm="1" md="1"></v-col>
+
+            <v-col cols="1" sm="1" md="1"></v-col>
         </v-row>
 
 
@@ -360,7 +377,7 @@
 <script>
 import PortalLayout from "../../Templates/PortalLayout";
 export default {
-props:['operacao_imoveis','provincia_selecionado','provincias','estadoImoveis','CondicoesImoveis'],
+    props: ['operacao_imoveis', 'provincia_selecionado', 'provincias', 'estadoImoveis', 'CondicoesImoveis','tipoImoveis', 'tipo_imoveis_selecionado', 'meio_periodo'],
     components: {
         PortalLayout,
     },
@@ -369,10 +386,10 @@ props:['operacao_imoveis','provincia_selecionado','provincias','estadoImoveis','
         dialogN: false,
         totalImoveis: 0,
         dialogContacto: false,
-        dados:{
+        dados: {
             page: 1,
         },
-        
+
         last_page: 1,
         estadoTickets: [],
         ticketpaginas: [],
@@ -384,26 +401,27 @@ props:['operacao_imoveis','provincia_selecionado','provincias','estadoImoveis','
         showSecondAutocompleteProjecto: [],
         projectos: [],
         query: {
-            estado_imoveis_id:null,
-            condicoes_imoveis_id:null,
-            provincia_id:null,
-            preco_inicio:null,
-            preco_final:null,
-            tipologia:null,
+            estado_imoveis_id: null,
+            condicoes_imoveis_id: null,
+            provincia_id: null,
+            preco_inicio: null,
+            preco_final: null,
+            tipologia: null,
+            id_tipo_imoveis:null
         },
-        itervalopreco:{
-           
-           
+        itervalopreco: {
+
+
         },
         itervalo_precos: [
             { id: 10000, designacao: '10.000' },
-            { id: 20000, designacao: '20.000'},
+            { id: 20000, designacao: '20.000' },
             { id: 50000, designacao: '50.000' },
-            { id: 100000, designacao: '100.000'},
+            { id: 100000, designacao: '100.000' },
             { id: 500000, designacao: '500.000' },
-            { id: 1000000, designacao: '1.000.000'},
+            { id: 1000000, designacao: '1.000.000' },
             { id: 150000, designacao: '1.500.0000' },
-            { id: 5000000, designacao: '5.000.000'},
+            { id: 5000000, designacao: '5.000.000' },
         ],
         tipo_clientes: [
             { id: 1, designacao: "SINGULAR" },
@@ -430,6 +448,7 @@ props:['operacao_imoveis','provincia_selecionado','provincias','estadoImoveis','
 
     created() {
         this.paginacao()
+        this.getcor(estado_imoveis_id)
 
     },
 
@@ -442,6 +461,25 @@ props:['operacao_imoveis','provincia_selecionado','provincias','estadoImoveis','
     },
 
     methods: {
+        getcor(estado_imoveis_id) {
+            if (estado_imoveis_id == 1) {
+                return 'green'
+            } else if (estado_imoveis_id == 2) {
+                return 'deep-orange darken-4'
+            } else if (estado_imoveis_id == 3) {
+                return 'blue-grey darken-4'
+            } else if (estado_imoveis_id == 4) {
+                return 'yellow darken-3'
+            } else if (estado_imoveis_id == 5) {
+                return 'deep-purple darken-2'
+            } else if (estado_imoveis_id == 6) {
+                return 'red darken-4'
+            } else if (estado_imoveis_id == 7) {
+                return 'red darken-4'
+            } else if (estado_imoveis_id == 8) {
+                return 'amber accent-4'
+            }
+        },
         say() {
             this.dialogN = true
         },
@@ -479,7 +517,7 @@ props:['operacao_imoveis','provincia_selecionado','provincias','estadoImoveis','
             //         //   console.log('Falha ao registar os dados na base de dados!...')
             //     });
         },
-         validate() {
+        validate() {
             this.$refs.form.validate();
             this.$refs.form2.validate();
         },
@@ -496,8 +534,10 @@ props:['operacao_imoveis','provincia_selecionado','provincias','estadoImoveis','
             // }, 2000);
         },
         paginacao(page = 1) {
-            this.dados.operacao_id=this.operacao_imoveis
-            this.dados.provincia_id=this.provincia_selecionado
+            this.dados.operacao_id = this.operacao_imoveis
+            this.dados.provincia_id = this.provincia_selecionado
+            this.dados.tipo_imoveis_id = this.tipo_imoveis_selecionado
+            this.dados.meio_periodo_id = this.meio_periodo
             axios
                 .post("/portal/filtrarImoveisPaginate", this.dados, {
                 })
@@ -514,17 +554,18 @@ props:['operacao_imoveis','provincia_selecionado','provincias','estadoImoveis','
                 });
 
         },
-        filtrarTicket() {
+        FiltrarImoveis() {
             // alert(JSON.stringify(this.query));
             // alert(itervalo_precos)
-            this.query.operacao_id=this.operacao_imoveis
+            this.query.operacao_id = this.operacao_imoveis
+            this.query.tipo_imoveis_id = this.tipo_imoveis
             axios
                 .get("/portal/pesquisarImovel", {
                     params: this.query,
                 })
                 .then((response) => {
                     this.ImoveisComprar = response.data;
-                  
+
                 })
                 .catch((error) => {
                     //toastr.warning('Houve uma falha ao carregar os dados!...');
@@ -551,5 +592,4 @@ props:['operacao_imoveis','provincia_selecionado','provincias','estadoImoveis','
 
 .show-btns {
     color: rgba(255, 255, 255, 1) !important;
-}
-</style>
+}</style>

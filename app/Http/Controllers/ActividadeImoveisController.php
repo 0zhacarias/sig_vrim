@@ -125,7 +125,7 @@ class ActividadeImoveisController extends Controller
         // dd($url);
         $imovel->update(
             [
-                'estado_imoveis_id'=>5,
+                'estado_imoveis_id'=>1,
             ]
 
         );
@@ -144,7 +144,22 @@ class ActividadeImoveisController extends Controller
         $imovel = Imoveis::find($request->imovel_id);
         $imovel->update(
             [
-                'estado_imoveis_id' => 3,
+                'estado_imoveis_id' => 2,
+            ]
+
+        );
+    }
+    public function cancelar_processo(Request $request)
+    {
+        // dd($request);
+        $imovel = Imoveis::find($request->imovel_id);
+        $solicitavisita = SolicitarImoveis::with('usuario_marca_visita')->where('imoveis_id', $request->imovel_id)->where('funcionario_id', null)->first();
+        $mensagem = 'Devido algumas inregularidade no processo, foi concelado o imóvel, e estará disponivel para outros interessado..';
+        $this->emailValidar($solicitavisita, $mensagem);
+        $imovel = Imoveis::find($request->imovel_id);
+        $imovel->update(
+            [
+                'estado_imoveis_id' => 1,
             ]
 
         );
@@ -154,7 +169,7 @@ class ActividadeImoveisController extends Controller
         $imovel = Imoveis::find($request->imovel_id);
         $imovel->update(
             [
-                // 'estado_imoveis_id'=>8,
+                'estado_imoveis_id'=>8,
             ]
 
         );
@@ -171,8 +186,8 @@ class ActividadeImoveisController extends Controller
         //Informação da visita
         $data_visita = $solicitavisita->data_visita;
         $hora_visita = $solicitavisita->hora_visita;
-        dd($solicitavisita);
-        $mensagem = 'Gostaste do Imoóvel.';
+        // dd($solicitavisita);
+        $mensagem = 'Gostaste do Imóvel.';
         $url = action([ImoveisController::class, 'portal_imovel']);
         Mail::to('zhacarias50@outlook.com')->send(new EmailImoveilNegociacao($mensagem, $nome_confirma_visita, $url));
     }
@@ -183,7 +198,7 @@ class ActividadeImoveisController extends Controller
         // dd($imovel);
         $imovel->update(
             [
-                'estado_imoveis_id' => 3,
+                'estado_imoveis_id' => 1,
             ]
 
         );

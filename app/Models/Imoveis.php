@@ -33,4 +33,20 @@ public function actividadeImoveis(){
 public function estadoImoveis(){
     return $this->belongsTo(EstadoImoveis::class,);
 }
+protected static function boot(){
+    parent::boot();
+
+    static::created(function ($imovel) {
+        $imovel->codigo_imovel = 'KBC-'. $imovel->id;
+        $imovel->save();
+    });
+
+    // $relacoes = ['tickets', 'projectos', 'controlEmpresa', 'funcionario'];
+
+    // foreach ($relacoes as $relacao) {
+    // static::deleting(function ($empresa) use ($relacao) {
+    //     $empresa->{$relacao}()->delete();
+    // });
+    // }
+}
 }

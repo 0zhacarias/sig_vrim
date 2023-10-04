@@ -148,7 +148,7 @@ export default {
         getcorrector: false,
         user: {
             zona_trabalho:null,
-            // tipo_usuario:2,
+            // tipo_user_id:2,
         },
         rules: {
             required: (value) => !!value || "Campos obrigatório.",
@@ -176,27 +176,27 @@ export default {
 
     methods: {
         pambaleiro() {
-            this.user.tipo_usuario = 4
+            this.user.tipo_user_id = 4
             this.getimobiliaria = true;
             this.getcorrector = false;
-            // alert(this.user.tipo_usuario)
+            // alert(this.user.tipo_user_id)
         },
         corrector() {
-            this.user.tipo_usuario = 5
+            this.user.tipo_user_id = 5
             this.getimobiliaria = true;
             this.getcorrector = true;
         },
         proprietario() {
-            this.user.tipo_usuario = 3
+            this.user.tipo_user_id = 3
             this.getimobiliaria = false;
         },
         cliente() {
-            this.user.tipo_usuario = 2
+            this.user.tipo_user_id = 2
             this.getimobiliaria = false;
         },
         setLogin() {
-            // alert(this.user.tipo_usuario)
-            if(this.user.tipo_usuario==null){
+            // alert(this.user.tipo_user_id)
+            if(this.user.tipo_user_id==null){
                 this.alertError=true
             }else{
                 this.$inertia.post("register", this.user, {

@@ -46,6 +46,9 @@ Route::get('/Registrar-conta', function () {
 Route::get('/logar', function () {
     return Inertia::render('Portal/Login') ;
 })->name('login.login');
+Route::get('/sobre-nos', function () {
+    return Inertia::render('Portal/SobreNos') ;
+})->name('sobre');
 Route::get('/condominio/create', function () {
     return Inertia::render('Portal/RegistrarConta');
 });
@@ -63,6 +66,8 @@ Route::post('/tipo-tipologia',[App\Http\Controllers\ImoveisController::class,'ti
 // Route::post('/Solicitar-visita/{id}',[App\Http\Controllers\ImoveisController::class,'solicitar_visita']);
 Route::get('/imovel-selecionado/{id}',[App\Http\Controllers\ImoveisController::class,'imovel_selecionado'])->name('immovel-selecionado');
 Route::get('/imoveis-provincia/{id}',[App\Http\Controllers\ImoveisController::class,'imoveis_provincia']);
+Route::get('/filtrar-imoveis-portal',[App\Http\Controllers\ImoveisController::class,'filtrar_imoveis_portal']);
+
 Route::get('/listaImoveisCompras',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_comprar'])->name('comprar-imoveis');
 Route::get('/listaImoveisArrendamentos',[App\Http\Controllers\ImoveisController::class,'lista_imoveis_arrendamento'])->name('arrendar-imoveis');
 Route::post('/filtrarImoveisPaginate',[App\Http\Controllers\ImoveisController::class,'filtrar_imoveis_paginate'])->name('filtrar-imoveis');
@@ -106,10 +111,21 @@ Route::resource('/moradores', App\Http\Controllers\MoradorController::class);
 Route::resource('/condominios', App\Http\Controllers\CondominioController::class);
 Route::get('/paginarwte', [App\Http\Controllers\HomeController::class, 'portal_auth'])->name('home');
 Route::get('/pdf-declaracao', [App\Http\Controllers\ClienteController::class, 'pdf_declaracao'])->name('declaracao');
-Route::post('/nao-validar-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'nao_validar_processo'])->name('gostar');
-Route::post('/validar-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'validar_processo'])->name('home');
-Route::post('/gostar-imovel', [App\Http\Controllers\ActividadeImoveisController::class, 'gostar_imovel'])->name('naogostar');
-Route::post('/nao-gostar-imovel', [App\Http\Controllers\ActividadeImoveisController::class, 'nao_gostar_imovel'])->name('home');
+Route::post('/nao-validar-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'nao_validar_processo'])->name('naovalidar');
+Route::post('/validar-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'validar_processo'])->name('validar');
+Route::post('/gostar-imovel', [App\Http\Controllers\ActividadeImoveisController::class, 'gostar_imovel'])->name('gostar');
+Route::post('/nao-gostar-imovel', [App\Http\Controllers\ActividadeImoveisController::class, 'nao_gostar_imovel'])->name('naogostar');
+Route::post('/cancelar-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'cancelar_processo'])->name('cancelar');
 Route::post('/carregar-imoveis-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'carregar_imoveis_processo'])->name('carregar_imoveis');
 Route::resource('/funcionario',App\Http\Controllers\FuncionarioController::class);
+Route::group(['prefix' => 'clientes', 'middleware'=>'auth'], function () {
 Route::resource('/cliente',App\Http\Controllers\ClienteController::class);
+Route::get('/meu-perfil', [App\Http\Controllers\ClienteController::class, 'perfil'])->name('perfil');
+Route::get('/meus-anuncios', [App\Http\Controllers\ClienteController::class, 'anuncios'])->name('anuncios');
+Route::get('/meus-processo', [App\Http\Controllers\ClienteController::class, 'processos'])->name('processo');
+Route::post('/atualizar-perfil', [App\Http\Controllers\ClienteController::class, 'atualizar_perfil'])->name('atualizar');
+Route::get('/permissoes', [App\Http\Controllers\ClienteController::class, 'permissoes'])->name('permissoes');
+Route::get('/buscar-roles', [App\Http\Controllers\FuncoesPermissoesController::class, 'getRoles']);
+Route::put('/permissoes-funcao/{id}', [App\Http\Controllers\FuncoesPermissoesController::class, 'permissoes_funcao']);
+
+});

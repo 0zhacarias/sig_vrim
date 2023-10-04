@@ -60,7 +60,11 @@
                     elevation="0" text>
                     Comprar
                 </v-btn>
-                <v-btn dense @click="anuncios()" class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff"
+                <v-btn dense v-if="user==null" @click="anuncios()" class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff"
+                    elevation="0" text>
+                    Anunciar
+                </v-btn>
+                <v-btn dense v-if="user!==null && user.can['Gerir Anúncios']" @click="anuncios()" class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff"
                     elevation="0" text>
                     Anunciar
                 </v-btn>
@@ -71,13 +75,18 @@
                     Login
                 </v-btn>
 
-                <v-btn v-if="user==null" dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff"
+                <!-- <v-btn v-if="user==null" dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff"
                     href="/RegistrarConta" elevation="0" text>
                     Cadastrar
-                </v-btn>
+                </v-btn> -->
+               
                 <v-btn v-if="user!==null" text dense class="white--text text-lowercase" href="/perfil">
                     {{ user.name }}<br />
                     <!-- {{ user.email}} -->
+                </v-btn>
+                <v-btn dense class="d-none d-lg-flex btn-custom-nm ml-5" color="#fff"
+                    href="/sobre-nos" elevation="0" text>
+                    Sobre Nós
                 </v-btn>
                 <v-btn class="white--text hidden-xs-only" v-if="user!==null" @click="logout" title="Terminar Sessão" icon>
                     <v-icon>mdi-export{{  }}</v-icon>
@@ -98,7 +107,7 @@
                         <v-list-item>
                             <v-list-item-title><router-link to="/contact">Anuciar</router-link></v-list-item-title>
                         </v-list-item>
-                        <v-list-item v-if="isLoggedIn">
+                        <v-list-item>
                             <v-list-item-title ><router-link
                                     to="/logout">sair</router-link></v-list-item-title>
                         </v-list-item>
@@ -115,7 +124,7 @@
         </v-main>
 
         <div class="text-center">
-            <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="50" offset-y nudge-top="600">
+            <v-menu v-model="dialogContacto" :close-on-content-click="false" :nudge-width="50" offset-y nudge-top="600">
                 <template v-slot:activator="{ on, attrs }">
                     <v-fab-transition>
                         <v-btn v-bind="attrs" v-on="on" v-show="!hidden" class="deep-purple" dark fixed bottom right fab>
@@ -128,62 +137,68 @@
                 <v-card class="" max-width="300">
                     <v-list>
                         <v-list-item>
-                            <v-list-item-avatar>
+                            <!-- <v-list-item-avatar>
                                 <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
-                            </v-list-item-avatar>
+                            </v-list-item-avatar> -->
 
                             <v-list-item-content>
                                 <v-list-item-title class="subtitle-1 text-h5">KUBICOS</v-list-item-title>
-                                <v-list-item-subtitle>Entre em contacto com um corretor</v-list-item-subtitle>
+                                <v-list-item-subtitle>Para adicionar a sua Zona de atuação ou a Imóbiliaria que pertences informe no formulário</v-list-item-subtitle>
                             </v-list-item-content>
 
-                            <v-list-item-action>
+                            <!-- <v-list-item-action>
                                 <v-btn :class="fav ? 'red--text' : ''" icon @click="fav = !fav">
                                     <v-icon>mdi-heart</v-icon>
                                 </v-btn>
-                            </v-list-item-action>
+                            </v-list-item-action> -->
                         </v-list-item>
                     </v-list>
 
                     <v-divider></v-divider>
                     <v-col cols="12"> <validation-provider v-slot="{ errors }" name="Numero do telefone" :rules="{
                         required: true,
-                        digits: 12,
-                        regex: '^(244)\\d{9}$'
+                        digits: 9,
+                        // regex: '^(244)\\d{9}$'
+                        regex: '^(9)\\d{8}$'
                     }">
-                            <v-text-field v-model="phoneNumber" outlined :counter="7" :error-messages="errors"
+                            <v-text-field v-model="phoneNumber" outlined :counter="9" :error-messages="errors" dense
                                 label="Phone Number" required></v-text-field>
                         </validation-provider></v-col>
                     <v-col cols="12"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                            <v-text-field v-model="email" outlined :error-messages="errors" label="E-mail"
+                            <v-text-field v-model="email" outlined :error-messages="errors" dense label="E-mail"
                                 required></v-text-field>
                         </validation-provider>
                     </v-col>
+                    <v-col cols="12"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
+                            <v-textarea rows="2" v-model="email" outlined :error-messages="errors" dense label="E-mail"
+                                required></v-textarea>
+                        </validation-provider>
+                    </v-col>
                     <v-list>
-
+<!-- 
                         <v-list-item>
                             <v-list-item-action>
                                 <v-switch v-model="message" color="purple"></v-switch>
                             </v-list-item-action>
-                            <v-list-item-title>Enable messages</v-list-item-title>
-                        </v-list-item>
+                            <v-list-item-subtitle>Para adicionar a sua Zona de atuação ou a Imóbiliaria que pertences informe no formulário</v-list-item-subtitle>
+                        </v-list-item> -->
 
-                        <v-list-item>
+                        <!-- <v-list-item>
                             <v-list-item-action>
                                 <v-switch v-model="hints" color="purple"></v-switch>
                             </v-list-item-action>
                             <v-list-item-title>Enable hints</v-list-item-title>
-                        </v-list-item>
+                        </v-list-item> -->
                     </v-list>
 
                     <v-card-actions>
                         <v-spacer></v-spacer>
 
-                        <v-btn text @click="menu = false">
-                            Cancel
+                        <v-btn text color="red" @click="dialogContacto = false">
+                            Fechar
                         </v-btn>
-                        <v-btn color="primary" text @click="menu = false">
-                            Save
+                        <v-btn color="indigo" text @click="dialogContacto = false">
+                            Enviar
                         </v-btn>
                     </v-card-actions>
                 </v-card>
@@ -350,8 +365,34 @@
 </template>
 <script>
 // import { Link } from "@inertiajs/inertia-vue";
+import { required, digits, email, regex } from 'vee-validate/dist/rules'
+import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+setInteractionMode('eager')
 
+extend('digits', {
+    ...digits,
+    message: '{_field_} precisa de  {length} digitos e deve começar com número 9. ({_value_})',
+})
+
+extend('required', {
+    ...required,
+    message: 'O campo não pode estar vazio',
+})
+extend('regex', {
+    ...regex,
+    message: '{_field_} {_value_} Não compre com as restrições (990987634)',
+})
+
+extend('email', {
+    ...email,
+    message: 'Email invalido',
+})
 export default {
+    props: ['provincias','startingImage', 'autoSlideInterval', 'showProgressBar', 'msg','tipoUsuario'],
+    components: {
+        ValidationProvider,
+        ValidationObserver,
+    },
     data() {
         return {
             usuario:{},
@@ -362,6 +403,7 @@ export default {
                 "fab fa-linkedin",
                 "fab fa-instagram",
             ],
+            dialogContacto:false,
             drawer: true,
             mini: true,
             totalNotificacoes: 0,

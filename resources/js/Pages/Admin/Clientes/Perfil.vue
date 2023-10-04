@@ -1,6 +1,7 @@
 <template>
-    <v-app>
-        <template>
+
+    <!-- <v-app> -->
+        <Cliente>
             <v-container v-if="editarform" class="w-75 justify-space-around">
                 <v-subheader class="text-h5 text-bold mt-10 ">Meus Dados</v-subheader>
                 <validation-observer ref="observer" v-slot="{ invalid }">
@@ -8,121 +9,71 @@
                         <v-row class="m-2">
                             <v-col cols="12">
 
-                                <validation-provider v-slot="{ errors }" name="Name" rules="required|max:10">
-                                    <v-text-field dense v-model="cliente.name" outlined :counter="10" :error-messages="errors"
+                                <validation-provider v-slot="{ errors }" name="Name" rules="required|max:25">
+                                    <v-text-field dense v-model="pessoa.nome" outlined :counter="10" :error-messages="errors"
                                         label="Nome Completo" required></v-text-field>
                                 </validation-provider>
                             </v-col>
                             
                             <v-col cols="6"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field disabled dense v-model="cliente.email" outlined :error-messages="errors" label="E-mail"
+                                    <v-text-field disabled dense v-model="pessoa.email" outlined :error-messages="errors" label="E-mail"
                                         required></v-text-field>
                                 </validation-provider>
                             </v-col>
-                            <v-col cols="6"> <validation-provider v-slot="{ errors }" name="Numero do telefone" :rules="{
+                            <v-col cols="6"> <validation-provider v-slot="{ errors }" name="numeroelefone" :rules="{
                                 required: true,
                                 digits: 12,
                                 regex: '^(244)\\d{9}$'
                             }">
-                                    <v-text-field dense v-model="cliente.telefone" outlined :counter="12" :error-messages="errors"
+                                    <v-text-field dense v-model="pessoa.numero_telefone" outlined :counter="12" :error-messages="errors"
                                         label="Numero do telefone" required></v-text-field>
                                 </validation-provider></v-col>
-                                <v-col cols="4"> <validation-provider v-slot="{ errors }" name="provincia" rules="required|bi">
+                                <v-col cols="6"> <validation-provider v-slot="{ errors }" name="provincia" rules="required">
                                     <v-autocomplete outlined dense :error-messages="errors"
-                                                                label="Provincia*" v-model="cliente.provincia_id
+                                                                label="Provincia*" v-model="pessoa.provincia_id
                                                                     " :items="provincias" item-text="designacao"
                                                            
                                                                 item-value="id" item-color="red" data-vv-name="provincia" required ></v-autocomplete>
                                 </validation-provider>
+                  
                             </v-col>
-                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="tipo de documentação" rules="required|email">
-                                    <!-- <v-text-field dense v-model="tipo_documentacao" outlined :error-messages="errors" label="E-mail"
-                                        required></v-text-field> -->
-
-                                        <v-select dense v-model="tipo_documentacao" outlined :items="items" :error-messages="errors"
-                                        label="tipo de documentação" data-vv-name="tipo de documentação" required></v-select>
-                                </validation-provider>
-                            </v-col>
-                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="BI" rules="required|bi">
-                                    <v-text-field dense v-model="cliente.bi" outlined :error-messages="errors" label="Bilhete de identidade"
+                            <v-col cols="6"> <validation-provider v-slot="{ errors }" name="bi" rules="required">
+                                    <v-text-field dense v-model="pessoa.numero_identificacao" outlined :error-messages="errors" label="Bilhete de identidade"
                                         required></v-text-field>
                                 </validation-provider>
                             </v-col>
                            
-
-                                                     
-                            <!-- <v-col cols="4"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field dense v-model="email" outlined :error-messages="errors" label="E-mail"
-                                        required></v-text-field>
-                                </validation-provider>
-                            </v-col> -->
                             <v-col cols="12"><v-divider></v-divider>
-                                Dados Profissionais
+                                Dados Profissionais 
                                 <v-divider></v-divider></v-col>
                             
-                            <v-col :cols="associado==true? 2:6"> <validation-provider v-slot="{ errors }" name="Tipo corretor" rules="required|tipoCorretor">
-                                <v-select dense v-model="tipo_corrector" outlined  @change="escolherTipoCorretor()" :items="tipoCorretor" :error-messages="errors"
-                                        label="Tipo de usuário" data-vv-name="Tipo de usuário" required></v-select>
+                            <v-col :cols="associado==true? 2:6"> <validation-provider v-slot="{ errors }" name="tipousuario" rules="required">
+                                <v-select dense v-model="pessoa.usuario.tipo_user_id" outlined  @change="escolherTipoCorretor()" :items="tipoUsuario" :error-messages="errors"
+                                       item-value="id" item-text="designacao" label="Tipo de usuário" data-vv-name="Tipo de usuário" required></v-select>
                                 </validation-provider>
                             </v-col>
-                            <v-col :cols="associado==true? 2:3" v-if="associado==true"> <validation-provider v-slot="{ errors }" name="Código do Corretor" rules="required|codigoCorretor">
-                                    <v-text-field  dense v-model="cliente.codigo_profissional" outlined :error-messages="errors" label="Código do corretor"
+                            <v-col :cols="associado==true? 2:3" v-if="associado==true"> <validation-provider v-slot="{ errors }" name="codigocorretor" rules="required|codigocorretor">
+                                    <v-text-field  dense v-model="pessoa.codigo_profissional" outlined :error-messages="errors" label="Código do corretor"
                                         required></v-text-field>
                                 </validation-provider>
                             </v-col>
 
-                            <v-col cols="4" v-if="associado==true"> <validation-provider v-slot="{ errors }" name="Nome da Imobiliaria" rules="required|nomeImobiliaria">
-                                <v-select dense v-model="nome_imobiliaria" outlined :items="items" :error-messages="errors"
+                            <v-col cols="4" v-if="associado==true"> <validation-provider v-slot="{ errors }" name="nomeImobiliaria" rules="required|nomeImobiliaria">
+                                <v-select dense v-model="pessoa.imobiliaria_id" outlined :items="items" :error-messages="errors"
                                         label="Nome da Imóbiliaria" data-vv-name="Nome da Imóbiliaria" required></v-select>
                                 </validation-provider>
                             </v-col>
 
-                            <v-col :cols="associado==true? 4:6"> <validation-provider v-slot="{ errors }" name="Zona de actuaçao" rules="required|zonaAtuacao">
-                                    <v-select dense v-model="zona_actuacao" :items="items" outlined :error-messages="errors" label="Zona de actuaçao"
+                            <v-col :cols="associado==true? 4:6"> <validation-provider v-slot="{ errors }" name="placa" rules="required">
+                                    <v-select dense v-model="pessoa.zona_actuacao" :items="placa" outlined :error-messages="errors" label="Zona de actuaçao"
                                         required></v-select>
                                 </validation-provider>
                             </v-col>
-                  <!--           <v-col cols="6"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field dense v-model="email" outlined :error-messages="errors" label="E-mail"
-                                        required></v-text-field>
-                                </validation-provider>
-                            </v-col>
-                            <v-col cols="6"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field dense v-model="email" outlined :error-messages="errors" label="E-mail"
-                                        required></v-text-field>
-                                </validation-provider>
-                            </v-col>
-                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field dense v-model="email" outlined :error-messages="errors" label="E-mail"
-                                        required></v-text-field>
-                                </validation-provider>
-                            </v-col>
-                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field dense v-model="email" outlined :error-messages="errors" label="E-mail"
-                                        required></v-text-field>
-                                </validation-provider>
-                            </v-col>
-                            <v-col cols="4"> <validation-provider v-slot="{ errors }" name="select" rules="required">
-                                    <v-select dense v-model="select" outlined :items="items" :error-messages="errors"
-                                        label="Select" data-vv-name="select" required></v-select>
-                                </validation-provider></v-col> -->
-                            <!-- <v-col cols="4"> <validation-provider v-slot="{ errors }" rules="required" name="checkbox">
-                                    <v-checkbox v-model="checkbox" :error-messages="errors" value="1" label="Option"
-                                        type="checkbox" required></v-checkbox>
-                                </validation-provider></v-col>
-                            <v-col cols="4"> <validation-provider v-slot="{ errors }" rules="required" name="checkbox">
-                                    <v-checkbox v-model="checkbox" :error-messages="errors" value="1" label="Option"
-                                        type="checkbox" required></v-checkbox>
-                                </validation-provider></v-col>
-                            <v-col cols="4"> <validation-provider v-slot="{ errors }" rules="required" name="checkbox">
-                                    <v-checkbox v-model="checkbox" :error-messages="errors" value="1" label="Option"
-                                        type="checkbox" required></v-checkbox>
-                                </validation-provider></v-col> -->
-                            <v-col cols="12"> <v-btn class="mr-4" type="submit" :disabled="invalid">
-                                    submit
+                            <v-col cols="12"> <v-btn class="mr-4 justify-end" type="submit" :disabled="invalid">
+                                    Atulizar
                                 </v-btn>
                                 <v-btn @click="clear">
-                                    clear
+                                    limpar
                                 </v-btn></v-col>
 
 
@@ -132,11 +83,12 @@
                     </form>
                 </validation-observer>
             </v-container>
-        </template>
-    </v-app>
+    </Cliente>
+    <!-- </v-app> -->
 </template>
 
 <script>
+import Cliente from "../Clientes/Cliente";
 // import { extend,setInteractionMode } from 'vee-validate';
 import { required, digits, email, max, regex } from 'vee-validate/dist/rules'
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
@@ -149,7 +101,7 @@ extend('digits', {
 
 extend('required', {
     ...required,
-    message: '{_field_} O campo não pode estar vazio',
+    message: 'O campo não pode estar vazio',
 })
 
 extend('max', {
@@ -168,8 +120,9 @@ extend('email', {
 })
 
 export default {
-    props: ["cliente", 'startingImage', 'autoSlideInterval', 'showProgressBar', 'msg'],
+    props: ["cliente",'pessoa', 'provincias','startingImage', 'autoSlideInterval', 'showProgressBar', 'msg','tipoUsuario'],
     components: {
+        Cliente,
         ValidationProvider,
         ValidationObserver,
     },
@@ -187,11 +140,33 @@ export default {
         checkbox: null,
         editarform:true,
         associado:false,
+        placa: ['Rangel', 'Benfica', 'Cazenga', 'BO',
+         'Marçal', 'Vila-lice', 'Nova Urbanização de Cacuado', 
+         'Maianga', 'Rangel', 'Benfica', 'Cazenga', 'BO',
+         'Cassenda', 'Benfica', 'Cazenga', 'Outros',],
     }),
-
+    computed: {
+    user() {
+      return this.$page.props.auth.user;
+    },
+  },
     methods: {
         submit() {
             this.$refs.observer.validate()
+            axios.post("/clientes/atualizar-perfil",this.pessoa, 
+            )
+            .then((response) => {
+                    this.loading = false;
+                    alert(JSON.stringify(response.data));
+                })
+                .catch(() => {
+                    alert(JSON.stringify(response.data));
+
+                    //   console.log('Falha ao registar os dados na base de dados!...')
+                });
+            // alert(JSON.stringify(this.pessoa))
+            window.location.reload()
+            this.clear();
         },
         escolherTipoCorretor(){
 if(this.tipo_corrector=='Corrector'){

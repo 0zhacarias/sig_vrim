@@ -32,46 +32,46 @@
                                                 Vender</v-btn>
                                             <v-btn outlined value="2" v-model="imovel.arrendamento_id"
                                                 class="corArrendamento" @click="arrendarImoveis()">Arrendar</v-btn>
-
+                                            <!-- 
                                             <v-btn outlined value="1" v-model="imovel.proprietario_id"
                                                 @click="proprietario()" class="corProprietario"
                                                 v-if="this.getarrendar == true || this.getvender == true">
                                                 Proprietário</v-btn>
                                             <v-btn outlined value="2" v-model="imovel.colaborador_id" @click="colaborador()"
                                                 class="corColaborador"
-                                                v-if="this.getarrendar == true || this.getvender == true">Pambaleiro</v-btn>
+                                                v-if="this.getarrendar == true || this.getvender == true">Pambaleiro</v-btn> -->
                                         </v-card-text>
 
                                         <v-form ref="form" lazy-validation>
                                             <v-container
-                                                v-if="(this.getarrendar == true || this.getvender == true) && (getProprietario == true || getcolaborador == true)">
+                                                v-if="(this.getarrendar == true || this.getvender == true) && (user.tipo_user.id == 3 || user.tipo_user.id == 4 || user.tipo_user.id == 5)">
                                                 <!-- <v-card-text align="center" justify="center">
                                                         <v-btn outlined  v-model="proprietario" @click="proprietario()" class="corProprietario"> Proprietário</v-btn>
                                                         <v-btn outlined v-model="colaborador" @click="colaborador()" class="corColaborador">Pambaleiro</v-btn>
                                                     </v-card-text> -->
-                                              
-                                                    <v-row dense class="pt-10">
-                                                        <span class="text-h5 "> Detalhes sobre o seu imóvel</span><br />
-                                                        <span class="subtitle pb-10">Essas informações são importantes para
-                                                            que seu anúncio
-                                                            apareça corretamente nas buscas dos interessados.
-                                                        </span>
-                                                        <v-col cols="12" sm="6" md="6">
-                                                            <v-autocomplete outlined dense :rules="tipoImovelRules"
-                                                                label="Tipo de Imovel*" v-model="imovel.categoria_imoveis_id
-                                                                    " :items="tipoImoveis" item-text="designacao"
-                                                                @change="getTipologia(imovel.categoria_imoveis_id)"
-                                                                item-value="id" item-color="red"></v-autocomplete>
-                                                        </v-col>
-                                                        <v-col cols="12" sm="6" md="6">
-                                                            <v-autocomplete outlined dense :rules="tipologiaRules" required
-                                                                label="Tipologia*" v-model="imovel.tipologia_id
-                                                                    " :items="tipologiaImoveis" item-text="designacao"
-                                                                item-value="id"></v-autocomplete>
-                                                        </v-col>
 
-                                                    </v-row>
-                                                
+                                                <v-row dense class="pt-10">
+                                                    <span class="text-h5 "> Detalhes sobre o seu imóvel</span><br />
+                                                    <span class="subtitle pb-10">Essas informações são importantes para
+                                                        que seu anúncio
+                                                        apareça corretamente nas buscas dos interessados.
+                                                    </span>
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <v-autocomplete outlined dense :rules="tipoImovelRules"
+                                                            label="Tipo de Imovel*" v-model="imovel.categoria_imoveis_id
+                                                                " :items="tipoImoveis" item-text="designacao"
+                                                            @change="getTipologia(imovel.categoria_imoveis_id)"
+                                                            item-value="id" item-color="red"></v-autocomplete>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <v-autocomplete outlined dense :rules="tipologiaRules" required
+                                                            label="Tipologia*" v-model="imovel.tipologia_id
+                                                                " :items="tipologiaImoveis" item-text="designacao"
+                                                            item-value="id"></v-autocomplete>
+                                                    </v-col>
+
+                                                </v-row>
+
                                                 <v-row>
                                                     <v-col cols="12" md="12">
                                                         <v-textarea v-model="imovel.designacao" label="titulo do Anúcio*"
@@ -338,14 +338,15 @@
                                                             </v-row>
                                                         </v-card-text> -->
                                                 </v-row>
-                                                
+
                                             </v-container>
                                         </v-form>
                                     </v-card>
                                     <v-card-actions>
                                         <v-spacer />
+                                        <!-- v-if="(getvender || getarrendar) && (getProprietario || getcolaborador)" -->
                                         <v-btn color="#6A1B9A"
-                                            v-if="(getvender || getarrendar) && (getProprietario || getcolaborador)"
+                                            v-if="(getvender || getarrendar) && (user.tipo_user.id == 3 || user.tipo_user.id == 4 || user.tipo_user.id == 5)"
                                             outlined @click="continuar(2, 'form')">
                                             Continuar
                                         </v-btn>
@@ -741,9 +742,8 @@
                                                     </v-list-item-group>
                                                 </v-list>
                                                 <v-card-actions>
-                                                    <v-btn color="warning" @click="e1 = 1">Voltar</v-btn>
-
                                                     <v-spacer />
+                                                    <v-btn color="warning" outlined @click="e1 = 1">Voltar</v-btn>
                                                     <v-btn color="#6A1B9A" outlined @click="continuar(3, 'form')">
                                                         Continuar
                                                     </v-btn>
@@ -846,9 +846,8 @@
                                     </v-card>
 
                                     <v-card-actions>
-                                        <v-btn color="warning" @click="e1 = 2">Voltar</v-btn>
-
                                         <v-spacer />
+                                        <v-btn color="warning" outlined @click="e1 = 2">Voltar</v-btn>
                                         <v-btn color="#6A1B9A" outlined @click="continuar(4, 'form')">
                                             Continuar
                                         </v-btn>
@@ -857,18 +856,20 @@
                                 <v-stepper-content step="4">
                                     <v-card flat>
                                         <v-form ref="form4" lazy-validation>
-                                            <v-container  class="py-15 ma-8">
+                                            <v-container class="py-15 ma-8">
                                                 <v-row dense>
                                                     <template>
-                                                        <span >
-                                                            <v-card-text  class="text-center text-h4">Entraremos em contacto com o senhor:  <b>{{ user.name }}</b>  para conferir a veracidade do seu imóvel.</v-card-text>
-                                             
+                                                        <span>
+                                                            <v-card-text class="text-center text-h4">Entraremos em contacto
+                                                                com o senhor: <b>{{ user.name }}</b> para conferir a
+                                                                veracidade do seu imóvel.</v-card-text>
+
                                                         </span><br />
                                                         <v-card-text class="text-center text-h6">
                                                             Ao divulgarmos as fotos e documentações iremos colocar
                                                             marca d'água no documento para proteger as informações.
-                                                        </v-card-text>           
-                                                       
+                                                        </v-card-text>
+
                                                     </template>
                                                 </v-row>
                                             </v-container>
@@ -876,10 +877,11 @@
                                     </v-card>
 
                                     <v-card-actions>
-                                        <v-btn color="warning" @click="e1 = 3">Voltar</v-btn>
-
                                         <v-spacer />
-                                        <v-btn class="bg-primary darken-4 white--text" @click="salvarImovel()">
+                                        <v-btn color="warning"  outlined @click="e1 = 3">Voltar</v-btn>
+
+                                        
+                                        <v-btn color="#6A1B9A" outlined @click="salvarImovel()">
                                             {{
                                                 editedIndex > -1
                                                 ? "Actualizar"
@@ -1116,11 +1118,11 @@ export default {
     },
 
     watch: {
-        overlay (val) {
-        val && setTimeout(() => {
-          this.overlay = false
-        }, 3000)
-      },
+        overlay(val) {
+            val && setTimeout(() => {
+                this.overlay = false
+            }, 3000)
+        },
     },
 
     methods: {
@@ -1375,7 +1377,6 @@ export default {
 
         increaseValue() {
             var value = parseInt(document.getElementById("idquarto").value, 10);
-            alert(value)
             value = isNaN(value) ? 0 : value;
             value++;
             document.getElementById("idquarto").value = value;

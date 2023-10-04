@@ -55,12 +55,11 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         
-
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
-            'tipo_usuario' => ['required'],
+            'tipo_user_id' => ['required'],
         ]);
     }
     /**
@@ -76,10 +75,10 @@ class RegisterController extends Controller
             $user = User::create([
                 'name' => $data['name'],
                 'telefone' => $data['email'],
-                'tipo_user_id' => $data['tipo_usuario'],
+                'tipo_user_id' => $data['tipo_user_id'],
                 'password' => Hash::make($data['password']),
             ]);
-            // dd($data['email'],$user);
+            
             Pessoa::create([
                 'nome'=>$data['name'],
                 'sobre_nome'=>$data['name'],
@@ -91,9 +90,10 @@ class RegisterController extends Controller
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'tipo_user_id' => $data['tipo_usuario'],
+                'tipo_user_id' => $data['tipo_user_id'],
                 'password' => Hash::make($data['password']),
             ]);
+            // dd($user,$user->assignRole('Funcionario'));
             Pessoa::create([
                 'nome'=>$data['name'],
                 'sobre_nome'=>$data['name'],
@@ -101,9 +101,24 @@ class RegisterController extends Controller
                 'user_id'=>$user->id,
                 'zona_trabalho'=>$data['zona_trabalho'],
             ]);
-        }
+        };
      
+       if($data['tipo_user_id']== 1){
+        $user->assignRole('Funcionario');
+
+       }elseif ($data['tipo_user_id']== 2) {
+        $user->assignRole('Clientes');
        
+       }elseif ($data['tipo_user_id']== 3) {
+        $user->assignRole('Proprietários');
+       
+       }elseif ($data['tipo_user_id']== 4) {
+        $user->assignRole('Colaborador');
+       
+       }elseif ($data['tipo_user_id']== 5) {
+        $user->assignRole('Corretor');
+       }
+    //    dd($user);
         // if ($data['pessoa']) {
         //     Pessoa::created([
         //         'user_id'=>$user->id,

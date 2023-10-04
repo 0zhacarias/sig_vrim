@@ -27,11 +27,11 @@
                             <v-row  class="px-5">
                                 <v-col cols="8">
                                     <template>
-                                    <v-tabs v-model="tab" centered class="text-h2 py-lg-10" show-arrows background-color="transparent"
+                                    <v-tabs v-model="filtrar.servico" centered class="text-h2 py-lg-10" show-arrows background-color="transparent"
                                         dark icons-and-text center-active>
-                                        <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 ">Comprar</v-tab>
+                                        <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 " >Comprar</v-tab>
                                         <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 ">Arrendar</v-tab>
-                                        <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 ">Meio periódo</v-tab>
+                                        <v-tab class="text-h6 px-lg-6 px-md-2 px-sm-1 " >Meio periódo</v-tab>
                                     </v-tabs>
                                 </template>
                                 </v-col>
@@ -49,18 +49,21 @@
 
                                 <v-col cols="4" md="4" class="opens-sans" >
                                     <v-autocomplete color="indigo" outlined rounded auto-select-first chips clearable deletable-chips
-                                        small-chips item-text="designacao" item-value="id" prepend-icon="" hide-details
+                                        small-chips item-text="designacao" item-value="id" prepend-icon=""  v-model="filtrar.local_id"
+                                        :items="provincias"
+                                       
+                                        hide-details
                                         label="Localização" class="indigo lighten-5">
                                     </v-autocomplete>
                                 </v-col>
                                 <v-col cols="4" md="4" class="opens-sans mb-n8">
-                                    <v-autocomplete outlined rounded auto-select-first chips clearable deletable-chips
-                                        small-chips item-text="designacao" item-value="id"
+                                    <v-autocomplete outlined rounded auto-select-first chips clearable deletable-chips v-model="filtrar.tipo_imovel"
+                                        small-chips item-text="designacao" item-value="id" :items="tipo_imoveis"
                                         prepend-icon="" label="Estado" full-width hide-details class="indigo lighten-5">
                                     </v-autocomplete>
                                 </v-col>
                                 <v-col cols="2" md="2">
-                                    <v-btn rounded x-large  class="bottom-gradient">
+                                    <v-btn rounded x-large  class="bottom-gradient"  @click="FiltrarImoveis()">
                                         pesquisar
                                     </v-btn>
                                 </v-col>
@@ -131,9 +134,8 @@
 
                                             <span class="mdi mdi-timer-lock-outline" title="Arrendamento"></span>{{
                                                 actidade.tempo_arrendar }} </v-chip>
-                                        <v-chip color="deep-purple" title="estado do imovel" class="white--text">
-                                            <span v-if="item.estado_imoveis_id == 1"
-                                                class="mdi mdi-archive-lock-open "></span>
+                                        <v-chip :color="getcor(item.estado_imoveis_id)" title="estado do imovel" class="white--text">
+                                            <span v-if="item.estado_imoveis_id == 1" class="mdi mdi-archive-lock-open "></span>
                                             <span v-if="item.estado_imoveis_id == 2" class="mdi mdi-archive-remove"></span>
                                             <span v-if="item.estado_imoveis_id == 3" class="mdi mdi-archive-cog "></span>
                                             <span v-if="item.estado_imoveis_id == 4" class="mdi mdi-archive-eye"></span>
@@ -218,7 +220,7 @@
 
                                             <span class="mdi mdi-timer-lock-outline" title="Arrendamento"></span>{{
                                                 actidade.tempo_arrendar }} </v-chip>
-                                        <v-chip color="deep-purple" title="estado do imovel" class="white--text">
+                                        <v-chip :color="getcor(item.estado_imoveis_id)" title="estado do imovel" class="white--text">
                                             <span v-if="item.estado_imoveis_id == 1"
                                                 class="mdi mdi-archive-lock-open "></span>
                                             <span v-if="item.estado_imoveis_id == 2" class="mdi mdi-archive-remove"></span>
@@ -425,18 +427,12 @@
             </v-container>
             <template>
                 <div class="text-center">
-                    <v-btn color="deep-purple accent-4" class="white--text" @click="overlay = !overlay">
-                        Launch Application
-                        <v-icon right>
-                            mdi-open-in-new
-                        </v-icon>
-                    </v-btn>
-
-                    <v-overlay :value="overlay">
+                    <v-overlay v-if="overlay">
                         <v-progress-circular indeterminate size="64"></v-progress-circular>
                     </v-overlay>
                 </div>
-            </template><template>
+            </template>
+            <template>
                 <v-row justify="center">
                     <v-img src="/img/cms-image.jpg" lazy-src="/img/cms-images.jpg" max-width="500" max-height="300">
                         <template v-slot:placeholder>
@@ -506,9 +502,11 @@ export default {
         last_page_proximo: 1,
         total_imoveis_proximos: 1,
         provincias: [],
+        tipo_imoveis: [],
         total_tmoveis: 0,
         novos_imoveis: [],
         mais_proximos: [],
+        filtrar:{},
         valid: true,
         name: "",
         overlay: false,
@@ -555,15 +553,52 @@ export default {
     created() {
         this.paginacao()
         this.paginacaoImovelProximo()
+        this.getcor(estado_imoveis_id)
 
     },
     methods: {
+        getcor(estado_imoveis_id) {
+            if (estado_imoveis_id == 1) {
+                return 'green'
+            } else if (estado_imoveis_id == 2) {
+                return 'deep-orange darken-4'
+            } else if (estado_imoveis_id == 3) {
+                return 'blue-grey darken-4'
+            } else if (estado_imoveis_id == 4) {
+                return 'yellow darken-3'
+            } else if (estado_imoveis_id == 5) {
+                return 'deep-purple darken-2'
+            } else if (estado_imoveis_id == 6) {
+                return 'red darken-4'
+            } else if (estado_imoveis_id == 7) {
+                return 'red darken-4'
+            } else if (estado_imoveis_id == 8) {
+                return 'amber accent-4'
+            }
+        },
         findImoveis(id) {
-            window.location.href = "/portal/imovel-selecionado/" + btoa(btoa(btoa(id)));
-            // alert(id);
+            this.overlay = true
+            setTimeout(() => {  
+                this.overlay = false
+                window.location.href = "/portal/imovel-selecionado/" + btoa(btoa(btoa(id)));
+            }, 2000)
         },
         findImoveisProvincia(id) {
-            window.location.href = "/portal/imoveis-provincia/" + id;
+            this.overlay = true
+            setTimeout(() => {  
+                this.overlay = false
+                window.location.href = "/portal/imoveis-provincia/" + id;
+            }, 2000)
+  
+        },
+        FiltrarImoveis() {
+            this.overlay = true
+            setTimeout(() => {  
+                this.overlay = false
+                this.$inertia.get("/portal/filtrar-imoveis-portal", this.filtrar, {});
+                // window.location.href = "/portal/filtra-imoveis-portal/" + this.filtrar;
+            }, 2000)
+            // window.location.href = "/portal/imoveis-provincia/" + id;
         },
         validate() {
             if (this.$refs.form.validate()) {
@@ -596,8 +631,9 @@ export default {
 
                     this.mais_proximos = response.data.mais_proximos.data;
                     this.last_page_proximo = response.data.mais_proximos.last_page;
-                    this.total_imoveis_proximos = response.data.mais_proximos.total;
+                    // this.total_imoveis_proximos = response.data.mais_proximos.total;
                     this.provincias = response.data.provincias;
+                    this.tipo_imoveis = response.data.tipo_imoveis;
 
                 })
                 .catch((error) => {
