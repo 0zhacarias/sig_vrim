@@ -222,19 +222,19 @@
                                                         informar um aproximado e alterar depois.</span>
                                                 </template>
                                                 <v-row class="py-0">
-                                                    <v-col cols="12" :md="this.getvender == false ? 6 : 4"
-                                                        :lg="this.getvender == false ? 6 : 6">
-                                                        <v-text-field v-model="imovel.preco"  outlined  dense
-                                                            :label="this.getvender == false ? 'Valor de venda do Imovel*' : 'Valor a ser Arrendado do Imovel*'"></v-text-field>
+                                                    <v-col cols="12" :md="this.operacao_id != 1  ? 6 : 4"
+                                                        :lg="this.operacao_id !== 1  ? 6 : 6"  >
+                                                        <v-text-field v-model="imovel.preco"  outlined  dense 
+                                                            :label="operacao_id ==1  ? 'Valor de venda do Imovel*' : 'Valor a ser Arrendado do Imovel*'"></v-text-field>
                                                     </v-col>
 
-                                                    <v-col cols="12" :md="this.getvender == flase ? 6 : 4"
-                                                        v-if="this.getvender == false">
-                                                        <v-text-field outlined   dense label="Quantidade de prestações*"
+                                                    <v-col cols="12" :md="this.operacao_id != 1 ? 6 : 4"
+                                                        v-if="this.operacao_id== 1">
+                                                        <v-text-field outlined  dense label="Quantidade de prestações*"
                                                             v-model="imovel.quantidade_prestacoes"></v-text-field>
                                                     </v-col>
-                                                    <v-col cols="12" :md="this.getarrendar == false ? 6 : 4"
-                                                        v-if="this.getarrendar == false">
+                                                    <v-col cols="12" :md="this.operacao_id != 2 ? 6 : 4"
+                                                        v-if="this.operacao_id == 2">
                                                         <v-autocomplete  label="Tempo de arrendamento"  outlined   dense
                                                             :items="tipo_regimes" item-value="id" item-text="designacao"
                                                             v-model="imovel.tempo_arrendar
@@ -247,8 +247,8 @@
                                                                     "></v-text-field>
                                                         </v-col> -->
                                                     <v-col cols="12" md="12"
-                                                        v-if="this.getcolaborador == true && this.getarrendar == true">
-                                                        <span>O pagamento referente a o arrendamento é o primeiro mês
+                                                        v-if="user.tipo_user_id == 4 && this.operacao_id == 2">
+                                                        <span>O pagamento referente a o arrendamento é o primeiro mês 
                                                         </span>
                                                     </v-col>
                                                 </v-row>
@@ -571,27 +571,28 @@
                                                     </template>
                                                     <v-divider></v-divider>
                                                     <v-row>
-                                                        <v-col cols="12" sm="6" md="4"><v-file-input 
+                                                        <v-col cols="12" sm="6" md="4" v-if="imovel.categoria_imoveis_id == 2 && this.operacao_id == 1" ><v-file-input 
                                                                 accept="application/pdf,image/*" label="Registo Predial"
-                                                                v-model="imovel.registoPredial" hint="O campo é opcional"
+                                                                v-model="imovel.registoPredial" hint="O campo é Obrigatório"
                                                                 persistent-hint required></v-file-input></v-col>
-                                                        <v-col cols="12" sm="6" md="4"><v-file-input
+                                                        <v-col cols="12" sm="6" md="4" v-if="imovel.categoria_imoveis_id == 2"><v-file-input
                                                                 accept="application/pdf,image/*" label="Matriz Predial"
                                                                 v-model="imovel.matrizpredial" hint="O campo é opcional"
                                                                 persistent-hint required></v-file-input></v-col>
 
-                                                        <v-col cols="12" sm="6" md="4"><v-file-input
-                                                                accept="application/pdf,image/*" label="Termo de equitação"
-                                                                v-model="imovel.termoEquitacao" hint="O campo é opcional"
+                                                        <v-col cols="12" sm="6" :md="imovel.categoria_imoveis_id == 2 ? 4: 8"><v-file-input
+                                                                accept="application/pdf,image/*" label="Termo de Quitação (factura)"
+                                                                v-model="imovel.termoEquitacao" hint="O campo é opcional "
                                                                 persistent-hint required></v-file-input></v-col>
 
-                                                        <v-col  cols="12" sm="6" md="4"><v-file-input
+                                                        <v-col  cols="12" sm="6" md="4" v-if="this.operacao_id == 1">
+                                                            <v-file-input
                                                                 accept="application/pdf,image/*"
                                                                 label="Directo de Superficie"
                                                                 v-model="imovel.direitoSuperficie" hint="O campo é opcional"
                                                                 persistent-hint required></v-file-input>
                                                         </v-col>
-                                                        <v-col cols="12" sm="6" md="4"><v-file-input
+                                                        <v-col cols="12" sm="6" md="4" v-if="this.operacao_id == 1"><v-file-input
                                                                 accept="application/pdf,image/*" label="Escritura
                                                                     Pública" v-model="imovel.escrituraPublica"
                                                                 hint="Compra e venda" persistent-hint
@@ -657,7 +658,7 @@
 import Cliente from "../Clientes/Cliente";
 export default {
 
-    props: ["meus_imoveis"],
+    props: ["meus_imoveis", "provincias", 'tipologiaImoveis', 'tipoImoveis',],
     components: {
         Cliente
     },
@@ -690,6 +691,7 @@ export default {
             tempo_arrendar: 0,
             quantidade_prestacoes: 0,
             dialogDelete:false,
+            operacao_id:null,
             // estado_nao_acabado: null,
 
             imposto_predial: null,
@@ -828,6 +830,17 @@ export default {
     },
 
     methods: {
+        formatValor: function(atual){
+        const valorFormatado = Intl.NumberFormat("pt-br", {
+            style: "currency",
+            currency: "AOA",
+        }).format(atual);
+        const valorNumerico = valorFormatado.replace(/AOA/g, '').trim();
+        return valorNumerico;
+      },
+      formatarDinheiro(valor) {
+    return valor.toLocaleString('en-US', { style: 'currency', currency: 'AOA' });
+  },
         validate() {
             this.$refs.form.validate();
             this.$refs.form2.validate();
@@ -863,6 +876,15 @@ export default {
         //     this.dialogEditar = true;
         // },
         carregarDialogEditarImovel(item) {
+            // item.control_projecto_tecnologia.forEach(elemento => {
+            //     this.projectoTecnologia.push(elemento.tecnologia);
+            // });
+            // actividade=item.actividade_imoveis
+            item.actividade_imoveis.forEach(actividade => {
+                this.operacao_id=actividade.operacao_imoveis_id
+            });
+            // alert( item.actividade_imoveis)
+            // alert(JSON.stringify(this.operacao_id));
             this.editedIndex = this.meus_imoveis.indexOf(item);
             this.imovel = Object.assign({}, item);
             // alert(JSON.stringify(this.editedIndex));
@@ -928,7 +950,7 @@ export default {
             // this.$inertia.post("/condominios", this.condominio, {});
 
             axios
-                .post("/portal/imoveis", this.item)
+                .post("/portal/update-imoveis", this.imovel)
                 .then((response) => {
                     this.loading = false;
                     alert(JSON.stringify(response.data));

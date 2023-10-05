@@ -213,11 +213,12 @@ class ImoveisController extends Controller
      * @param  \App\Models\Imoveis  $imoveis
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $imovel = Imoveis::find($id);
+        // $imovel = Imoveis::find($id);
         $data = $request->all();
-        $imovel->update($data);
+        dd($data);
+        // $imovel->update($data);
         return redirect()->back()->with('Actualização feita com sucesso');
     }
 

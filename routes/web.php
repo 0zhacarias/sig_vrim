@@ -63,6 +63,7 @@ Route::resource('/Pagamento',App\Http\Controllers\PagamentoController::class);
 Route::post('/Solicitar-visita',[App\Http\Controllers\SolicitarImoveisController::class,'solicitar_visita'])->name('solicitar-visita');
 Route::post('/municipios',[App\Http\Controllers\ImoveisController::class,'municipios'])->name('municipios');
 Route::post('/tipo-tipologia',[App\Http\Controllers\ImoveisController::class,'tipo_tipologia'])->name('tipo-tipologia');
+Route::post('/update-imoveis',[App\Http\Controllers\ImoveisController::class,'update'])->name('atualizar-imoveis');
 // Route::post('/Solicitar-visita/{id}',[App\Http\Controllers\ImoveisController::class,'solicitar_visita']);
 Route::get('/imovel-selecionado/{id}',[App\Http\Controllers\ImoveisController::class,'imovel_selecionado'])->name('immovel-selecionado');
 Route::get('/imoveis-provincia/{id}',[App\Http\Controllers\ImoveisController::class,'imoveis_provincia']);

@@ -273,7 +273,12 @@ class ClienteController extends Controller
     public function anuncios()
     {
 
+
         if (auth()->user()) {
+            $dados['provincias'] = Provincias::all();
+            // $dados['municipios'] = Municipios::all();
+            $dados['tipologiaImoveis'] = Tipologia::all();
+            $dados['tipoImoveis'] = TipoImoveis::all();
             $userLog = auth()->user()->load('tipo_user');
             $dados['cliente'] = User::where('id', $userLog->id)->first();
             $dados['meus_pagamentos'] = Imoveis::with('fotosImoveis', 'condicaoImoveis', 'actividadeImoveis.operacaoImoveis', 'estadoImoveis')->get();
@@ -284,9 +289,10 @@ class ClienteController extends Controller
                     ->get();
             } else {
                 $dados['meus_imoveis'] = Imoveis::where('cadastrado_por', $userLog->id)
-                ->with('fotosImoveis', 'condicaoImoveis', 'actividadeImoveis.operacaoImoveis', 'estadoImoveis')->orderBy('created_at', 'desc')->get();
+                ->with('fotosImoveis', 'condicaoImoveis', 'actividadeImoveis', 'estadoImoveis')->orderBy('created_at', 'desc')->get();
                 $dados['imoveis_processos'] = Imoveis::whereIn('id', $id_user_marca_visita)->whereIn('estado_imoveis_id', [4, 5, 6, 7, 8])
                     ->with('fotosImoveis', 'condicaoImoveis', 'actividadeImoveis.operacaoImoveis', 'estadoImoveis')->get();
+                    // dd($dados['meus_imoveis']);
             }
             return Inertia::render('Admin/Clientes/MeusAnuncios', $dados);
         } else {
