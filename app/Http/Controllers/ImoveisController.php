@@ -102,15 +102,15 @@ class ImoveisController extends Controller
             'localizacao' => $request->get('localizacao_geografica'),
             // 'imposto_predial' => $request->get('imposto_predial'),
             'numero_banheiro' => $request->get('numero_banheiro'),
-            'provincia_id' => $request->get('provincia'),
+            'provincia_id' => $request->get('provincia_id'),
             'preco' => $request->get('preco'),
             'estado_imoveis_id' => 3,
-            'cozinha' => $request->get('numero_cozinha'),
+            'numero_cozinha' => $request->get('numero_cozinha'),
             'tipologia_imoveis_id' => $request->get('tipologia_id'),
             'categoria_imoveis_id' => $request->get('categoria_imoveis_id'),
-            'suite' => $request->get('numero_quartos'),
-            'condicao_imoveis_id' => $request->get('condicao_imovel'),
-            'sala_de_estar' => $request->get('sala_de_estar'),
+            // 'suite' => $request->get('numero_quartos'),
+            'condicao_imoveis_id' => $request->get('condicao_imoveis_id'),
+            'numero_sala_estar' => $request->get('numero_sala_estar'),
             'numero_quartos' => $request->get('numero_quartos'),
             'numero_andar' => $request->get('numero_andar'),
             //Vai deixar alguma coisa
@@ -155,6 +155,14 @@ class ImoveisController extends Controller
                 'tipo_domumentacoes' => 2,
             ]);
         }
+        if ($request->hasFile('tituloPropriedade')) {
+            $filepdf = $request->tituloPropriedade->store('Tipo_Propriedade');
+            $fotos = Documentacoes::create([
+                'foto' => $filepdf,
+                'imoveis_id' => $imovel->id,
+                'tipo_domumentacoes' => 1,
+            ]);
+        }
         if ($request->hasFile('mutiplaImagem')) {
             foreach ($request->mutiplaImagem as $foto) {
                 $fileFoto =  $foto->store('Foto_Multipla');
@@ -165,13 +173,11 @@ class ImoveisController extends Controller
             };
         }
         // dd($proprietario_colaborador);
-        if ($request->get('arrendamento_id') == 1) {
+        if ($request->get('arrendamento_id') == 2) {
             $operacao_imoveis_id = 2;
         } else if ($request->get('venda_id') == 1) {
             $operacao_imoveis_id = 1;
-        } else {
-            $operacao_imoveis_id = 0;
-        }
+        } 
         $actividade = ActividadeImoveis::create([
             // 'proprietario_colaborador' => $proprietario_colaborador_corrector,
             'operacao_imoveis_id' => $operacao_imoveis_id,
@@ -215,11 +221,94 @@ class ImoveisController extends Controller
      */
     public function update(Request $request)
     {
-        // $imovel = Imoveis::find($id);
-        $data = $request->all();
-        dd($data);
-        // $imovel->update($data);
-        return redirect()->back()->with('Actualização feita com sucesso');
+        // $foto = [];
+        // foreach ($request->fotos_imoveis as $fotos) {
+        //     $foto = $fotos['imoveis_id'];
+        // };
+        $imovel = Imoveis::find($request->id);
+        // $proprietario_colaborador_corrector = $userLog->tipo_user->id;
+        $userLog = auth()->user()->load('tipo_user');
+        $imovel->update([
+            'designacao' => $request->get('designacao'),
+            'descricao' => $request->get('designacao'),
+            'metros' => $request->get('metros'),
+            'localizacao' => $request->get('localizacao_geografica'),
+            'numero_banheiro' => $request->get('numero_banheiro'),
+            'provincia_id' => $request->get('provincia_id'),
+            'preco' => $request->get('preco'),
+            // 'estado_imoveis_id' => 3,
+            'numero_cozinha' => $request->get('numero_cozinha'),
+            'tipologia_imoveis_id' => $request->get('tipologia_id'),
+            'categoria_imoveis_id' => $request->get('categoria_imoveis_id'),
+            'condicao_imoveis_id' => $request->get('condicao_imoveis_id'),
+            'numero_sala_estar' => $request->get('numero_sala_estar'),
+            'numero_quartos' => $request->get('numero_quartos'),
+            'numero_andar' => $request->get('numero_andar'),
+            //Vai deixar alguma coisa
+            'mobiliado' => $request->get('mobiliado'),
+            //Parte Interna
+            'armario_embutido' => $request->get('armario_embutido'),
+            'arcondicionados' => $request->get('ar_condicionados'),
+            'mesa_cadeira' => $request->get('mesa_cadeira'),
+            //Exterior
+            'numero_garagem' => $request->get('numero_garagem'),
+            'maquina_lavar_roupa' => $request->get('maquina_lavar_roupa'),
+            'churrasqueira' => $request->get('churrasqueira'),
+            'piscina' => $request->get('piscina'),
+            'gerador' => $request->get('gerador'),
+            'ginasio' => $request->get('ginasio'),
+            'tanqueagua' => $request->get('tanqueagua'),
+            // 'foto_principal' => $request->get('foto_principal'),
+            'cadastrado_por' => auth()->user()->id,
+        ]);
+       
+        if ($request->hasFile('foto_principal')) {
+        
+            $fileFoto = $request->foto_principal->store('Foto_principal');
+            $imovel->update([
+                'foto_principal' => $fileFoto,
+            ]);
+        }
+        
+        $documentos = Documentacoes::where('imoveis_id', $imovel->id)->first();
+        if ($request->hasFile('tituloPropriedade')) {
+            $fileFoto = $request->tituloPropriedade->store('Tipo_Propriedade');
+            if ($documentos->tipo_domumentacoes) {
+                Storage::delete('Tipo_Propriedade', $documentos->Tipo_Propriedade);
+            }
+            $documentos->tipo_domumentacoes = $fileFoto;
+            $documentos->save();
+        }
+      
+        $fotosmultiplas = FotosImoveis::where('imoveis_id', $imovel->id)->get();
+        if ($request->hasFile('mutiplaImagem')) {
+            foreach ($fotosmultiplas as $foto) {
+                Storage::delete('Foto_Multipla', $foto->foto);
+            };
+            foreach ($fotosmultiplas as $foto) {
+                $fileFoto =  $foto->store('Foto_Multipla');
+                $foto->foto = $fileFoto;
+                $foto->save();
+            };
+        }
+        $actividades = ActividadeImoveis::where('imoveis_id',$imovel->id)->first();
+     
+        if($request->get('operacao_id')==1 && $request->get('quantidade_prestacoes')){
+            $actividades->update([
+                'operacao_imoveis_id' => $request->operacao_id,
+                'imoveis_id' => $imovel->id,
+                'quantidade_prestacoes' => $request->get('quantidade_prestacoes'),
+              
+            ]);
+        }else if($request->get('operacao_id')==2 && $request->get('tempo_arrendar')){
+            $actividades->update([
+                'operacao_imoveis_id' => $request->operacao_id,
+                'imoveis_id' => $imovel->id,
+                'tempo_arrendar' => $request->get('tempo_arrendar'),
+            ]);
+        }
+     
+        return redirect()->back()->with('success','Actualização feita com sucesso');
     }
 
     /**
@@ -240,7 +329,7 @@ class ImoveisController extends Controller
         $dados['tipologiaImoveis'] = Tipologia::all();
         $dados['operacao_imoveis'] = 1;
         $dados['CondicoesImoveis'] = CondicaoImoveis::get();
-        $dados['estadoImoveis'] = EstadoImoveis::whereNotIn('id', [4,3, 2])->get();
+        $dados['estadoImoveis'] = EstadoImoveis::whereNotIn('id', [4, 3, 2])->get();
         $dados['tipoImoveis'] = TipoImoveis::all();
         return Inertia::render('Portal/ListaImoveis', $dados);
     }
@@ -249,7 +338,7 @@ class ImoveisController extends Controller
         $dados['provincias'] = Provincias::orderBy('designacao', 'asc')->get();
         $dados['operacao_imoveis'] = 2;
 
-        $dados['estadoImoveis'] = EstadoImoveis::whereNotIn('id', [4,3, 2])->get();
+        $dados['estadoImoveis'] = EstadoImoveis::whereNotIn('id', [4, 3, 2])->get();
         $dados['CondicoesImoveis'] = CondicaoImoveis::all();
         $dados['tipoImoveis'] = TipoImoveis::all();
         return Inertia::render('Portal/ListaImoveis', $dados);
@@ -345,7 +434,7 @@ class ImoveisController extends Controller
                     ->paginate(10);
             }
         } else {
-          
+
             if ($provincia_id) {
                 $imoveis = Imoveis::with('fotosImoveis', 'condicaoImoveis', 'actividadeImoveis.operacaoImoveis', 'estadoImoveis')
                     ->where('provincia_id', $provincia_id)
@@ -358,7 +447,7 @@ class ImoveisController extends Controller
                         ->paginate(10);
                 } else {
 
-                  
+
                     $imoveis = Imoveis::with('fotosImoveis', 'condicaoImoveis', 'actividadeImoveis.operacaoImoveis', 'estadoImoveis')
                         ->where('deleted_at', null)
                         ->whereIn('id', $actividadeImoveis)
@@ -421,28 +510,26 @@ class ImoveisController extends Controller
             }
         }
 
-        if($preco_final){
+        if ($preco_final) {
 
             $imoveis = Imoveis::with('fotosImoveis', 'condicaoImoveis', 'actividadeImoveis.operacaoImoveis', 'estadoImoveis')
-            ->whereIn('id', $actividadeImoveis)
-            ->whereIn('provincia_id', $id_provincia)
-            ->whereIn('condicao_imoveis_id', $condicoes_imovel)
-            ->whereIn('estado_imoveis_id', $id_estadoimovel)
-            ->whereIn('categoria_imoveis_id', $id_tipo)
-            ->where('preco', '>=', $preco_inicio)
-            ->where('preco', '<=', $preco_final)
-            ->orderBy('created_at', 'asc')->get();
-
-        }
-        else{
+                ->whereIn('id', $actividadeImoveis)
+                ->whereIn('provincia_id', $id_provincia)
+                ->whereIn('condicao_imoveis_id', $condicoes_imovel)
+                ->whereIn('estado_imoveis_id', $id_estadoimovel)
+                ->whereIn('categoria_imoveis_id', $id_tipo)
+                ->where('preco', '>=', $preco_inicio)
+                ->where('preco', '<=', $preco_final)
+                ->orderBy('created_at', 'asc')->get();
+        } else {
             $imoveis = Imoveis::with('fotosImoveis', 'condicaoImoveis', 'actividadeImoveis.operacaoImoveis', 'estadoImoveis')
-            ->whereIn('id', $actividadeImoveis)
-            ->whereIn('provincia_id', $id_provincia)
-            ->whereIn('condicao_imoveis_id', $condicoes_imovel)
-            ->whereIn('estado_imoveis_id', $id_estadoimovel)
-            ->whereIn('categoria_imoveis_id', $id_tipo)
-            ->orderBy('created_at', 'asc')
-            ->get();
+                ->whereIn('id', $actividadeImoveis)
+                ->whereIn('provincia_id', $id_provincia)
+                ->whereIn('condicao_imoveis_id', $condicoes_imovel)
+                ->whereIn('estado_imoveis_id', $id_estadoimovel)
+                ->whereIn('categoria_imoveis_id', $id_tipo)
+                ->orderBy('created_at', 'asc')
+                ->get();
 
             // dd($imoveis,$id_tipo, $request);
         }

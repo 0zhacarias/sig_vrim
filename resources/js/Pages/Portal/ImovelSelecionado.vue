@@ -36,7 +36,8 @@
                 <card class="white">
                     <v-col md="8" offset-md="2">
                         <v-card-subtitle class="">Arrendamento / Quarto / Cozinha Equipada / Leiria</v-card-subtitle>
-       <v-card-text class="text-h5 ">
+                        <v-card-text class="text-h5 ">
+           <v-card-subtitle class="">Código:{{ imoveis.codigo_imovel }}</v-card-subtitle>
                             <v-card-title class="deep-purple lighten-5"> {{ imoveis.designacao }}</v-card-title>
                             <v-row>
 

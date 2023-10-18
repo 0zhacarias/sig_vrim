@@ -1,8 +1,37 @@
 <template>
     <Cliente>
         <v-container class="w-90 justify-space-around">
-            <v-subheader class="text-h5 text-bold mt-10 ">Minhas solicitações: {{ imoveis_processos.length }}</v-subheader> <v-row>
+            <!-- <v-subheader class="text-h5 text-bold mt-10 ">Minhas solicitações: {{ imoveis_processos.length }}</v-subheader>  -->
+          
+                <v-row>
+                    <v-col cols="12" md="12" class="pa-0  mt-15 indigo">
+                    <v-card-actions>
+                        <span class=" white--text text-bold text-h5">
+                            Minhas solicitações: {{ imoveis_processos.length }}
+                        </span>
 
+                        <v-spacer></v-spacer>
+                        <v-card-title>
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Pesquisar" outlined
+                                dense dark single-line hide-details></v-text-field>
+                        </v-card-title>
+                        <!-- <v-text-field v-model="imobiliaria.pesquisar" outlined dense label="Contacto*" type="text">
+                        </v-text-field> -->
+                        <v-btn icon elevation="5" color="indigo" class="white" outlined rounded
+                            title="Pesquisar" @click="carregarDialogimobiliaria(item)">
+                           <v-icon>
+                            mdi-magnify
+                           </v-icon>
+                         
+                        </v-btn>
+                        <v-btn icon color="indigo" outlined rounded class="white" title="Emitir Relatório do processo"
+                                    @click="emitirRelatoriosProcesso(item)">
+                                    <v-icon>
+                                        mdi mdi-file-document-multiple
+                                    </v-icon>
+                                </v-btn>
+                    </v-card-actions>
+                </v-col>
                 <v-col v-for="item in imoveis_processos" :key="item.id" cols="12" sm="6" md="4"
                     :lg="imoveis_processos.length <= 2 ? 6 : 4">
                     <v-hover v-slot="{ hover }">
@@ -11,6 +40,7 @@
                             <!-- <v-img height="150" src="/img/pexels-dids-2969915.jpg"></v-img> -->
                             <v-img height="180" gradient="to bottom, rgba(0,0,0,.4), rgba(0,0,0,.2)" :src="'/storage/' +
                                 item.foto_principal"></v-img>
+                            <v-card-title>Código: {{ item.codigo_imovel }}</v-card-title>
                             <v-card-title>¨{{ item.designacao }}</v-card-title>
 
                             <v-card-text>
@@ -58,6 +88,7 @@
                                 </v-chip-group>
                             </v-card-actions>
                             <v-card-actions class="justify-end m-0 p-0">
+                             
                                 <v-btn icon :disabled="item.estado_imoveis_id !== 5 || user.tipo_user.id == 1"
                                     color="green" outlined rounded title="Gostei do Imóvel" @click="gostarImovel()"
                                     v-model="validar_gostar.valiado">
@@ -93,6 +124,28 @@
                                     <v-icon>
                                         mdi mdi-hand-back-left-off-outline
                                        
+                                    </v-icon>
+                                </v-btn>
+                                <v-btn icon v-if="user.tipo_user.id == 1  && item.estado_imoveis_id ==3  && item.estado_imoveis_id !=1" color="red" outlined rounded
+                                    title="Nao Aprovar o imóvel" @click="naoAprovarImovel(item.id)"
+                                    v-model="validar_processo.aprovaVisita">
+                                    <v-icon>
+                                        mdi mdi-handshake
+
+                                    </v-icon>
+                                </v-btn>
+                                <v-btn icon v-if="user.tipo_user.id == 1 && item.estado_imoveis_id ==3 && item.estado_imoveis_id !=1" color="indigo" outlined rounded
+                                    title="Validar veracidade do imóvel" @click="aprovarImovel(item.id)"
+                                    v-model="validar_processo.naoAprovarVisita">
+                                    <v-icon>
+                                        mdi mdi-handshake
+                                    </v-icon>
+                                </v-btn>
+                                <v-btn icon v-if="item.estado_imoveis_id ==6 || item.estado_imoveis_id ==7 " 
+                                    color="indigo" outlined rounded title="Emitir declaração do Imóvel" @click="imprirDadosImovel(item.id)"
+                                    v-model="validar_gostar.valiado">
+                                    <v-icon>
+                                        mdi mdi-file-document-multiple
                                     </v-icon>
                                 </v-btn>
                             </v-card-actions>
@@ -234,6 +287,7 @@ export default {
             location.reload();
         },
         validaVisita(item) {
+
             this.loading = true;
             this.validar_processo.imovel_id = item
             // alert(JSON.stringify( this.validar_processo));
@@ -250,6 +304,7 @@ export default {
                 });
         },
         naoValidarVisita(item) {
+         
             this.loading = true;
             this.validar_processo.imovel_id = item
             axios
@@ -264,6 +319,39 @@ export default {
                 });
             location.reload();
         },
+        naoAprovarImovel(item){
+            this.loading = true;
+            this.validar_processo.imovel_id = item
+            axios
+                .post("/nao-validar-processo", this.validar_processo)
+                .then((response) => {
+                    this.loading = true;
+                    this.snackbarNaovalidado = true;
+                })
+                .catch(() => {
+                    // alert(JSON.stringify(response.data));
+                    //   console.log('Falha ao registar os dados na base de dados!...')
+                });
+            location.reload();
+        },
+        aprovarImovel(item){
+            this.loading = true;
+            this.validar_processo.imovel_id = item
+            // alert(JSON.stringify( this.validar_processo));
+            axios
+                .post("/validar-processo", this.validar_processo)
+                .then((response) => {
+                    this.loading = true;
+                    this.snackbar = true;
+                    
+                })
+                .catch(() => {
+                    alert(JSON.stringify(response.data));
+                    //   console.log('Falha ao registar os dados na base de dados!...')
+                });
+                // location.reload();
+        },
+
         cancelarProcesso(item){
             this.loading = true;
             this.validar_processo.imovel_id = item
@@ -278,6 +366,35 @@ export default {
                     //   console.log('Falha ao registar os dados na base de dados!...')
                 });
             location.reload();
+        },
+        imprirDadosImovel: function () {
+            window.open(
+                // alert(JSON.stringify(this.query)),
+                "/pdfs/listar-pdf-funcionarios/"
+            );
+        },
+        imprirDadosImovel(item){
+            window.open(
+                "/imprimir-documentacao/" + item
+            )
+            // this.loading = true;
+            // this.validar_processo.imovel_id = item
+            // axios
+            //     .post("/imprimir-documentacao", this.validar_processo)
+            //     .then((response) => {
+            //         this.loading = true;
+            //         this.snackbarNaovalidado = true;
+            //     })
+            //     .catch(() => {
+            //         // alert(JSON.stringify(response.data));
+            //         //   console.log('Falha ao registar os dados na base de dados!...')
+            //     });
+            // // location.reload();
+        },
+        emitirRelatoriosProcesso(){
+            window.open(
+                "/emitir-relatorios-processo"
+            )
         }
 
     },

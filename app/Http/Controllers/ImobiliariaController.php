@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Imobiliaria;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ImobiliariaController extends Controller
 {
@@ -14,7 +15,9 @@ class ImobiliariaController extends Controller
      */
     public function index()
     {
-        //
+        $dados['imobiliarias']=Imobiliaria::all();
+        // dd( $imobiliarias);
+        return Inertia::render('Admin/Clientes/Imobiliaria',$dados);
     }
 
     /**
@@ -35,7 +38,12 @@ class ImobiliariaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        // $data = $request->all();
+        $imobiliaria=$request->all();
+        Imobiliaria::create($imobiliaria);
+
+        return redirect()->back()->with('success','Imóbiliaria cadastrado com sucesso');
     }
 
     /**
@@ -67,9 +75,11 @@ class ImobiliariaController extends Controller
      * @param  \App\Models\Imobiliaria  $imobiliaria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Imobiliaria $imobiliaria)
+    public function update(Request $request, $id)
     {
-        //
+        $imobiliaria=Imobiliaria::find($id);
+        $imobiliaria->update($request->all());
+     
     }
 
     /**
@@ -78,8 +88,9 @@ class ImobiliariaController extends Controller
      * @param  \App\Models\Imobiliaria  $imobiliaria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Imobiliaria $imobiliaria)
+    public function destroy($id)
     {
-        //
+        $imobiliaria=Imobiliaria::find($id);
+        $imobiliaria->delete();
     }
 }

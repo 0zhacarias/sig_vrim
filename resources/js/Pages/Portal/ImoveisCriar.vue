@@ -44,7 +44,7 @@
 
                                         <v-form ref="form" lazy-validation>
                                             <v-container
-                                                v-if="(this.getarrendar == true || this.getvender == true) && (user.tipo_user.id == 3 || user.tipo_user.id == 4 || user.tipo_user.id == 5)">
+                                                v-if="(this.getarrendar == true || this.getvender == true) && (user.tipo_user_id == 3 || user.tipo_user_id == 4 || user.tipo_user_id == 5)">
                                                 <!-- <v-card-text align="center" justify="center">
                                                         <v-btn outlined  v-model="proprietario" @click="proprietario()" class="corProprietario"> Proprietário</v-btn>
                                                         <v-btn outlined v-model="colaborador" @click="colaborador()" class="corColaborador">Pambaleiro</v-btn>
@@ -83,7 +83,7 @@
 
                                                 <v-row>
                                                     <v-col cols="12" md="3">
-                                                        <v-autocomplete v-model="imovel.provincia" dense
+                                                        <v-autocomplete v-model="imovel.provincia_id" dense
                                                             :items="this.provincias" item-value="id" item-text="designacao"
                                                             label="Provincia**" @change="getMunicipio()" outlined>
 
@@ -91,7 +91,7 @@
                                                     </v-col>
                                                     <v-col cols="12" md="3">
                                                         <v-autocomplete :items="this.municipios" item-value="id"
-                                                            item-text="designacao" v-model="imovel.cidades" label="Cidades*"
+                                                            item-text="designacao" v-model="imovel.cidade_id" label="Cidades*"
                                                             dense outlined>
 
                                                         </v-autocomplete>
@@ -202,7 +202,7 @@
                                                             <v-col cols="12" sm="12" md="2" class="text-center">
 
                                                                 <v-btn outlined dense color="indigo"
-                                                                    @click="decrementGaragem" block>
+                                                                    @click="decrementSalaEstar" block>
                                                                     -
                                                                 </v-btn>
 
@@ -210,14 +210,14 @@
 
                                                             <v-col cols="12" sm="12" md="3">
                                                                 <v-text-field dense color="indigo" outlined
-                                                                    v-model="imovel.numero_garagem"
+                                                                    v-model="imovel.numero_sala_estar"
                                                                     class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
                                                                 </v-text-field>
                                                             </v-col>
 
                                                             <v-col cols="12" sm="12" md="2" class="text-center">
                                                                 <v-btn outlined dense color="indigo"
-                                                                    @click="incrementGaragem" block>
+                                                                    @click="incrementSalaEstar" block>
                                                                     +
                                                                 </v-btn>
                                                             </v-col>
@@ -235,6 +235,7 @@
                                                         </v-row>
                                                         <v-divider></v-divider>
                                                         <v-divider></v-divider>
+                                                        
                                                     </v-col>
                                                     <v-col cols="12" sm="12" md="6">
                                                         <v-row>
@@ -305,8 +306,53 @@
                                                         </v-row>
                                                         <v-divider></v-divider>
                                                         <v-divider></v-divider>
+                                                        <v-row>
+                                                            <v-col cols="12" sm="12" md="5">
+                                                                <span class="text-body-1 text-black indigo--text">Número
+                                                                    de garagens</span><br />
+                                                                <span class="text-caption">Vagas para
+                                                                    Carros(Opcional)</span>
+                                                            </v-col>
+
+                                                            <v-col cols="12" sm="12" md="2" class="text-center">
+
+                                                                <v-btn outlined dense color="indigo"
+                                                                    @click="decrementGaragem" block>
+                                                                    -
+                                                                </v-btn>
+
+                                                            </v-col>
+
+                                                            <v-col cols="12" sm="12" md="3">
+                                                                <v-text-field dense color="indigo" outlined
+                                                                    v-model="imovel.numero_garagem"
+                                                                    class="no-padding-messages no-padding-details v-messages.theme--light pa-1">
+                                                                </v-text-field>
+                                                            </v-col>
+
+                                                            <v-col cols="12" sm="12" md="2" class="text-center">
+                                                                <v-btn outlined dense color="indigo"
+                                                                    @click="incrementGaragem" block>
+                                                                    +
+                                                                </v-btn>
+                                                            </v-col>
+
+                                                            <!-- <v-card-text>
+                                                            <v-row align="center" justify="center">
+                                                                <v-col cols="12">
+                                                                    <p class="text-center">
+                                                                        Rounded
+                                                                    </p>
+                                                                </v-col>
+
+                                                            </v-row>
+                                                        </v-card-text> -->
+                                                        </v-row>
+                                                        <v-divider></v-divider>
+                                                        <v-divider></v-divider>
                                                     </v-col>
                                                 </v-row>
+                                                
 
                                                 <v-row>
                                                     <v-col cols="12" sm="6" md="7">
@@ -346,7 +392,7 @@
                                         <v-spacer />
                                         <!-- v-if="(getvender || getarrendar) && (getProprietario || getcolaborador)" -->
                                         <v-btn color="#6A1B9A"
-                                            v-if="(getvender || getarrendar) && (user.tipo_user.id == 3 || user.tipo_user.id == 4 || user.tipo_user.id == 5)"
+                                            v-if="(getvender || getarrendar) && (user.tipo_user_id == 3 || user.tipo_user_id == 4 || user.tipo_user_id == 5)"
                                             outlined @click="continuar(2, 'form')">
                                             Continuar
                                         </v-btn>
@@ -387,8 +433,8 @@
                                                                     "></v-text-field>
                                                         </v-col> -->
                                                     <v-col cols="12" md="12"
-                                                        v-if="this.getcolaborador == true && this.getarrendar == true">
-                                                        <span>O pagamento referente a o arrendamento é o primeiro mês
+                                                        v-if="user.tipo_user_id == 4 && this.getarrendar == true">
+                                                        <span>O pagamento referente ao arrendamento é o primeiro mês
                                                         </span>
                                                     </v-col>
                                                 </v-row>
@@ -430,12 +476,12 @@
                                                     <v-col cols="7">
                                                         <span>
                                                             <v-btn elevation="0" outlined rounded
-                                                                v-model="imovel.condicao_imovel" @click="estadoNovo()"
+                                                                v-model="imovel.condicao_imoveis_id" @click="estadoNovo()"
                                                                 class="estadonovo"> Nova</v-btn>
-                                                            <v-btn outlined rounded v-model="imovel.condicao_imovel"
+                                                            <v-btn outlined rounded v-model="imovel.condicao_imoveis_id"
                                                                 @click="estadoNaoAcabado()" class="estadonaoacabadol">Não
                                                                 acabada</v-btn>
-                                                            <v-btn outlined rounded v-model="imovel.condicao_imovel"
+                                                            <v-btn outlined rounded v-model="imovel.condicao_imoveis_id"
                                                                 @click="estadoReabilitado()"
                                                                 class="estadoreabilitado">Reabilitada</v-btn>
                                                         </span>
@@ -562,7 +608,7 @@
                                                                         </v-list-item-content>
                                                                         <v-list-item-action>
                                                                             <v-checkbox :input-value="active"
-                                                                                v-model="imovel.ar_condicionados"
+                                                                                v-model="imovel.arcondicionados"
                                                                                 style="background-color: #e9e5f5; border-radius: 10px;"
                                                                                 color="primary"></v-checkbox>
                                                                         </v-list-item-action>
@@ -985,7 +1031,7 @@ export default {
         loading: null,
         msg: null,
         imovel: {
-            condicao_imovel: null,
+            condicao_imoveis_id: null,
             colaborador_id: null,
             proprietario_id: null,
             venda_id: null,
@@ -1001,10 +1047,12 @@ export default {
             numero_banheiro: 0,
             numero_garagem: 0,
             numero_andar: 0,
+            numero_sala_estar:0,
+            tempo_arrendar: 0,
             metros: 0,
             designacao: null,
             localizacao_geografica: null,
-            provincia: null,
+            provincia_id: null,
             cidades: null,
             simImP: null,
             naoImP: null,
@@ -1017,6 +1065,8 @@ export default {
             armario_embutido: null,
             // armario_cozinha: null,
             piscina: null,
+            elevador:0,
+            rechao:0,
             // sofa: null,
 
         },
@@ -1235,7 +1285,7 @@ export default {
             simmobiliado.style.color = "black";
         },
         estadoNovo() {
-            this.imovel.condicao_imovel = 1
+            this.imovel.condicao_imoveis_id = 1
             const estadonovo = document.querySelector(".estadonovo");
             const estadonaoacabadol = document.querySelector(".estadonaoacabadol");
             const estadoreabilitado = document.querySelector(".estadoreabilitado");
@@ -1247,7 +1297,7 @@ export default {
             estadoreabilitado.style.color = "black";
         },
         estadoNaoAcabado() {
-            this.imovel.condicao_imovel = 2
+            this.imovel.condicao_imoveis_id = 2
             const estadonaoacabadol = document.querySelector(".estadonaoacabadol");
             const estadonovo = document.querySelector(".estadonovo");
             const estadoreabilitado = document.querySelector(".estadoreabilitado");
@@ -1259,7 +1309,7 @@ export default {
             estadoreabilitado.style.color = "black";
         },
         estadoReabilitado() {
-            this.imovel.condicao_imovel = 3
+            this.imovel.condicao_imoveis_id = 3
             const estadoreabilitado = document.querySelector(".estadoreabilitado");
             const estadonovo = document.querySelector(".estadonovo");
             const estadonaoacabadol = document.querySelector(".estadonaoacabadol");
@@ -1287,7 +1337,7 @@ export default {
                 });
         },
         getTipologia(item) {
-            alert(item);
+
             this.id_tipo_imovel.id = item
             axios
                 .post("/portal/tipo-tipologia", this.id_tipo_imovel)
@@ -1424,6 +1474,15 @@ export default {
                 this.imovel.numero_banheiro--;
             }
         },
+        decrementSalaEstar() {
+            if (this.imovel.numero_sala_estar > 0) {
+                this.imovel.numero_sala_estar--;
+            }
+        },
+        incrementSalaEstar() {
+            this.imovel.numero_sala_estar++;
+        },
+
         decrementGaragem() {
             if (this.imovel.numero_garagem > 0) {
                 this.imovel.numero_garagem--;

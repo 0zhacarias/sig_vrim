@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Imobiliaria extends Model
 {
-    use HasFactory;
+    protected $table='imobiliaria';
+    protected $guarded=['id'];
+    use HasFactory, SoftDeletes;
 }

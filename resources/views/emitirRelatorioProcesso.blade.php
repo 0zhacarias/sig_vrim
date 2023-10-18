@@ -373,6 +373,7 @@
             font-size: 15px;
         }
     </style>
+    
 </head>
 {{-- <div id="logo">
     <img width="210" src="img/LogoM/mutue_helpdesk-h.png">
@@ -399,11 +400,11 @@
                     </span> --}}
                 </h5>
             </div>
-    {{--         <div class="table-bill">
+            <div class="table-bill">
                 <table>
                     <thead>
                         <th>#</th>
-                        <th>Designação</th>
+                        <th>Nome do Imóvel</th>
                         <th>Prioridade</th>
                         <th>Estado Atual</th>
                         <th>Nome do Projecto</th>
@@ -412,7 +413,45 @@
                         <th>Data e Hora de abertura</th>
                     </thead>
                     <tbody>
-                     @if (count($declaracaoPDF))
+                        <table>
+                            <tr>
+                                <td>linha 1, coluna 1</td>
+                                <td>linha 1, coluna 2</td>
+                            </tr>
+                            <tr>
+                                <td>linha 2, coluna 1</td>
+                                <td>linha 2, coluna 2</td>
+                            </tr>
+                            <tr>
+                                <td>linha 3, coluna 1</td>
+                                <td>linha 3, coluna 2</td>
+                                <td>linha 3, coluna 3</td>
+                                <td>linha 3, coluna 4</td>
+                                <td>linha 3, coluna 5</td>
+                            </tr>
+                            <tr>
+                                <td>linha 4, coluna 1</td>
+                                <td>linha 4, coluna 2</td>
+                                <td>linha 4, coluna 3</td>
+                                <td>linha 4, coluna 4</td>
+                                <td>linha 4, coluna 5</td>
+                            </tr>
+                            <tr>
+                                <td>linha 5, coluna 1</td>
+                                <td>linha 5, coluna 2</td>
+                                <td>linha 5, coluna 3</td>
+                                <td>linha 5, coluna 4</td>
+                                <td>linha 5, coluna 5</td>
+                            </tr>
+                            <tr>
+                                <td>linha 6, coluna 1</td>
+                                <td>linha 6, coluna 2</td>
+                                <td>linha 6, coluna 3</td>
+                                <td>linha 6, coluna 4</td>
+                                <td>linha 6, coluna 5</td>
+                            </tr>
+                        </table>
+                    {{--  @if (count($declaracaoPDF))
                             @foreach ($declaracaoPDF as $tickets)
                                 <tr>
                                     <td><span class="subtitulos">{{ $loop->iteration }}</span></td>
@@ -439,19 +478,9 @@
                                         class="subtitulos">{!! $tickets->descricao !!}</span></td>
                             </tr>
                         @endforeach
-                    @endif -
+                    @endif - --}}
                 </tbody>
-            </table> --}}
-            <p ><h4>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. In provident quam aperiam eos autem dolore laboriosam 
-            veritatis impedit iusto magnam. Unde nisi dicta porro repellat sequi animi commodi delectus dolores? </h4> 
-            </p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. In provident quam aperiam eos autem dolore laboriosam 
-            veritatis impedit iusto magnam. Unde nisi dicta porro repellat sequi animi commodi delectus dolores?
-        </div>
-
-            <p>Assinatura do proprietario : ___________________________________</p>
-            <p>Assinatura do Cliente: __________________________________________</p>
+            </table>
 
             <div class="note">Nós confirmamos que esta declaração foi gerada pelo nosso sistema.</div>
         <div class="note">Data de Impressão: {{ $datatime }}</div>
@@ -461,3 +490,30 @@
 </body>
 
 </html>
+{{-- <style>
+    table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+
+/* Estilizando as duas primeiras linhas */
+table tr:nth-child(1),
+table tr:nth-child(2) {
+    background-color: #ccc; /* Cor de fundo das duas primeiras linhas */
+}
+
+/* Estilizando as outras linhas */
+table tr:not(:first-child):not(:nth-child(2)) {
+    background-color: #f2f2f2; /* Cor de fundo das outras linhas */
+}
+</style> --}}
+    

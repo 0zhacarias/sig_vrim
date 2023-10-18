@@ -3,6 +3,33 @@
         <v-container  class="w-90 justify-space-around">
         <v-subheader class="text-h4 text-bold ">Pagamentos</v-subheader>
         <v-row>
+            <v-col cols="12" md="12" class="pa-0  mt-15 indigo">
+                    <v-card-actions>
+                        <span class=" white--text text-bold text-h5">
+                            Pagamentos
+                        </span>
+
+                        <v-spacer></v-spacer>
+                        <v-card-title>
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Pesquisar" outlined
+                                dense dark single-line hide-details></v-text-field>
+                        </v-card-title>
+                        <!-- <v-text-field v-model="imobiliaria.pesquisar" outlined dense label="Contacto*" type="text">
+                        </v-text-field> -->
+                        <v-btn icon elevation="5" color="indigo" class="white" outlined rounded
+                            title="Relatório" @click="carregarDialogimobiliaria(item)">
+                            <v-icon>
+                                mdi mdi-file-document-multiple
+                            </v-icon>
+                        </v-btn>
+                        <!-- <v-btn icon color="indigo" outlined rounded class="white" title="Cadastrar Funcionario"
+                                    @click="carregarDialogpessoa(item)">
+                                    <v-icon>
+                                        mdi mdi-plus
+                                    </v-icon>
+                                </v-btn> -->
+                    </v-card-actions>
+                </v-col>
             <v-col v-for="item in pagamentos" :key="item.id" cols="12" sm="6" md="4" :lg="pagamentos.length <= 4 ? 6 : 3">
                 <v-hover v-slot="{ hover }">
 

@@ -98,6 +98,7 @@
                                 <v-img height="150" :src="'/storage/' + item.foto_principal"></v-img>
 
                                 <v-card-title>{{ item.title }}</v-card-title>
+                                <v-card-subtitle class="text--subtitle">Código:{{ item.codigo_imovel }}</v-card-subtitle>
                                 <v-card-subtitle class="text--subtitle">{{ item.designacao }}</v-card-subtitle>
 
                                 <v-card-text>
@@ -432,7 +433,7 @@
                     </v-overlay>
                 </div>
             </template>
-            <template>
+            <!-- <template>
                 <v-row justify="center">
                     <v-img src="/img/cms-image.jpg" lazy-src="/img/cms-images.jpg" max-width="500" max-height="300">
                         <template v-slot:placeholder>
@@ -442,7 +443,7 @@
                         </template>
                     </v-img>
                 </v-row>
-            </template>
+            </template> -->
         </template>
 
         <!-- Contactos

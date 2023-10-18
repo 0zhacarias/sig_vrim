@@ -16,13 +16,32 @@
                       <v-list-item-title> Meus Dados</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item v-if="user.can['Gerir Anúncios']" href="/clientes/meus-anuncios" 
+                  <v-list-item v-if="user.can['Gerir Funcionario']"  href="/pessoa"  active-class="deep-purple--text">
+                    <v-list-item-icon>
+                      <v-icon>mdi-account</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title> Funcionarios</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item  v-if="user.can['Gerir Imóbiliaria']" href="/imobiliaria" 
                     active-class="deep-purple--text">
                     <v-list-item-icon>
                       <v-icon>mdi-clock</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                      <v-list-item-title>Meus Anúncios</v-list-item-title> 
+                      <v-list-item-title > Imóbiliaria</v-list-item-title> 
+                    
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item v-if="user.can['Gerir Anúncios']" href="meus-anuncios" 
+                    active-class="deep-purple--text">
+                    <v-list-item-icon>
+                      <v-icon>mdi-clock</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title v-if="user.tipo_user_id == 1"> Anúncios</v-list-item-title> 
+                      <v-list-item-title v-else>Meus Anúncios</v-list-item-title> 
                     </v-list-item-content>
                   </v-list-item>
                   <v-list-item  v-if="user.can['Gerir Processos'] "  href="/clientes/meus-processo"

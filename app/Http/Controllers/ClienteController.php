@@ -8,6 +8,7 @@ use App\Mail\EmailImoveilNegociacao;
 use App\Models\Cliente;
 use App\Models\Imoveis;
 use App\Models\Municipios;
+use App\Models\OperacaoImoveis;
 use App\Models\Pessoa;
 use App\Models\Provincias;
 use App\Models\SolicitarImoveis;
@@ -171,9 +172,13 @@ class ClienteController extends Controller
 
 
         if (auth()->user()) {
+            
             $userLog = auth()->user()->load('tipo_user');
             $dados['cliente'] = User::where('id', $userLog->id)->first();
-
+            $dados['provincias'] = Provincias::all();
+            // $dados['municipios'] = Municipios::all();
+            $dados['tipologiaImoveis'] = Tipologia::all();
+            $dados['tipoImoveigis'] = TipoImoveis::all();
             $dados['meus_imoveis'] = Imoveis::where('cadastrado_por', $userLog->id)
                 ->with('fotosImoveis', 'condicaoImoveis', 'actividadeImoveis.operacaoImoveis', 'estadoImoveis')->orderBy('created_at', 'desc')->get();
             $dados['meus_pagamentos'] = Imoveis::with('fotosImoveis', 'condicaoImoveis', 'actividadeImoveis.operacaoImoveis', 'estadoImoveis')->get();
@@ -253,8 +258,9 @@ class ClienteController extends Controller
             $id_user_marca_visita = SolicitarImoveis::where('user_marca_visita', $userLog->id)->select('imoveis_id')->get();
             if ($userLog->tipo_user_id == 1) {
 
-                $dados['imoveis_processos'] = Imoveis::whereIn('estado_imoveis_id', [4, 5, 6, 7, 8])
+                $dados['imoveis_processos'] = Imoveis::whereIn('estado_imoveis_id', [1,2,3,4, 5, 6, 7, 8])
                     ->with('fotosImoveis', 'condicaoImoveis', 'actividadeImoveis.operacaoImoveis', 'estadoImoveis')
+                    ->orderBy('created_at', 'desc')
                     ->get();
                 // dd($dados['imoveis_processos']);
             } else {
@@ -284,10 +290,16 @@ class ClienteController extends Controller
             $dados['meus_pagamentos'] = Imoveis::with('fotosImoveis', 'condicaoImoveis', 'actividadeImoveis.operacaoImoveis', 'estadoImoveis')->get();
             $id_user_marca_visita = SolicitarImoveis::where('user_marca_visita', $userLog->id)->select('imoveis_id')->get();
             if ($userLog->tipo_user_id == 1) {
+               
+                $dados['meus_imoveis'] = Imoveis::    
+                with('fotosImoveis', 'condicaoImoveis', 'actividadeImoveis', 'estadoImoveis')
+                ->orderBy('created_at', 'desc')->get();
+                $dados['operacoes'] = OperacaoImoveis::all();
                 $dados['imoveis_processos'] = Imoveis::whereIn('estado_imoveis_id', [4, 5, 6, 7, 8])
                     ->with('fotosImoveis', 'condicaoImoveis', 'actividadeImoveis.operacaoImoveis', 'estadoImoveis')
                     ->get();
             } else {
+                $dados['operacoes'] = OperacaoImoveis::whereIn('id',[2,3])->get();
                 $dados['meus_imoveis'] = Imoveis::where('cadastrado_por', $userLog->id)
                 ->with('fotosImoveis', 'condicaoImoveis', 'actividadeImoveis', 'estadoImoveis')->orderBy('created_at', 'desc')->get();
                 $dados['imoveis_processos'] = Imoveis::whereIn('id', $id_user_marca_visita)->whereIn('estado_imoveis_id', [4, 5, 6, 7, 8])
@@ -318,16 +330,7 @@ class ClienteController extends Controller
         # code...
     }
     // Generate PDF
-    public function createPDF()
-    {
-        // retreive all records from db
-        $data = Employee::all();
-        // share data to view
-        view()->share('employee', $data);
-        $pdf = PDF::loadView('pdf_view', $data);
-        // download PDF file with download method
-        return $pdf->download('pdf_file.pdf');
-    }
+
     public function login_google()
     {
 

@@ -3,7 +3,33 @@
         <!-- <v-subheader>Meus Anúcios</v-subheader> -->
         <v-container  class="w-90 justify-space-around">
         <v-row>
-            <v-subheader class="text-h5 text-bold mt-10 ">Meus Anuncios{{ meus_imoveis.length }}</v-subheader>
+            <v-col cols="12" md="12" class="pa-0  mt-15 indigo">
+                    <v-card-actions>
+                        <span class=" white--text text-bold text-h5">
+                            Meus Anuncios {{ meus_imoveis.length }}
+                        </span>
+
+                        <v-spacer></v-spacer>
+                        <v-card-title>
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Pesquisar" outlined
+                                dense dark single-line hide-details></v-text-field>
+                        </v-card-title>
+                        <!-- <v-text-field v-model="imobiliaria.pesquisar" outlined dense label="Contacto*" type="text">
+                        </v-text-field> -->
+                        <v-btn icon elevation="5" color="indigo" class="white" outlined rounded
+                            title="Pesquisar" @click="carregarDialogimobiliaria(item)">
+                            <v-icon>
+                                mdi-magnify
+                            </v-icon>
+                        </v-btn>
+                        <v-btn icon color="indigo" outlined rounded class="white" title="Emitir Relatórios"
+                                    @click="emitirRelatoriosProcesso()">
+                                    <v-icon>
+                                        mdi mdi-file-document-multiple
+                                    </v-icon>
+                                </v-btn>
+                    </v-card-actions>
+                </v-col>
             <!-- :lg="meus_imoveis.length > 3 ? 3 : 4" -->
             <v-col v-for="item in meus_imoveis" :key="item.id" cols="12" sm="12" md="4" lg="4">
                 <v-hover v-slot="{ hover }">
@@ -12,6 +38,8 @@
                             <!-- <v-img height="150" src="/img/pexels-dids-2969915.jpg"></v-img> -->
                             <v-img height="200" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.2)" :src="'/storage/' +
                                 item.foto_principal"></v-img>
+
+                            <v-card-title v-text="item.codigo_imovel"></v-card-title>
                             <v-card-title v-text="item.designacao"></v-card-title>
 
                             <v-card-text>
@@ -30,7 +58,9 @@
 
                             <v-card-actions class="pa-0 ma-0">
                                 <v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text" column>
-                                    <v-chip><span class="mdi mdi-seat-individual-suite" title="Dormitório">{{ item.suite
+                                    <v-chip><span class="mdi mdi-seat-individual-suite" title="Dormitório">{{ item.numero_quartos
+                                    }}</span></v-chip>
+                                    <v-chip><span class="mdi mdi-seat-individual-suite" title="Dormitório">{{ item.numero_sala_estar
                                     }}</span></v-chip>
                                     <v-chip><span class="mdi mdi-car" title="Garagem">{{ item.numero_garagem
                                     }}</span></v-chip>
@@ -68,15 +98,20 @@
                                         mdi mdi-thumb-up-outline
                                     </v-icon>
                                 </v-btn> -->
-                                <v-btn icon color="deep-purple lighten-2" outlined rounded title="Editar Imóvel"
+                                <v-btn v-if="item.estado_imoveis_id == 1" icon color="deep-purple lighten-2" outlined rounded title="Editar Imóvel"
                                     @click="carregarDialogEditarImovel(item)">
                                     <v-icon>
                                         mdi mdi-pencil-outline
                                     </v-icon>
                                 </v-btn>
-                                <v-btn icon color="red" outlined rounded title="Remover o Imóvel" @click="deleteImovel(item)">
+                                <v-btn icon v-if="item.estado_imoveis_id !== 6 && item.estado_imoveis_id !== 7 && item.estado_imoveis_id !== 8 "  color="red" outlined rounded title="Remover o Imóvel" @click="deleteImovel(item)">
                                     <v-icon>
                                         mdi mdi-delete-outline
+                                    </v-icon>
+                                </v-btn>
+                                <v-btn icon color="indigo" outlined rounded title="Emitir pdf do Imóvel" @click="emitirPDFAnuncio(item.id)">
+                                    <v-icon>
+                                        mdi mdi-file-document-multiple
                                     </v-icon>
                                 </v-btn>
                             </v-card-actions>
@@ -104,14 +139,20 @@
                                             
                                                 <v-form ref="form" lazy-validation>
                                                 <v-row dense>
-                                                    <v-col cols="12" sm="6" md="6"> 
+                                                    <v-col cols="12" sm="6" md="2"> 
+                                                        <v-autocomplete dense :rules="tipoImovelRules"  outlined 
+                                                            label="Tipo de Imovel*" v-model="imovel.operacao_id
+                                                                " :items="operacoes" item-text="designacao"
+                                                            item-value="id" item-color="red" required=""></v-autocomplete>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6" md="5"> 
                                                         <v-autocomplete dense :rules="tipoImovelRules"  outlined 
                                                             label="Tipo de Imovel*" v-model="imovel.categoria_imoveis_id
                                                                 " :items="tipoImoveis" item-text="designacao"
                                                             @change="getTipologia(imovel.categoria_imoveis_id)"
                                                             item-value="id" item-color="red" required=""></v-autocomplete>
                                                     </v-col>
-                                                    <v-col cols="12" sm="6" md="6">
+                                                    <v-col cols="12" sm="6" md="5">
                                                         <v-autocomplete dense :rules="tipologiaRules" required outlined  
                                                             label="Tipologia*" v-model="imovel.tipologia_id
                                                                 " :items="tipologiaImoveis" item-text="designacao"
@@ -137,7 +178,7 @@
                                                     </v-col>
                                                     <v-col cols="3" md="4">
                                                         <v-autocomplete :items="this.municipios" item-value="id"
-                                                            item-text="designacao" v-model="imovel.cidades" label="Cidades*"
+                                                            item-text="designacao" v-model="imovel.cidade_id" label="Cidades*"
                                                             outlined    dense>
 
                                                         </v-autocomplete>
@@ -165,6 +206,14 @@
                                                         <v-text-field outlined   dense color="indigo" placeholder="nº banheiros"
                                                             label="nº banheiros:" hint="O campo é opcional"
                                                             v-model="imovel.numero_banheiro" type="number"
+                                                            class="no-padding-messages no-padding-details v-messages.theme--light">
+
+                                                        </v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="12" md="2">
+                                                        <v-text-field outlined   dense color="indigo" placeholder="nº Sala de estar"
+                                                            label="nº Sala de estar:" hint="Obrigatorio"
+                                                            v-model="imovel.numero_sala_estar" type="number"
                                                             class="no-padding-messages no-padding-details v-messages.theme--light">
 
                                                         </v-text-field>
@@ -261,13 +310,13 @@
                                                     </v-col>
                                                     <v-col cols="7">
                                                         <span>
-                                                            <v-btn elevation="0" outlined  rounded
-                                                                v-model="imovel.condicao_imovel" @click="estadoNovo()"
-                                                                class="estadonovo" dense> Nova</v-btn>
-                                                            <v-btn outlined rounded v-model="imovel.condicao_imovel" small
+                                                            <v-btn elevation="0" outlined  rounded small
+                                                                v-model="imovel.condicao_imoveis_id" @click="estadoNovo()"
+                                                                class="estadonovo"> Nova</v-btn>
+                                                            <v-btn outlined rounded v-model="imovel.condicao_imoveis_id" small
                                                                 @click="estadoNaoAcabado()" class="estadonaoacabadol">Não
                                                                 acabada</v-btn>
-                                                            <v-btn outlined rounded v-model="imovel.condicao_imovel" small 
+                                                            <v-btn outlined rounded v-model="imovel.condicao_imoveis_id" small 
                                                                 @click="estadoReabilitado()"
                                                                 class="estadoreabilitado">Reabilitada</v-btn>
                                                         </span>
@@ -325,7 +374,7 @@
                                                                         </v-list-item-content>
                                                                         <v-list-item-action>
                                                                             <v-checkbox :input-value="active"
-                                                                                v-model="imovel.ar_condicionados"
+                                                                                v-model="imovel.arcondicionados"
                                                                                 style="background-color: #e9e5f5; border-radius: 10px;"
                                                                                 color="primary"></v-checkbox>
                                                                         </v-list-item-action>
@@ -658,7 +707,7 @@
 import Cliente from "../Clientes/Cliente";
 export default {
 
-    props: ["meus_imoveis", "provincias", 'tipologiaImoveis', 'tipoImoveis',],
+    props: ["meus_imoveis", "provincias", 'tipoImoveis','operacoes'],
     components: {
         Cliente
     },
@@ -666,11 +715,8 @@ export default {
         dialogEditar: false,
         imovel: {
             condicao_imovel: null,
-            colaborador_id: null,
-            proprietario_id: null,
             venda_id: null,
             arrendamento_id: null,
-            croquis: null,
             tituloPropriedade: null,
             localizacao: null,
             descricao: null,
@@ -688,10 +734,15 @@ export default {
             cidades: null,
             simImP: null,
             naoImP: null,
-            tempo_arrendar: 0,
-            quantidade_prestacoes: 0,
+            tempo_arrendar:0,
+            quantidade_prestacoes:0,
             dialogDelete:false,
             operacao_id:null,
+            cidade_id:null,
+            operacao_id:null,
+            mobiliado:null,
+            rechao:null,
+            elevador:null,
             // estado_nao_acabado: null,
 
             imposto_predial: null,
@@ -704,9 +755,7 @@ export default {
         },
         defautImovel: {
             condicao_imovel: null,
-            colaborador_id: null,
-            proprietario_id: null,
-            venda_id: null,
+            operacao_id: null,
             arrendamento_id: null,
             croquis: null,
             tituloPropriedade: null,
@@ -830,6 +879,17 @@ export default {
     },
 
     methods: {
+        emitirRelatoriosProcesso(){
+            window.open(
+                "/emitir-relatorios-processo"
+            )
+        },
+        emitirPDFAnuncio(item){
+            window.open(
+                "/emitir-anuncio/"+ item
+            )
+        },
+
         formatValor: function(atual){
         const valorFormatado = Intl.NumberFormat("pt-br", {
             style: "currency",
@@ -887,7 +947,8 @@ export default {
             // alert(JSON.stringify(this.operacao_id));
             this.editedIndex = this.meus_imoveis.indexOf(item);
             this.imovel = Object.assign({}, item);
-            // alert(JSON.stringify(this.editedIndex));
+            
+            // alert(JSON.stringify(this.imovel.mobiliado));
             this.dialogEditar = true;
             // let searchServico = this.servicos_por_pagar.find(function (elemento) {
             //     return elemento.id == servico_id;
@@ -944,7 +1005,7 @@ export default {
             this.e6=1
         },
         editarImovel() {
-
+            
             // this.dialogEditar = true;
 
             // this.$inertia.post("/condominios", this.condominio, {});
@@ -961,6 +1022,8 @@ export default {
 
                     //   console.log('Falha ao registar os dados na base de dados!...')
                 });
+                this.fecharDialog();
+                // location.reload();
         },
         simIP() {
             this.imovel.simImP = true;

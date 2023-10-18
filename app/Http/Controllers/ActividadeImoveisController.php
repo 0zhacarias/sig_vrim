@@ -7,6 +7,7 @@ use App\Models\ActividadeImoveis;
 use App\Models\Imoveis;
 use App\Models\SolicitarImoveis;
 use App\Models\User;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -115,44 +116,66 @@ class ActividadeImoveisController extends Controller
     }
     public function validar_processo(Request $request)
     {
+        
         $userLog = auth()->user()->load('tipo_user');
+        
+        
         $imovel = Imoveis::find($request->imovel_id);
+       
+        if( $imovel->estado_imoveis_id==3){
+            $imovel->update(
+                [
+                    'estado_imoveis_id'=>1,
+                ]
+    
+            );
+        }else if($imovel->estado_imoveis_id==4){
+            $imovel->update(
+                [
+                    'estado_imoveis_id'=>1,
+                ]
+    
+            );
+        }
         $solicitavisita = SolicitarImoveis::with('usuario_marca_visita')->where('imoveis_id', $request->imovel_id)->where('funcionario_id', null)->first();
         $mensagem = 'A sua marcação foi aceite no horário desejado.';
-
-        
-
+        $this->emailValidar($solicitavisita, $mensagem);
         // dd($url);
-        $imovel->update(
-            [
-                'estado_imoveis_id'=>1,
-            ]
-
-        );
+      
         $solicitavisita->update([
             'funcionario_id' => auth()->user()->id,
         ]);
-        $this->emailValidar($solicitavisita, $mensagem);
+       
         // dd($imovel, $solicitavisita->usuario_marca_visita->email);
 
     }
     public function nao_validar_processo(Request $request)
-    {$imovel = Imoveis::find($request->imovel_id);
+    {
         $solicitavisita = SolicitarImoveis::with('usuario_marca_visita')->where('imoveis_id', $request->imovel_id)->where('funcionario_id', null)->first();
         $mensagem = 'A sua marcação não foi aceite no horário desejado, por favor volte a reagendar o mesmo.';
         $this->emailValidar($solicitavisita, $mensagem);
         $imovel = Imoveis::find($request->imovel_id);
-        $imovel->update(
-            [
-                'estado_imoveis_id' => 2,
-            ]
-
-        );
+        
+        if( $imovel->estado_imoveis_id==3){
+            $imovel->update(
+                [
+                    'estado_imoveis_id'=>2,
+                    ]
+                    
+                );
+            }else if($imovel->estado_imoveis_id==4){
+                $imovel->update(
+                    [
+                        'estado_imoveis_id'=>5,
+                        ]
+                        
+                    );
+                }
+               
     }
     public function cancelar_processo(Request $request)
     {
         // dd($request);
-        $imovel = Imoveis::find($request->imovel_id);
         $solicitavisita = SolicitarImoveis::with('usuario_marca_visita')->where('imoveis_id', $request->imovel_id)->where('funcionario_id', null)->first();
         $mensagem = 'Devido algumas inregularidade no processo, foi concelado o imóvel, e estará disponivel para outros interessado..';
         $this->emailValidar($solicitavisita, $mensagem);
@@ -163,6 +186,54 @@ class ActividadeImoveisController extends Controller
             ]
 
         );
+    }
+    public function imprimir_documentacao( $id)
+    {
+
+        $declaracao=Imoveis::where('id',$id)->get();
+        $userLog = auth()->user()->load('tipo_user');
+        $user = User::where('id', $userLog->id)->get();
+        
+        $pdf = PDF::loadView('declaracaoPDF', [
+            'declaracaoPDF' => $declaracao,
+            'datatime' => date("Y-m-d"),
+            'user'=>$user,
+        ]);
+        // dd($pdf );
+        return $pdf->stream('Listas tipo de problemas projecto.pdf');
+
+    }
+    public function emitir_anuncio($id)
+    {
+
+        $declaracao=Imoveis::where('id',$id)->get();
+        $userLog = auth()->user()->load('tipo_user');
+        $user = User::where('id', $userLog->id)->get();
+        
+        $pdf = PDF::loadView('eminitirAnuncioPDF', [
+            'eminitirAnuncioPDF' => $declaracao,
+            'datatime' => date("Y-m-d"),
+            'user'=>$user,
+        ]);
+        // dd($pdf );
+        return $pdf->stream('Listas tipo de problemas projecto.pdf');
+
+    }
+    public function emitir_relatorios_processo()
+    {
+
+        $declaracao=Imoveis::all();
+        $userLog = auth()->user()->load('tipo_user');
+        // $user = User::where('id', $userLog->id)->get();
+        
+        $pdf = PDF::loadView('emitirRelatorioProcesso', [
+            'emitirRelatorioProcesso' => $declaracao,
+            'datatime' => date("Y-m-d"),
+            // 'user'=>$user,
+        ]);
+        // dd($pdf );
+        return $pdf->stream('Listas tipo de problemas projecto.pdf');
+
     }
     public function gostar_imovel(Request $request)
     {
@@ -189,7 +260,7 @@ class ActividadeImoveisController extends Controller
         // dd($solicitavisita);
         $mensagem = 'Gostaste do Imóvel.';
         $url = action([ImoveisController::class, 'portal_imovel']);
-        Mail::to('zhacarias50@outlook.com')->send(new EmailImoveilNegociacao($mensagem, $nome_confirma_visita, $url));
+        // Mail::to('zhacarias50@outlook.com')->send(new EmailImoveilNegociacao($mensagem, $nome_confirma_visita, $url));
     }
     public function nao_gostar_imovel(Request $request)
     {

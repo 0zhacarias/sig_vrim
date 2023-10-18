@@ -111,14 +111,22 @@ Route::resource('/home', App\Http\Controllers\HomeController::class);
 Route::resource('/moradores', App\Http\Controllers\MoradorController::class);
 Route::resource('/condominios', App\Http\Controllers\CondominioController::class);
 Route::get('/paginarwte', [App\Http\Controllers\HomeController::class, 'portal_auth'])->name('home');
+// Route::get('/listar-pdf-tickets/{estado}
 Route::get('/pdf-declaracao', [App\Http\Controllers\ClienteController::class, 'pdf_declaracao'])->name('declaracao');
 Route::post('/nao-validar-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'nao_validar_processo'])->name('naovalidar');
 Route::post('/validar-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'validar_processo'])->name('validar');
 Route::post('/gostar-imovel', [App\Http\Controllers\ActividadeImoveisController::class, 'gostar_imovel'])->name('gostar');
 Route::post('/nao-gostar-imovel', [App\Http\Controllers\ActividadeImoveisController::class, 'nao_gostar_imovel'])->name('naogostar');
 Route::post('/cancelar-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'cancelar_processo'])->name('cancelar');
+
+Route::get('/imprimir-documentacao/{id}', [App\Http\Controllers\ActividadeImoveisController::class, 'imprimir_documentacao'])->name('imprimir_documentacao');
+Route::get('/emitir-anuncio/{id}', [App\Http\Controllers\ActividadeImoveisController::class, 'emitir_anuncio'])->name('emitir_anuncio');
+Route::get('/emitir-relatorios-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'emitir_relatorios_processo'])->name('emitir_relatorio_processo');
+
 Route::post('/carregar-imoveis-processo', [App\Http\Controllers\ActividadeImoveisController::class, 'carregar_imoveis_processo'])->name('carregar_imoveis');
-Route::resource('/funcionario',App\Http\Controllers\FuncionarioController::class);
+Route::resource('/pessoa',App\Http\Controllers\FuncionarioController::class);
+Route::resource('/imobiliaria',App\Http\Controllers\ImobiliariaController::class);
+
 Route::group(['prefix' => 'clientes', 'middleware'=>'auth'], function () {
 Route::resource('/cliente',App\Http\Controllers\ClienteController::class);
 Route::get('/meu-perfil', [App\Http\Controllers\ClienteController::class, 'perfil'])->name('perfil');
